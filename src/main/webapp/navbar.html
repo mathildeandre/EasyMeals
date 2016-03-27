@@ -1,0 +1,71 @@
+<nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" role="navigation">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="#welcomeMeal">
+                <!--<i class="fa fa-play-circle"></i>-->
+                <span class="glyphicon glyphicon-fire"></span> easyMeals
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li class="hidden">
+                    <a href="#welcomeMeal"></a>
+                </li>
+                <li class=" page-scroll dropdown " ng-class="{ activeInNavBar: isActiveInNavBar('recipe')}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Recettes
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" >
+                        <li class="page-scroll" ng-class="{ activeInNavBar: isActiveInNavBar('starter')}" >
+                            <a href="#/recipe/starter">Entrees</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="page-scroll " ng-class="{ activeInNavBar: isActiveInNavBar('course')}">
+                            <a href="/#/recipe/course">Plats</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="page-scroll" ng-class="{ activeInNavBar: isActiveInNavBar('dessert')}">
+                            <a href="/#/recipe/dessert">Desserts</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="page-scroll" ng-class="{ activeInNavBar: isActiveInNavBar('breakfast')}">
+                            <a href="/#/recipe/breakfast">Petit dej - Goûter</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="page-scroll" ng-class="{ activeInNavBarPlanning: isActiveInNavBar('planning')}">
+                    <a href="#/planning">Creer Planning</a>
+                </li>
+                <li class="page-scroll" ng-class="{ activeInNavBarExpense: isActiveInNavBar('calculationExpense')}">
+                    <a href="/#/calculationExpense">Calcul Dépenses</a>
+                </li>
+                <li class="page-scroll" ng-class="{ activeInNavBarAlcohol: isActiveInNavBar('calculationAlcohol')}"><!--ng-class="{ active: isActiveInNavBar('#/calculationAlcohol')}"-->
+                    <a href="/#/calculationAlcohol">Soirée Alcoolisée ?</a>
+                </li>
+                <li class="page-scroll" >
+                    <span class="checkbox checkbox-warning" >
+                        <input type="checkbox"  ng-model="showDebug"  id="idShowDebug" ng-change="toggleDebug()">
+                        <label for="idShowDebug" >
+                            DEBUG
+                        </label>
+                    </span>
+                </li>
+
+                <!--<li class="page-scroll">
+                    <a href="#/grilleImpot">Grille Impots</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#/testDirective">Test Directives</a>
+                </li>
+                -->
+            </ul>
+        </div>
+    </div>
+</nav>

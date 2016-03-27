@@ -1,0 +1,300 @@
+.h5WelcomeMeal{
+    margin-top:20px;
+    margin-bottom:0;
+    color:indianred;
+}
+.bodyEasyMeals{
+    width: 100%;
+    height: 100%;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: url(../img/intro-bg.jpg) no-repeat bottom center scroll;
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+.bodyRecipe{
+
+    width: 100%;
+    height: 100%;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: url(../img/recipe_vegetables.jpg) repeat ; /* planning-recipe_meals OR recipe_fruits.jpeg  //bottom center scroll */
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.bodyPlanning{
+
+    width: 100%;
+    height: 100%;
+    /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: url(../img/expense-planning_Red-Raspberry.jpg) ; /* expense-planning_Red-Raspberry   OR  planning-recipe_meals.jpg*/
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+
+.bodyExpense{
+
+    width: 100%;
+    height: 100%;
+    /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: url(../img/expense_noteSober.jpg) no-repeat ; /*expense_note OR  expense-planning_Red-Raspberry */
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+
+
+.bodyAlcohol{
+
+    width: 100%;
+    /*height: 100%;*/
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: url(../img/alcohol_glass-wineGood.jpg) no-repeat ; /* alcohol_glassWineOnWood //center scroll */
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+
+::selection { /* surlign / effet souris  */
+    color: white;
+    background: darkslategrey;
+}
+select::selection,option::selection { /* ne fonctionne pas  */
+    color: white;
+    background: darkslategrey;
+}
+/*ne fonctionne pas.. est ce que c pas assez precis
+.bodyPlanning::selection{
+    background: green; /* REMPLACER PAR LA COULEUR DÉSIRÉE*
+}
+*/
+
+
+/******************************************* NAVBAR *****************************************/
+
+
+.dropdown > .active > a{
+    background-color: purple;
+}
+.activeInNavBar > a {
+    color:yellow;
+}
+.activeInNavBarPlanning > a {
+    color:cornflowerblue;
+}
+.activeInNavBarExpense > a {
+    color:#5cb85c;
+}
+.activeInNavBarAlcohol > a {
+    color:#d9534f;
+}
+
+.dropdown-menu > li > a{
+    color:cornflowerblue;
+    height:40px;
+    vertical-align:middle;
+}
+.dropdown-menu > li{
+    /*vertical-align:middle; //ne marche pas.. meme en faisant sur le ul parent list-style: none;*/
+}
+.dropdown-menu > .activeInNavBar > a {
+    color:black;
+    /* background-color: cornflowerblue;*/
+}
+
+
+/******************************************* TABLES ****************************************/
+
+.myTh{
+    color:darkslategrey;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700; /* epaisseur txt */
+    letter-spacing: 1px;
+    font-size: 20px;
+}
+
+
+
+/**********************************************************************************************/
+/******************************************* PLANNING ****************************************/
+/********************************************************************************************/
+
+/*
+.itemToDragPlanning_OldStyle {
+    padding: 7px;
+    border-radius:3px;
+    margin:5px;
+
+    border:1px solid #5bc0de;
+    color: #5bc0de;
+}*/
+.itemToDragPlanning {
+    padding: 6px;
+    border-radius:3px;
+    margin:5px 0;
+
+    border:1px solid lightgrey;
+    color: cornflowerblue;
+}
+.itemRecipesPlanning{
+    margin:4px;
+}
+
+.nbPers{
+    color:cornflowerblue;
+    color: lightgrey;
+    border:1px solid lightgrey;
+    border-radius:3px;
+    padding:3px;
+}
+.inputNbPers{
+    color:cornflowerblue;
+    width:40px;
+    border:none;
+    border-radius:3px;
+    text-align: center;
+    background-color:#f9f9f9;
+}
+.inputGlobalNbPers{
+
+    width:40px;
+    color:cornflowerblue;
+
+    border:1px solid lightgrey;
+    border-radius:3px;
+    padding:3px;
+    text-align: center;
+}
+
+.contourTxt{
+    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+}
+
+
+/**********************************************************************************************/
+/******************************************* EXPENSES ****************************************/
+/********************************************************************************************/
+
+
+
+.myBorder{
+    border: 5px solid red;
+    border-radius:10px;
+}
+#resultExpense {
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700; /* epaisseur txt */
+    letter-spacing: 1px;
+    font-size: 20px;
+    color:#5cb85c; /*success*/
+}
+
+
+.fieldExpense {
+    /*
+    border:none;
+    background-color:#dff0d8
+    */
+    padding: 7px;
+    width:60px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #5cb85c;
+}
+
+select.fieldExpense {
+    width:auto;
+}
+textarea.fieldExpense {
+    width:auto;
+    text-align: left;
+}
+.fieldExpense:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 2px solid #95d095;
+}
+
+.myThExpense {
+    color: darkslategrey;
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 600; /* epaisseur txt */
+    letter-spacing: 1px;
+}
+
+/**********************************************************************************************/
+/******************************************* ALCOHOL ****************************************/
+/********************************************************************************************/
+
+
+.fieldAlcohol {
+    /*
+    border:none;
+    background-color:#dff0d8
+    */
+    ont-weight: 700; /* epaisseur txt */
+    font-size: 20px;
+    padding: 7px;
+    width:80px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #d9534f;
+
+}
+.fieldAlcohol:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 2px solid #e89996;
+}
+
+
+.itemToDragAlcohol{
+    padding: 6px;
+    margin:4px; /* seul difference avec itemDroppedAlcohol */
+
+    border-radius:3px;
+    border:1px solid lightgrey;
+    color: #d9534f;
+}
+
+.itemDroppedAlcohol {
+
+    width:350px;
+    padding: 6px;
+    margin:5px 0; /* seul difference avec itemToDragAlcohol */
+    margin-left:50px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    color: #d9534f;
+
+}
+/* ne fonctionne pas
+.bodyAlcohol > input:focus {
+    outline: 0;
+    border:2px solid #e89996;
+}
+*/
