@@ -8,7 +8,7 @@
         <!--
             NAVBAR RECIPES LEFT-FIXED
         -->
-        <div class="col-xs-3"  scroll >
+        <div class="col-xs-4"  scroll >
             <span style="display:block; height:50px; visibility:hidden;"></span> <!-- DEGUEU permet d etre au meme niveau que les recipes -->
             <div  class="panel panel-default" style=" overflow: hidden;" >
 
@@ -20,7 +20,7 @@
 
                 <div class="panel-body main-panel">
 
-                    <div class="">
+                    <div class="" ng-class="{navRecipeFixed:boolNavFixed}">
                         <div ng-repeat="recipe in recipes | orderBy:'name'">
                             <div><a href="#/recipe/{{recipeType}}#{{recipe.id}}" class="btn btn-default" >{{recipe.name}}</a></div> <!--(id:{{recipe.id}})-->
                         </div>

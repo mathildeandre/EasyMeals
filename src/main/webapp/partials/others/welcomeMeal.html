@@ -1,0 +1,294 @@
+<div ng-controller="WelcomeMealCtrl">
+
+    <h2>Bienvenue dans easyMeals ! :)</h2>
+
+
+    class body:{{classBody}} - recipeType: {{recipeTypee}}
+<!--
+    <br>
+    THE ID : {{myId}}
+    <br>
+    <button ng-click="incrementId()" type="button" class="btn btn-success">INCREMENT</button>
+
+    <br>
+-->
+
+    <span class="checkbox checkbox-info" >
+        <input type="checkbox"  ng-model="showHelp"  id="idShowHelp" ng-change="toggleHelp()">
+        <label for="idShowHelp" >
+            MODE ACCOMPAGNEMENT
+        </label>
+    </span>
+
+    <br>
+
+    <div ng-show="showHelp" class="row" style="font-size: 15px; color:cornflowerblue" >
+
+        <div class="col-md-12">
+
+            <div  class="panel panel-default"  >
+                <div class="panel-heading">
+                    <h3 class="panel-title" style="color:cornflowerblue">Accompagnement</h3>
+                </div>
+
+
+                <div class="panel-body main-panel" style="color:cornflowerblue">
+                    <div>Ce mode vous permet d'être guidé sur l'utilisation de ce site web</div>
+                    <div>Utile pour le début essentiellement, vous pourrez désactiver ce mode par la suite</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+
+
+
+    <span class="checkbox checkbox-warning" >
+        <input type="checkbox"  ng-model="showDebug"  id="idShowDebug" ng-change="toggleDebug()">
+        <label for="idShowDebug" >
+            SHOW DEBUG
+        </label>
+    </span>
+
+    <br>
+
+    <div ng-show="showDebug" class="row" style="font-size: 15px; color:darkorange" >
+
+        <div class="col-md-12">
+
+            <div  class="panel panel-default"  >
+                <div class="panel-heading">
+                    <h3 class="panel-title" style="color:darkorange">Debug</h3>
+                </div>
+
+
+                <div class="panel-body main-panel" style="color:darkorange">
+                    <div>Ce mode permet d'afficher le contenu des objets pour aider à debugger</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+
+
+
+
+
+
+
+
+    <span class="checkbox checkbox-danger" >
+        <input type="checkbox"  ng-model="showImprovement"  id="idShowImprovement" ng-change="toggleImpr()">
+        <label for="idShowImprovement" >
+            VISUALISER AMELIORATIONS !
+        </label>
+    </span>
+
+    <br>
+
+
+
+        <div ng-show="showImprovement" class="row" style="font-size: 15px; color:#d9534f" >
+
+            <div class="col-md-12">
+
+                <div  class="panel panel-default" >
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title" style="color:#d9534f">Ameliorations/Bugs</h3>
+                    </div>
+
+
+
+
+
+                    <div panel-body main-panel style="color:#d9534f">
+
+
+                        <h5 class="h5WelcomeMeal">MATHOU commentaires :p</h5>
+                        <ul>
+                            <li style="font-size: 18px">[CSS] JARTER  ces putin de - panel panel-default - panel-heading - panel-body  main-panel ->fucking bootstrap :p</li>
+                            <li> Vue icon possibilité de voir la recette sans l'ouvrir ds nouvel onglet ? </li>
+                            <li> Affichage icon : cliquer sur le nom de la recette </li>
+                            <li> Affichage icon : nom recettes longues </li>
+                            <li> Tailles images quand ouverture recette</li>
+                            <li> Tri : trop bien :) Est ce qu'il y a des vrais notes ?? </li>
+                            <li> J'aime pas trop mes recettes préférés et liste planning dans la navbar :s </li>
+                            <li> Quand creation de nouvelle recette, upload image recette </li>
+                        </ul>
+
+
+
+
+                        <h5 class="h5WelcomeMeal" style="color:darkslategrey">General</h5>
+                        <ul style="color:darkslategrey">
+                            <li style="font-size: 20px">COCKTAIL : pouvoir selectionner nb pers directement par cocktail
+                                (ex : mojito pr 2pers, sex and the beach pr 10pers)</li>
+                            <li style="font-size: 20px">RESPONSIVE - adapter avec javascript : si la page est plus petite que n px : plus de margin (ds recipe par ex !!)</li>
+                            <li style="font-size: 20px">RESPONSIVE : adapter avec javascript #2: [recipe] si largeur ecran trop petite enlever margin entre 2 article (filtre & list) + margin into list</li>
+                            <li style="font-size: 20px">RESPONSIVE : adapter avec javascript #3: [recipe] si hauteur ecran trop petite enlever filtre fixed...(laisser static tt en haut...)</li>
+                            <li style="font-size: 20px"> GERER TOUTES fonctions communes recipe & planning into COMMUN service !</li>
+                            <li style="font-size: 22px">ALLER voir ex. codeFormer Examples->filters with ngRepeat !!!!</li>
+                            <li style="font-size: 20px"> Voir sur tp angular MAth exemple stylé de formulaire !!</li>
+                            <li >Git : faire du menage (enlever TP1...)</li>
+                            <li>INTERFACE PERSO pour trier recette a ajouter base commune...</li>
+                            <li>css PICTURES...</li>
+                            <li >Mettre a jour les service (comme si on sauvegardait ds la base...)</li>
+                            <li>ameliore avec APPLI (pr alcohol )</li>
+                            <li>APPLI simplifiée pour planning (pas de creation de meal..)</li>
+                            <li>mangerMieux.com ???</li>
+                            <li>avec des concepts de meilleur bouff avec un bonhomme qui smile en fonction de ce quon prevoi pr la semaine</li>
+                            <li>aussi ajouter le cote CALORIE et a faire attention a ce qu'on mange (toinou est sur le coup :))</li>
+                        </ul>
+
+                        <h5 class="h5WelcomeMeal" style="color:darkorange">Recipe</h5>
+                        <ul style="color:darkorange">
+                            <li >noter recettes !</li>
+                            <li style="font-size: 20px">ameliorer filtre ingredients : faire que le text est contenu ds food
+                                (ex si on recherche pate on veut voir "pate feuillete" et "patepain" etc..) ne pas etre stricte sur les accents, et 's' pluriel a negliger...</li>
+                            <li>Completer creationRecipe => en choisissant types, originRecipe etc!</li>
+                            <li> pouvoir ajouter une IMAGE pr une recette</li>
+                            <li> depuis creation de recette -> boutton retour recettes</li>
+                            <li> ajouter info sur rectte : duree preparation , nivo complexite, calori etc</li>
+
+                            <li style="text-decoration: line-through;">ajouter bouton fullscreen (glyphicon glyphicon-fullscreen) qui ouvre la recette en grand
+                                (nouvel onglet ?? : glyphicon glyphicon-new-window)</li>
+                            <li style="text-decoration: line-through;">trier par...</li>
+                            <li style="text-decoration: line-through;">faire fonctionner route avec NAVBAR raccourci category... </li>
+                            <li style="text-decoration: line-through;">faire des possibilite denregistre les recette ds favoris / plat pr la semaine</li>
+                            <li style="text-decoration: line-through;"> mettre les recette en mode accordeon avec que |photo - nom| + si on clique dessus -> description..</li>
+                            <li style="text-decoration: line-through;"> pouvoir selectionne type affichage (liste ou en mode block d'images cote a cote
+                                avec nom recette dessous petit : comme le dessins fb de math)</li>
+                            <li style="text-decoration: line-through;">nav de gauche : plus les nom des recettes mais des filtres
+                                (vegetarien, viande, plat rapide, recherche par ingredient/list dingredients)</li>
+                            <li style="text-decoration: line-through;">bloquer defilement avec scroll... => NO BOOTSTRAP FOR THIS : homemade CSS</li>
+
+                        </ul>
+
+                        <h5 class="h5WelcomeMeal" style="color:cornflowerblue">Planning</h5>
+                        <ul style="color:cornflowerblue">
+                            <li>FILTRES ... cf recipe (buttons entree plat dessert disposés horizontalement tout en haut, puis en dessous mettre filtre a gauche et list de recette a droite un peu comme section RECETTES</li>
+                            <li>Colorer case planning lors event "onDropOver"</li>
+                            <li style="color: lightgrey">reduire largeur border of recipe when dropped into planning => OUPAH : div trop complex et autre chose pas adapté..</li>
+                            <li style="font-size: 20px">CORRIGER BUG lors de drag de recette (ex:burger) dans le drop de nbPers...gros mess ^^
+                            <br>=> enlever le drag&drop de nbPers local ?</li>
+                            <li>trash droppable ?? je ne me rappel plus l'utilite..</li>
+                        </ul>
+
+                        <h5 class="h5WelcomeMeal" style="color:hotpink">ListShopping</h5>
+                        <ul style="color:hotpink">
+                            <li>Prevoir d'envoyer la liste par email</li>
+                            <li>(et eventuellement de l'imprimer sur une page a part ? -> moins important)</li>
+                            <li >lisShopping automatiquement triée par categorie (frais, legumes..etc)</li>
+                            <li >PAGE listShop où suppression des ingredient qu'on a ds le cadie</li>
+                        </ul>
+
+                        <h5 class="h5WelcomeMeal" style="color:limegreen">Expenses</h5>
+                        <ul style="color:limegreen">
+                            <li> ajuster les taille pr le mode improvement ( cf 'IMPROVEMENT' in calculationExpense.html)</li>
+                            <li>Prevoir de drag&drop les row entre elle</li>
+                            <li>peut regler pb des FILTRES pr planning & alcohol en mm tps!!</li>
+                        </ul>
+
+                        <h5 class="h5WelcomeMeal" >Alcohol</h5>
+                        <ul>
+                            <li>(titre "prevoir boissons"! et non : "soiree alcoolise")</li>
+                            <li>
+                                permettre de choisir entre gerer la qty "boissons alcoolisees" ou "boissons non alcoolisees"
+                            <br> => pour non alcoolisee : pareil : NB_PERS + NB_VERRES (de base 6) sauf que 1 verre tt le tps  : 20cl (par ex)</li>
+                            <li>gerer le prix en indiquant un prix maximum ???</li>
+                            <li>FILTRES : remettre bieres-vins-alcFort!</li>
+                            <li>afficher nb de verre environ dun element de la liste (sil faut retirer on sait....)</li>
+                        </ul>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    <div ng-show="showImprovement" class="row" style="font-size: 15px; color:#d9534f" >
+
+        <div class="col-md-8">
+
+            <div  class="panel panel-default" >
+                <div class="panel-heading">
+                    <h3 class="panel-title" >Done</h3>
+                </div>
+
+
+                <div class="panel-body main-panel" >
+
+                    <ul>
+                        <li >Faire un file "note" avec tous les details important (ex pour la nav deroulante avec fichier bootstrap!</li>
+                        <li>NAV avec liste deroulante (RECETTES -> ENTREES/PLATS/DESSERTS)</li>
+                        <li>ajout de BREAKFAST & SNACK avec entree/plat/desserts</li>
+                        <li style="color:cornflowerblue">
+                            Faire un mode accompagnement...
+                        </li>
+                        <li style="color:darkorange">
+                            Faire un mode debug (comme improvement)- checkbox "debug" dans bar de nav ou endroit plus accessible
+                        </li>
+                        <li>tout en francais..</li>
+                        <li>permettre de supprimer un ingredient de listShopping (petit dessins poubelle rouge)</li>
+                        <li style="color:darkorange">
+                            debugger le pb ds calcul depenses (ca plante quand on augmente le nbPers)
+                            <br>-> resolue ! cf 'BUG EXPENSES -> INFINITE LOOP' dans notes.txt
+                        </li>
+                        <li>pouvoir surligner avec le curseur de la souris => CSS "::selection" (ou sur le texte)!</li>
+                        <li>permettre de cocher les checkbox en cliquant ds TOUTE la CASE et non juste la box
+                            <br>-> RESOLUE : augmentation size checkbox (cf NOTES.txt) </li>
+
+                        <li>CSS alcohol in RED DONE! + :focus also in red</li>
+
+                        <li >recup CSS ancien website angular projet novembre (cap) pour RECIPE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div ng-show="showImprovement" class="row" style="font-size: 15px; color:lightgrey" >
+
+        <div class="col-md-8">
+
+            <div  class="panel panel-default" >
+                <div class="panel-heading">
+                    <h3 class="panel-title" >IDEES futurs</h3>
+                </div>
+
+
+                <div class="panel-body main-panel" >
+
+                    <ul>
+                        <li >Ajouter posssibilite de faire semaine healty => dietetique !!</li>
+                        <li >Faire marche le drive (leclerc, monop ..^^) (avec des filtres genre produits bio, produits pas chere, produit bonne qualite etc..)</li>
+                        <li >Quand les gens mettent leur plat ds planning calculer les calories et faire un bonhome qui smile ou non etc...</li>
+                        <li >MANGER-MIEUX.COM  !!! le but n'est pas de se priver mais bien manger quand mm! ce site calcul le bon equilibre!</li>
+                        <li> faire le planning en mode appli (ios/android)</li>
+                        <li>separer la partie alcohol !! Petite appli independante : BoireMieux.com :p avec option cocktails etc</li>
+                        <li>pour grosse entreprise/cantine !</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>

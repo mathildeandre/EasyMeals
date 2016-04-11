@@ -1,0 +1,31 @@
+<section class="section" ng-controller="SingleRecipeCtrl">
+
+
+    <div ng-show="showRecipe">
+        <h3 class="titleRecipeSingle">{{recipe.name}}  ({{recipe.nbPerson}} pers.)</h3>
+
+        <div class="divRecipeSingle">
+            <div class="divTopRecipeSingle" style="margin-top:20px;">
+                <div class="pixRecipeSingle" style="background-image:url('../images/course/{{recipe.pixName}}'),url('../../images/no-image.png') ;"> </div>
+
+                <div class="ingredientRecipeSingle">
+                    <div class="subTitleSingle"> Ingrédients </div>
+                    <ul ng-repeat="ingr in recipe.ingredients">
+                        <li > <span>{{ingr.qty}}</span>{{ingr.unit}}<span></span> <span>{{ingr.food}}</span> </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="preparationRecipeSingle">
+                <div class="subTitleSingle"> Préparation</div>
+                <div> {{recipe.description}} </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="!showRecipe">
+        <h3>Recette inexistante</h3>
+    </div>
+</section >
+
+
