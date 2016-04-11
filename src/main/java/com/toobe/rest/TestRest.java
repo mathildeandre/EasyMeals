@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
-@Path("/users")
+@Path("/recipes")
 public class TestRest {
 
     @GET
@@ -23,5 +23,4 @@ public class TestRest {
         courseList = new RecipeManager().getRecipes();
         return Response.ok(courseList).build();
     }
-
 }
