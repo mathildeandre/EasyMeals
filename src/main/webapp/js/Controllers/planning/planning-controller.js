@@ -5,7 +5,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('PlanningCtrl', function($scope, $log, PlanningService, RecipeService, fourTypeMeal, units, steps) {
+myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, fourTypeMeal, units, steps) {
 
 
     $scope.$emit('intoPlanning'); //will tell to parents (global-controller.js) to modify pix
@@ -15,13 +15,13 @@ myModule.controller('PlanningCtrl', function($scope, $log, PlanningService, Reci
      * RECIPES LIST ...
      */
     $scope.recipeType = 'course';
-    $scope.helloTest = "aie aie HELLO UU";
     var getRecipes = function(recipeType){
         switch(recipeType){
             case 'starter' : return RecipeService.getStarters();
             case 'course' :  return RecipeService.getCourses();
             case 'dessert' : return RecipeService.getDesserts();
             case 'breakfast' : return RecipeService.getBreakfasts();
+            case 'cocktail' : return RecipeService.getCocktails();
             default:  $scope.recipeType = 'ERROR';
         }
     }
@@ -29,6 +29,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, PlanningService, Reci
     $scope.selectRecipes = function(recipeType){
         $scope.recipeType = recipeType;
         $scope.recipes = getRecipes(recipeType);
+        $scope.$broadcast('updateFilter');
     }
 
     $scope.displayRecipeType = function(){
@@ -37,6 +38,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, PlanningService, Reci
             case 'course' :  return 'Plats';
             case 'dessert' : return 'Desserts';
             case 'breakfast' : return 'Petit Dej - Gouter';
+            case 'cocktail' : return 'Cocktails';
         }
     }
 

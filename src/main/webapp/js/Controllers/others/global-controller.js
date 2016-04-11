@@ -39,11 +39,9 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
     }
 
     $scope.showHelp=GlobalService.getHelp();
-    $scope.largeExpense=GlobalService.getLargeExpenseParameter();
     $scope.toggleHelp = function(){
         GlobalService.toggleHelp();
         $scope.showHelp=GlobalService.getHelp();
-        $scope.largeExpense=GlobalService.getLargeExpenseParameter();
     }
 
     $scope.showImprovement=GlobalService.getImprovement();
