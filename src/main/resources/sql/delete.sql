@@ -1,0 +1,11 @@
+DELETE FROM Food WHERE id = ?;
+DELETE FROM Food_Category WHERE id = ?;
+DELETE FROM Ingredient WHERE idRecipe = ? AND idFood = ?;
+DELETE FROM Ingredient_Custom WHERE idRecipe = ? AND idFood = ? AND idUser = ?;
+DELETE FROM Recipe WHERE id = ?;
+DELETE FROM Recipe_Category WHERE id = ?;
+DELETE FROM Recipe_Description WHERE idRecipe = ? AND noDescription = ?;
+DELETE FROM Recipe_Origin WHERE id = ?;
+DELETE FROM Rel_Recipe_Category WHERE idCategory = ? AND idRecipe = ?;
+DELETE FROM Rel_User_Recipe WHERE idRecipe = ? AND idUser = ?;
+DELETE FROM `User` WHERE id = ?;

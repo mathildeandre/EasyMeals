@@ -1,0 +1,11 @@
+SELECT id, name, idCategory FROM Food;
+SELECT id, name FROM Food_Category;
+SELECT idRecipe, idFood, quantity, unit FROM Ingredient;
+SELECT idRecipe, idFood, idUser, quantity, unit, isHide FROM Ingredient_Custom;
+SELECT id, name, type, nbPerson, rating, nbVoter, idUser, idOldUser, idOrigin FROM Recipe;
+SELECT id, name FROM Recipe_Category;
+SELECT idRecipe, noDescription, description FROM Recipe_Description;
+SELECT id, name FROM Recipe_Origin;
+SELECT idCategory, idRecipe FROM Rel_Recipe_Category;
+SELECT idRecipe, idUser, isFavorite, isForPlanning, rating, isHide FROM Rel_User_Recipe;
+SELECT id, name, pwd, email FROM `User`;
