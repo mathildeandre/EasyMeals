@@ -4,6 +4,7 @@ package com.toobe.dto;
  * Created by mathilde on 27/03/2016.
  */
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -24,20 +25,39 @@ import java.util.List;
         }
 */
 
-public class Recipe {
+public class Recipe implements Serializable{
 
     private int id;
     private String name;
+    private String pixName;
+    private String recipeType;
     private int nbPerson;
     private List<Ingredient> ingredients;
-    private String description;
+    private List<String> descriptions;
+    private boolean descriptionOpen;
+    private String origin;
+    private List<CategoryRecipe> categories;
+    private boolean isFavorite;
+    private boolean isForPlanning;
+    private int rating;
+    private int nbVoter;
 
-    public Recipe(int id, String name, int nbPerson, List<Ingredient> ingredients, String description){
+    public Recipe(int id, String name, String pixName, String recipeType, int nbPerson, List<Ingredient> ingredients, List<String> descriptions,
+                  String origin, List<CategoryRecipe> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter) {
         this.id = id;
         this.name = name;
+        this.pixName = pixName;
+        this.recipeType = recipeType;
         this.nbPerson = nbPerson;
         this.ingredients = ingredients;
-        this.description = description;
+        this.descriptions = descriptions;
+        this.descriptionOpen = false;
+        this.origin = origin;
+        this.categories = categories;
+        this.isFavorite = isFavorite;
+        this.isForPlanning = isForPlanning;
+        this.rating = rating;
+        this.nbVoter = nbVoter;
     }
 
     public int getId() {
@@ -56,6 +76,22 @@ public class Recipe {
         this.name = name;
     }
 
+    public String getPixName() {
+        return pixName;
+    }
+
+    public void setPixName(String pixName) {
+        this.pixName = pixName;
+    }
+
+    public String getRecipeType() {
+        return recipeType;
+    }
+
+    public void setRecipeType(String recipeType) {
+        this.recipeType = recipeType;
+    }
+
     public int getNbPerson() {
         return nbPerson;
     }
@@ -72,11 +108,67 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public String getDescription() {
-        return description;
+    public List<String> getDescriptions() {
+        return descriptions;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List<String> descriptions) {
+        this.descriptions = descriptions;
+    }
+
+    public boolean isDescriptionOpen() {
+        return descriptionOpen;
+    }
+
+    public void setDescriptionOpen(boolean descriptionOpen) {
+        this.descriptionOpen = descriptionOpen;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public List<CategoryRecipe> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryRecipe> categories) {
+        this.categories = categories;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public boolean isForPlanning() {
+        return isForPlanning;
+    }
+
+    public void setForPlanning(boolean forPlanning) {
+        isForPlanning = forPlanning;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getNbVoter() {
+        return nbVoter;
+    }
+
+    public void setNbVoter(int nbVoter) {
+        this.nbVoter = nbVoter;
     }
 }

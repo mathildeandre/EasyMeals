@@ -11,11 +11,13 @@ public class Ingredient {
     private int qty;
     private String unit;
     private String food;
+    private int rayonId;
 
-    public Ingredient(int qty, String unit, String food){
+    public Ingredient(int qty, String unit, String food, int rayonId) {
         this.qty = qty;
         this.unit = unit;
         this.food = food;
+        this.rayonId = rayonId;
     }
 
     public int getQty() {
@@ -40,5 +42,13 @@ public class Ingredient {
 
     public void setFood(String food) {
         this.food = food;
+    }
+
+    public int getRayonId() {
+        return rayonId;
+    }
+
+    public void setRayonId(int rayonId) {
+        this.rayonId = rayonId;
     }
 }
