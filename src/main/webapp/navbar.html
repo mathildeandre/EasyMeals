@@ -204,15 +204,20 @@
                 <li class="page-scroll" ng-class="{ activeInNavBarPlanning: isActiveInNavBar('planning')}">
                     <a href="#/planning">Creer Planning</a>
                 </li>
+                </li>
+                <li class="page-scroll" ng-class="{ activeInNavBarErrand: isActiveInNavBar('errand')}">
+                    <a href="#/errand">Mes Listes</a>
+                </li>
                 <li class="page-scroll" ng-class="{ activeInNavBarExpense: isActiveInNavBar('calculationExpense')}">
                     <a href="/#/calculationExpense">Calcul Dépenses</a>
                 </li>
 
                 <!--
-                <li class="page-scroll" ng-class="{ activeInNavBarAlcohol: isActiveInNavBar('calculationAlcohol')}"> <!--ng-class="{ active: isActiveInNavBar('#/calculationAlcohol')}"--
+                <li class="page-scroll" ng-class="{ activeInNavBarAlcohol: isActiveInNavBar('calculationAlcohol')}"> <!--ng-class="{ active: isActiveInNavBar('#/calculationAlcohol')}"->
                     <a href="/#/calculationAlcohol">Soirée Alcoolisée ?</a>
                 </li>
                 -->
+
                 <li class="page-scroll" >
                     <span class="checkbox checkbox-warning" >
                         <input type="checkbox"  ng-model="showDebug"  id="idShowDebug" ng-change="toggleDebug()">
@@ -222,7 +227,8 @@
                     </span>
                 </li>
 
-                <!--<li class="page-scroll">
+                <!--
+                <li class="page-scroll">
                     <a href="#/grilleImpot">Grille Impots</a>
                 </li>
                 <li class="page-scroll">

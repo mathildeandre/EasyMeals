@@ -26,28 +26,7 @@ h6 {
     font-weight: 700;
     letter-spacing: 1px;
 }
-.btn {
-    text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 400;
-    -webkit-transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
-}
 
-.btn-default {
-    border: 1px solid #28c3ab; //commentaire ici;
-    color: #28c3ab;
-    background-color: transparent;
-}
-
-.btn-default:hover,
-.btn-default:focus {
-    border: 1px solid #28c3ab;
-    outline: 0;
-    color: #000;
-    background-color: #28c3ab;
-}
 
 .main-panel {
     color:black;
@@ -83,6 +62,7 @@ h6 {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding: 0 4vw;
 }
 .bodyRecipe{
 
@@ -97,11 +77,10 @@ h6 {
     background-size: cover;
     -o-background-size: cover;
 
-    padding: 0 2vw;
+    padding: 0 4vw;
 }
 
 .bodyPlanning{
-
     width: 100%;
     height: 100%;
     /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
@@ -113,8 +92,23 @@ h6 {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding: 0 2vw;
 }
+.bodyErrand{
+    width: 100%;
+    height: 100%;
+    /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: url(../img/errand_shoppingTrolley.jpg) no-repeat ; /*expense_note OR  expense-planning_Red-Raspberry */
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    padding: 0 10vw;
 
+}
 
 .bodyExpense{
 
@@ -146,6 +140,7 @@ h6 {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding: 0 4vw;
 }
 
 
@@ -168,6 +163,18 @@ h6 {
 
 }
 
+/*
+<!--
+<article class="myArticle">
+    <div class="myArticleHeading" >
+        <div class="myArticleTitle">myNameTitle</div>
+    </div>
+    <div class="myArticleBody">
+        content body HERE...
+    </div>
+</article>
+-->
+*/
 .myArticle{
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
@@ -199,43 +206,307 @@ h6 {
 }
 
 
+
+/*******************************************************************************************************************************************************************************/
 /**********************************************************************  BUTTONS   ********************************************************************************************/
+/*****************************************************************************************************************************************************************************/
 
-.btn{/*from bootstrap line 3005 ne sera plus utiliser soon!*/
-    padding: 6px 8px;
-    border-radius: 3px;
+/* btn & myBtn -> useless
+  examples : */
+.btn {
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 }
-
 
 .myBtn{
     padding: 6px 12px;
     border-radius: 3px;
-/*  line-height:normal; /*putin de boostrap...*
-    vertical-align: middle;
-    /*
-    display: inline-block;
+    /*  line-height:normal; /*putin de boostrap...*
+        vertical-align: middle;
+        /*
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: normal;
+        line-height:normal;
+        text-align: center;
+        white-space: nowrap;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        */
+}
+
+/************************************** BUTTONS FULL not used yet ! **********************************************/
+
+.myBtnFull{
     padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    line-height:normal;
+    border-radius: 3px;
+    border:none;
+    text-transform: uppercase;
+    //font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+
+    text-transform : none;
+    background-color: lightgrey;
+    color: white;
+}
+
+.myBtnFull:hover,
+.myBtnFull:focus{
+    background-color: #ddd;
+}
+
+.myBtnFullRecipe{
+    background-color: #f5c88a;
+}
+.myBtnFullRecipe:hover,
+.myBtnFullRecipe:focus{
+    background-color: #f0ad4e;
+}
+
+/************************************** BUTTONS EMPTY **********************************************/
+.myBtnEmpty{
+    padding: 6px 12px;
+    border-radius: 3px;
+    border:1px solid lightgrey;
+    color:lightgrey;
+    //background-color: white;
+    background-color: transparent;
+    text-transform : none;
+}
+
+.myBtnEmpty:hover,
+.myBtnEmpty:focus{
+    color: #333;
+    background-color:lightgrey;
+    outline: 0;
+}
+
+.myBtnEmptyRecipe{
+    padding: 4px 6px 5px 6px;
+    border:1px solid #f0ad4e;
+    color:#f0ad4e;
+}
+.myBtnEmptyRecipe:hover,
+.myBtnFilterRecipe:focus{
+    color:darkslategrey;
+    background-color: #f5c88a;
+    outline: 0;
+
+}
+
+.myBtnEmptyPlanning{
+    padding: 4px 6px 5px 6px;
+    border:1px solid #5bc0de;
+    color:#5bc0de;
+}
+.myBtnEmptyPlanning:hover,
+.myBtnEmptyPlanning:focus{
+    color:darkslategrey;
+    background-color: #95d6e9;
+    outline: 0;
+
+}
+.myBtnRecipeType{
+
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-right:2vw;
+    width: 200px;
+    color:white;
+}
+.myBtnRecipeType:hover,
+.myBtnRecipeType:focus{
+    color:white;
+}
+.myBtnRecipeTypeFull{
+    background-color: #95d6e9;
+}
+
+.myBtnEmptyErrand{
+    padding: 4px 6px 5px 6px;
+    //border:1px solid #ff5050; //#ff3385;
+    //color: #ff5050; //#ff3385;
+    border:1px solid #ff80bf;
+    color: #ff80bf;
+}
+.myBtnEmptyErrand:hover,
+.myBtnEmptyErrand:focus{
+    color:darkslategrey;
+    //background-color: #ff9999; // #ff80b3 ;
+    background-color: #ffb3d9;
+    outline: 0;
+
+}
+.myBtnErrandFull{
+    background-color: #ffb3d9;
+}
+
+
+.btn-default {
+    border: 1px solid #28c3ab;
+    color: #28c3ab;
+    background-color: transparent;
+}
+
+.btn-default:hover,
+.btn-default:focus {
+    border: 1px solid #28c3ab;
+    outline: 0;
+    color: #000;
+    background-color: #28c3ab;
+}
+
+
+.txtDarkBtn{
+    color:darkslategrey;
+}
+
+/*******************************************************************************************************************************************************************************/
+/**********************************************************************  SELECT & INPUT    ********************************************************************************************/
+/*****************************************************************************************************************************************************************************/
+
+
+.fieldRecipe{
+    padding: 5px;
+    width:100px;
+    border-radius:3px;
     text-align: center;
-    white-space: nowrap;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    */
+
+    border:1px solid lightgrey;
+    color: #f0ad4e;
+}
+.fieldRecipe:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #f5c88a ;
+}
+
+
+.fieldPlanning{
+    padding: 5px;
+    width:100px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #5bc0de;
+}
+.fieldPlanning:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #95d6e9 ;
+}
+
+.fieldErrand{
+    padding: 5px;
+    width-max:250px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #ffb3d9; //#ff80bf;
+}
+.fieldErrand:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    //border: 1px solid #ffb3d9 ;
 }
 
 
 
+.inputRecipe{
+    padding: 5px;
+    width:130px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    color: darkslategrey;
+
+}
+.inputRecipe:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #f5c88a ;
+}
+.inputRecipeSearch{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+}
+.inputRecipeSearch:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #f5c88a ;
+}
+
+.inputRecipePlanning{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+}
+.inputRecipePlanning:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #95d6e9 ;
+}
+
+.inputErrand{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+    width: 80%;
+}
+.inputErrand:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid hotpink ;
+}
+
+/**********************************************************************  TRASH  ********************************************************************************************/
+
+
+.trashFilterRecipe{
+    color: #f0ad4e;
+    font-size:18px;
+}
+.trashFilterRecipe:hover{
+    color: #f5c88a;
+    transform: scale(1.5);
+}
+.trashFilterPlanning{
+    color: #5bc0de;
+    font-size:18px;
+}
+.trashFilterPlanning:hover{
+    color: #95d6e9;
+    transform: scale(1.5);
+}
+
+
 /**********************************************************************  SELECTION (mouse cursor select) ********************************************************************************************/
+
+.classicCursor{
+    cursor: auto;
+}
+
+
 ::selection { /* surlign / effet souris  */
     color: white;
     background: darkslategrey;
@@ -259,6 +530,50 @@ select::selection,option::selection { /* ne fonctionne pas  */
     font-weight: 700; /* epaisseur txt */
     letter-spacing: 1px;
     font-size: 20px;
+}
+
+
+
+
+.titleInlineBlock{
+    display:inline-block;
+}
+
+.rightInlineBlock{
+    display:inline-block;
+    position: relative;
+    float: right;
+    vertical-align: top;
+}
+
+
+/**********************************************************************  DRAG & DROP   ********************************************************************************************/
+
+.itemDrag{
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.itemDrag:hover{
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.itemDrag:active{
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+
+.grabbing{
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+
 }
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
@@ -284,6 +599,141 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
 
+/******************************************* FROM GRAYSCALE *****************************************/
+.navbar { /* permet de background black*/
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.navbar-brand:focus {
+    outline: 0;
+}
+
+
+/*********************************************** OK upper **************************/
+
+
+
+.navbar-custom a {
+    color: #fff;
+}
+
+.navbar-custom .nav li a {
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+.navbar-custom .nav li a:hover,
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li.active {
+    outline: 0;
+    background-color: rgba(255,255,255,.2);
+}
+
+/*********************************************** down osef **************************/
+.navbar-toggle {
+    padding: 4px 6px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.navbar-toggle:focus,
+.navbar-toggle:active {
+    outline: 0;
+}
+
+@media(min-width:767px) {
+    .navbar {
+        padding: 20px 0;
+        border-bottom: 0;
+        letter-spacing: 1px;
+        background: 0 0;
+        -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+        -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+        transition: background .5s ease-in-out,padding .5s ease-in-out;
+    }
+
+    .top-nav-collapse {
+        padding: 0;
+        background-color: #000;
+    }
+
+    .navbar-custom.top-nav-collapse {
+        border-bottom: 1px solid rgba(255,255,255,.3);
+    }
+}
+
+
+/******************************************* MY NAVBAR *****************************************/
+
+/* like .navbar */
+.myDropdown{ /* permet de background black*/
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+    width:1500px;
+}
+.myDropdownLight{
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+    width:239px;
+}
+.myDropdownItem{
+    border-bottom: 1px solid rgba(255,255,255,.3);
+}
+.typeRecipe{
+    width:147px;
+    border-right: 1px solid rgba(255,255,255,.3);
+}
+.myNavBarNav > li > a{ /* juste parce que avec bootstrap, ces sous parties etaient un peu trop grosses*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+}
+.dropdown-menu { /* car bootstrap a un padding et c moche! */
+    padding:0;
+}
+.activeInNavBar > a {
+    color:#f0ad4e;
+}
+.activeInNavBarPlanning > a {
+    color:cornflowerblue;
+}
+.activeInNavBarExpense > a {
+    color:#5cb85c;
+}
+.activeInNavBarAlcohol > a {
+    color:#d9534f;
+}
+.activeInNavBarErrand > a {
+    color:deeppink;
+
+}
+
+/*
+.dropdown-menu > li > a,
+.dropdown-menu a{
+    color:cornflowerblue;
+    height:40px;
+    vertical-align:middle;
+}
+.dropdown-menu > li{
+    /*vertical-align:middle; //ne marche pas.. meme en faisant sur le ul parent list-style: none;*
+}
+.dropdown-menu > .activeInNavBar > a {
+    color:black;
+    /* background-color: cornflowerblue;*
+}
+*/
 
 
 /***********************************************************************************************************************************************************************************************/
@@ -308,7 +758,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /***********************************************************************************************************************************************************************************************/
 
 .titleRecipe{
-    margin-left:2vw;
+    /*margin-left:2vw;*/
 }
 
 /**********************************************************************  FILTER RECIPE #LEFT FIXED   ********************************************************************************************/
@@ -319,8 +769,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 #filterRecipe{
     float: left;
-    margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
-    width:24vw;
+    width:24vw; /* stay at 64vw in any case*/
+    overflow: auto;
+    /*margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
 }
 
 
@@ -329,41 +780,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
     font-size:9px;
     margin-right:5px; /* a enlever si pas de directive..*/
 }
-.btn-defaultRecipe{
-    padding: 4px 6px 5px 6px;
-    border:1px solid #f0ad4e;
-    color:#f0ad4e;
-    background-color: white;
-    text-transform : none;
 
-}
-.btn-defaultRecipe:hover{
-    color:darkslategrey;
-    background-color: #f5c88a;
-}
-.inputRecipe{
-    padding: 5px;
-    width:130px;
-    border-radius:3px;
-    border:1px solid lightgrey;
-    color: darkslategrey;
 
-}
-.inputRecipe:focus {
-    outline: 0; /*2px solid #d9534f;*/
-    border: 2px solid #f5c88a ;
-}
-.inputRecipeSearch{
-    padding: 2px;
-    border-radius:3px;
-    border:1px solid lightgrey;
-    border:none;
-    color: darkslategrey;
-}
-.inputRecipeSearch:focus{
-    /*border: 1px solid #f5c88a ;*/
-
-}
 
 
 .btnPlusFilter{
@@ -371,32 +789,20 @@ select::selection,option::selection { /* ne fonctionne pas  */
     padding-bottom:5px;
 }
 
-.myMainPanelFilterRecipe{
-    padding:1vw;
-
-}
 /************************************************************************************************************/
 /*****************************  FILTER - MA SELECTION    ***************************************************/
 /**********************************************************************************************************/
 
-.trashFilter{
-    color: #f0ad4e;
-    display:inline-block;
-    position: relative;
-    float: right;
-    font-size:18px;
+.artRecipeMySelection{
+    margin-bottom:20px;
+    /*overflow: auto; //into #filterRecipe; */
 }
-.trashFilter:hover{
-    color: #f5c88a;
-    transform: scale(1.5);
-}
+
+
 .separatorSelection{
     border-bottom:1px solid lightgray;
 }
 
-.divSelection{
-    margin:2px 5px;
-}
 .divSubSelection{
     margin:3px 0;
 }
@@ -463,12 +869,21 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /**********************************************************************  LIST RECIPE #RIGHT   ************************************************************************************************/
 
 #listRecipe{
-    margin-left:28%;
-    width:64%;
+    margin-left:28vw;
+    width:64vw; /* stay at 64vw in any case*/
+    overflow: hidden;
+
 }
-.myMainPanelListRecipe{
+
+.rightHeadingSearch{
+    font-size:17px;
+    margin-right:5%;
+}
+
+.artBodyListRecipe{
     padding-top:2vw;
     padding-left:3vw
+    /* .myArticleBody = padding: 1vw; */
 }
 .divTopListRecipe{
     margin-bottom:2vw;
@@ -482,7 +897,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     display:inline-block;
     vertical-align: middle;
 }
-.sortListRecipe{
+.sortRecipeList{
     font-size:15px;
     margin-right:3vw;
     display:inline-block;
@@ -499,21 +914,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
     background-color: lightgrey;
     cursor:pointer;
 }
-
-.fieldRecipe{
-    padding: 5px;
-    width:100px;
-    border-radius:3px;
-    text-align: center;
-
-    border:1px solid lightgrey;
-    color: #f0ad4e;
-}
-.fieldRecipe:focus {
-    outline: 0; /*2px solid #d9534f;*/
-    border: 2px solid #f5c88a ;
-}
-
 
 /************************************************************************************************************/
 /*********************************  NO DESCRIPTION custom  *************************************************/
@@ -799,6 +1199,34 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************    RECIPE CREATION       **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+.artRecipeCreation{
+    width: 60vw;
+    margin-left: 20vw;
+}
+
+.artHeadingRecipeCreation{
+    //height: 58px;
+}
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/******************************************************************* --END--  RECIPE CREATION   ************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
 
 
 
@@ -825,7 +1253,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /**********************************************************************  PLANNING RECIPES  **************************************************************************************************/
 
 .divRecipesType{
-    margin: 2vw;
+    margin: 2vw 0;
 }
 .btnRecipeType{
     margin-right:2vw;
@@ -834,19 +1262,25 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .artMySelection{
     float: left;
-    margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
+    //margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
     width:20vw;
+    margin-bottom: 2vw;
 
 }
 .artFilters{
     margin-bottom:1vw;
-    margin-left:25vw;
-    width:70vw;
+    margin-left:23vw;
+    width:72vw;
 
+}
+
+.blockFilterPlanningRecipe{
+    display:inline-block;
+    margin-right:1vw;
 }
 .filterMyLists{
     display:inline-block;
-    width:30%;
+    //width:25%;
     vertical-align: top;
 
 }
@@ -863,10 +1297,18 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 .artRecipes{
-    margin-left:2vw;
+    /*margin-left:2vw;*/
+    margin-bottom:1vw;
+    margin-left:23vw;
+    width:72vw;
+
 
 }
 
+.sortPlanningRecipeList{
+    font-size:15px;
+    margin-right:1vw;
+}
 
 
 
@@ -883,7 +1325,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .itemToDragPlanning {
     padding: 6px;
     border-radius:3px;
-    margin:2px 0;
+    margin: 0.3vw;
 
     border:1px solid lightgrey;
     color: cornflowerblue;
@@ -918,7 +1360,36 @@ select::selection,option::selection { /* ne fonctionne pas  */
     text-align: center;
 }
 
+.rightTrashPlanning{
+    margin-right:3vw;
+}
 
+
+/**********************************************************************  PLANNING LIST SHOPPING  *********************************************************************************************/
+.artPlanningListShopping{
+    width: 60vw;
+    margin-top:3vw;
+    margin-left:15vw;
+}
+
+.divPlanningListShop{
+    margin-top:2vw;
+}
+.divPlanListShopLeft{
+    display:inline-block;
+    width : 48%;
+    margin-right : 3%;
+    //background : red;
+    vertical-align: top;
+}
+.divPlanListShopRight{
+    display:inline-block;
+    width : 45%;
+    overflow: hidden;
+    //background : green;
+    vertical-align: top;
+
+}
 
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
@@ -1022,6 +1493,18 @@ textarea.fieldExpense {
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
 
+.inputAlcoholSearch{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+}
+.inputAlcoholSearch:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #e89996 ;
+}
 
 .fieldAlcohol {
     /*
@@ -1085,6 +1568,76 @@ textarea.fieldExpense {
 
 
 
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         ERRAND          **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+.artErrandTop{
+    width: 60%;
+}
+.artBodyErrandTop{
+    font-size: 20px;
+}
+.artErrandList{
+    width: 35%;
+}
+.artErrandPlanning{
+    width: 90%;
+}
+
+
+.divCategory{
+    border:1px solid lightgrey;
+    border-radius:3px;
+    //padding:7px;
+
+    margin-bottom:10px;
+}
+.divCategoryDone {
+    color: lightgrey;
+}
+.divTitleCategory{
+    border-bottom:1px solid lightgrey;
+    border-radius: 3px;
+    padding:7px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+}
+.divBodyCategory{
+    padding:7px;
+}
+.divOneCategory{
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+.lineThrough{
+    text-decoration: line-through;
+}
+
+
+.tdMeal:hover{
+    cursor: pointer;
+    background-color: lightgrey;
+}
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --end--  ERRAND      **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
 
 
 
@@ -1093,8 +1646,54 @@ textarea.fieldExpense {
 /**************************************************************************************************************************************************************************************/
 
 .glyphiconBtn{
-    cursor:pointer;
+    cursor: pointer;
 }
+.modifyListNameOk{
+    color: #95d095;
+}
+.modifyListNameOk:hover{
+    color: #5cb85c;
+    transform: scale(1.5);
+}
+
+.pencilModifyListName{
+
+}
+.pencilModifyListName:hover{
+    transform: scale(1.5);
+}
+/*
+.pencilModifyListName[title]:hover:after{
+    position: absolute;
+    top: 100%;
+    left:-30px;
+    white-space: pre;
+    border-radius: 5px;
+    font-size:8px;
+    color:darkslategrey;
+    content: 'Modifier nom';
+}
+*/
+.listReset{
+
+}
+.listReset:hover{
+    transform: scale(1.5);
+}
+
+.ingrDoneOk{
+    color: lightgrey;
+}
+.ingrDone, .heartNoBtn{
+    color: #ff4d4d ;
+    color : indianred;
+}
+.ingrDone:hover{
+    color:red;
+    color : indianred;
+    transform: scale(1.5);
+}
+
 
 /** .titleAndSoNoDescription > **/
 .heart{

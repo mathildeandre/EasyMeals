@@ -2,7 +2,7 @@
  * Created by fabien on 14/03/2016.
  */
 
-myModule.controller('CustomizeShoppingCtrl', function($scope, $log, PlanningService, RecipeService, fourTypeMeal, units, steps) {
+myModule.controller('CustomizeShoppingCtrl', function($scope, $log, PlanningService, RecipeService, ErrandService, fourTypeMeal, units, steps) {
 
 
 
@@ -17,6 +17,13 @@ myModule.controller('CustomizeShoppingCtrl', function($scope, $log, PlanningServ
         {id:6, name:'Fruit/Legumes', ingredients:[]},
         {id:7, name:'Frais', ingredients:[]}
     ];
+
+    $scope.saveListShopping = function(){
+        ErrandService.setIngrCategories($scope.categories);
+        ErrandService.setPlanning($scope.fourWeekMeals);
+        alert("list sauvegarder");
+    }
+
 
     $scope.categoryChosen = 'Surgeles';
     $scope.modifQty = false;

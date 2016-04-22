@@ -71,6 +71,13 @@ myService.service('RecipeService', function() {
                 isForPlanning:true,
                 rating:2
             },
+
+
+
+
+
+
+
             {
                 id:3,
                 name:'Aubergines au Four',
@@ -88,6 +95,35 @@ myService.service('RecipeService', function() {
                 isForPlanning:true,
                 rating:4
             },
+
+/* from BDD
+            {"id":1,
+ "name":"Burgers Maison",
+ "pixName":"burgersMaison.jpeg",
+ "recipeType":"course",
+ "nbPerson":17,
+ "ingredients":[{"qty":400,"unit":"g","food":"steack hachÃ©","rayonId":2},
+ {"qty":5,"unit":"","food":"tomate","rayonId":4},
+ {"qty":1,"unit":"","food":"salade","rayonId":4},
+ {"qty":10,"unit":"","food":"pain Ã  burger","rayonId":5},
+ {"qty":100,"unit":"g","food":"fromage rapÃ©","rayonId":8},
+ {"qty":0,"unit":"","food":"crÃªpe Ã  burritos","rayonId":13}],
+ "descriptions":["cuire steack Ã  la poÃªle",
+ "preparer salade,couper tomates en rondelle et ouvrir les pains Ã  burger et mettre du fromage sur chaque partie",
+ "quand les steack sont pret, mettre pains au four 2min",
+ "tout est pret, mettre sauce au choix sur chaque partie du pain, steack, tomate salade",
+ "Votre burger est pret !"],
+ "descriptionOpen":false,
+ "origin":"americain",
+ "categories":[{"id":1,"name":"viande","noRank":1},{"id":2,"name":"four","noRank":5}],
+ "rating":0,"nbVoter":0,
+ "favorite":false,
+ "forPlanning":false}
+*/
+
+
+
+
             {
                 id:4,
                 name:'Crêpes',

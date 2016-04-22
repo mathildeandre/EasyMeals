@@ -8,8 +8,10 @@ var myModule = angular.module('controllers');
 myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, fourTypeMeal, units, steps) {
 
 
+    $scope.sayBoom = function(category){
+        alert("sayyy boom u fucking ash.."+category)
+    }
     $scope.$emit('intoPlanning'); //will tell to parents (global-controller.js) to modify pix
-
 
     /**
      * RECIPES LIST ...
@@ -30,6 +32,9 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, fourTy
         $scope.recipeType = recipeType;
         $scope.recipes = getRecipes(recipeType);
         $scope.$broadcast('updateFilter');
+    }
+    $scope.isRecipeTypeSelected = function(recipeType){
+        return $scope.recipeType == recipeType;
     }
 
     $scope.displayRecipeType = function(){

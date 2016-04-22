@@ -1,175 +1,131 @@
 <div>
 
-<!-- DEBUG -->
-<div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-    ELEMENTS LUNCH :
-    <div>{{fourWeekMeals[1]}}</div>
-    <br>
-    WEEKMEALS LUNCH -> LUNDI :
-    <div >{{fourWeekMeals[1].weekMeals[0]}}</div>
-</div>
+    <!-- DEBUG -->
+    <!--<div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+        ELEMENTS LUNCH :
+        <div>{{fourWeekMeals[1]}}</div>
+        <br>
+        WEEKMEALS LUNCH -> LUNDI :
+        <div >{{fourWeekMeals[1].weekMeals[0]}}</div>
+    </div>-->
+    <!-- DEBUG
+    on affiche les nom de recettes des repas du midi
+    -->
+    <div ng-show="showDebug" ng-repeat="meal in fourWeekMeals[1].weekMeals" style="font-size: 18px; color:darkorange">
+        Recipes of {{meal.id}} :
+        <span ng-repeat="recipe in meal.recipes">
+            {{recipe.name}} -
+        </span>
+    </div>
 
 
-<div class="row" style="color:darkslategrey">
-    <div class="col-md-12">
 
-        <div  class="panel panel-default" >
-            <div class="panel-heading">
-                <h3 class="panel-title" style="color:darkslategrey;">PLANNING</h3>
+    <article class="myArticle">
+        <div class="myArticleHeading" >
+            <div class="myArticleTitle">PLANNING</div>
+        </div>
+
+        <div class="myArticleBody">
+            <table class="table  table-hover table-bordered table">
+                <th class="info myTh" ></th>
+                <th class="info myTh">Lundi</th>
+                <th class="info myTh">Mardi</th>
+                <th class="info myTh">Mercredi</th>
+                <th class="info myTh">Jeudi</th>
+                <th class="info myTh">Vendredi</th>
+                <th class="info myTh">Samedi</th>
+                <th class="info myTh">Dimanche</th>
+                <!--
+                     //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
+                     //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
+                     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
+                     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+                 -->
+                <tr ng-repeat="aWeekMeal in fourWeekMeals" ng-show="aWeekMeal.show" >
+
+                    <th class="info myTh" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(aWeekMeal.typeMeal)}}</th>
+
+                    <td ng-repeat="meal in aWeekMeal.weekMeals"  style="width:13%;" data-drop="true" ng-model='meal.recipes'  jqyoui-droppable="{multiple:true}"> <!--, onOver:'onOverTab(\'hehehe\')' -->
+
+                                <span ng-show="showNbPers" class="nbPers"  data-drop="true" ng-model='meal.nbPers'
+                                      jqyoui-droppable="{multiple:true}">
+                                    <input class="inputNbPers" type="number" min="1"  ng-model="meal.nbPers" > pers.
+                                </span>
+                        <br ng-show="showNbPers">
+                        <!--ng-repeat="recipe in meal.recipes  | orderByRecipeType" -->
+                        <!--track by $index permet d'avoir 2x le mm element dans un drop sans bug -->
+                        <div ng-repeat="recipe in meal.recipes  track by $index " class="itemToDragPlanning itemDrag"   style="display: inline-block;"
+                             data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="meal.recipes" ng-show="recipe.name"
+                             jqyoui-draggable="{index: {{$index}},placeholder:false , deepCopy:'true'}"  >
+                            {{recipe.name}}
+
+                            <br>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+            <!-- DEBUG -->
+            <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+                <div ng-repeat="recipe in fourWeekMeals[1].weekMeals[0].recipes">
+                    {{recipe.name}}
+                </div>
             </div>
 
 
 
-            <div class="panel-body main-panel">
-
-                <table class="table  table-hover table-bordered table">
-                    <th class="info myTh" ></th>
-                    <th class="info myTh">Lundi</th>
-                    <th class="info myTh">Mardi</th>
-                    <th class="info myTh">Mercredi</th>
-                    <th class="info myTh">Jeudi</th>
-                    <th class="info myTh">Vendredi</th>
-                    <th class="info myTh">Samedi</th>
-                    <th class="info myTh">Dimanche</th>
-                    <!--
-                         //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
-                         //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
-                         //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
-                         //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
-                     -->
-                    <tr ng-repeat="aWeekMeal in fourWeekMeals" ng-show="aWeekMeal.show" >
-
-                        <th class="info myTh" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(aWeekMeal.typeMeal)}}</th>
-
-                        <td ng-repeat="meal in aWeekMeal.weekMeals"  style="width:13%" data-drop="true" ng-model='meal.recipes'  jqyoui-droppable="{multiple:true}"> <!--, onOver:'onOverTab(\'hehehe\')' -->
-
-                            <span ng-show="showNbPers" class="nbPers"  data-drop="true" ng-model='meal.nbPers'
-                                 jqyoui-droppable="{multiple:true}">
-                                <input class="inputNbPers" type="number" min="1"  ng-model="meal.nbPers" > pers.
+            <div>
+                <div style="display:inline-block">
+                    <div>
+                        <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
+                        <span ng-repeat="aWeekMeal in fourWeekMeals" class="checkbox checkbox-info checkbox-inline">
+                            <input type="checkbox"  ng-model="aWeekMeal.show" id="{{aWeekMeal.id}}">
+                            <label for="{{aWeekMeal.id}}" ><b>{{displayMealType(aWeekMeal.typeMeal)}}</b> &nbsp&nbsp</label>
+                        </span>
+                    </div>
+                    <div>
+                        Nombre global de personnes : &nbsp&nbsp
+                        <input class="inputGlobalNbPers" type="number" ng-model="globalNbPers" ng-change="spreadGlobalNbPers(globalNbPers)" min="1" style="width:40px">
+                    </div>
+                    <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
+                        <div>Apres avoir choisi le nombre de personne global, il est possible de le modifier pour un repas en particulier : cocher "afficher nb pers." puis modifier directement le nb dans le repas ou y faire glisser le nb ci-dessous  </div>
+                    </div>
+                    <div>
+                        <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
+                        <span class="checkbox checkbox-info checkbox-inline" >
+                            <input type="checkbox"  ng-model="showNbPers" id="idShowPers">
+                            <label for="idShowPers" >Afficher nb pers. &nbsp</label>
+                        </span>
+                        <!-- Partie avec case nbPers to drag into planning --
+                        <span ng-show="showNbPers">
+                            <span ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">- Modifier nb pers puis faire <b>glisser</b> sur un item 'pers' d'une case du planning :</span>
+                            <span ng-show="!showHelp">- <b>Glisser</b> dans une case Nb pers. :</span>
+                            <span class="itemToDragPlanning nbPers" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="nbPers"
+                                  jqyoui-draggable="{placeholder:'keep', deepCopy:'true'}">
+                                <input class="inputNbPers" type="number" min="1" ng-model="nbPers"><span class="glyphicon glyphicon-tag"></span>
                             </span>
-                            <br ng-show="showNbPers">
-                            <!--ng-repeat="recipe in meal.recipes  | orderByRecipeType" -->
-                            <!--track by $index permet d'avoir 2x le mm element dans un drop sans bug -->
-                            <div ng-repeat="recipe in meal.recipes track by $index " class="itemToDragPlanning" style="display: inline-block;"
-                                 data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="meal.recipes" ng-show="recipe.name"
-                                 jqyoui-draggable="{index: {{$index}},placeholder:false}"  >
-                                {{recipe.name}}
-                                <br>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                        </span>
+                        -->
+                    </div>
+                </div>
 
+                <div class="rightInlineBlock rightTrashPlanning">
+                    <div id="trashPlanning" class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
+                         data-drop="{{dataDropTrash}}" ng-model='trash'  jqyoui-droppable="{multiple:true, onOver:'onOverTrash()', onOut:'onOutTrash()', onDrop:'onOutTrash()'}"  > <!-- , onOver:'onOverTrash()', onOut:'onOutTrash()' }" -->
+                    </div>
+                </div>
 
                 <!-- DEBUG -->
                 <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-                    <div ng-repeat="recipe in fourWeekMeals[1].weekMeals[0].recipes">
-                        {{recipe.name}}
-                    </div>
+                            <span class="checkbox checkbox-success checkbox-inline" >
+                                     <input type="checkbox"  ng-model="dataDropTrash" id="dataDropTrashId">
+                                     <label for="dataDropTrashId" >Trash Droppable ?</label>
+                            </span> droppable ? : {{dataDropTrash}}
                 </div>
-
-
-                <div class="row" style="color:darkslategrey" >
-
-                    <div class="col-md-10">
-                        <div>
-
-
-                            <span>
-                                Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp
-                            </span>
-
-                            <span class="checkbox checkbox-info checkbox-inline" ng-repeat="aWeekMeal in fourWeekMeals">
-                                <input type="checkbox"  ng-model="aWeekMeal.show" id="{{aWeekMeal.id}}">
-                                <label for="{{aWeekMeal.id}}" >
-                                    <b>{{displayMealType(aWeekMeal.typeMeal)}}</b> &nbsp&nbsp
-                                </label>
-                            </span>
-
-
-                        </div>
-
-
-
-                        <div>
-                            Nombre global de personnes : &nbsp&nbsp
-                            <input class="inputGlobalNbPers" type="number" ng-model="globalNbPers" ng-change="spreadGlobalNbPers(globalNbPers)" min="1" style="width:40px">
-                        </div>
-
-
-                        <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
-                            <div>Apres avoir choisi le nombre de personne global, il est possible de le modifier pour un repas en particulier : cocher "afficher nb pers." puis modifier directement le nb dans le repas ou y faire glisser le nb ci-dessous  </div>
-                        </div>
-                        <div>
-                            <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
-                             <span class="checkbox checkbox-info checkbox-inline" >
-                                 <input type="checkbox"  ng-model="showNbPers" id="idShowPers">
-                                 <label for="idShowPers" >
-                                     Afficher nb pers. &nbsp
-                                 </label>
-                             </span>
-
-
-                                    <span ng-show="showNbPers">
-                                        <!--
-                                        - &nbsp
-                                        Modifier nb pers : <input style="width:40px" type="number" min="1" ng-model="nbPers">
-                                        ->
-                                        Faire glisser sur un item 'pers' d'une case du planning :
-                                        <span style="border:1px solid black; border-radius:5px; padding:7px;"
-                                              data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="nbPers"
-                                              jqyoui-draggable="{placeholder:'keep'}">
-                                            {{nbPers}}
-                                        </span>
-                                        --->
-
-                                         <span ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
-                                             - Modifier nb pers puis faire <b>glisser</b> sur un item 'pers' d'une case du planning :
-                                         </span>
-                                         <span ng-show="!showHelp">
-                                             - <b>Glisser</b> dans une case Nb pers. :
-                                         </span>
-
-
-
-                                        <span class="itemToDragPlanning nbPers"
-                                              data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="nbPers"
-                                              jqyoui-draggable="{placeholder:'keep', deepCopy:'true'}">
-                                            <input class="inputNbPers" type="number" min="1" ng-model="nbPers">
-                                            <!--{{nbPers}}-->
-                                            <span class="glyphicon glyphicon-tag" ></span>
-                                        </span>
-                                    </span>
-                        </div>
-
-
-                    </div>
-
-
-
-
-                    <div class="col-md-2">
-                        <div id="trashPlanning" class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
-                             data-drop="{{dataDropTrash}}" ng-model='trash'  jqyoui-droppable="{multiple:true, onOver:'onOverTrash()', onOut:'onOutTrash()', onDrop:'onOutTrash()'}"  > <!-- , onOver:'onOverTrash()', onOut:'onOutTrash()' }" -->
-                        </div>
-                    </div>
-
-                    <!-- DEBUG -->
-                    <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-                        <div class="col-md-3">
-                        <span class="checkbox checkbox-success checkbox-inline" >
-                                 <input type="checkbox"  ng-model="dataDropTrash" id="dataDropTrashId">
-                                 <label for="dataDropTrashId" >
-                                     Trash Droppable ?
-                                 </label>
-                        </span>
-                            droppable ? : {{dataDropTrash}}
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
-</div>
+    </article>
+
+
 </div>
