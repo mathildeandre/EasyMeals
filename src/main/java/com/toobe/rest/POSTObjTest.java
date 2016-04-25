@@ -15,13 +15,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/course")
-public class POSTCourse {
+@Path("/testObj")
+public class POSTObjTest {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
-    public Response insertFood(TestObj r){
-        System.out.println(" course obj json "+r);
+    public Response insertObjTest(TestObj r){
+        System.out.println(" course obj json "+r.getName());
         //Boolean rep = new ManagerPost().insertFood();
         return Response.ok("OK ca a bien marche le post ").build();
     }

@@ -33,12 +33,28 @@ fonctionne !!
 
 fin  fonctionne !!
 */
-/*
-    restFactory.testPost("-msg de angular- HELLO COCO!").then(
-        function(data){
-            $log.debug(data);
-        }
-    )
+
+    $scope.buttonRestTxtPost = function(){
+
+        restFactory.txtPost("-msg de angular- TEST post txt").then(
+            function(data){
+                $log.debug(data);
+            }
+        )
+    }
+    $scope.buttonRestObjTestPost = function(){
+
+        restFactory.insertObjTest().then(
+            function(data){
+                $log.debug(data);
+            }
+        )
+    }
+
+
+
+
+    /*
     */
 /*
     var uneRecette = {"id":1,
