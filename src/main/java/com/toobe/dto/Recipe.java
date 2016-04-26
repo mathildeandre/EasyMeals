@@ -36,14 +36,17 @@ public class Recipe implements Serializable{
     private List<String> descriptions;
     private boolean descriptionOpen;
     private String origin;
-    private List<CategoryRecipe> categories;
+    private List<RecipeCategory> categories;
     private boolean isFavorite;
     private boolean isForPlanning;
     private int rating;
     private int nbVoter;
 
+    public Recipe(){
+
+    }
     public Recipe(int id, String name, String pixName, String recipeType, int nbPerson, List<Ingredient> ingredients, List<String> descriptions,
-                  String origin, List<CategoryRecipe> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter) {
+                  String origin, List<RecipeCategory> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter) {
         this.id = id;
         this.name = name;
         this.pixName = pixName;
@@ -132,11 +135,11 @@ public class Recipe implements Serializable{
         this.origin = origin;
     }
 
-    public List<CategoryRecipe> getCategories() {
+    public List<RecipeCategory> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryRecipe> categories) {
+    public void setCategories(List<RecipeCategory> categories) {
         this.categories = categories;
     }
 

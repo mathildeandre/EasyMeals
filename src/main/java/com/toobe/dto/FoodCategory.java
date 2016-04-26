@@ -9,13 +9,13 @@ package com.toobe.dto;
     {"id":1,"name":"viande","noRank":5}
 */
 
-public class OriginRecipe {
+public class FoodCategory {
 
     private int id;
     private String name;
     private int noRank;
 
-    public OriginRecipe(int id, String name, int noRank) {
+    public FoodCategory(int id, String name, int noRank) {
         this.id = id;
         this.name = name;
         this.noRank = noRank;

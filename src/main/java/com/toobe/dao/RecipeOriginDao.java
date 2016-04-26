@@ -1,6 +1,6 @@
 package com.toobe.dao;
 
-import com.toobe.dto.OriginRecipe;
+import com.toobe.dto.RecipeOrigin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +12,13 @@ import java.util.List;
 /**
  * Created by mathilde on 27/03/2016.
  */
-public class OriginRecipeDao {
+public class RecipeOriginDao {
 
     /**
      * On trouve ici toutes les foods
      */
-    public List<OriginRecipe> getOriginsRecipe(Connection conn){
-        List<OriginRecipe> originRecipeList = new ArrayList<OriginRecipe>();
+    public List<RecipeOrigin> getRecipeOrigins(Connection conn){
+        List<RecipeOrigin> recipeOriginList = new ArrayList<RecipeOrigin>();
         PreparedStatement stm;
         try {
             stm = conn.prepareStatement("SELECT * FROM recipe_origin");
@@ -27,19 +27,19 @@ public class OriginRecipeDao {
             int id;
             String name;
             int noRank;
-            OriginRecipe originRecipe;
+            RecipeOrigin recipeOrigin;
             while(res.next()){
                 id = res.getInt("id");
                 name = res.getString("name");
                 noRank = res.getInt("noRank");
-                originRecipe = new OriginRecipe(id, name, noRank);
-                originRecipeList.add(originRecipe);
+                recipeOrigin = new RecipeOrigin(id, name, noRank);
+                recipeOriginList.add(recipeOrigin);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return originRecipeList;
+        return recipeOriginList;
     }
 
 

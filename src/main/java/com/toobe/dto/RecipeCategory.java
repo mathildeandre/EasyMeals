@@ -11,13 +11,13 @@ import java.util.List;
     {"id":1,"name":"viande","noRank":5}
 */
 
-public class CategoryRecipe {
+public class RecipeCategory {
 
     private int id;
     private String name;
     private int noRank;
 
-    public CategoryRecipe(int id, String name, int noRank) {
+    public RecipeCategory(int id, String name, int noRank) {
         this.id = id;
         this.name = name;
         this.noRank = noRank;

@@ -10,7 +10,7 @@ CREATE TABLE ListShopping_Category (id int(10) NOT NULL AUTO_INCREMENT, idListSh
 CREATE TABLE ListShopPlanning_User (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255), `date` int(11), idListShop int(10) NOT NULL, idPlanning int(10) NOT NULL, idUser int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Planning (id int(10) NOT NULL AUTO_INCREMENT, lastOpen tinyint DEFAULT false NOT NULL, name varchar(255) NOT NULL, idUser int(10) NOT NULL, PRIMARY KEY (id), INDEX (idUser));
 CREATE TABLE Planning_CaseMeal (id int(10) NOT NULL AUTO_INCREMENT, noDay int(10) NOT NULL, nbPers int(10) NOT NULL, idPlanningWeekMeal int(10) NOT NULL, PRIMARY KEY (id));
-CREATE TABLE Planning_WeekMeal (id int(10) NOT NULL AUTO_INCREMENT, weekMealName varchar(255) NOT NULL, idPlanning int(10) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE Planning_WeekMeal (id int(10) NOT NULL AUTO_INCREMENT, weekMealName varchar(255) NOT NULL, showWeekMeal tinyint NOT NULL, idPlanning int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Recipe (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idType int(10) NOT NULL, isPublic tinyint NOT NULL, idUser int(10) NOT NULL, rating int(10), nbVoter int(10) DEFAULT 0 NOT NULL, nbPerson int(10) DEFAULT 1 NOT NULL, pixName varchar(255), idOrigin int(10) NOT NULL, isValidated tinyint DEFAULT 0 NOT NULL, PRIMARY KEY (id), INDEX (idType), INDEX (isPublic), INDEX (idUser));
 CREATE TABLE Recipe_Category (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, noRank int(10), PRIMARY KEY (id));
 CREATE TABLE Recipe_Description (idRecipe int(10) NOT NULL, noDescription int(10) NOT NULL, description varchar(255), PRIMARY KEY (idRecipe, noDescription));

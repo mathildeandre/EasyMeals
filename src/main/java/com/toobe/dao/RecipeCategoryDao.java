@@ -1,6 +1,6 @@
 package com.toobe.dao;
 
-import com.toobe.dto.CategoryRecipe;
+import com.toobe.dto.RecipeCategory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +12,13 @@ import java.util.List;
 /**
  * Created by mathilde on 27/03/2016.
  */
-public class CategoryRecipeDao {
+public class RecipeCategoryDao {
 
     /**
      * On trouve ici toutes les foods
      */
-    public List<CategoryRecipe> getCategoriesRecipe(Connection conn){
-        List<CategoryRecipe> categoryRecipeList = new ArrayList<CategoryRecipe>();
+    public List<RecipeCategory> getRecipeCategories(Connection conn){
+        List<RecipeCategory> recipeCategoryList = new ArrayList<RecipeCategory>();
         PreparedStatement stm;
         try {
             stm = conn.prepareStatement("SELECT * FROM RECIPE_CATEGORY");
@@ -27,19 +27,19 @@ public class CategoryRecipeDao {
             int idCategory;
             String nameCategory;
             int noRankCategory;
-            CategoryRecipe categoryRecipe;
+            RecipeCategory recipeCategory;
             while(res.next()){
                 idCategory = res.getInt("id");
                 nameCategory = res.getString("name");
                 noRankCategory = res.getInt("noRank");
-                categoryRecipe = new CategoryRecipe(idCategory, nameCategory, noRankCategory);
-                categoryRecipeList.add(categoryRecipe);
+                recipeCategory = new RecipeCategory(idCategory, nameCategory, noRankCategory);
+                recipeCategoryList.add(recipeCategory);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return categoryRecipeList;
+        return recipeCategoryList;
     }
 
 

@@ -1,5 +1,6 @@
 package com.toobe.dao;
 
+import com.toobe.dto.FoodCategory;
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
 
@@ -37,6 +38,35 @@ public class FoodDao {
         return foodList;
     }
 
+
+
+
+    /**
+     * On trouve ici toutes les foodCategories
+     */
+    public List<FoodCategory> getFoodCategories(Connection conn){
+        List<FoodCategory> foodCategoryList = new ArrayList<FoodCategory>();
+        PreparedStatement stm;
+        FoodCategory foodCategory;
+        try {
+            stm = conn.prepareStatement("SELECT * FROM FOOD_CATEGORY");
+            ResultSet res = stm.executeQuery();
+
+            int id, noRank;
+            String name;
+            while(res.next()){
+                id = res.getInt("id");
+                noRank = res.getInt("noRank");
+                name = res.getString("name");
+                foodCategory = new FoodCategory(id, name, noRank);
+                foodCategoryList.add(foodCategory);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return foodCategoryList;
+    }
 
 
 

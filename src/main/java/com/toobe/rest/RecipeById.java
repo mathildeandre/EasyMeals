@@ -15,15 +15,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/recipes/{recipeType}/{idUser}")
-public class Recipes {
+@Path("/recipe/{idRecipe}")
+public class RecipeById {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipes(@PathParam("recipeType") String recipeType, @PathParam("idUser") int idUser){
-        //localhost:8080/rest/recipes/course/2
-        List<Recipe> list = new ManagerGet().getRecipes(recipeType, idUser);
-        return Response.ok(list).build();
+    public Response getRecipeById(@PathParam("idRecipe") int idRecipe){
+        //localhost:8080/rest/recipe/2
+        Recipe recipe = new ManagerGet().getRecipeById(idRecipe);
+        return Response.ok(recipe).build();
     }
 
 
