@@ -12,12 +12,17 @@ import java.util.List;
 public class ManagerGet {
 
     private RecipeDao recipeDao;
+    private ListShoppingDao listShoppingDao;
     private PlanningDao planningDao;
     private RecipeCategoryDao recipeCategoryDao;
     private RecipeOriginDao recipeOriginDao;
     private FoodDao foodDao;
     private Connection conn;
 
+
+    /*********************************************/
+    /************* RECIPE ***********************/
+    /*******************************************/
     public List<Recipe> getRecipes(String recipeType, int idUser){
         startConnection();
         recipeDao = new RecipeDao();
@@ -29,6 +34,27 @@ public class ManagerGet {
         return recipeDao.getRecipeById(conn, idRecipe);
     }
 
+
+    public List<String> getRecipeTypes(){
+        startConnection();
+        recipeDao = new RecipeDao();
+        return recipeDao.getRecipeTypes(conn);
+    }
+    public List<RecipeCategory> getRecipeCategories(){
+        startConnection();
+        recipeCategoryDao = new RecipeCategoryDao();
+        return recipeCategoryDao.getRecipeCategories(conn);
+    }
+    public List<RecipeOrigin> getRecipeOrigins(){
+        startConnection();
+        recipeOriginDao = new RecipeOriginDao();
+        return recipeOriginDao.getRecipeOrigins(conn);
+    }
+
+
+    /***********************************************/
+    /************* PLANNING ***********************/
+    /*********************************************/
     public List<Planning> getPlanningsOfUser(int idUser){
         startConnection();
         planningDao = new PlanningDao();
@@ -40,36 +66,37 @@ public class ManagerGet {
         return planningDao.getPlanningById(conn, idPlanning);
     }
 
-
-
-    public List<String> getRecipeTypes(){
+    /****************************************************/
+    /************* LIST SHOPPING ***********************/
+    /**************************************************/
+    public ListShopping getListShoppingById(int idListShopping){
         startConnection();
-        recipeDao = new RecipeDao();
-        return recipeDao.getRecipeTypes(conn);
+        listShoppingDao = new ListShoppingDao();
+        return listShoppingDao.getListShoppingById(conn, idListShopping);
     }
 
+    public List<ListShoppingPlanning> getListsShoppingPlanning(int idUser){
+        startConnection();
+        listShoppingDao = new ListShoppingDao();
+        return listShoppingDao.getListsShoppingPlanning(conn, idUser);
+    }
+
+
+
+
+
+    /*********************************************/
+    /************** FOOD ************************/
+    /*******************************************/
     public List<String> getFoods(){
         startConnection();
         foodDao = new FoodDao();
         return foodDao.getFoods(conn);
     }
-
-
-
     public List<FoodCategory> getFoodCategories(){
         startConnection();
         foodDao = new FoodDao();
         return foodDao.getFoodCategories(conn);
-    }
-    public List<RecipeCategory> getRecipeCategories(){
-        startConnection();
-        recipeCategoryDao = new RecipeCategoryDao();
-        return recipeCategoryDao.getRecipeCategories(conn);
-    }
-    public List<RecipeOrigin> getRecipeOrigins(){
-        startConnection();
-        recipeOriginDao = new RecipeOriginDao();
-        return recipeOriginDao.getRecipeOrigins(conn);
     }
 
 

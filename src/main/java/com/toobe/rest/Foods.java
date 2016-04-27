@@ -24,3 +24,4 @@ public class Foods {
         return Response.ok(list).build();
     }
 }
+
