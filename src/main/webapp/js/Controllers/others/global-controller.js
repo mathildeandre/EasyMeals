@@ -5,7 +5,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location, GlobalService) {
+myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location, GlobalService, restGETFactory) {
 
     /**
      * Pour avoir une variable "global" utilisable entre les differentes section/view
@@ -13,6 +13,7 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
      * uniquement ici dans le controller vont etre remise a zero a chaque fois que l'on recherche la view...
      *
      */
+    restGETFactory.loadAllData();
 
     $scope.classBody = "bodyEasyMeals";
 

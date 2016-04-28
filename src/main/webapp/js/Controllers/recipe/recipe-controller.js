@@ -5,7 +5,7 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService, restFactory, $http, $q) {
+myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService, restGETFactory, restFactory, $http, $q) {
 
 /*
 fonctionne !!
@@ -34,6 +34,7 @@ fonctionne !!
 fin  fonctionne !!
 */
 
+    /*
     $scope.buttonRestTxtPost = function(){
 
         restFactory.txtPost("-msg de angular- TEST post txt").then(
@@ -51,7 +52,7 @@ fin  fonctionne !!
         )
     }
 
-
+*/
 
 
     /*
@@ -120,7 +121,7 @@ fin  fonctionne !!
     var getRecipes = function(recipeType){
         switch(recipeType){
             case 'starter' : return RecipeService.getStarters();
-            case 'course' :  return RecipeService.getCourses();
+            case 'course' :  return restGETFactory.getCourses();
             case 'dessert' : return RecipeService.getDesserts();
             case 'breakfast' : return RecipeService.getBreakfasts();
             case 'cocktail' : return RecipeService.getCocktails();
