@@ -1,4 +1,4 @@
-package com.toobe.rest;
+package com.toobe.restGET;
 
 /**
  * Created by mathilde on 13/03/2016.
@@ -15,15 +15,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/recipe/{idRecipe}")
-public class RecipeById {
+@Path("/recipes/{recipeType}/{idUser}")
+public class Recipes {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipeById(@PathParam("idRecipe") int idRecipe){
-        //localhost:8080/rest/recipe/2
-        Recipe recipe = new ManagerGet().getRecipeById(idRecipe);
-        return Response.ok(recipe).build();
+    public Response getRecipes(@PathParam("recipeType") String recipeType, @PathParam("idUser") int idUser){
+        //localhost:8080/rest/recipes/course/2
+        List<Recipe> list = new ManagerGet().getRecipes(recipeType, idUser);
+        return Response.ok(list).build();
     }
 
 

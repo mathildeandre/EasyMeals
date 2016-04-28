@@ -1,4 +1,4 @@
-package com.toobe.rest;
+package com.toobe.restGET;
 
 /**
  * Created by mathilde on 13/03/2016.

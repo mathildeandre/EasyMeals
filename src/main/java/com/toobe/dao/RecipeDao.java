@@ -3,6 +3,7 @@ package com.toobe.dao;
 import com.toobe.dto.RecipeCategory;
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
+import com.toobe.dto.RecipeDescription;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,7 +56,7 @@ public class RecipeDao {
                 /* INGREDIENTS */
                 List<Ingredient> ingredientList = getIngredientList(conn, idRecipe); //new ArrayList<Ingredient>(); //
                 /* DESCRIPTIONS */
-                List<String> descriptionList = getDescriptionList(conn, idRecipe); //new ArrayList<String>();//
+                List<RecipeDescription> descriptionList = getDescriptionList(conn, idRecipe); //new ArrayList<String>();//
                 /* CATEGORIES */
                 List<RecipeCategory> categoryList = getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
 
@@ -88,6 +89,60 @@ public class RecipeDao {
 
 
 
+    /**
+     * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
+     */
+    public List<Recipe> getRecipesPublicNotValidated(Connection conn, String recipeType){
+        List<Recipe> listRecipe = new ArrayList<Recipe>();
+        Recipe recipe;
+        PreparedStatement stm;
+        try {
+            /* on recup l'id de Recipe_Type correspondant a notre recipeType (ex : course) */
+            stm = conn.prepareStatement("SELECT * FROM RECIPE_TYPE WHERE name = '"+recipeType+"'");
+            ResultSet res = stm.executeQuery();
+            int idType = 1;
+            if(res.next()){
+                idType = res.getInt("id");
+            }
+            /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (mnt idType)*/
+            stm = conn.prepareStatement("SELECT recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, rating, nbVoter " +
+                                        "FROM RECIPE JOIN Recipe_Origin ON recipe.idOrigin = recipe_origin.id " +
+                                        "WHERE isPublic = 1 AND isValidated = 0  AND idType = "+idType );
+            ResultSet resRecipe = stm.executeQuery();
+
+            int idRecipe, nbPerson, rating, nbVoter;
+            String name, pixName, origin;
+            boolean isFavorite, isForPlanning;
+
+            while(resRecipe.next()){
+                idRecipe = resRecipe.getInt("idRecipe"); ;
+                /* INGREDIENTS */
+                List<Ingredient> ingredientList = getIngredientList(conn, idRecipe); //new ArrayList<Ingredient>(); //
+                /* DESCRIPTIONS */
+                List<RecipeDescription> descriptionList = getDescriptionList(conn, idRecipe); //new ArrayList<String>();//
+                /* CATEGORIES */
+                List<RecipeCategory> categoryList = getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
+
+                /* recipeType en arg de la fct*/;
+                /* ingredientList, descriptionList & categoryList construitent au dessus */
+                name = resRecipe.getString("recipeName");
+                pixName = resRecipe.getString("pixName");
+                nbPerson = resRecipe.getInt("nbPerson");
+                origin = resRecipe.getString("recipeOriginName");
+                isFavorite = false;
+                isForPlanning = false;
+                rating = resRecipe.getInt("rating");
+                nbVoter = resRecipe.getInt("nbVoter");
+
+                recipe = new Recipe(idRecipe, name, pixName, recipeType, nbPerson, ingredientList, descriptionList, origin, categoryList, isFavorite, isForPlanning, rating, nbVoter);
+                listRecipe.add(recipe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listRecipe;
+    }
+
 
 
 
@@ -110,8 +165,13 @@ public class RecipeDao {
                 idType = res.getInt("id");
             }
             /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (mnt idType)*/
-            stm = conn.prepareStatement("SELECT recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, rating, nbVoter  FROM RECIPE JOIN Recipe_Origin ON recipe.idOrigin = recipe_origin.id WHERE isPublic = 1 AND idType = "+idType +
-                                  " UNION SELECT  recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, rating, nbVoter FROM RECIPE JOIN Recipe_Origin ON recipe.idOrigin = recipe_origin.id WHERE idUser = "+idUser+" AND idType = "+idType);
+            stm = conn.prepareStatement("SELECT recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, rating, nbVoter  " +
+                                        "FROM RECIPE JOIN Recipe_Origin ON recipe.idOrigin = recipe_origin.id " +
+                                        "WHERE isPublic = 1 AND idType = "+idType +
+                                        " UNION " +
+                                        "SELECT  recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, rating, nbVoter " +
+                                        "FROM RECIPE JOIN Recipe_Origin ON recipe.idOrigin = recipe_origin.id " +
+                                        "WHERE idUser = "+idUser+" AND idType = "+idType);
             ResultSet resRecipe = stm.executeQuery();
 
             int idRecipe, nbPerson, rating, nbVoter;
@@ -123,7 +183,7 @@ public class RecipeDao {
                 /* INGREDIENTS */
                List<Ingredient> ingredientList = getIngredientList(conn, idRecipe); //new ArrayList<Ingredient>(); //
                 /* DESCRIPTIONS */
-                List<String> descriptionList = getDescriptionList(conn, idRecipe); //new ArrayList<String>();//
+                List<RecipeDescription> descriptionList = getDescriptionList(conn, idRecipe); //new ArrayList<String>();//
                 /* CATEGORIES */
                 List<RecipeCategory> categoryList = getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
 
@@ -189,16 +249,20 @@ public class RecipeDao {
     /**
      * Utilisee dans les fct qui construisent un recipe
      */
-    public List<String> getDescriptionList(Connection conn, int idRecipe){
-        List<String> descriptionList = new ArrayList<String>();
+    public List<RecipeDescription> getDescriptionList(Connection conn, int idRecipe){
+        List<RecipeDescription> descriptionList = new ArrayList<RecipeDescription>();
         String descr;
+        int noDescrip;
+        RecipeDescription recipeDescrip;
         PreparedStatement stm;
         try {
-            stm = conn.prepareStatement("SELECT description FROM Recipe_Description WHERE idRecipe = "+idRecipe+" ORDER BY noDescription");
+            stm = conn.prepareStatement("SELECT description, noDescription FROM Recipe_Description WHERE idRecipe = "+idRecipe+" ORDER BY noDescription");
             ResultSet resDescription = stm.executeQuery();
             while(resDescription.next()){
                 descr = resDescription.getString("description");
-                descriptionList.add(descr);
+                noDescrip = resDescription.getInt("noDescription");
+                recipeDescrip = new RecipeDescription(descr, noDescrip);
+                descriptionList.add(recipeDescrip);
             }
         } catch (SQLException e) {
             e.printStackTrace();

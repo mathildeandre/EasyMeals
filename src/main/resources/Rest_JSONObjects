@@ -62,7 +62,21 @@ Java classes from package /dto/
   - RecipeDescription = {"name":"faite cuire 5min","noDescript":1}
 
 
-  /* a completer pr sur... ds recipe aussi + faire description */
   - Recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
-
+    {
+        "id":2,
+        "name":"Burritos",
+        "pixName":"burritos.jpg",
+        "recipeType":"course",
+        "nbPerson":9,
+        "ingredients":[{"qty":200,"unit":"g","food":"steack hachÃ©","rayonId":2},{"qty":4,"unit":"","food":"sauce burger","rayonId":14}],
+        "descriptions":[{"name":"faire cuire steack","noDescip":1},{"name":"mettre dans crepe avec legumes","noDescip":2},{"name":"Votre burritos est pret !","noDescip":3}],
+        "descriptionOpen":false,
+        "origin":"mexicain",
+        "categories":[{"id":1,"name":"viande","noRank":1},{"id":3,"name":"legume","noRank":8}],
+        "isFavorite":false,
+        "isForPlanning":false,
+        "rating":0,
+        "nbVoter":0
+     }
 

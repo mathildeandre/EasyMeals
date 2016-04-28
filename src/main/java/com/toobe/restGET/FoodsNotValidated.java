@@ -1,10 +1,10 @@
-package com.toobe.rest;
+package com.toobe.restGET;
 
 /**
  * Created by mathilde on 13/03/2016.
  */
 
-import com.toobe.dto.RecipeOrigin;
+import com.toobe.dto.Food;
 import com.toobe.model.ManagerGet;
 
 import javax.ws.rs.GET;
@@ -14,13 +14,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/recipeOrigins")
-public class RecipeOrigins {
+@Path("/foodsNotValidated")
+public class FoodsNotValidated {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipeOrigins(){
-        List<RecipeOrigin> list = new ManagerGet().getRecipeOrigins();
+    public Response getFoods(){
+        List<Food> list = new ManagerGet().getFoodsNotValidated();
         return Response.ok(list).build();
     }
 }
+

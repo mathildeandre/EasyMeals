@@ -1,11 +1,10 @@
-package com.toobe.rest;
+package com.toobe.restGET;
 
 /**
  * Created by mathilde on 13/03/2016.
  */
 
 import com.toobe.dto.FoodCategory;
-import com.toobe.dto.RecipeCategory;
 import com.toobe.model.ManagerGet;
 
 import javax.ws.rs.GET;

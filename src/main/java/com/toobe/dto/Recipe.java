@@ -8,22 +8,22 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-{
-        id:5,
-        name:'Burritos',
-        pixName:'burritos.jpg',
-        recipeType:'course',
-        nbPerson:2,
-        ingredients:[{qty:4, unit:'', food:'crepe a burritos', rayonId:3},{qty:0.2, unit:'kg', food:'steack', rayonId:1}],
-        description:'miam miam',
-        descriptionOpen: false,
-        origin:'Mexicain',
-        categories:['viande', 'poêle', 'legume', 'Facile'],
-        isFavorite: true,
-        isForPlanning:false,
-        rating:3.5
-        }
-*/
+        {"id":2,
+        "name":"Burritos",
+        "pixName":"burritos.jpg",
+        "recipeType":"course",
+        "nbPerson":9,
+        "ingredients":[{"qty":200,"unit":"g","food":"steack hachÃ©","rayonId":2},{"qty":4,"unit":"","food":"sauce burger","rayonId":14}],
+        "descriptions":[{"name":"faire cuire steack","noDescip":1},{"name":"mettre dans crepe avec legumes","noDescip":2},{"name":"Votre burritos est pret !","noDescip":3}],
+        "descriptionOpen":false,
+        "origin":"mexicain",
+        "categories":[{"id":1,"name":"viande","noRank":1},{"id":3,"name":"legume","noRank":8}],
+        "isFavorite":false,
+        "isForPlanning":false,
+        "rating":0,
+        "nbVoter":0}
+
+ */
 
 public class Recipe implements Serializable{
 
@@ -33,7 +33,7 @@ public class Recipe implements Serializable{
     private String recipeType;
     private int nbPerson;
     private List<Ingredient> ingredients;
-    private List<String> descriptions;
+    private List<RecipeDescription> descriptions;
     private boolean descriptionOpen;
     private String origin;
     private List<RecipeCategory> categories;
@@ -45,7 +45,7 @@ public class Recipe implements Serializable{
     public Recipe(){
 
     }
-    public Recipe(int id, String name, String pixName, String recipeType, int nbPerson, List<Ingredient> ingredients, List<String> descriptions,
+    public Recipe(int id, String name, String pixName, String recipeType, int nbPerson, List<Ingredient> ingredients, List<RecipeDescription> descriptions,
                   String origin, List<RecipeCategory> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter) {
         this.id = id;
         this.name = name;
@@ -111,11 +111,11 @@ public class Recipe implements Serializable{
         this.ingredients = ingredients;
     }
 
-    public List<String> getDescriptions() {
+    public List<RecipeDescription> getDescriptions() {
         return descriptions;
     }
 
-    public void setDescriptions(List<String> descriptions) {
+    public void setDescriptions(List<RecipeDescription> descriptions) {
         this.descriptions = descriptions;
     }
 
@@ -143,19 +143,19 @@ public class Recipe implements Serializable{
         this.categories = categories;
     }
 
-    public boolean isFavorite() {
+    public boolean getIsFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
+    public void setIsFavorite(boolean favorite) {
         isFavorite = favorite;
     }
 
-    public boolean isForPlanning() {
+    public boolean getIsForPlanning() {
         return isForPlanning;
     }
 
-    public void setForPlanning(boolean forPlanning) {
+    public void setIsForPlanning(boolean forPlanning) {
         isForPlanning = forPlanning;
     }
 

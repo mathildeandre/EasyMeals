@@ -28,6 +28,13 @@ public class ManagerGet {
         recipeDao = new RecipeDao();
         return recipeDao.getRecipes(conn, recipeType, idUser);
     }
+     public List<Recipe> getRecipesPublicNotValidated(String recipeType){
+        startConnection();
+        recipeDao = new RecipeDao();
+        return recipeDao.getRecipesPublicNotValidated(conn, recipeType);
+    }
+
+
     public Recipe getRecipeById(int idRecipe){
         startConnection();
         recipeDao = new RecipeDao();
@@ -88,10 +95,22 @@ public class ManagerGet {
     /*********************************************/
     /************** FOOD ************************/
     /*******************************************/
-    public List<String> getFoods(){
+    public List<Food> getFoods(){
         startConnection();
         foodDao = new FoodDao();
         return foodDao.getFoods(conn);
+    }
+    public List<Food> getFoodsNotValidated(){
+        startConnection();
+        foodDao = new FoodDao();
+        return foodDao.getFoodsNotValidated(conn);
+    }
+
+
+    public List<String> getFoodsString(){
+        startConnection();
+        foodDao = new FoodDao();
+        return foodDao.getFoodsString(conn);
     }
     public List<FoodCategory> getFoodCategories(){
         startConnection();

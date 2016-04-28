@@ -1,5 +1,6 @@
 package com.toobe.dao;
 
+import com.toobe.dto.Food;
 import com.toobe.dto.FoodCategory;
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
@@ -19,7 +20,60 @@ public class FoodDao {
     /**
      * On trouve ici toutes les foods
      */
-    public List<String> getFoods(Connection conn){
+
+
+    public List<Food> getFoods(Connection conn){
+        List<Food> foodList = new ArrayList<Food>();
+        PreparedStatement stm;
+        try {
+            stm = conn.prepareStatement("SELECT * FROM FOOD");
+            ResultSet res = stm.executeQuery();
+
+            String name;
+            int id, idCategory;
+            boolean isValidated;
+            Food food;
+            while(res.next()){
+                id = res.getInt("id");
+                name = res.getString("name");
+                idCategory = res.getInt("idCategory");
+                isValidated = res.getInt("isValidated") == 1;
+                food = new Food(id, name, idCategory, isValidated);
+                foodList.add(food);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return foodList;
+    }
+    public List<Food> getFoodsNotValidated(Connection conn){
+        List<Food> foodList = new ArrayList<Food>();
+        PreparedStatement stm;
+        try {
+            stm = conn.prepareStatement("SELECT * FROM FOOD WHERE isValidated = 0");
+            ResultSet res = stm.executeQuery();
+
+            String name;
+            int id, idCategory;
+            boolean isValidated;
+            Food food;
+            while(res.next()){
+                id = res.getInt("id");
+                name = res.getString("name");
+                idCategory = res.getInt("idCategory");
+                isValidated = res.getInt("isValidated") == 1;
+                food = new Food(id, name, idCategory, isValidated);
+                foodList.add(food);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return foodList;
+    }
+
+    public List<String> getFoodsString(Connection conn){
         List<String> foodList = new ArrayList<String>();
         PreparedStatement stm;
         try {
