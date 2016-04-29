@@ -1,0 +1,61 @@
+<article id="listRecipe" class="myArticle">
+
+        <div class="myArticleHeading" >
+            <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType()}}</div>
+            <div class="rightInlineBlock rightHeadingSearch">
+                <span   class="glyphicon glyphicon-search " ></span>
+                &nbsp
+                <input class="inputRecipeSearch" type="text" ng-model="searchRecipe" placeholder="recette, ingredient etc..">
+            </div>
+        </div>
+
+
+        <div class="myArticleBody artBodyListRecipe">
+
+            <div class="divTopListRecipe">
+
+               <!-- <div>{{recipes[0].name}} - {{recipesToDisplay[0].name}}  </div>-->
+
+
+                <div class="buttonCreate" >
+                    <a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayCreationRecipeType()}}</a> <!--creer nouveau plat-->
+                </div>
+                <div class="buttonsDisplayListRecipe">
+                    Affichage : &nbsp
+                    <span ng-click="showInListFct()"  class="glyphicon glyphicon-align-justify gliphList glyphiconBtn"></span> <!--title=""-->
+                    &nbsp-&nbsp
+                    <span ng-click="showInBlockFct()" class="glyphicon glyphicon-th gliphBlock glyphiconBtn"></span></span><!--title=""-->
+                </div>
+                <div class="sortRecipeList" >
+                    <span   class="glyphicon glyphicon-sort" ></span>
+                    &nbsp
+                    <select class="fieldRecipe"  ng-model='recipeOrderBy'  >
+                        <option ng-repeat="orderby in listOrderBy" value="{{orderby.value}}">{{orderby.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- DEBUG ng-show="showDebug" ->
+            <div ng-show="false" style="font-size: 18px; color:darkorange">
+                <div style="font-weight: 800; border-bottom:1px solid grey">recipesToDisplay :</div><div ng-repeat="recipe in recipesToDisplay">{{recipe.name}}</div>
+                <div style="font-weight: 800;border-bottom:1px solid grey">Recipe favorite :</div><div ng-repeat="recipe in recipesFavorite">{{recipe.name}}</div>
+                <div style="font-weight: 800;border-bottom:1px solid grey">Recipe planning :</div><div ng-repeat="recipe in recipesPlanning">{{recipe.name}}</div>
+            </div>
+            -->
+            <div ng-show="showInList" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy"
+                 ng-class="{recipeWithDescription: recipe.descriptionOpen, recipeWithNoDescr:!recipe.descriptionOpen}">
+                <!-- or :
+                <div ng-include="'../../partials/recipe/recipeItemDisplayNotOpenInList.html'"></div>
+                -->
+                <recipeitem-displayinlist></recipeitem-displayinlist>
+                <recipeitem-displayopen></recipeitem-displayopen>
+            </div>
+
+            <div ng-show="showInBlock" class="divRecipesBlock" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy "
+                 ng-class="{divRecipesBlockIcon:!recipe.descriptionOpen, divRecipesBlockDescription:recipe.descriptionOpen}">
+
+                <recipeitem-displayinblock></recipeitem-displayinblock>
+                <recipeitem-displayopen></recipeitem-displayopen>
+            </div>
+        </div>
+</article>

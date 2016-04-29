@@ -1,3 +1,51 @@
+
+
+/**************************** OLD GRAYSCALE ***********************************/
+
+.myMain {
+
+    padding-top:90px;
+    /*
+    display: block;/* ->from bootstrap;*
+    margin-right: auto;
+    margin-left: auto;
+    min-height:780px;
+    height:780px;
+    max-height:780px;*/
+
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 35px;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+
+.main-panel {
+    color:black;
+}
+/**************************** FIN OLD GRAYSCALE ***********************************/
+
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         MAIN             **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
 .h5WelcomeMeal{
     margin-top:20px;
     margin-bottom:0;
@@ -14,6 +62,7 @@
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding: 0 4vw;
 }
 .bodyRecipe{
 
@@ -27,23 +76,39 @@
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+
+    padding: 0 4vw;
 }
 
 .bodyPlanning{
-
     width: 100%;
     height: 100%;
     /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
-    background: url(../img/expense-planning_Red-Raspberry.jpg) ; /* expense-planning_Red-Raspberry   OR  planning-recipe_meals.jpg*/
+    background: url(../img/planning_background.jpg) ; /* expense-planning_Red-Raspberry   OR  intro-bg.jpg OR planning-recipe_meals.jpg*/
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding: 0 2vw;
 }
+.bodyErrand{
+    width: 100%;
+    height: 100%;
+    /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: url(../img/errand_shoppingTrolley.jpg) no-repeat ; /*expense_note OR  expense-planning_Red-Raspberry */
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    padding: 0 10vw;
 
+}
 
 .bodyExpense{
 
@@ -58,6 +123,7 @@
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding: 0 2vw;
 }
 
 
@@ -74,6 +140,370 @@
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding: 0 4vw;
+}
+
+
+
+
+
+/**************************************************************************************************************************************************************************************/
+/**********************************************************************  ARTICLE custom   ********************************************************************************************/
+/************************************************************************************************************************************************************************************/
+.mySectionBlock{
+    display: block;
+}
+.mySection{
+
+}
+.mySectionHeading{
+
+}
+.mySectionTitle{
+
+}
+
+/*
+<!--
+<article class="myArticle">
+    <div class="myArticleHeading" >
+        <div class="myArticleTitle">myNameTitle</div>
+    </div>
+    <div class="myArticleBody">
+        content body HERE...
+    </div>
+</article>
+-->
+*/
+.myArticle{
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #fff;
+    //color:darkslategrey;
+    color:#333;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.myArticleHeading {
+    padding: 10px 1vw;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.myArticleTitle{
+    color:#333;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.myArticleBody {
+    padding: 1vw;
+}
+
+
+
+/*******************************************************************************************************************************************************************************/
+/**********************************************************************  BUTTONS   ********************************************************************************************/
+/*****************************************************************************************************************************************************************************/
+
+/* btn & myBtn -> useless
+  examples : */
+.btn {
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+.myBtn{
+    padding: 6px 12px;
+    border-radius: 3px;
+    /*  line-height:normal; /*putin de boostrap...*
+        vertical-align: middle;
+        /*
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: normal;
+        line-height:normal;
+        text-align: center;
+        white-space: nowrap;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        */
+}
+
+/************************************** BUTTONS FULL not used yet ! **********************************************/
+
+.myBtnFull{
+    padding: 6px 12px;
+    border-radius: 3px;
+    border:none;
+    text-transform: uppercase;
+    //font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+
+    text-transform : none;
+    background-color: lightgrey;
+    color: white;
+}
+
+.myBtnFull:hover,
+.myBtnFull:focus{
+    background-color: #ddd;
+}
+
+.myBtnFullRecipe{
+    background-color: #f5c88a;
+}
+.myBtnFullRecipe:hover,
+.myBtnFullRecipe:focus{
+    background-color: #f0ad4e;
+}
+
+/************************************** BUTTONS EMPTY **********************************************/
+.myBtnEmpty{
+    padding: 6px 12px;
+    border-radius: 3px;
+    border:1px solid lightgrey;
+    color:lightgrey;
+    //background-color: white;
+    background-color: transparent;
+    text-transform : none;
+}
+
+.myBtnEmpty:hover,
+.myBtnEmpty:focus{
+    color: #333;
+    background-color:lightgrey;
+    outline: 0;
+}
+
+.myBtnEmptyRecipe{
+    padding: 4px 6px 5px 6px;
+    border:1px solid #f0ad4e;
+    color:#f0ad4e;
+}
+.myBtnEmptyRecipe:hover,
+.myBtnFilterRecipe:focus{
+    color:darkslategrey;
+    background-color: #f5c88a;
+    outline: 0;
+
+}
+
+.myBtnEmptyPlanning{
+    padding: 4px 6px 5px 6px;
+    border:1px solid #5bc0de;
+    color:#5bc0de;
+}
+.myBtnEmptyPlanning:hover,
+.myBtnEmptyPlanning:focus{
+    color:darkslategrey;
+    background-color: #95d6e9;
+    outline: 0;
+
+}
+.myBtnRecipeType{
+
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-right:2vw;
+    width: 200px;
+    color:white;
+}
+.myBtnRecipeType:hover,
+.myBtnRecipeType:focus{
+    color:white;
+}
+.myBtnRecipeTypeFull{
+    background-color: #95d6e9;
+}
+
+.myBtnEmptyErrand{
+    padding: 4px 6px 5px 6px;
+    //border:1px solid #ff5050; //#ff3385;
+    //color: #ff5050; //#ff3385;
+    border:1px solid #ff80bf;
+    color: #ff80bf;
+}
+.myBtnEmptyErrand:hover,
+.myBtnEmptyErrand:focus{
+    color:darkslategrey;
+    //background-color: #ff9999; // #ff80b3 ;
+    background-color: #ffb3d9;
+    outline: 0;
+
+}
+.myBtnErrandFull{
+    background-color: #ffb3d9;
+}
+
+
+.btn-default {
+    border: 1px solid #28c3ab;
+    color: #28c3ab;
+    background-color: transparent;
+}
+
+.btn-default:hover,
+.btn-default:focus {
+    border: 1px solid #28c3ab;
+    outline: 0;
+    color: #000;
+    background-color: #28c3ab;
+}
+
+
+.txtDarkBtn{
+    color:darkslategrey;
+}
+
+/*******************************************************************************************************************************************************************************/
+/**********************************************************************  SELECT & INPUT    ********************************************************************************************/
+/*****************************************************************************************************************************************************************************/
+
+
+.fieldRecipe{
+    padding: 5px;
+    width:100px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #f0ad4e;
+}
+.fieldRecipe:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #f5c88a ;
+}
+
+
+.fieldPlanning{
+    padding: 5px;
+    width:100px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #5bc0de;
+}
+.fieldPlanning:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #95d6e9 ;
+}
+
+.fieldErrand{
+    padding: 5px;
+    width-max:250px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #ffb3d9; //#ff80bf;
+}
+.fieldErrand:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    //border: 1px solid #ffb3d9 ;
+}
+
+
+
+.inputRecipe{
+    padding: 5px;
+    width:130px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    color: darkslategrey;
+
+}
+.inputRecipe:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #f5c88a ;
+}
+.inputRecipeSearch{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+}
+.inputRecipeSearch:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #f5c88a ;
+}
+
+.inputRecipePlanning{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+}
+.inputRecipePlanning:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #95d6e9 ;
+}
+
+.inputErrand{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+    width: 80%;
+}
+.inputErrand:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid hotpink ;
+}
+
+/**********************************************************************  TRASH  ********************************************************************************************/
+
+
+.trashFilterRecipe{
+    color: #f0ad4e;
+    font-size:18px;
+}
+.trashFilterRecipe:hover{
+    color: #f5c88a;
+    transform: scale(1.5);
+}
+.trashFilterPlanning{
+    color: #5bc0de;
+    font-size:18px;
+}
+.trashFilterPlanning:hover{
+    color: #95d6e9;
+    transform: scale(1.5);
+}
+
+
+/**********************************************************************  SELECTION (mouse cursor select) ********************************************************************************************/
+
+.classicCursor{
+    cursor: auto;
 }
 
 
@@ -92,40 +522,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 */
 
 
-/******************************************* NAVBAR *****************************************/
-
-
-.dropdown > .active > a{
-    background-color: purple;
-}
-.activeInNavBar > a {
-    color:yellow;
-}
-.activeInNavBarPlanning > a {
-    color:cornflowerblue;
-}
-.activeInNavBarExpense > a {
-    color:#5cb85c;
-}
-.activeInNavBarAlcohol > a {
-    color:#d9534f;
-}
-
-.dropdown-menu > li > a{
-    color:cornflowerblue;
-    height:40px;
-    vertical-align:middle;
-}
-.dropdown-menu > li{
-    /*vertical-align:middle; //ne marche pas.. meme en faisant sur le ul parent list-style: none;*/
-}
-.dropdown-menu > .activeInNavBar > a {
-    color:black;
-    /* background-color: cornflowerblue;*/
-}
-
-
-/******************************************* TABLES ****************************************/
+/**********************************************************************  TABLES   ********************************************************************************************/
 
 .myTh{
     color:darkslategrey;
@@ -137,10 +534,785 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 
-/**********************************************************************************************/
-/******************************************* PLANNING ****************************************/
-/********************************************************************************************/
 
+.titleInlineBlock{
+    display:inline-block;
+}
+
+.rightInlineBlock{
+    display:inline-block;
+    position: relative;
+    float: right;
+    vertical-align: top;
+}
+
+
+/**********************************************************************  DRAG & DROP   ********************************************************************************************/
+
+.itemDrag{
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.itemDrag:hover{
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.itemDrag:active{
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+
+.grabbing{
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+
+}
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --end--   MAIN        **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         NAVBAR           **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+/******************************************* FROM GRAYSCALE *****************************************/
+.navbar { /* permet de background black*/
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.navbar-brand:focus {
+    outline: 0;
+}
+
+
+/*********************************************** OK upper **************************/
+
+
+
+.navbar-custom a {
+    color: #fff;
+}
+
+.navbar-custom .nav li a {
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+.navbar-custom .nav li a:hover,
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li.active {
+    outline: 0;
+    background-color: rgba(255,255,255,.2);
+}
+
+/*********************************************** down osef **************************/
+.navbar-toggle {
+    padding: 4px 6px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.navbar-toggle:focus,
+.navbar-toggle:active {
+    outline: 0;
+}
+
+@media(min-width:767px) {
+    .navbar {
+        padding: 20px 0;
+        border-bottom: 0;
+        letter-spacing: 1px;
+        background: 0 0;
+        -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+        -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+        transition: background .5s ease-in-out,padding .5s ease-in-out;
+    }
+
+    .top-nav-collapse {
+        padding: 0;
+        background-color: #000;
+    }
+
+    .navbar-custom.top-nav-collapse {
+        border-bottom: 1px solid rgba(255,255,255,.3);
+    }
+}
+
+
+/******************************************* MY NAVBAR *****************************************/
+
+/* like .navbar */
+.myDropdown{ /* permet de background black*/
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+    width:1500px;
+}
+.myDropdownLight{
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+    width:239px;
+}
+.myDropdownItem{
+    border-bottom: 1px solid rgba(255,255,255,.3);
+}
+.typeRecipe{
+    width:147px;
+    border-right: 1px solid rgba(255,255,255,.3);
+}
+.myNavBarNav > li > a{ /* juste parce que avec bootstrap, ces sous parties etaient un peu trop grosses*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+}
+.dropdown-menu { /* car bootstrap a un padding et c moche! */
+    padding:0;
+}
+.activeInNavBar > a {
+    color:#f0ad4e;
+}
+.activeInNavBarPlanning > a {
+    color:cornflowerblue;
+}
+.activeInNavBarExpense > a {
+    color:#5cb85c;
+}
+.activeInNavBarAlcohol > a {
+    color:#d9534f;
+}
+.activeInNavBarErrand > a {
+    color:deeppink;
+
+}
+
+/*
+.dropdown-menu > li > a,
+.dropdown-menu a{
+    color:cornflowerblue;
+    height:40px;
+    vertical-align:middle;
+}
+.dropdown-menu > li{
+    /*vertical-align:middle; //ne marche pas.. meme en faisant sur le ul parent list-style: none;*
+}
+.dropdown-menu > .activeInNavBar > a {
+    color:black;
+    /* background-color: cornflowerblue;*
+}
+*/
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --END--   NAVBAR      **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         RECIPE           **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+.titleRecipe{
+    /*margin-left:2vw;*/
+}
+
+/**********************************************************************  FILTER RECIPE #LEFT FIXED   ********************************************************************************************/
+.navRecipeFixed {
+    position: fixed;
+    top:50px;
+    overflow: auto;
+}
+#filterRecipe{
+    float: left;
+    width:24vw; /* stay at 64vw in any case*/
+    overflow: auto;
+    /*margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
+}
+
+
+/*****************************  BTN - INPUT custom filter    **************************************************/
+.littlePlus{
+    font-size:9px;
+    margin-right:5px; /* a enlever si pas de directive..*/
+}
+
+
+
+
+.btnPlusFilter{
+    font-size:12px;
+    padding-bottom:5px;
+}
+
+/************************************************************************************************************/
+/*****************************  FILTER - MA SELECTION    ***************************************************/
+/**********************************************************************************************************/
+
+.artRecipeMySelection{
+    margin-bottom:20px;
+    /*overflow: auto; //into #filterRecipe; */
+}
+
+
+.separatorSelection{
+    border-bottom:1px solid lightgray;
+}
+
+.divSubSelection{
+    margin:3px 0;
+}
+
+
+.txtSelection{
+    font-size:13px;
+    color:darkslategrey;
+}
+.txtTitleSelection{
+    font-size:13px;
+}
+/************************************************************************************************************/
+/*****************************  FILTER - AFFINER RECHERCHE  ************************************************/
+/**********************************************************************************************************/
+
+.elemColonneX3{ /* colonnes x3*/
+    display:inline-block;
+    margin: 0 1% 0 1%;
+    width:30%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+.elemCategorieVrac{ /*pas de colonne : tt en vrac*/
+    display:inline-block;
+    margin: 3px 3% 3px 0;
+}
+.elemColonneX2{/*colonne x2*/
+    display:inline-block;
+    margin: 2px 0;
+    width:42%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+.txtFilter{
+    font-size:13px;
+    color:darkslategrey;
+}
+
+.txtTitleSubFilter{
+    font-weight: 600; /*=normal.  bold = 700;*/
+    border-bottom:1px solid grey;
+    margin-bottom:10px;
+}
+
+.divSubFilter{
+    /* border:1px solid grey;
+     border-radius:5px;
+     margin:10px 5px;
+     padding:7px;
+     */
+    margin:5px;
+    padding:5px 0;
+
+}
+.divSubFilterTop{
+    margin-top:0;
+}
+
+
+
+/**********************************************************************  LIST RECIPE #RIGHT   ************************************************************************************************/
+
+#listRecipe{
+    margin-left:28vw;
+    width:64vw; /* stay at 64vw in any case*/
+    overflow: hidden;
+
+}
+
+.rightHeadingSearch{
+    font-size:17px;
+    margin-right:5%;
+}
+
+.artBodyListRecipe{
+    padding-top:2vw;
+    padding-left:3vw
+    /* .myArticleBody = padding: 1vw; */
+}
+.divTopListRecipe{
+    margin-bottom:2vw;
+}
+.buttonCreate{
+    margin-left:0;
+    display:inline-block;
+}
+.buttonsDisplayListRecipe{
+    margin-left:3vw;
+    display:inline-block;
+    vertical-align: middle;
+}
+.sortRecipeList{
+    font-size:15px;
+    margin-right:3vw;
+    display:inline-block;
+    position:relative;
+    float:right;
+}
+/** div recipe autant withDescr or noDescr.**/
+.divRecipes{
+    border-radius: 5px;
+    margin: 15px 0;
+    margin-right: 2vw;
+}
+.divRecipes:hover{
+    background-color: lightgrey;
+    cursor:pointer;
+}
+
+/************************************************************************************************************/
+/*********************************  NO DESCRIPTION custom  *************************************************/
+/**********************************************************************************************************/
+
+
+.pixRecipeNoDescription{
+    width:220px;
+    height:140px;
+    background-repeat:no-repeat;
+    background-size:cover;
+    /*
+    background-position:top left;
+    background-image:url("../images/lasagne.jpg");
+    */
+    display: inline-block;
+    border-radius:3px;
+
+}
+
+.titleAndSoNoDescription{
+
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    letter-spacing: 1px;
+    display: inline-block;/*block sera a droite de la pix*/
+    margin-left:5%;
+    vertical-align:top;
+    font-size: 22px;
+}
+.titleAndSoNoDescription > .title{
+    margin-top:25px;
+    margin-bottom:25px;
+    font-size: 20px;/* 22*/
+    color:darkslategrey; /*darkorange*/
+
+}
+
+/************************************************************************************************************/
+/********************************  WITH DESCRIPTION custom  ************************************************/
+/**********************************************************************************************************/
+
+.recipeWithDescrip{
+    background-image:url('../images/blackSlateSlab.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
+    color:white;
+    border-radius:3px;
+    padding:10px;
+    padding-bottom:20px;
+}
+
+.recipeWithDescrip .heart[title]:hover:after,
+.recipeWithDescrip .thList[title]:hover:after,
+.recipeWithDescrip .newWindow[title]:hover:after{
+    color:white;
+    left:-60px;
+}
+
+.divTopRecipe{
+    /*margin-top:15px;*/
+    overflow:hidden;
+    margin-bottom:10px;
+}
+
+.pixRecipeWithDescrip{
+    width:44%;/*240px;*/
+    min-width : 240px;
+    height:160px; /* a modifier dynamiquement (avec javascript en recuperant la largeur et en faisant 2/3)*/
+    background-repeat:no-repeat;
+    background-size:100% 100%; /*100% not enought*/
+    background-position:top left;
+    /*background-image:url("../images/burger2.jpg");*/
+    display: inline-block;
+    margin-left:2%;
+    border-radius:3px;
+
+}
+.ingredientRecipe{
+    display: inline-block;
+    width:50%;
+    margin-left:2%;
+    vertical-align:top;
+    /*font-style:bold;
+    font-size:large;*/
+}
+.preparationRecipe{
+    margin-left:2%;
+    /*font-style:bold;
+    font-size:large;*/
+}
+
+.titleOfDescrip{
+    margin: 5px 0 20px 2%;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.subTitleOfDescrip{
+    margin-bottom:10px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+/************************************************************************************************************/
+/********************************  BLOCK custom  ***********************************************************/
+/**********************************************************************************************************/
+.divRecipesBlock{
+    display:inline-block;
+    margin: 1vw 2vw 1vw 0;
+}
+.divRecipesBlock:hover{
+    cursor:pointer;
+}
+.divRecipesBlockIcon{
+
+    width:17vw; /*x4*/
+    /*width:14vw; x3*/
+    min-width:160px;
+    /*width:220px;*/
+    vertical-align: top;
+
+}.divRecipesBlockDescription{
+     width:90%;
+ }
+
+.pixRecipeBlock{
+    width:17vw; /*x3*/
+    height:11vw;
+    /*width:14vw; x3
+    height:9vw;*/
+    min-width:160px;
+    min-height:100px;
+    /*width:220px;
+    height:140px;*/
+    background-repeat:no-repeat;
+    background-size:cover;
+    border-radius:3px;
+}
+
+.titleAndSoBlock{
+}
+/* ici on laisse faire mais 1 ligne max pr le titre donc glyphicons en retour a la ligne au pire mais propre*/
+.titleBlock{
+    display:inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.glyphiconsBlock{
+    margin-left:5px;
+    display:inline-block;
+}
+/* ici on fix les glyphicon a droit et 1 seul ligne pr titre mais titre tres court...*
+.titleBlock{
+    display:inline-block;
+    /*no retour line:*
+    max-width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.glyphiconsBlock{
+    display:inline-block;
+    vertical-align: top;
+    position: relative;
+    float: right;
+}*/
+/* ici on fix les glyphicon a droite et plusieurs lignes pr titre mais largeur que 60% donc bof*
+.titleBlock{
+    display:inline-block;
+    /*no retour line:*
+    max-width: 60%;
+    white-space: normal;
+}
+.glyphiconsBlock{
+    display:inline-block;
+    vertical-align: top;
+    position: relative;
+    float: right;
+}*/
+/* ici on laisse faire (pb est sil y a  2 ligne mais 2eme ligne remplie que a moitie,
+    glyphicons seront en retour a la ligne qd mm.. (pask block de text rectangulaire*
+.titleBlock{
+    display:inline-block;
+}
+.glyphiconsBlock{
+    margin-left:5px;
+    display:inline-block;
+}
+*/
+
+
+/* marche mais pb de variable pr afficher {{recipe.name}} ...^^ *
+.titleBlock[title]:hover{
+    transform:scale(1);
+}
+.titleBlock[title]:hover:after{
+
+    padding: 4px 8px;
+    position: absolute;
+    top: 100%;
+    left:-30px;
+    white-space: nowrap;
+    z-index: 50;
+    border-radius: 5px;
+    font-size:8px;
+    color:darkslategrey;
+    content: 'Ajouter à mes recettes préferées';
+}
+*/
+
+
+/************************************************************************************************************/
+/*************************  SINGLE RECIPE (new window) custom  *********************************************/
+/**********************************************************************************************************/
+.titleRecipeSingle{
+    margin-left:5%;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 2px;
+
+}
+.divRecipeSingle{
+    border-radius: 5px;
+    margin: 20px 5%;
+}
+
+.divTopRecipeSingle{
+    /*margin-top:15px;*/
+    overflow:hidden;
+    margin-bottom:10px;
+}
+.pixRecipeSingle{
+    /*width:44%;/*240px;*
+    height:250px; /* a modifier dynamiquement (avec javascript en recuperant la largeur et en faisant 2/3)*/
+
+    width:40vw;
+    height:23vw;
+    min-width:400px;
+    min-height:250px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-position:top left;
+    /*background-image:url("../images/burger2.jpg");*/
+    display: inline-block;
+    margin-left:2%;
+    border-radius:3px;
+
+}
+.ingredientRecipeSingle{
+    display: inline-block;
+    width:50%;
+    margin-left:2%;
+    vertical-align:top;
+
+    font-size: 20px;
+    /*font-style:bold;
+    font-size:large;*/
+}
+.subTitleSingle{
+    margin-bottom:10px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+.preparationRecipeSingle{
+    margin-left:2%;
+    font-size: 20px;
+}
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --END--   RECIPE      **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************    RECIPE CREATION       **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+.artRecipeCreation{
+    width: 60vw;
+    margin-left: 20vw;
+}
+
+.artHeadingRecipeCreation{
+    //height: 58px;
+}
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/******************************************************************* --END--  RECIPE CREATION   ************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         PLANNING         **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
+.contourTxt{
+    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+}
+
+
+/**********************************************************************  PLANNING RECIPES  **************************************************************************************************/
+
+.divRecipesType{
+    margin: 2vw 0;
+}
+.btnRecipeType{
+    margin-right:2vw;
+    width: 150px;
+}
+
+.artMySelection{
+    float: left;
+    //margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
+    width:20vw;
+    margin-bottom: 2vw;
+
+}
+.artFilters{
+    margin-bottom:1vw;
+    margin-left:23vw;
+    width:72vw;
+
+}
+
+.blockFilterPlanningRecipe{
+    display:inline-block;
+    margin-right:1vw;
+}
+.filterMyLists{
+    display:inline-block;
+    //width:25%;
+    vertical-align: top;
+
+}
+.filterCategories{
+    display:inline-block;
+    width:25%;
+    vertical-align: top;
+}
+.filterOrignins{
+    display:inline-block;
+    width:25%;
+    vertical-align: top;
+}
+
+
+.artRecipes{
+    /*margin-left:2vw;*/
+    margin-bottom:1vw;
+    margin-left:23vw;
+    width:72vw;
+
+
+}
+
+.sortPlanningRecipeList{
+    font-size:15px;
+    margin-right:1vw;
+}
+
+
+
+/**********************************************************************  PLANNING TAB  **************************************************************************************************/
 /*
 .itemToDragPlanning_OldStyle {
     padding: 7px;
@@ -153,7 +1325,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .itemToDragPlanning {
     padding: 6px;
     border-radius:3px;
-    margin:5px 0;
+    margin: 0.3vw;
 
     border:1px solid lightgrey;
     color: cornflowerblue;
@@ -188,22 +1360,77 @@ select::selection,option::selection { /* ne fonctionne pas  */
     text-align: center;
 }
 
-.contourTxt{
-    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+.rightTrashPlanning{
+    margin-right:3vw;
 }
 
 
-/**********************************************************************************************/
-/******************************************* EXPENSES ****************************************/
-/********************************************************************************************/
-
-
-
-.myBorder{
-    border: 5px solid red;
-    border-radius:10px;
+/**********************************************************************  PLANNING LIST SHOPPING  *********************************************************************************************/
+.artPlanningListShopping{
+    width: 60vw;
+    margin-top:3vw;
+    margin-left:15vw;
 }
-#resultExpense {
+
+.divPlanningListShop{
+    margin-top:2vw;
+}
+.divPlanListShopLeft{
+    display:inline-block;
+    width : 48%;
+    margin-right : 3%;
+    //background : red;
+    vertical-align: top;
+}
+.divPlanListShopRight{
+    display:inline-block;
+    width : 45%;
+    overflow: hidden;
+    //background : green;
+    vertical-align: top;
+
+}
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --end--  PLANNING     **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         EXPENSES         **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+.artParameter{
+    width: 30%;
+    margin-bottom: 30px;
+}
+.artParameterHelp{
+    width: 70%;
+}
+.artWhoPaidWhat{
+    width: 100%;
+    overflow-y:auto;
+    margin-bottom: 30px;
+}
+.artResult{
+    width: 30%;
+    margin-bottom: 30px;
+}
+
+.artBodyResult {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700; /* epaisseur txt */
     letter-spacing: 1px;
@@ -245,10 +1472,39 @@ textarea.fieldExpense {
     letter-spacing: 1px;
 }
 
-/**********************************************************************************************/
-/******************************************* ALCOHOL ****************************************/
-/********************************************************************************************/
 
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --end--  EXPENSES     **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         ALCOHOL          **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+.inputAlcoholSearch{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+}
+.inputAlcoholSearch:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #e89996 ;
+}
 
 .fieldAlcohol {
     /*
@@ -296,5 +1552,284 @@ textarea.fieldExpense {
 .bodyAlcohol > input:focus {
     outline: 0;
     border:2px solid #e89996;
+}
+*/
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --end--  ALCOHOL      **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
+
+
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         ERRAND          **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+.artErrandTop{
+    width: 65%;
+}
+.artBodyErrandTop{
+    font-size: 20px;
+}
+.artErrandList{
+    width: 35%;
+}
+.artErrandPlanning{
+    width: 90%;
+}
+
+
+.divCategory{
+    border:1px solid lightgrey;
+    border-radius:3px;
+    //padding:7px;
+
+    margin-bottom:10px;
+}
+.divCategoryDone {
+    color: lightgrey;
+}
+.divTitleCategory{
+    border-bottom:1px solid lightgrey;
+    border-radius: 3px;
+    padding:7px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+}
+.divBodyCategory{
+    padding:7px;
+}
+.divOneCategory{
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+.lineThrough{
+    text-decoration: line-through;
+}
+
+
+.tdMeal:hover{
+    cursor: pointer;
+    background-color: lightgrey;
+}
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --end--  ERRAND      **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+
+
+
+
+
+/****************************************************************************************************************************************************************************************/
+/*************************************************************************   GLYPHICONS  ***********************************************************************************************/
+/**************************************************************************************************************************************************************************************/
+
+.glyphiconBtn{
+    cursor: pointer;
+}
+.modifyListNameOk{
+    color: #95d095;
+}
+.modifyListNameOk:hover{
+    color: #5cb85c;
+    transform: scale(1.5);
+}
+
+.pencilModifyListName{
+
+}
+.pencilModifyListName:hover{
+    transform: scale(1.5);
+}
+/*
+.pencilModifyListName[title]:hover:after{
+    position: absolute;
+    top: 100%;
+    left:-30px;
+    white-space: pre;
+    border-radius: 5px;
+    font-size:8px;
+    color:darkslategrey;
+    content: 'Modifier nom';
+}
+*/
+.listReset{
+
+}
+.listReset:hover{
+    transform: scale(1.5);
+}
+
+.ingrDoneOk{
+    color: lightgrey;
+}
+.ingrDone, .heartNoBtn{
+    color: #ff4d4d ;
+    color : indianred;
+}
+.ingrDone:hover{
+    color:red;
+    color : indianred;
+    transform: scale(1.5);
+}
+
+
+/** .titleAndSoNoDescription > **/
+.heart{
+    color: #bfbfbf ;/*lightgrey++*/
+}
+.heart:hover{
+    color:red;
+    transform: scale(1.5);
+}
+.thList{
+    color: #bfbfbf ;/*lightgrey++*/
+}
+.thList:hover{
+    color:#1b61e4;
+    transform: scale(1.5);
+}
+.newWindow{
+    color: #f5c88a;
+}
+.newWindow:hover{
+    color: #f0ad4e;
+    transform: scale(1.5);
+}
+.hearta:hover{
+    transform: scale(1.5);
+}
+.hearta[title]:hover:after{
+
+    position: absolute;
+    top: 100%;
+    left:-30px;
+    white-space: pre;
+    border-radius: 5px;
+    font-size:8px;
+    color:orange;
+    content: 'Ajouter à mes recettes fdsfdsdsqffdq';
+}
+
+.heart[title]:hover:after,
+.thList[title]:hover:after,
+.newWindow[title]:hover:after{
+    position: absolute;
+    top: 100%;
+    left:-30px;
+    white-space: pre;
+    border-radius: 5px;
+    font-size:8px;
+    color:darkslategrey;
+}
+.heart[title]:hover:after{
+    content: 'Ajouter à mes recettes préferées';
+}
+.thList[title]:hover:after{
+    content: 'Ajouter à liste planning';
+}
+.newWindow[title]:hover:after{
+    content: 'Ouvrir recette dans nouvel onglet';
+}
+
+.heartTaken:hover, .thListTaken:hover{
+    color:slategray;
+    transform: scale(1);
+}
+.heartTaken, .heartNoBtn{
+    color: #ff4d4d ;
+}
+.thListTaken, .thListNoBtn{
+    color: cornflowerblue;
+}
+.heartTaken[title]:hover:after{
+    font-size:12px;
+    content: 'Retirer de mes recettes préferées';
+}
+.thListTaken[title]:hover:after{
+    font-size:12px;
+    content: 'Retirer de la liste planning';
+}
+
+.gliphList,
+.gliphBlock{
+    color:darkslategrey;
+    font-size:20px;
+}
+
+.gliphList:hover,
+.gliphBlock:hover{
+    transform: scale(1.5);
+}
+.gliphList[title]:hover:after,
+.gliphBlock[title]:hover:after{
+    padding: 4px 8px;
+    position: absolute;
+    top: 100%;
+    left:-30px;
+    white-space: nowrap;
+    z-index: 50;
+    border-radius: 5px;
+    font-size:12px;
+    color:darkslategrey;
+}
+.gliphList[title]:hover:after{
+    content: 'Affichage liste';
+}
+.gliphBlock[title]:hover:after{
+    content: 'Affichage en blocks';
+}
+
+
+/****************************************************************************************************************************************************************************************/
+/*********************************************************   glyphicons heart/thList  pr  NAVBAR  **************************************************************************************/
+/**************************************************************************************************************************************************************************************/
+.myDropdown .heart[title]:hover:after,.myDropdownLight .heart[title]:hover:after{
+    content: 'Mes recettes preferées';
+}
+.myDropdown .thList[title]:hover:after, .myDropdownLight .thList[title]:hover:after{
+    content: 'Liste planning';
+}
+.myDropdown .heart[title]:hover:after,
+.myDropdownLight .heart[title]:hover:after,
+.myDropdown .thList[title]:hover:after,
+.myDropdownLight .thList[title]:hover:after{
+    color:white;
+    left:-10px;
+}
+/*
+.navBarHeart{
+    color: #bfbfbf ;/*lightgrey++*
+}
+.navBarHeart > a > span:hover{
+    color:red;
+    transform: scale(1.5);
+}
+/*
+.navBarHeart > a >span[title]:hover:after{
+    content: 'Mes recettes preferées';
+    color:white;
+    left:-10px;
 }
 */

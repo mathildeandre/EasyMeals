@@ -1,0 +1,11 @@
+<section ng-controller="RecipeCtrl">
+
+    <div class="titleRecipe contourTxt"><h2>{{displayRecipeType()}}</h2></div> <!-- titleRecipe initilisee -->
+
+    <div ng-controller="FilterCtrl">
+        <recipe-filter></recipe-filter>
+
+        <recipe-list></recipe-list>
+    </div>
+
+</section >

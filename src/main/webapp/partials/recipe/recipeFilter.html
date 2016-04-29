@@ -1,0 +1,127 @@
+
+<div id="filterRecipe" scroll ng-class="{navRecipeFixed:boolNavFixed}">
+
+
+
+    <!--
+    ----------------------------------------------------------------------------------------------------------
+    -------------------------   MA SELECTION   ---------------------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------
+    -->
+    <article  class="myArticle artRecipeMySelection" > <!-- class="panel panel-default" style=" overflow: auto;"  -->
+
+        <div class="myArticleHeading">
+            <div class="myArticleTitle titleInlineBlock">Ma Selection</div>
+            <div class="rightInlineBlock">
+                <span ng-click="emptyFilterSelection()" class="glyphicon glyphicon-trash trashFilterRecipe glyphiconBtn" ></span>
+            </div>
+        </div>
+
+        <div class="myArticleBody">
+
+
+            <!--
+            <button ng-click="buttonRestTxtPost()">ICI on lance le POSTtxt</button>
+            <button ng-click="buttonRestObjTestPost()">On lance le POST objTest</button>
+            <!--
+            Bonjour
+            <br><br>
+            ici mon mot : {{wordFct()}}
+            <br>
+            ici mon mot : {{word}}
+            <br><br>
+            Aurevoir
+-->
+                <div class="divSubSelection" ng-repeat="myList in filterMySelection.myLists | orderBy:'name'"
+                     ng-click="removeMyListFromSelection(myList)">
+                    <button-selection mybtn-emptysection="myBtnEmptyRecipe">
+                        {{myList.name}}
+                        <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
+                        &nbsp
+                        <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-th-list thListNoBtn"></span>
+                    </button-selection>
+                </div>
+                <div class="separatorSelection" ng-show="separateMyList()"></div>
+                <div class="divSubSelection" ng-repeat="ingredientName in filterMySelection.ingredients | orderBy:'toString()'"
+                     ng-click="removeIngredientFromSelection(ingredientName)">
+                    <button-selection filter-type="Ingredient :" mybtn-emptysection="myBtnEmptyRecipe">{{ingredientName}}</button-selection>
+                </div>
+                <div class="separatorSelection" ng-show="separateIngredient()"></div>
+                <div class="divSubSelection" ng-repeat="category in filterMySelection.categories | orderBy:'toString()'"
+                     ng-click="removeCategoryFromSelection(category)">
+                    <button-selection filter-type="Categorie :" mybtn-emptysection="myBtnEmptyRecipe">{{category}}</button-selection>
+                </div>
+                <div class="separatorSelection" ng-show="separateCategorie()"></div>
+                <div class="divSubSelection" ng-repeat="origin in filterMySelection.origins | orderBy:'toString()'"
+                     ng-click="removeOriginFromSelection(origin)">
+                    <button-selection filter-type="Recette :" mybtn-emptysection="myBtnEmptyRecipe">{{origin}}</button-selection>
+                </div>
+        </div>
+    </article>
+
+
+
+
+    <!--
+    ----------------------------------------------------------------------------------------------------------
+    -------------------------   AFFINER RECHERCHE   ----------------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------
+    -->
+    <article  class="myArticle"  style=" overflow: auto;">
+
+        <div class="myArticleHeading">
+            <div class="myArticleTitle">Affiner la recherche</div>
+        </div>
+
+
+
+        <div class="myArticleBody">
+
+            <div class="divSubFilter divSubFilterTop" ng-show="filterSearch.myLists.length > 0">
+                <div class="txtTitleSubFilter" >Mes listes</div>
+                <div class="divSubSelection" ng-repeat="myList in filterSearch.myLists | orderBy:'name'" ng-click="moveMyListToSelection(myList)">
+                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">
+                        {{myList.name}}
+                        <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
+                        &nbsp
+                        <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-th-list thListNoBtn"></span>
+                    </button-filter>
+                </div>
+            </div>
+            <div class="divSubFilter">
+                <div class="txtTitleSubFilter" ng-class="{divSubFilterTop: filterSearch.myLists.length  == 0}">Filtrer avec ingrédients</div>
+                <div>
+                    <!-- NEW (into button-filter)
+                    <button  type="button" class="btn btn-defaultRecipe" >
+                        <span class="glyphicon glyphicon-plus littlePlus" ></span>
+                        <span class="txtFilter">{{myList.name}}</span>
+                    </button>-->
+                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnPlusFilter"
+                             ng-click="moveIngredientToSelection(ingredientName)"> <!-- $index indique l'index du ng-repeat -->
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <span class="txtFilter">
+                        <input class="inputRecipe" type="text" ng-model ='ingredientName' placeholder="ingredient" />
+                    </span>
+                </div>
+            </div>
+            <div class="divSubFilter">
+                <div class="txtTitleSubFilter" >Categories recettes</div>
+                <div class="elemCategorieVrac" ng-repeat="category in filterSearch.categories | orderBy:'toString()'"
+                     ng-click="moveCategoryToSelection(category)">
+                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category}}</button-filter>
+                </div>
+            </div>
+            <div class="divSubFilter">
+                <div class="txtTitleSubFilter" >Nationalités recettes</div>
+                <div class="elemColonneX2" ng-repeat="origin in filterSearch.origins | orderBy:'toString()'"
+                     ng-click="moveOriginToSelection(origin)"><!--track by $index ne fonctionne pas : $index en argument de moveOr..() correspond pas-->
+                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{origin}}</button-filter>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+</div>

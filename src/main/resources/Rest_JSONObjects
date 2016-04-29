@@ -1,0 +1,82 @@
+
+Here we are going to explain what are the JSON OBJECTS exchanged by the webServices
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Java classes from package /rest/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ - Foods : List<String>                                 >> gives the whole list of food                                 @Path("/foods")
+ - FoodCategories : List<FoodCategory>                  >> gives the whole list of foodCategory                         @Path("/foodCategories")
+
+ - ListShoppingById : ListShopping                      >> gives a listShopping selected by id                          @Path("/listShopping/{idListShopping}")
+ - PlanningById : Planning                              >> gives a planning selected by id                              @Path("/planning/{idPlanning}")
+ - Plannings : List<Planning>                           >> gives every plannings of a USER                              @Path("/plannings/{idUser}")
+ - ListsShoppingPlanning : List<ListShoppingPlanning>   >> gives every listShoppingPlanning of a USER                   @Path("/listShoppingPlanning/{idUser}")
+
+ - RecipeCategories : List<RecipeCategory>              >> gives the whole list of recipeCategory                       @Path("/recipeCategories")
+ - RecipeOrigins : List<RecipeOrigin>                   >> gives the whole list of recipeOrigin                         @Path("/recipeOrigins")
+ - RecipeTypes : List<String>                           >> gives the whole list of recipeTypes (starter, course..)      @Path("/recipeTypes")
+ - RecipeById : Recipe                                  >> gives a recipe selected by id                                @Path("/recipe/{idRecipe}")
+ - Recipes : List<Recipe>                               >> gives every recipes of a USER (selected by a recipeType)     @Path("/recipes/{recipeType}/{idUser}")
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Java classes from package /dto/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ - FoodCategory = {"id":1,"name":"viande","noRank":5}
+
+ - Ingredient = {qty:4, unit:'', food:'crepe a burritos', rayonId:3}
+
+ - ListShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
+   ListShoppingCategory = {id:0, name:'Autre', noRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
+
+
+
+ - PLANNING
+  NEW ....
+  //Planning = {name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+  //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
+  //caseMeal = {id: lunch4, nbPers:5 , noDay:4,  recipes:[recipe1, recipe2, ...]}
+  //recipe =  {id:'1',name:'burger',recipeType:'course',...}
+
+               OLD ...
+            //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
+            //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
+            //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
+            //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+   */
+   >>>>>>>>>>>    ATTENTION le planning est rempli uniquement avec ce qu'il faut,: la base ne stock pas les case vide etc,
+          ::::::::::::::::::::::   il faudra CONSTRUIRE les cases vide dans ANGULAR...
+
+
+
+  - ListShoppingPlanning = {id:4 , name:"", date:"16/07/16", listShopping:{name:.., listShoppingCategories}, planning:{name:.., lastOpen:..  ...}}
+
+  - RecipeCategory = {"id":1,"name":"viande","noRank":5}
+  - RecipeOrigin = {"id":1,"name":"viande","noRank":5}
+  - RecipeDescription = {"name":"faite cuire 5min","noDescript":1}
+
+
+  - Recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+    {
+        "id":2,
+        "name":"Burritos",
+        "pixName":"burritos.jpg",
+        "recipeType":"course",
+        "nbPerson":9,
+        "ingredients":[{"qty":200,"unit":"g","food":"steack hachÃ©","rayonId":2},{"qty":4,"unit":"","food":"sauce burger","rayonId":14}],
+        "descriptions":[{"name":"faire cuire steack","noDescip":1},{"name":"mettre dans crepe avec legumes","noDescip":2},{"name":"Votre burritos est pret !","noDescip":3}],
+        "descriptionOpen":false,
+        "origin":"mexicain",
+        "categories":[{"id":1,"name":"viande","noRank":1},{"id":3,"name":"legume","noRank":8}],
+        "isFavorite":false,
+        "isForPlanning":false,
+        "rating":0,
+        "nbVoter":0
+     }
+
