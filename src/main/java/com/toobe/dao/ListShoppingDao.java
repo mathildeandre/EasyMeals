@@ -28,11 +28,12 @@ public class ListShoppingDao {
             ResultSet res = stm.executeQuery();
 
             while(res.next()){
+                int id = res.getInt("id");
                 String name = res.getString("name");
                 int date  = res.getInt("date");
                 ListShopping listShopping = getListShoppingById(conn, res.getInt("idListShop"));
                 Planning planning = planningDao.getPlanningById(conn, res.getInt("idPlanning"));
-                ListShoppingPlanning listShoppingPlanning = new ListShoppingPlanning(name, date, listShopping, planning);
+                ListShoppingPlanning listShoppingPlanning = new ListShoppingPlanning(id, name, date, listShopping, planning);
                 list_listShoppingPlanning.add(listShoppingPlanning);
             }
         } catch (SQLException e) {

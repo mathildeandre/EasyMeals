@@ -50,7 +50,7 @@ myService.factory("restGETFactory", function ($http, $q, $log) {
 
         /* LIST SHOPPING PLANNING _ user */
         if(listsShoppingPlanning == undefined){
-            getObjFromServer('/listShoppingPlanning/2').then(function(data){ //2 = idUser
+            getObjFromServer('/rest/listShoppingPlanning/2').then(function(data){ //2 = idUser
                 listsShoppingPlanning = data;
                 $log.warn("listShoppingPlanning loaded!")
             })

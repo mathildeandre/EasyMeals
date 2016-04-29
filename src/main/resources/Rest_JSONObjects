@@ -55,7 +55,7 @@ Java classes from package /dto/
 
 
 
-  - ListShoppingPlanning = {name:"", date:"16/07/16", listShopping:{name:.., listShoppingCategories}, planning:{name:.., lastOpen:..  ...}}
+  - ListShoppingPlanning = {id:4 , name:"", date:"16/07/16", listShopping:{name:.., listShoppingCategories}, planning:{name:.., lastOpen:..  ...}}
 
   - RecipeCategory = {"id":1,"name":"viande","noRank":5}
   - RecipeOrigin = {"id":1,"name":"viande","noRank":5}

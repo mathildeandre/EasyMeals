@@ -12,6 +12,7 @@ ListShoppingPlanning = {name:"", date:"16/07/16", listShopping:{name:.., listSho
  */
 
 public class ListShoppingPlanning {
+    private int id;
     private String name;
     private int date;
     private ListShopping listShopping;
@@ -20,12 +21,20 @@ public class ListShoppingPlanning {
     public ListShoppingPlanning(){
 
     }
-
-    public ListShoppingPlanning(String name, int date, ListShopping listShopping, Planning planning) {
+    public ListShoppingPlanning(int id, String name, int date, ListShopping listShopping, Planning planning) {
+        this.id = id;
         this.name = name;
         this.date = date;
         this.listShopping = listShopping;
         this.planning = planning;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
