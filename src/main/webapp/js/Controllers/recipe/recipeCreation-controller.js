@@ -37,7 +37,9 @@ myModule.controller('RecipeCreationCtrl', function($scope, $location, $routePara
 
 
         $scope.addRecipe = function(recipe){
+            alert("blabla");
             recipe.recipeType = recipeType;
+            RecipeService.createRecipe(recipe);
             switch(recipeType){
                 case 'starter' : RecipeService.addStarter(recipe); break;
                 case 'course' :  RecipeService.addCourse(recipe); break;

@@ -3,7 +3,7 @@
  */
 
 var myService = angular.module('services');
-myService.service('RecipeService', function() {
+myService.service('RecipeService', function($http, $q, $log) {
 
     var id = 0;
         var starters = [
@@ -382,6 +382,24 @@ myService.service('RecipeService', function() {
             cocktails.push(cocktail);
         };
 
+        createRecipe = function (recipe){
+            alert("cerate :"+recipe.name);
+            var dataObj = {
+                name : recipe.name
+            };
+            return $http({
+                method: 'POST',
+                url: '/rest/recipe/create',
+                data: dataObj
+            })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.data;
+                    }
+                    return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+                })
+        }
+
 
         return {
             getCourses: getCoursesInMyFct,
@@ -394,8 +412,8 @@ myService.service('RecipeService', function() {
             addDessert: addDessert,
             addBreakfast: addBreakfast,
             addCocktail: addCocktail,
-            getSingleRecipe: getSingleRecipe
-
+            getSingleRecipe: getSingleRecipe,
+            createRecipe: createRecipe
         };
     })
 

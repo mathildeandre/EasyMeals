@@ -7,24 +7,34 @@ package com.toobe.restGET;
 import com.toobe.dto.Recipe;
 import com.toobe.model.ManagerGet;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.print.attribute.standard.Media;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/recipes/{recipeType}/{idUser}")
+@Path("/recipes")
+//localhost:8080/rest/recipes/
 public class Recipes {
 
+
+    @Path("/{recipeType}/{idUser}") //course/2
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getRecipes(@PathParam("recipeType") String recipeType, @PathParam("idUser") int idUser){
-        //localhost:8080/rest/recipes/course/2
-        List<Recipe> list = new ManagerGet().getRecipes(recipeType, idUser);
+
+        List<Recipe> list = ManagerGet.getInstance().getRecipes(recipeType, idUser);
         return Response.ok(list).build();
     }
+
+    /*
+    @Path("/create")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createRecipe(Recipe r){
+        return null;
+    }
+    */
 
 
 }

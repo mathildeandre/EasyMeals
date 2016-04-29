@@ -8,8 +8,11 @@ import java.util.List;
 
 /**
  * Created by mathilde on 27/03/2016.
+ * CLASS Singleton : only one instance at a time
  */
 public class ManagerGet {
+
+    private static ManagerGet self;
 
     private RecipeDao recipeDao;
     private ListShoppingDao listShoppingDao;
@@ -19,6 +22,16 @@ public class ManagerGet {
     private FoodDao foodDao;
     private Connection conn;
 
+    public static ManagerGet getInstance(){
+        if(self != null){
+            return self;
+        }
+        return new ManagerGet();
+    }
+
+    // TODO Close connection?
+
+    // TODO add constructor to initailize all dao ?
 
     /*********************************************/
     /************* RECIPE ***********************/
@@ -119,7 +132,7 @@ public class ManagerGet {
     }
 
 
-    public void startConnection(){
+    private void startConnection(){
          Database db = new Database();
         conn = db.getConnection();
 

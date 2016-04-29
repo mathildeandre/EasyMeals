@@ -44,16 +44,6 @@ public class ListShoppingDao {
 
 
 
-
-
-
-
-
-
-
-
-
-
   /*
     listShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
     listShoppingCategory = {id:0, name:'Autre', noRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}

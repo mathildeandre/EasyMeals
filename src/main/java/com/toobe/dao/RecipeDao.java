@@ -82,13 +82,6 @@ public class RecipeDao {
 
 
 
-
-
-
-
-
-
-
     /**
      * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
      */
@@ -142,11 +135,6 @@ public class RecipeDao {
         }
         return listRecipe;
     }
-
-
-
-
-
 
 
     /**

@@ -8,6 +8,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class TestObj {
 
+    /*
+    public TestObj(){
+
+    }*/
+
     private String name;
 
     public TestObj(String name) {
