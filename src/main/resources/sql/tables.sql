@@ -1,3 +1,4 @@
+
 CREATE TABLE Food (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, quantity int(10), unit varchar(10), idCategory int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Food_Category (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, noRank int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Ingredient (idRecipe int(10) NOT NULL, idFood int(10) NOT NULL, quantity int(10) NOT NULL, unit varchar(10), PRIMARY KEY (idRecipe, idFood));

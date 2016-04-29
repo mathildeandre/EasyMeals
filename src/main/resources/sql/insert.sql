@@ -1,4 +1,5 @@
 
+
 /* FOOD CATEGORY */
 INSERT INTO Food_Category( name, noRank) VALUES ('Autre', 1);
 INSERT INTO Food_Category( name, noRank) VALUES ('Viande',2);
@@ -173,6 +174,8 @@ INSERT INTO ListShopPlanning_User (name, idListShop, idPlanning, idUser )VALUES 
 
 
 
+INSERT INTO Food(id, name, idCategory) VALUES (?, ?, ?);
+INSERT INTO Food_Category(id, name) VALUES (?, ?);
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (?, ?, ?, ?);
 INSERT INTO Ingredient_Custom(idRecipe, idFood, idUser, quantity, unit, isHide) VALUES (?, ?, ?, ?, ?, ?);
 INSERT INTO Recipe(id, name, type, nbPerson, rating, nbVoter, idUser, idOldUser, idOrigin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);

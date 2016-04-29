@@ -23,4 +23,3 @@ DROP TABLE IF EXISTS Recipe_Origin;
 DROP TABLE IF EXISTS Rel_Recipe_Category;
 DROP TABLE IF EXISTS Rel_User_Recipe;
 DROP TABLE IF EXISTS `User`;
-
