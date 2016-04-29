@@ -1,0 +1,192 @@
+<div  ng-controller="ErrandCtrl" >
+
+    <div><h2>Mes Listes </h2></div>
+
+
+    <!---------------------------------------------------- ARTICLE TOP -------------------------------------------------->
+    <article class="myArticle artErrandTop" >
+        <div class="myArticleHeading">
+            <div class="myArticleTitle">Liste :
+                <span ng-show="!modifyingListName">
+                    {{listName}} &nbsp
+                    <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
+                </span>
+                <span ng-show="modifyingListName">
+                    <input class="inputErrand" type="text" ng-model ='listName' placeholder="Choissisez un nom" /> &nbsp
+                    <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
+                </span>
+            </div>
+
+        </div>
+        <div class="myArticleBody artBodyErrandTop" >
+            <button  ng-click="displayErrandList()" type="button" class="myBtnEmpty myBtnEmptyErrand" ng-class="{myBtnErrandFull : isDisplayErrandList, classicCursor: isDisplayErrandList}">
+                <span class="txtDarkBtn">Liste de Courses</span>
+            </button>&nbsp &nbsp
+            <button  ng-click="displayErrandPlanning()"  type="button" class="myBtnEmpty myBtnEmptyErrand" ng-class="{myBtnErrandFull : !isDisplayErrandList, classicCursor: !isDisplayErrandList}">
+                <span class="txtDarkBtn">Planning</span>
+            </button>&nbsp &nbsp
+
+            Voir liste :
+            <select class="fieldErrand"  ng-model='myListId' ng-change="changeList(myListId)">
+                <option ng-repeat="list in listsShoppingPlanning" value="{{list.id}}"> {{list.name}}</option> <!-- selected="{{isSelected(list.id)}}"  ne fonctionne pas comme ca ds option...-->
+                <!--<option value="{{currentListShoppingPlanning.id}}" selected="true">{{currentListShoppingPlanning.name}}</option>-->
+            </select>
+        </div>
+    </article>
+
+    <br><br>
+
+    <!---------------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------- ARTICLE LISTE  -------------------------------------------------->
+    <!---------------------------------------------------------------------------------------------------------------------->
+    <article class="myArticle artErrandList" ng-show="isDisplayErrandList" >
+        <div class="myArticleHeading">
+            <div class="myArticleTitle">
+                Courses
+                <span class="rightInlineBlock  glyphicon glyphicon-refresh listReset glyphiconBtn" ng-click="reinitList()"></span>
+            </div>
+        </div>
+        <div class="myArticleBody" >
+            <div ng-repeat="category in currentListShoppingPlanning.listShopping.listShoppingCategories | orderBy:'name'"  class="divCategory" ng-show="category.ingredients.length>0" ng-class="{divCategoryDone : isCategoryDone(category)}">
+                <div class="divTitleCategory">
+                    {{category.name}}
+                </div>
+                <!--<b style="border-bottom:1px solid grey; " >{{category.name}}</b>-->
+                <div class="divBodyCategory">
+                    <div ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}">
+                        - {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food}}
+
+                        &nbsp
+                        <span ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-remove ingrDone glyphiconBtn" ></span>
+                        <span ng-show="ingr.done" class="glyphicon glyphicon-ok ingrDoneOk" ></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+    <!------------------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------- ARTICLE PLANNING  -------------------------------------------------->
+    <!------------------------------------------------------------------------------------------------------------------------->
+
+
+    <article class="myArticle" ng-show="!isDisplayErrandList">
+
+        <div class="myArticleHeading" >
+            <div class="myArticleTitle">PLANNING</div>
+        </div>
+
+        <div class="myArticleBody">
+            <table class="table  table-bordered table">
+                <th class="info myTh" ></th>
+                <th class="info myTh">Lundi</th>
+                <th class="info myTh">Mardi</th>
+                <th class="info myTh">Mercredi</th>
+                <th class="info myTh">Jeudi</th>
+                <th class="info myTh">Vendredi</th>
+                <th class="info myTh">Samedi</th>
+                <th class="info myTh">Dimanche</th>
+                <!--
+                     //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
+                     //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
+                     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
+                     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+                 -->
+                <tr ng-repeat="aWeekMeal in fourWeekMeals" ng-show="aWeekMeal.show" >
+
+                    <th class="info myTh" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(aWeekMeal.typeMeal)}}</th>
+
+                    <td ng-repeat="meal in aWeekMeal.weekMeals"  style="width:13%" data-drop="true" ng-click="displayMeal(meal)" class="tdMeal" >
+                        <span ng-show="showNbPers" class="nbPers">{{meal.nbPers}} pers.</span>
+                        <br ng-show="showNbPers">
+                        <div ng-repeat="recipe in meal.recipes track by $index " class="itemToDragPlanning" style="display: inline-block;" ng-show="recipe.name">
+                            {{recipe.name}} <br>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+            <!-- DEBUG -->
+            <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+                <div ng-repeat="recipe in fourWeekMeals[1].weekMeals[0].recipes">
+                    {{recipe.name}}
+                </div>
+            </div>
+
+            <div>
+                <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
+                        <span ng-repeat="aWeekMeal in fourWeekMeals" class="checkbox checkbox-info checkbox-inline">
+                            <input type="checkbox"  ng-model="aWeekMeal.show" id="{{aWeekMeal.id}}">
+                            <label for="{{aWeekMeal.id}}" ><b>{{displayMealType(aWeekMeal.typeMeal)}}</b> &nbsp&nbsp</label>
+                        </span>
+            </div>
+            <div>
+                <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
+                        <span class="checkbox checkbox-info checkbox-inline" >
+                            <input type="checkbox"  ng-model="showNbPers" id="idShowPers">
+                            <label for="idShowPers" >Afficher nb pers. &nbsp</label>
+                        </span>
+
+            </div>
+
+            <br>
+            <br>
+
+
+            <h4>Recettes : </h4>
+            <span ng-show="recipesToDisplay.length == 0"> (selectionner un repas pour voir les recettes correspondantes)</span>
+
+
+            <!--
+            <div ng-show="true" class="divRecipes" ng-repeat="recipe in recipesToDisplay"
+                 ng-class="{recipeWithDescription: recipe.descriptionOpen, recipeWithNoDescr:!recipe.descriptionOpen}">
+
+                <recipeitem-displayinlist></recipeitem-displayinlist>
+                <recipeitem-displayopen></recipeitem-displayopen>
+            </div>
+            -->
+            <div ng-show="true" class="divRecipes" ng-repeat="recipe in recipesToDisplay">
+                <div class="recipeWithDescrip">
+                    <div class="titleOfDescrip" >
+                        {{recipe.name}}
+                        <span ng-show="recipe.adaptNbPers">({{recipe.nbPerson}} pers.)</span>
+                        <span ng-show="!recipe.adaptNbPers">({{nbPersOfMeal}} pers.)</span>
+
+                        <span class="rightInlineBlock" style="text-transform: none">
+                            <span  class="checkbox checkbox-info checkbox-inline ">
+                                <input type="checkbox"  ng-model="recipe.adaptNbPers" id="{{recipe.id}}adaptNbPers">
+                                <label for="{{recipe.id}}adaptNbPers" >Recette d'origine</label>
+                            </span>
+                        </span>
+                    </div>
+
+                    <div class="divTopRecipe">
+                        <div class="pixRecipeWithDescrip" style="background-image:url('../images/course/{{recipe.pixName}}'),url('../../images/no-image.png') ;"> </div>
+
+                        <div class="ingredientRecipe">
+                            <div class="subTitleOfDescrip"> Ingrédients </div>
+
+                            <ul  ng-show="recipe.adaptNbPers" ng-repeat="ingr in recipe.ingredients" >
+                                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food}}</span> </li>
+                            </ul>
+                            <ul  ng-show="!recipe.adaptNbPers" ng-repeat="ingr in recipe.ingredientsAdapt" >
+                                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food}}</span> </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="preparationRecipe">
+                        <div class="subTitleOfDescrip"> Préparation</div>
+                        <div> {{recipe.description}} </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </article>
+
+</div>
