@@ -288,24 +288,6 @@ public class RecipeDao {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /* USELESS .... */
     public List<String> getRecipesOld(Connection conn){
         List<String> listRecipe = new ArrayList<String>();

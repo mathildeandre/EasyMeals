@@ -29,6 +29,10 @@ public class ManagerGet {
         return new ManagerGet();
     }
 
+    public ManagerGet(){
+        recipeDao = new RecipeDao();
+    }
+
     // TODO Close connection?
 
     // TODO add constructor to initailize all dao ?

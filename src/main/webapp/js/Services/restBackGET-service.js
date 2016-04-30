@@ -34,10 +34,8 @@ myService.factory("restGETFactory", function ($http, $q, $log) {
         return listsShoppingPlanning;
     }
 
-
     function loadAllData(){
         $log.warn("ON LOAD TOUTES LES DONN2ES")
-
 
         /* COURSES */
         if(courses == undefined){
@@ -57,8 +55,6 @@ myService.factory("restGETFactory", function ($http, $q, $log) {
         }
 
     }
-
-
 
     function getObjFromServer(url) {
         return $http({
