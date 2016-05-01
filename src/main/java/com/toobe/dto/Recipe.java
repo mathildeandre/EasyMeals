@@ -4,6 +4,10 @@ package com.toobe.dto;
  * Created by mathilde on 27/03/2016.
  */
 
+import com.toobe.dto.info.RecipeCategory;
+import com.toobe.dto.info.RecipeOrigin;
+import com.toobe.dto.info.RecipeType;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,36 +33,41 @@ public class Recipe implements Serializable{
 
     private int id;
     private String name;
+    private boolean isPublic;
+    private int idUser;
     private String pixName;
-    private String recipeType;
-    private int nbPerson;
+    private RecipeType recipeType; //STARTER / COURSE / DESERT
     private List<Ingredient> ingredients;
     private List<RecipeDescription> descriptions;
-    private boolean descriptionOpen;
-    private String origin;
+    //private boolean descriptionOpen;
+    private RecipeOrigin origin;
     private List<RecipeCategory> categories;
     private boolean isFavorite;
     private boolean isForPlanning;
+    private int nbPerson;
     private int rating;
     private int nbVoter;
+    private boolean isValidated;
 
     public Recipe(){
 
     }
-    public Recipe(int id, String name, String pixName, String recipeType, int nbPerson, List<Ingredient> ingredients, List<RecipeDescription> descriptions,
-                  String origin, List<RecipeCategory> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter) {
+    public Recipe(int id, String name, boolean isPublic, int idUser, String pixName, RecipeType recipeType, int nbPerson, List<Ingredient> ingredients, List<RecipeDescription> descriptions,
+                  RecipeOrigin origin, List<RecipeCategory> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter) {
         this.id = id;
         this.name = name;
+        this.isPublic = isPublic;
+        this.idUser = idUser;
         this.pixName = pixName;
         this.recipeType = recipeType;
-        this.nbPerson = nbPerson;
         this.ingredients = ingredients;
         this.descriptions = descriptions;
-        this.descriptionOpen = false;
+        //this.descriptionOpen = false;
         this.origin = origin;
         this.categories = categories;
         this.isFavorite = isFavorite;
         this.isForPlanning = isForPlanning;
+        this.nbPerson = nbPerson;
         this.rating = rating;
         this.nbVoter = nbVoter;
     }
@@ -87,11 +96,11 @@ public class Recipe implements Serializable{
         this.pixName = pixName;
     }
 
-    public String getRecipeType() {
+    public RecipeType getRecipeType() {
         return recipeType;
     }
 
-    public void setRecipeType(String recipeType) {
+    public void setRecipeType(RecipeType recipeType) {
         this.recipeType = recipeType;
     }
 
@@ -119,19 +128,11 @@ public class Recipe implements Serializable{
         this.descriptions = descriptions;
     }
 
-    public boolean isDescriptionOpen() {
-        return descriptionOpen;
-    }
-
-    public void setDescriptionOpen(boolean descriptionOpen) {
-        this.descriptionOpen = descriptionOpen;
-    }
-
-    public String getOrigin() {
+    public RecipeOrigin getRecipeOrigin() {
         return origin;
     }
 
-    public void setOrigin(String origin) {
+    public void setRecipeOrigin(RecipeOrigin origin) {
         this.origin = origin;
     }
 
@@ -173,5 +174,29 @@ public class Recipe implements Serializable{
 
     public void setNbVoter(int nbVoter) {
         this.nbVoter = nbVoter;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public boolean isValidated() {
+        return isValidated;
+    }
+
+    public void setValidated(boolean validated) {
+        isValidated = validated;
     }
 }

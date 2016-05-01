@@ -5,8 +5,8 @@ package com.toobe.serviceRest;
  */
 
 import com.toobe.dto.Recipe;
-import com.toobe.dto.RecipeCategory;
-import com.toobe.dto.RecipeOrigin;
+import com.toobe.dto.info.RecipeCategory;
+import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.model.ManagerGet;
 
 import javax.ws.rs.*;

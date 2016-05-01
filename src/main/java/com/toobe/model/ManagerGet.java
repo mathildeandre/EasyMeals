@@ -2,8 +2,11 @@ package com.toobe.model;
 
 import com.toobe.dao.*;
 import com.toobe.dto.*;
+import com.toobe.dto.info.RecipeCategory;
+import com.toobe.dto.info.RecipeOrigin;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -31,6 +34,11 @@ public class ManagerGet {
 
     public ManagerGet(){
         recipeDao = new RecipeDao();
+        listShoppingDao = new ListShoppingDao();
+        planningDao = new PlanningDao();
+        recipeCategoryDao = new RecipeCategoryDao();
+        recipeOriginDao = new RecipeOriginDao();
+        foodDao = new FoodDao();
     }
 
     // TODO Close connection?
@@ -42,37 +50,36 @@ public class ManagerGet {
     /*******************************************/
     public List<Recipe> getRecipes(String recipeType, int idUser){
         startConnection();
-        recipeDao = new RecipeDao();
         return recipeDao.getRecipes(conn, recipeType, idUser);
     }
      public List<Recipe> getRecipesPublicNotValidated(String recipeType){
         startConnection();
-        recipeDao = new RecipeDao();
         return recipeDao.getRecipesPublicNotValidated(conn, recipeType);
     }
 
 
     public Recipe getRecipeById(int idRecipe){
         startConnection();
-        recipeDao = new RecipeDao();
         return recipeDao.getRecipeById(conn, idRecipe);
     }
 
 
     public List<String> getRecipeTypes(){
         startConnection();
-        recipeDao = new RecipeDao();
         return recipeDao.getRecipeTypes(conn);
     }
     public List<RecipeCategory> getRecipeCategories(){
         startConnection();
-        recipeCategoryDao = new RecipeCategoryDao();
         return recipeCategoryDao.getRecipeCategories(conn);
     }
     public List<RecipeOrigin> getRecipeOrigins(){
         startConnection();
-        recipeOriginDao = new RecipeOriginDao();
         return recipeOriginDao.getRecipeOrigins(conn);
+    }
+
+    public boolean createRecipe(Recipe r){
+        startConnection();
+        return recipeDao.createRecipe(conn,r);
     }
 
 
@@ -81,12 +88,10 @@ public class ManagerGet {
     /*********************************************/
     public List<Planning> getPlanningsOfUser(int idUser){
         startConnection();
-        planningDao = new PlanningDao();
         return planningDao.getPlanningsOfUser(conn, idUser);
     }
     public Planning getPlanningById(int idPlanning){
         startConnection();
-        planningDao = new PlanningDao();
         return planningDao.getPlanningById(conn, idPlanning);
     }
 
@@ -95,13 +100,11 @@ public class ManagerGet {
     /**************************************************/
     public ListShopping getListShoppingById(int idListShopping){
         startConnection();
-        listShoppingDao = new ListShoppingDao();
         return listShoppingDao.getListShoppingById(conn, idListShopping);
     }
 
     public List<ListShoppingPlanning> getListsShoppingPlanning(int idUser){
         startConnection();
-        listShoppingDao = new ListShoppingDao();
         return listShoppingDao.getListsShoppingPlanning(conn, idUser);
     }
 
@@ -114,24 +117,20 @@ public class ManagerGet {
     /*******************************************/
     public List<Food> getFoods(){
         startConnection();
-        foodDao = new FoodDao();
         return foodDao.getFoods(conn);
     }
     public List<Food> getFoodsNotValidated(){
         startConnection();
-        foodDao = new FoodDao();
         return foodDao.getFoodsNotValidated(conn);
     }
 
 
     public List<String> getFoodsString(){
         startConnection();
-        foodDao = new FoodDao();
         return foodDao.getFoodsString(conn);
     }
     public List<FoodCategory> getFoodCategories(){
         startConnection();
-        foodDao = new FoodDao();
         return foodDao.getFoodCategories(conn);
     }
 
@@ -139,6 +138,13 @@ public class ManagerGet {
     private void startConnection(){
          Database db = new Database();
         conn = db.getConnection();
+    }
 
+    private void closeConnection(){
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

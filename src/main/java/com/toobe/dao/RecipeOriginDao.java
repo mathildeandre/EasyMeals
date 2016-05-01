@@ -1,6 +1,6 @@
 package com.toobe.dao;
 
-import com.toobe.dto.RecipeOrigin;
+import com.toobe.dto.info.RecipeOrigin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,4 +41,5 @@ public class RecipeOriginDao {
         }
         return recipeOriginList;
     }
+
 }

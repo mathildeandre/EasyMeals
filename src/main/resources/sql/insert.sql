@@ -174,14 +174,26 @@ INSERT INTO ListShopPlanning_User (name, idListShop, idPlanning, idUser )VALUES 
 
 
 
-INSERT INTO Food(id, name, idCategory) VALUES (?, ?, ?);
-INSERT INTO Food_Category(id, name) VALUES (?, ?);
+INSERT INTO Food(id, name, idCategory, isValidated) VALUES (?, ?, ?, ?);
+INSERT INTO Food_Category(id, name, noRank) VALUES (?, ?, ?);
+INSERT INTO Food_Recipe(id, name, idType, idFood, quantity, unit, nbPerson, pixName, idOrigin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (?, ?, ?, ?);
 INSERT INTO Ingredient_Custom(idRecipe, idFood, idUser, quantity, unit, isHide) VALUES (?, ?, ?, ?, ?, ?);
-INSERT INTO Recipe(id, name, type, nbPerson, rating, nbVoter, idUser, idOldUser, idOrigin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-INSERT INTO Recipe_Category(id, name) VALUES (?, ?);
+INSERT INTO Ingredient_ListShop(idFood, idListShopCategory, quantity, unit) VALUES (?, ?, ?, ?);
+INSERT INTO List_Shopping(id, name) VALUES (?, ?);
+INSERT INTO ListShopping_Category(id, idListShop, idFoodCategory) VALUES (?, ?, ?);
+INSERT INTO ListShopPlanning_User(id, name, `date`, idListShop, idPlanning, idUser) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO Planning(id, lastOpen, name, idUser) VALUES (?, ?, ?, ?);
+INSERT INTO Planning_CaseMeal(id, noDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?, ?);
+INSERT INTO Planning_WeekMeal(id, weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?, ?);
+INSERT INTO Recipe(id, name, idType, isPublic, idUser, rating, nbVoter, nbPerson, pixName, idOrigin, isValidated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO Recipe_Category(id, name, noRank) VALUES (?, ?, ?);
 INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (?, ?, ?);
-INSERT INTO Recipe_Origin(id, name) VALUES (?, ?);
+INSERT INTO Recipe_Origin(id, name, noRank) VALUES (?, ?, ?);
+INSERT INTO Recipe_Type(id, name) VALUES (?, ?);
+INSERT INTO Rel_Food_Category(idCategory, idFoodRecipe) VALUES (?, ?);
+INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);
 INSERT INTO Rel_Recipe_Category(idCategory, idRecipe) VALUES (?, ?);
 INSERT INTO Rel_User_Recipe(idRecipe, idUser, isFavorite, isForPlanning, rating, isHide) VALUES (?, ?, ?, ?, ?, ?);
 INSERT INTO `User`(id, name, pwd, email) VALUES (?, ?, ?, ?);
+

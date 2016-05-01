@@ -70,15 +70,19 @@ public class ListShoppingDao {
                 List<Ingredient> ingredientList = new ArrayList<Ingredient>();;
                 Ingredient ingr;
                 int qty, idCategoryIngr;
-                String unit, food;
-                stm = conn.prepareStatement("SELECT quantity, unit, name, idCategory FROM Ingredient_ListShop JOIN FOOD ON Ingredient_ListShop.idFood = food.id WHERE Ingredient_ListShop.idListShopCategory = "+idListShoppingCategory);
+                int idFood;
+                String unit, nameFood;
+                boolean isValidated;
+                stm = conn.prepareStatement("SELECT quantity, unit, idFood,  name, idCategory, isValidated FROM Ingredient_ListShop JOIN FOOD ON Ingredient_ListShop.idFood = food.id WHERE Ingredient_ListShop.idListShopCategory = "+idListShoppingCategory);
                 ResultSet resIngredient = stm.executeQuery();
                 while(resIngredient.next()){
                     qty = resIngredient.getInt("quantity");
                     unit = resIngredient.getString("unit");
-                    food = resIngredient.getString("name");
+                    idFood = resIngredient.getInt("idFood");
+                    nameFood = resIngredient.getString("name");
                     idCategoryIngr = resIngredient.getInt("idCategory");
-                    ingr = new Ingredient(qty, unit, food, idCategoryIngr);
+                    isValidated = resIngredient.getBoolean("isValidated");
+                    ingr = new Ingredient(qty, unit, new Food(new Long(idFood), nameFood, idCategoryIngr, isValidated), idCategoryIngr);
                     ingredientList.add(ingr);
                 }
                 ListShoppingCategory listShoppingCategory = new ListShoppingCategory(idListShoppingCategory, nameFoodCategory, noRank, ingredientList);
