@@ -309,7 +309,6 @@ h6 {
     outline: 0;
 
 }
-
 .myBtnEmptyPlanning{
     padding: 4px 6px 5px 6px;
     border:1px solid #5bc0de;
@@ -321,6 +320,14 @@ h6 {
     background-color: #95d6e9;
     outline: 0;
 
+}
+
+.btnAddQty{
+    padding:10px;
+    padding-right: 15px;
+    padding-left: 17px;
+    font-size: 20px;
+    //text-transform: lowercase;
 }
 .myBtnRecipeType{
 
@@ -339,22 +346,26 @@ h6 {
 }
 
 .myBtnEmptyErrand{
-    padding: 4px 6px 5px 6px;
+    //padding: 4px 6px 5px 6px;
     //border:1px solid #ff5050; //#ff3385;
     //color: #ff5050; //#ff3385;
-    border:1px solid #ff80bf;
-    color: #ff80bf;
+    //border:1px solid #ff80bf; //rose anciennement;
+    //color: #ff80bf;
+    padding: 6px 10px 7px 10px;
+    border: 1px solid #d9534f;
 }
 .myBtnEmptyErrand:hover,
 .myBtnEmptyErrand:focus{
     color:darkslategrey;
     //background-color: #ff9999; // #ff80b3 ;
-    background-color: #ffb3d9;
+    //background-color: #ffb3d9;
+    background-color: #e89996;
     outline: 0;
 
 }
 .myBtnErrandFull{
-    background-color: #ffb3d9;
+    //background-color: #ffb3d9;
+    background-color: #e89996;
 }
 
 
@@ -375,6 +386,9 @@ h6 {
 
 .txtDarkBtn{
     color:darkslategrey;
+}
+.txtWhiteBtn{
+    color: antiquewhite;
 }
 
 /*******************************************************************************************************************************************************************************/
@@ -399,7 +413,7 @@ h6 {
 
 .fieldPlanning{
     padding: 5px;
-    width:100px;
+    width:130px;
     border-radius:3px;
     text-align: center;
 
@@ -418,11 +432,12 @@ h6 {
     text-align: center;
 
     border:1px solid lightgrey;
-    color: #ffb3d9; //#ff80bf;
+    //color: #ffb3d9; //#ff80bf;
+    color: #d9534f;
 }
 .fieldErrand:focus {
     outline: 0; /*2px solid #d9534f;*/
-    //border: 1px solid #ffb3d9 ;
+    border: 1px solid #d9534f ;
 }
 
 
@@ -471,12 +486,12 @@ h6 {
     border:1px solid lightgrey;
     border:none;
     color: darkslategrey;
-    width: 80%;
+    width: 60%;
 }
 .inputErrand:focus{
     /*border: 1px solid #f5c88a ;*/
     outline: 0; /*2px solid #d9534f;*/
-    border: 1px solid hotpink ;
+    border: 1px solid #d9534f ;
 }
 
 /**********************************************************************  TRASH  ********************************************************************************************/
@@ -715,7 +730,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:#d9534f;
 }
 .activeInNavBarErrand > a {
-    color:deeppink;
+    //color:deeppink;
+    color:#d9534f;
 
 }
 
@@ -979,9 +995,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 .pixRecipeWithDescrip{
-    width:44%;/*240px;*/
+    width:25vw;/*240px;*/
+    height:14vw;
     min-width : 240px;
-    height:160px; /* a modifier dynamiquement (avec javascript en recuperant la largeur et en faisant 2/3)*/
+    min-height:160px; /* a modifier dynamiquement (avec javascript en recuperant la largeur et en faisant 2/3)*/
     background-repeat:no-repeat;
     background-size:100% 100%; /*100% not enought*/
     background-position:top left;
@@ -989,7 +1006,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
     display: inline-block;
     margin-left:2%;
     border-radius:3px;
-
 }
 .ingredientRecipe{
     display: inline-block;
@@ -1390,7 +1406,21 @@ select::selection,option::selection { /* ne fonctionne pas  */
     vertical-align: top;
 
 }
+.divPlanListShopRightAddIngrLeft{
+    display:inline-block;
+    //width : 45%;
+    overflow: hidden;
+    vertical-align: top;
+    margin-right:1vw;
 
+}
+.divPlanListShopRightAddIngrRight{
+    display:inline-block;
+    //width : 45%;
+    overflow: hidden;
+    vertical-align: top;
+
+}
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
 /*******************************************************************    --end--  PLANNING     **************************************************************************************************/
@@ -1587,8 +1617,12 @@ textarea.fieldExpense {
 .artBodyErrandTop{
     font-size: 20px;
 }
+.divErrandTop{
+    font-size: 22px;
+    margin: 30px 0 40px 0;
+}
 .artErrandList{
-    width: 35%;
+    width: 38%;
 }
 .artErrandPlanning{
     width: 90%;
@@ -1628,6 +1662,15 @@ textarea.fieldExpense {
 .tdMeal:hover{
     cursor: pointer;
     background-color: lightgrey;
+}
+
+
+.itemColorErrand{
+    color: #d9534f;
+}
+.thErrand{
+    background-color: #e89996;
+    color: white;
 }
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/

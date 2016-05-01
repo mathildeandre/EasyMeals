@@ -121,7 +121,7 @@ fin  fonctionne !!
     var getRecipes = function(recipeType){
         switch(recipeType){
             case 'starter' : return RecipeService.getStarters();
-            case 'course' :  return restGETFactory.getCourses();
+            case 'course' :  return RecipeService.getCourses();//restGETFactory.getCourses();
             case 'dessert' : return RecipeService.getDesserts();
             case 'breakfast' : return RecipeService.getBreakfasts();
             case 'cocktail' : return RecipeService.getCocktails();

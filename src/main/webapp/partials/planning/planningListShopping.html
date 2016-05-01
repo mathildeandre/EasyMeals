@@ -4,7 +4,7 @@
 
     <article  class="myArticle artPlanningListShopping" id="ListShopping">
         <div class="myArticleHeading" >
-            <div class="myArticleTitle">Liste de courses</div>
+            <div class="myArticleTitle">Votre Liste de Courses</div>
         </div>
 
         <div class="myArticleBody"  ng-controller="CustomizeShoppingCtrl">
@@ -20,29 +20,34 @@
                 <br>
             </div>
 
-            <div> <button class="btn btn-info" ng-click="calculListShopping()">Générer liste de course</button> </div>
-            <div> <button class="btn btn-info" ng-click="testAnchor()">See anchor</button> </div>
+            <div ng-show="!showListShopping()"> <button class="btn btn-info" ng-click="calculListShopping()">Générer liste de course</button> </div>
+            <div ng-show="showListShopping()"> <button class="btn btn-info" ng-click="calculListShopping()">Re-générer liste de course</button> </div>
+            <!--<div> <button class="btn btn-info" ng-click="testAnchor()">See anchor</button> </div>-->
 
+            <div ng-show="!showListShopping()">
+                <br>
+                (cliquer sur "Générer.." pour voir apparaitre la liste de course)
+            </div>
 
 
             <div ng-show="showListShopping()" class="divPlanningListShop">
 
                 <div class="divPlanListShopLeft" id="listCategoryShop">
-                    <h5>Votre Liste avec Categories</h5>
+                    <!--<h5>Votre Liste avec Categories</h5>-->
 
                     <div ng-repeat="category in categories | orderBy:'name'  ">
                         <div style="border:1px solid lightgrey; border-radius:5px; margin:5px; padding:7px; " ng-show="category.ingredients.length>0">
 
                             <b style="border-bottom:1px solid grey; " >{{category.name}}</b>
-                            <div ng-repeat="ingr in category.ingredients | orderBy:'food'">
+                            <div style="margin: 5px 0; font-size:16px;" ng-repeat="ingr in category.ingredients | orderBy:'food'">
                                 <div>
                                     -
                                     <span ng-show="!modifQty">{{ingr.qty | number:1}}</span>
                                     <span ng-show="modifQty"><input style="width:60px" type="number" ng-model ='ingr.qty' min="0" /></span>
                                     {{getIngrUnitDisplay(ingr.unit) }} {{ingr.food}}
-                                    <button type="button" class="btn btn-default" ng-click="moveCategoryToList(category, ingr)"> <!-- $index indique l'index du ng-repeat -->
+                                    <!--<button type="button" class="btn btn-default" ng-click="moveCategoryToList(category, ingr)">
                                         <span class="glyphicon glyphicon-minus"></span>
-                                    </button>
+                                    </button>-->
                                     <span ng-click="trashIngredientFromCategorie(category, ingr)" class="glyphicon glyphicon-trash" style="color:indianred"></span>
 
                                 </div>
@@ -50,12 +55,15 @@
                         </div>
                     </div>
                     <br>
-                    <br>
-                    <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="saveListShopping()"> SAUVEGARDER LISTE </button>
 
                 </div>
 
                 <div class="divPlanListShopRight">
+
+
+
+
+                    <!--
                     <div>
                         <h5> Selectionner categorie pour inserer ingredients </h5>
                         <span class="glyphicon glyphicon-arrow-left" style="margin-left:50px; font-size: 30px; color:#5bc0de"></span>
@@ -65,11 +73,9 @@
                             </label>
                         </div>
                         <input style="width:90px" type="text" ng-model ='catName' placeholder="chocolat" />
-                        <button type="button" class="btn btn-default" ng-click="addCategoryList(catName)"> <!-- $index indique l'index du ng-repeat -->
+                        <button type="button" class="btn btn-default" ng-click="addCategoryList(catName)">
                             <span class="glyphicon glyphicon-plus"></span> categorie
                         </button>
-                        <button class="btn btn-default" ng-click="toggleModifQty()" ng-show="!modifQty">Modifier Quantités</button>
-                        <button class="btn btn-info" ng-click="toggleModifQty()" ng-show="modifQty">Modification ok</button>
                     </div>
                     <div >
                         <h5>Liste temporaire</h5>
@@ -85,18 +91,41 @@
                                 <span ng-click="trashIngredientFromListShop(ingr)" class="glyphicon glyphicon-trash" style="color:indianred"></span>
                             </div>
                         </div>
-                        <input style="width:30px" type="number" ng-model ='newIngredient.qty' min="0"  placeholder="1" />
-                        <input style="width:60px" type="text" ng-model ='newIngredient.unit' placeholder="tablette" />
-                        <input style="width:90px" type="text" ng-model ='newIngredient.food' placeholder="chocolat" />
-                        <button type="button" class="btn btn-default" ng-click="addIngredientList(newIngredient)">
-                            <span class="glyphicon glyphicon-plus"></span> ingredient
+
+
+
+                        -->
+                    <div class="divPlanListShopRightAddIngrLeft">
+                        Ajouter Ingredient :
+                        <input style="width:40px" type="number" ng-model ='newIngredient.qty' min="0"  placeholder="50" />
+                        <input style="width:60px" type="text" ng-model ='newIngredient.unit' placeholder="g" />
+                        <input style="width:100px" type="text" ng-model ='newIngredient.food' placeholder="chocolat" />
+
+                        <br>
+                        dans Categorie :
+                        <select class="fieldPlanning"  ng-model='categoryChosenCreateIngr'>
+                            <option ng-repeat="category in categories" value="{{category.name}}"> {{category.name}}</option>
+                        </select>
+                    </div>
+                    <div class="divPlanListShopRightAddIngrRight">
+                        <button type="button" class="myBtnEmpty myBtnEmptyPlanning btnAddQty" ng-click="addNewIngr(newIngredient, categoryChosenCreateIngr )">
+                            <span class="glyphicon glyphicon-plus"></span> <!-- + Ingredient-->
                         </button>
                     </div>
+
+                    <br>
+                    <br>
+                    <br>
+                    <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="toggleModifQty()" ng-show="!modifQty">Modifier Quantités</button>
+                    <button class="btn btn-info" ng-click="toggleModifQty()" ng-show="modifQty">Valider Modification</button>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="saveListShopping()">SAUVEGARDER LISTE</button>
+
                 </div>
-
             </div>
-
-            <div id="yo">
         </div>
     </article>
 

@@ -84,10 +84,32 @@ myModule.controller('CustomizeShoppingCtrl', function($scope, $log, PlanningServ
 
     $scope.newIngredient = {qty:null, unit:'', food:''};
 
+
+    $scope.addNewIngr = function(ingr, categoryName){
+        var newIngr = JSON.parse(JSON.stringify(ingr));//NEW OBJECT
+
+        for(var i=0; i<$scope.categories.length; i++){
+            if($scope.categories[i].name == categoryName){
+                $scope.categories[i].ingredients.push(newIngr);
+            }
+        }
+    }
+    $scope.trashIngredientFromCategorie = function(category, ingr){
+        var index = category.ingredients.indexOf(ingr); //fonctionne aussi tres bien
+        category.ingredients.splice(index, 1);
+    }
+
+
+
+    /*************************************************************************************
+     * ************************* USELES BELOW ********************************************
+     * ***********************************************************************************/
     $scope.addIngredientList = function(ingr){
         var newIngr = JSON.parse(JSON.stringify(ingr));//NEW OBJECT
         $scope.listShop.push(newIngr);
     }
+
+
     $scope.addCategoryList = function(catName){
         var newCat = {name:catName, ingredients:[]};//JSON.parse(JSON.stringify(cat));//NEW OBJECT
         $scope.categories.push(newCat);
@@ -97,10 +119,6 @@ myModule.controller('CustomizeShoppingCtrl', function($scope, $log, PlanningServ
     $scope.trashIngredientFromListShop = function(ingr){
         var index = $scope.listShop.indexOf(ingr); //fonctionne aussi tres bien
         $scope.listShop.splice(index, 1);
-    }
-    $scope.trashIngredientFromCategorie = function(category, ingr){
-        var index = category.ingredients.indexOf(ingr); //fonctionne aussi tres bien
-        category.ingredients.splice(index, 1);
     }
     $scope.moveListToCategory = function(ingr){
         for(var i=0; i<$scope.categories.length; i++){

@@ -9,14 +9,16 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restGETF
 
 
     $scope.listsShoppingPlanning = restGETFactory.getListsShoppingPlanning();
-    $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[0];
+    $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[1];
 
+    $scope.listName = $scope.currentListShoppingPlanning.name;
 
     $scope.changeList = function(idListSelected){
-        $log.debug("changeLIst : id "+idListSelected)
+        $log.debug("changeLIst : id "+idListSelected.id)
         for(var i=0; i<$scope.listsShoppingPlanning.length; i++){
-            if(idListSelected == $scope.listsShoppingPlanning[i].id){
+            if(idListSelected.id == $scope.listsShoppingPlanning[i].id){
                 $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[i];
+                $scope.listName = $scope.currentListShoppingPlanning.name;
             }
         }
     }
@@ -28,7 +30,6 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restGETF
 
     $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
 
-    $scope.listName = "holidays week 12/04/2016";
 
     $scope.myLists = ErrandService.getLists();
     $scope.categories = ErrandService.getIngrCategories();
@@ -87,8 +88,16 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restGETF
         category.ingredients[index].done = true;;
 
     }
-
     $scope.reinitList = function(){
+        var categories = $scope.currentListShoppingPlanning.listShopping.listShoppingCategories;
+        for(var i=0; i<categories.length; i++){
+            for(var j=0; j<categories[i].ingredients.length; j++){
+                categories[i].ingredients[j].done = false;
+            }
+
+        }
+    }
+    $scope.reinitListOLD = function(){
         for(var i=0; i<$scope.categories.length; i++){
             for(var j=0; j<$scope.categories[i].ingredients.length; j++){
                 $scope.categories[i].ingredients[j].done = false;
@@ -123,8 +132,9 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restGETF
         }
     }
     $scope.modifyingListName = false;
-    $scope.toggleModifyListName = function(){
+    $scope.toggleModifyListName = function(listName){
         $scope.modifyingListName = !$scope.modifyingListName;
+
     }
 
     $scope.isDisplayErrandList = true;
