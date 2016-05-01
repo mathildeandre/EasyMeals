@@ -4,15 +4,11 @@
 
 var myService = angular.module('services');
 
-myService.factory("restGETFactory", function ($http, $q, $log) {
-
-    return {
-        getCourses: getCourses,
-        getListsShoppingPlanning: getListsShoppingPlanning,
-        loadAllData : loadAllData
-    };
+myService.service("restGETFactory", function ($http, $q, $log) {
 
 
+
+    var idListShop = 14;
     var starter = [];
     var courses = [];
     var desserts = [];
@@ -32,6 +28,11 @@ myService.factory("restGETFactory", function ($http, $q, $log) {
     function getListsShoppingPlanning(){
         $log.info("[getListsShoppingPlanning]");
         return listsShoppingPlanning;
+    }
+    function addListShoppingPlanning(listSP){
+        listSP.id = idListShop++;
+        idListShop = idListShop+1;
+        listsShoppingPlanning.push(listSP);
     }
 
     function loadAllData(){
@@ -69,6 +70,12 @@ myService.factory("restGETFactory", function ($http, $q, $log) {
             })
     };
 
+    return {
+        getCourses: getCourses,
+        getListsShoppingPlanning: getListsShoppingPlanning,
+        addListShoppingPlanning: addListShoppingPlanning,
+        loadAllData : loadAllData
+    };
     /*
     function getCoursesServer() {
         return $http({
