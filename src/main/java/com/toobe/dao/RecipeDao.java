@@ -5,6 +5,8 @@ import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
 import com.toobe.dto.RecipeDescription;
+import com.toobe.dto.info.RecipeOrigin;
+import com.toobe.dto.info.RecipeType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -69,7 +71,7 @@ public class RecipeDao {
     }
     */
 
-
+    //TODO
     public Recipe getRecipeById(Connection conn, int idRecipe) {
         Recipe recipe = new Recipe();
         PreparedStatement stm;
@@ -171,6 +173,15 @@ public class RecipeDao {
         return listRecipe;
     }
 
+    /**
+     * SELECT RECIPE.id, RECIPE.name, isPublic, idUser, rating, nbVoter, nbPerson, pixName, idOrigin, RECIPE.isValidated, idType, RECIPE_TYPE.name,
+     food.id, food.name, food.idCategory, foodCat.name, foodCat.noRank, food.isValidated, ingr.quantity, ingr.unit
+     FROM RECIPE, RECIPE_TYPE, INGREDIENT ingr, FOOD food, FOOD_CATEGORY foodCat
+     WHERE RECIPE.idType=RECIPE_TYPE.id
+     AND ingr.idRecipe=RECIPE.id
+     AND ingr.idFood=food.id
+     AND food.idCategory=foodCat.id;
+     */
 
     /**
      * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
@@ -188,18 +199,18 @@ public class RecipeDao {
                 idType = res.getInt("id");
             }
             /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (mnt idType)*/
-            stm = conn.prepareStatement("SELECT recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, rating, nbVoter  " +
-                    "FROM RECIPE JOIN Recipe_Origin ON recipe.idOrigin = recipe_origin.id " +
+            stm = conn.prepareStatement("SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.noRank, rating, nbVoter, isValidated " +
+                    "FROM RECIPE JOIN Recipe_Origin ro ON recipe.idOrigin = ro.id " +
                     "WHERE isPublic = 1 AND idType = " + idType +
                     " UNION " +
-                    "SELECT  recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, rating, nbVoter " +
-                    "FROM RECIPE JOIN Recipe_Origin ON recipe.idOrigin = recipe_origin.id " +
+                    "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.noRank, rating, nbVoter, isValidated " +
+                    "FROM RECIPE JOIN Recipe_Origin ro ON recipe.idOrigin = ro.id " +
                     "WHERE idUser = " + idUser + " AND idType = " + idType);
             ResultSet resRecipe = stm.executeQuery();
 
-            int idRecipe, nbPerson, rating, nbVoter;
-            String name, pixName, origin;
-            boolean isFavorite, isForPlanning;
+            int idRecipe, nbPerson, rating, nbVoter, idOrigin, rankOrigin;
+            String name, pixName, nameOrigin;
+            boolean isFavorite, isForPlanning, isPublic, isValidated;
 
             while (resRecipe.next()) {
                 idRecipe = resRecipe.getInt("idRecipe");
@@ -215,15 +226,23 @@ public class RecipeDao {
                 ;
                 /* ingredientList, descriptionList & categoryList construitent au dessus */
                 name = resRecipe.getString("recipeName");
+                isPublic = resRecipe.getBoolean("isPublic");
                 pixName = resRecipe.getString("pixName");
                 nbPerson = resRecipe.getInt("nbPerson");
-                origin = resRecipe.getString("recipeOriginName");
+                idOrigin= resRecipe.getInt("idRo");
+                nameOrigin = resRecipe.getString("nameRo");
+                rankOrigin = resRecipe.getInt("noRank");
                 isFavorite = false;
                 isForPlanning = false;
                 rating = resRecipe.getInt("rating");
                 nbVoter = resRecipe.getInt("nbVoter");
+                isValidated = resRecipe.getBoolean("isValidated");
 
-                recipe = new Recipe();//(idRecipe, name, pixName, recipeType, nbPerson, ingredientList, descriptionList, origin, categoryList, isFavorite, isForPlanning, rating, nbVoter);
+                //REcipe Type
+                //
+                recipe = new Recipe(idRecipe, name, isPublic, idUser, pixName, new RecipeType(idType, name), nbPerson,
+                ingredientList, descriptionList, new RecipeOrigin(idOrigin, nameOrigin, rankOrigin), categoryList, isFavorite, isForPlanning, rating, nbVoter,
+                isValidated);//(idRecipe, name, pixName, recipeType, nbPerson, ingredientList, descriptionList, origin, categoryList, isFavorite, isForPlanning, rating, nbVoter);
                 listRecipe.add(recipe);
             }
         } catch (SQLException e) {

@@ -42,7 +42,7 @@ public class Recipe implements Serializable{
     //private boolean descriptionOpen;
     private RecipeOrigin origin;
     private List<RecipeCategory> categories;
-    private boolean isFavorite;
+    private boolean isFavorite; //coeur
     private boolean isForPlanning;
     private int nbPerson;
     private int rating;
@@ -52,8 +52,10 @@ public class Recipe implements Serializable{
     public Recipe(){
 
     }
-    public Recipe(int id, String name, boolean isPublic, int idUser, String pixName, RecipeType recipeType, int nbPerson, List<Ingredient> ingredients, List<RecipeDescription> descriptions,
-                  RecipeOrigin origin, List<RecipeCategory> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter) {
+    public Recipe(int id, String name, boolean isPublic, int idUser, String pixName, RecipeType recipeType, int nbPerson,
+                  List<Ingredient> ingredients, List<RecipeDescription> descriptions, RecipeOrigin origin,
+                  List<RecipeCategory> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter,
+                  boolean isValidated) {
         this.id = id;
         this.name = name;
         this.isPublic = isPublic;
@@ -70,6 +72,7 @@ public class Recipe implements Serializable{
         this.nbPerson = nbPerson;
         this.rating = rating;
         this.nbVoter = nbVoter;
+        this.isValidated = isValidated;
     }
 
     public int getId() {

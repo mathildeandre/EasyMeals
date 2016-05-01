@@ -13,6 +13,11 @@ public class RecipeType {
 
     }
 
+    public RecipeType(int idType, String name){
+        this.idType = idType;
+        this.nameType = name;
+    }
+
     public int getIdType() {
         return idType;
     }

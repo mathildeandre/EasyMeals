@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class ListShoppingDao {
 
-
-
     public List<ListShoppingPlanning> getListsShoppingPlanning(Connection conn, int idUser){
         PreparedStatement stm;
 
@@ -94,7 +92,4 @@ public class ListShoppingDao {
         }
         return listShopping;
     }
-
-
-
 }
