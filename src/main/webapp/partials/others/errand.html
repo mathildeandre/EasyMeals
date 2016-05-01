@@ -16,9 +16,9 @@
         <!--<select class="fieldErrand"  ng-model='myListId' ng-change="changeList(myListId)">
             <option ng-repeat="list in listsShoppingPlanning" value="{{list.id}}"> {{list.name}}</option> d(list.id)}}"
         </select>-->
-        <select class="fieldErrand"  ng-model='myListId' ng-change="changeList(myListId)"
-                ng-init="myListId=currentListShoppingPlanning"
-                ng-options='list.id for list in listsShoppingPlanning' ></select>
+        <select class="fieldErrand"  ng-model='myList' ng-change="changeList(myList)"
+                ng-init="myList=currentListShoppingPlanning"
+                ng-options='list.name for list in listsShoppingPlanning' ></select>
                     <!-- ng options : list.name sera l'affichage et list sera passé dans ng-model-->
 
 
@@ -140,7 +140,7 @@
                      //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
                      //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
                  -->
-                <tr ng-repeat="aWeekMeal in fourWeekMeals" ng-show="aWeekMeal.show" >
+                <tr ng-repeat="aWeekMeal in currentListShoppingPlanning.planning.weekMeals" ng-show="aWeekMeal.show" >
 
                     <th class="myTh thErrand" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(aWeekMeal.typeMeal)}}</th>
 

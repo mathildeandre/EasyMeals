@@ -2,7 +2,7 @@
  * Created by fabien on 14/03/2016.
  */
 
-myModule.controller('CustomizeShoppingCtrl', function($scope, $log, PlanningService, RecipeService, ErrandService,restGETFactory, fourTypeMeal, units, steps) {
+myModule.controller('CustomizeShoppingCtrl', function($scope, $log, $location, PlanningService, RecipeService, ErrandService,restGETFactory, fourTypeMeal, units, steps) {
 
 
 
@@ -28,6 +28,8 @@ myModule.controller('CustomizeShoppingCtrl', function($scope, $log, PlanningServ
         ErrandService.setIngrCategories($scope.categories);
         ErrandService.setPlanning($scope.fourWeekMeals);
         alert("list sauvegarder");
+
+        $location.path("/errand");//$location.hash(recipe.id);
     }
 
 

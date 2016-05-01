@@ -9,16 +9,17 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restGETF
 
 
     $scope.listsShoppingPlanning = restGETFactory.getListsShoppingPlanning();
-    $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[1];
 
-    $scope.listName = $scope.currentListShoppingPlanning.name;
+    $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[$scope.listsShoppingPlanning.length-1];
 
-    $scope.changeList = function(idListSelected){
-        $log.debug("changeLIst : id "+idListSelected.id)
+    //$scope.listName = $scope.currentListShoppingPlanning.name;
+
+    $scope.changeList = function(listSelected){
+        $log.debug("changeLIst : id "+listSelected.id)
         for(var i=0; i<$scope.listsShoppingPlanning.length; i++){
-            if(idListSelected.id == $scope.listsShoppingPlanning[i].id){
+            if(listSelected.id == $scope.listsShoppingPlanning[i].id){
                 $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[i];
-                $scope.listName = $scope.currentListShoppingPlanning.name;
+                //$scope.listName = $scope.currentListShoppingPlanning.name;
             }
         }
     }
@@ -31,9 +32,9 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restGETF
     $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
 
 
-    $scope.myLists = ErrandService.getLists();
-    $scope.categories = ErrandService.getIngrCategories();
-    $scope.fourWeekMeals = ErrandService.getPlanning();
+    //$scope.myLists = ErrandService.getLists();
+    //$scope.categories = ErrandService.getIngrCategories();
+    //$scope.fourWeekMeals = ErrandService.getPlanning();
 
 
 

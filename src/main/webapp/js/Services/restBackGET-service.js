@@ -39,7 +39,7 @@ myService.service("restGETFactory", function ($http, $q, $log) {
         $log.warn("ON LOAD TOUTES LES DONN2ES")
 
         /* COURSES */
-        if(courses == undefined){
+        if(courses == undefined || courses.length == 0){
             getObjFromServer('/rest/recipes/course/2').then(function(data){ //2 = idUser
                 courses = data;
                 $log.warn("courses loaded!")
@@ -48,7 +48,7 @@ myService.service("restGETFactory", function ($http, $q, $log) {
         }
 
         /* LIST SHOPPING PLANNING _ user */
-        if(listsShoppingPlanning == undefined){
+        if(listsShoppingPlanning == undefined || listsShoppingPlanning.length == 0){
             getObjFromServer('/rest/listShoppingPlanning/2').then(function(data){ //2 = idUser
                 listsShoppingPlanning = data;
                 $log.warn("listShoppingPlanning loaded!")
