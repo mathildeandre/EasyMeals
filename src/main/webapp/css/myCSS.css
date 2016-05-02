@@ -560,7 +560,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .titleInlineBlock{
     display:inline-block;
 }
-
 .rightInlineBlock{
     display:inline-block;
     position: relative;
