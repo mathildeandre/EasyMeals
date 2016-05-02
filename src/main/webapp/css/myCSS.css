@@ -808,7 +808,13 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .btnPlusFilter{
     font-size:12px;
+    padding-left:7px;
     padding-bottom:5px;
+}
+.btnMinusFilter{
+    font-size:12px;
+    padding-left:5px;
+    padding-bottom:4px;
 }
 
 /************************************************************************************************************/
@@ -835,7 +841,14 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:darkslategrey;
 }
 .txtTitleSelection{
-    font-size:13px;
+    //font-size:13px;
+    color:#f0ad4e;
+}
+.txtTitleSelectionPlanning{
+    color:cornflowerblue;
+}
+.recipeMySelectionFavoriteOrPlanning{
+    //color:#f0ad4e;
 }
 /************************************************************************************************************/
 /*****************************  FILTER - AFFINER RECHERCHE  ************************************************/
