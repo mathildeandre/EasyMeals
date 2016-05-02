@@ -10,12 +10,12 @@ package com.toobe.dto;
  */
 
 public class Food {
-    private int id;
+    private Long id;
     private String name;
     private int idCategory;
     private boolean isValidated;
 
-    public Food(int id, String name, int idCategory, boolean isValidated) {
+    public Food(Long id, String name, int idCategory, boolean isValidated) {
         this.id = id;
         this.name = name;
         this.idCategory = idCategory;
@@ -23,11 +23,11 @@ public class Food {
     }
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,5 +53,15 @@ public class Food {
 
     public void setValidated(boolean validated) {
         isValidated = validated;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", idCategory=" + idCategory +
+                ", isValidated=" + isValidated +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.toobe.dao;
 
-import com.toobe.dto.RecipeCategory;
+import com.toobe.dto.info.RecipeCategory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -5,10 +5,7 @@ import com.toobe.dto.FoodCategory;
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +35,7 @@ public class FoodDao {
                 name = res.getString("name");
                 idCategory = res.getInt("idCategory");
                 isValidated = res.getInt("isValidated") == 1;
-                food = new Food(id, name, idCategory, isValidated);
+                food = new Food(new Long(id), name, idCategory, isValidated);
                 foodList.add(food);
             }
 
@@ -63,7 +60,7 @@ public class FoodDao {
                 name = res.getString("name");
                 idCategory = res.getInt("idCategory");
                 isValidated = res.getInt("isValidated") == 1;
-                food = new Food(id, name, idCategory, isValidated);
+                food = new Food(new Long(id), name, idCategory, isValidated);
                 foodList.add(food);
             }
 
@@ -120,6 +117,28 @@ public class FoodDao {
             e.printStackTrace();
         }
         return foodCategoryList;
+    }
+
+    private final static String INSERT_FOOD = "INSERT INTO Food(name, idCategory, isValidated) VALUES (?, ?, ?)";
+
+    public Long createFood(Connection conn, String name){
+        PreparedStatement stm;
+        ResultSet resultSet;
+        Long newId = null;
+        try {
+            stm = conn.prepareStatement(INSERT_FOOD, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1,name);
+            stm.setNull(2, Types.INTEGER);
+            stm.setBoolean(3, false);
+            stm.executeUpdate();
+            resultSet = stm.getGeneratedKeys();
+            if(resultSet.next()){
+                newId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return newId;
     }
 
 

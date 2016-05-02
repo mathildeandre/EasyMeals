@@ -10,10 +10,10 @@ package com.toobe.dto;
 public class Ingredient {
     private int qty;
     private String unit;
-    private String food;
+    private Food food;
     private int rayonId;
 
-    public Ingredient(int qty, String unit, String food, int rayonId) {
+    public Ingredient(int qty, String unit, Food food, int rayonId) {
         this.qty = qty;
         this.unit = unit;
         this.food = food;
@@ -36,11 +36,11 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public String getFood() {
+    public Food getFood() {
         return food;
     }
 
-    public void setFood(String food) {
+    public void setFood(Food food) {
         this.food = food;
     }
 
