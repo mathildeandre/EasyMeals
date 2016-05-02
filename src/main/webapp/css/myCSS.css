@@ -106,6 +106,13 @@ h6 {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+
+    /* 100% permet d'empecher l'image du cadi de s'agrandir en fonction de la taille de la liste! (au contraire de cover)*/
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    background-size: 100%;
+    -o-background-size: 100%;
+
     padding: 0 10vw;
 
 }
@@ -1064,7 +1071,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     height:11vw;
     /*width:14vw; x3
     height:9vw;*/
-    min-width:120px;
+    min-width:160px;
     min-height:100px;
     /*width:220px;
     height:140px;*/
