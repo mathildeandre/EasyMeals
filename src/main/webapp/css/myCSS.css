@@ -1478,25 +1478,29 @@ select::selection,option::selection { /* ne fonctionne pas  */
     border:none;
     background-color:#dff0d8
     */
+    width:100%;
     padding: 7px;
-    width:60px;
     border-radius:3px;
     text-align: center;
 
     border:1px solid lightgrey;
     color: #5cb85c;
 }
-
-select.fieldExpense {
-    width:auto;
+.fieldExpenseTH{
+    padding: 7px 4px;
+    text-align: center;
 }
-textarea.fieldExpense {
-    width:auto;
-    text-align: left;
+
+.fieldExpense:hover {
+    cursor: pointer;
 }
 .fieldExpense:focus {
     outline: 0; /*2px solid #d9534f;*/
     border: 2px solid #95d095;
+}
+.fieldExpenseNbPers{
+    width:70px;
+
 }
 
 .myThExpense {
@@ -1505,7 +1509,40 @@ textarea.fieldExpense {
     font-weight: 600; /* epaisseur txt */
     letter-spacing: 1px;
 }
+.thExpenseAPaye{
+    width : 140px;
+    min-width : 100px;
+}
+.thExpensePrix{
+    width : 90px;
+    min-width : 80px;
+}
+.thExpenseDesc{
+    width : 200px;
+    text-align: left;
+    min-width : 160px;
 
+}
+.thExpenseFieldName{
+    //width : 120px;
+    min-width: 80px;
+
+}
+
+.checkboxExpense{
+    margin-left:50%;
+    -webkit-transform: scale(1.2);
+}
+.tdExpenseCheckboxAll{
+    text-align: center;
+}
+.tdExpenseTrash{
+    text-align: center;
+    vertical-align: middle;
+}
+.checkboxExpenseAll{
+    margin-left:8px;
+}
 
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
@@ -1695,6 +1732,23 @@ textarea.fieldExpense {
 .glyphiconBtn{
     cursor: pointer;
 }
+.trashIngrFromList{
+    margin-left: 10px;
+    color:indianred;
+}
+.trashIngrFromList:hover{
+    transform: scale(1.5);
+}
+
+.trashRowExpense{
+    font-size:22px;
+    color: #95d095;
+    margin-top:10px;
+}
+.trashRowExpense:hover{
+    transform: scale(1.5);
+}
+
 .modifyListNameOk{
     color: #95d095;
 }
