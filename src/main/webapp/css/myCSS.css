@@ -1474,21 +1474,18 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 .fieldExpense {
-    /*
-    border:none;
-    background-color:#dff0d8
-    */
     width:100%;
     padding: 7px;
     border-radius:3px;
     text-align: center;
-
     border:1px solid lightgrey;
     color: #5cb85c;
 }
 .fieldExpenseTH{
     padding: 7px 4px;
-    text-align: center;
+}
+.fieldExpenseDescrip{
+    text-align: left;
 }
 
 .fieldExpense:hover {
