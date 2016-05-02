@@ -152,6 +152,7 @@ fin  fonctionne !!
    // $scope.courses = RecipeService.getCourses();
 
 
+    /*
     $scope.getIngrUnitDisplay = function(ingredientUnit){
         if(ingredientUnit != ''){
             return (ingredientUnit + ' of');
@@ -161,6 +162,7 @@ fin  fonctionne !!
             return ' piece(s) of';
         }
     }
+    */
 
     $scope.toggleDescOpen = function(recipe){
         recipe.descriptionOpen = !recipe.descriptionOpen;

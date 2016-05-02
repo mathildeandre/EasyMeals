@@ -42,9 +42,9 @@
                             <div style="margin: 5px 0; font-size:16px;" ng-repeat="ingr in category.ingredients | orderBy:'food'">
                                 <div>
                                     -
-                                    <span ng-show="!modifQty">{{ingr.qty | number:1}}</span>
-                                    <span ng-show="modifQty"><input style="width:60px" type="number" ng-model ='ingr.qty' min="0" /></span>
-                                    {{getIngrUnitDisplay(ingr.unit) }} {{ingr.food}}
+                                    <span ng-show="!modifQty">{{ingr.qty}}</span>
+                                    <span ng-show="modifQty"><input style="width:60px" type="number" step="{{unitStep(ingr.unit)}}" ng-model ='ingr.qty' min="0" /></span>
+                                    {{displayIngrUnitAndFood(ingr)}}
                                     <!--<button type="button" class="btn btn-default" ng-click="moveCategoryToList(category, ingr)">
                                         <span class="glyphicon glyphicon-minus"></span>
                                     </button>-->

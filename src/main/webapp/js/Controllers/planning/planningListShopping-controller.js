@@ -85,17 +85,19 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         for(var i=0; i<listShop.length; i++){
             ingredient = listShop[i];
             if(ingredient.food != ''){
-                var food = ingredient.food;
                 for(var j=i+1; j<listShop.length; j++){
                     ingredient2 = listShop[j];
-                    if(ingredient.food == ingredient2.food || ingredient.food+'s' == ingredient2.food || ingredient.food == ingredient2.food+'s'){
+                    if(ingredient.food != '' && ingredient.food == ingredient2.food){
                         var newQty = calculQty(ingredient, ingredient2);
-                        if(ingredient.qty < newQty){
+                        if(ingredient.qty < newQty){ /*si qty na pas bougé : "cas ou unites differentes & unit NI g,kg,cl,l" */
                             ingredient2.food = '';
                             ingredient.qty = newQty;
+
                         }
                     }
                 }
+
+                setIngrWithGoodUnitAndQty(ingredient);
             }
         }
 
@@ -113,21 +115,69 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         var unit2=ing2.unit;
         var qty1=ing1.qty;
         var qty2=ing2.qty;
+
+        var newQty;
         if(unit1 == unit2){
-            return qty1+qty2;
+            newQty = qty1+qty2;
         }
         else{
             switch(unit1){
-                case 'g' : if(unit2=='kg'){return qty1+qty2*1000} else{return qty1};
-                case 'kg' :  if(unit2=='g'){return qty1+qty2/1000} else{return qty1};
-                case 'cl' :  if(unit2=='l'){return qty1+qty2*100} else{return qty1};
-                case 'l' :  if(unit2=='cl'){return qty1+qty2/100} else{return qty1};
-                default: return qty1;
+                case 'g' : if(unit2=='kg'){newQty = qty1+qty2*1000} else{newQty = qty1} break;
+                case 'kg' :  if(unit2=='g'){newQty = qty1+qty2/1000} else{newQty = qty1} break;
+                case 'cl' :  if(unit2=='l'){newQty = qty1+qty2*100} else{newQty = qty1} break;
+                case 'l' :  if(unit2=='cl'){newQty = qty1+qty2/100} else{newQty = qty1} break;
+                default: newQty = qty1; /* cas ou unites differentes & unit NI g,kg,cl,l*/
             }
         }
+        return newQty;
+    }
+    var setIngrWithGoodUnitAndQty = function(ingr){
+        var newQty = ingr.qty;
+        //adjust/transform units if not well adapt (ex: 1250g will become 1,250kg & 0,8kg : 800g)
+        switch(ingr.unit){
+            case 'g' : if(newQty >= 1000){ingr.unit = 'kg'; ingr.qty = newQty/1000;} break;
+            case 'kg' :  if(newQty <1){ingr.unit = 'g'; ingr.qty = newQty*1000;} break;
+            case 'cl' :  if(newQty >= 100){ingr.unit = 'l'; ingr.qty = newQty/100;} break;
+            case 'l' :  if(newQty < 1){ingr.unit = 'cl'; ingr.qty = newQty*100;} break;
+        }
+
+        /*adjust number after comma*/
+        switch(ingr.unit){
+            case 'g' : ingr.qty = Math.round(ingr.qty); break;
+            case 'kg' : ingr.qty = Number((ingr.qty).toFixed(2)); break; //if(ingr.qty !== parseInt(ingr.qty, 10)) {ingr.qty = Number((ingr.qty).toFixed(3))};
+            case 'cl' : break;
+            case 'l' : break;
+            default: ingr.qty = Number((ingr.qty).toFixed(1));//if (ingr.qty !== parseInt(ingr.qty, 10)){}
+        }
+        /*
+         Number((ingr.qty).toFixed(3)); => permet de limiter a 3 nb apres la virgule au MAX et eventuellement moins !
+         .toFixed indique le nb de chiffre apres le virgule(force mm en mettant des zero : 32 sera 32.000)
+         mais toFixed transform en String donc il est important ensuite d'englober le tout par Nummber()
+         Number() enleve le nb de 0 inutile dc c'est le parfait mixe (ex : 32.000 redeviendra 32! 1.300 sera 1.3)
+         */
     }
 
 
+    $scope.unitStep = function(aUnit){
+        switch(aUnit){
+            case 'g' : return 25;
+            case 'kg' : return 0.1;
+            case 'cl' : return 1;
+            case 'l' : return 1;
+            default: return 1;
+        }
+    }
+    $scope.displayIngrUnitAndFood = function(ingr){
+        switch(ingr.unit){
+            case 'g' : return ingr.unit+' de '+ingr.food;
+            case 'kg' : return ingr.unit+' de '+ingr.food;
+            case 'cl' : return ingr.unit+' de '+ingr.food;
+            case 'l' : return ingr.unit+' de '+ingr.food;
+            default: return ingr.unit+' '+ingr.food;
+        /*On naffiche pas de 's' apres nom en cas de pluriel car ex : 6 crepe a burritos => 6 crepe a burritoss
+         * Il faudrait plutot avoir un mode pluriel definit pour chaque food et l'activer en fonction.. */
+        }
+    }
     $scope.getIngrUnitDisplay = function(ingredientUnit){
         if(ingredientUnit != ''){
             return (ingredientUnit + ' of');

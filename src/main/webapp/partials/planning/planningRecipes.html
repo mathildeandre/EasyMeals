@@ -207,7 +207,7 @@
                     <div  class="itemToDragPlanning itemRecipesPlanning itemDrag"
                           data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="recipe" ng-show="recipe.name"
                           jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:'true'}"
-                          title="{{displayIngredientsOfRecipe(recipe)}}">
+                          title="{{displayIngredientsOfRecipeByTitle(recipe)}}">
                         {{recipe.name}}
                     </div>
                 </div>

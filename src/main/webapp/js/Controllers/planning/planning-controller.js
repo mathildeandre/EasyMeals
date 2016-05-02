@@ -48,8 +48,9 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, fourTy
     }
 
 
-    $scope.displayIngredientsOfRecipe = function(recipe){
+    $scope.displayIngredientsOfRecipeByTitle = function(recipe){
         var str='';
+        str = str+"\n - "+recipe.nbPerson+" pers. -";
         for(var i=0; i<recipe.ingredients.length; i++){
             str = str+"\n"+recipe.ingredients[i].qty+recipe.ingredients[i].unit+' '+recipe.ingredients[i].food;
         }
