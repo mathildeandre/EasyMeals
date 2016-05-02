@@ -166,9 +166,10 @@ fin  fonctionne !!
         recipe.descriptionOpen = !recipe.descriptionOpen;
     }
 
-    $scope.showInList = true;
-    $scope.showInBlock = false;
+    $scope.showInBlock = true;
 
+    /*
+    $scope.showInList = false;
     $scope.showInListFct = function(){
         $scope.showInList = true;
         $scope.showInBlock = false;
@@ -176,8 +177,9 @@ fin  fonctionne !!
     $scope.showInBlockFct = function(){
         $scope.showInList = false;
         $scope.showInBlock = true;
-
     }
+    */
+
 
     /* ICI !!!! doit communiquer avec filter controller (broadcast) */
     $scope.toggleIsFavorite = function(recipe, event){
@@ -192,7 +194,7 @@ fin  fonctionne !!
     }
     $scope.openRecipeNewWindow = function(id) {
         event.stopPropagation();
-        $window.open('http://localhost:9000/#/singleRecipe/'+$scope.recipeType+'/'+id);
+        $window.open('http://localhost:8080/#/singleRecipe/'+$scope.recipeType+'/'+id);
     };
     /*$scope.reloadRoute = function() {
         alert("bjr");

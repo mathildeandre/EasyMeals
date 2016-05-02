@@ -22,9 +22,9 @@
                 </div>
                 <div class="buttonsDisplayListRecipe">
                     Affichage : &nbsp
-                    <span ng-click="showInListFct()"  class="glyphicon glyphicon-align-justify gliphList glyphiconBtn"></span> <!--title=""-->
+                    <span ng-click="showInBlock = !showInBlock"  class="glyphicon glyphicon-align-justify gliphList glyphiconBtn"></span> <!--title=""-->
                     &nbsp-&nbsp
-                    <span ng-click="showInBlockFct()" class="glyphicon glyphicon-th gliphBlock glyphiconBtn"></span></span><!--title=""-->
+                    <span ng-click="showInBlock = !showInBlock" class="glyphicon glyphicon-th gliphBlock glyphiconBtn"></span></span><!--title=""-->
                 </div>
                 <div class="sortRecipeList" >
                     <span   class="glyphicon glyphicon-sort" ></span>
@@ -42,7 +42,7 @@
                 <div style="font-weight: 800;border-bottom:1px solid grey">Recipe planning :</div><div ng-repeat="recipe in recipesPlanning">{{recipe.name}}</div>
             </div>
             -->
-            <div ng-show="showInList" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy"
+            <div ng-show="!showInBlock" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy"
                  ng-class="{recipeWithDescription: recipe.descriptionOpen, recipeWithNoDescr:!recipe.descriptionOpen}">
                 <!-- or :
                 <div ng-include="'../../partials/recipe/recipeItemDisplayNotOpenInList.html'"></div>

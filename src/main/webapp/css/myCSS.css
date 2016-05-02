@@ -100,7 +100,7 @@ h6 {
     /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
-    background: url(../img/errand_shoppingTrolley.jpg) no-repeat ; /*expense_note OR  expense-planning_Red-Raspberry */
+    background: url(../img/errand_shoppingTrolley.jpg) repeat ; /*expense_note OR  expense-planning_Red-Raspberry */
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -897,34 +897,36 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 .artBodyListRecipe{
-    padding-top:2vw;
-    padding-left:3vw
-    /* .myArticleBody = padding: 1vw; */
+    padding:3vw 1vw 2vw 3vw;
+    /* 1 seul vw padding a droite car il y a deja le margin-right:2vw; du .divRecipesBlock inevitable
+    donc on ajoute egalement un margin-right:2vw; */
+    border : 2px solid purple;
 }
 .divTopListRecipe{
     margin-bottom:2vw;
+    margin-right:2vw;
+    border : 2px solid red;
 }
 .buttonCreate{
-    margin-left:0;
     display:inline-block;
+    margin-left:0;
 }
 .buttonsDisplayListRecipe{
-    margin-left:3vw;
     display:inline-block;
+    margin-left:3vw;
     vertical-align: middle;
 }
 .sortRecipeList{
-    font-size:15px;
-    margin-right:3vw;
     display:inline-block;
     position:relative;
     float:right;
+    font-size:15px;
 }
 /** div recipe autant withDescr or noDescr.**/
 .divRecipes{
     border-radius: 5px;
-    margin: 15px 0;
-    margin-right: 2vw;
+    margin: 1vw 2vw 1vw 0;
+    border : 2px solid green;
 }
 .divRecipes:hover{
     background-color: lightgrey;
@@ -1009,7 +1011,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .ingredientRecipe{
     display: inline-block;
-    width:50%;
+    //width:50%;
     margin-left:2%;
     vertical-align:top;
     /*font-style:bold;
@@ -1044,28 +1046,29 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .divRecipesBlock{
     display:inline-block;
     margin: 1vw 2vw 1vw 0;
+    border : 2px solid blue;
 }
 .divRecipesBlock:hover{
     cursor:pointer;
 }
 .divRecipesBlockIcon{
 
-    width:17vw; /*x4*/
+    width:17.5vw; /*x4*/
     /*width:14vw; x3*/
     min-width:160px;
     /*width:220px;*/
     vertical-align: top;
 
 }.divRecipesBlockDescription{
-     width:90%;
+     width: 57.5vw;
  }
 
 .pixRecipeBlock{
-    width:17vw; /*x3*/
+    width:17.5vw; /*x3*/
     height:11vw;
     /*width:14vw; x3
     height:9vw;*/
-    min-width:160px;
+    min-width:120px;
     min-height:100px;
     /*width:220px;
     height:140px;*/
@@ -1152,7 +1155,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /*************************  SINGLE RECIPE (new window) custom  *********************************************/
 /**********************************************************************************************************/
 .titleRecipeSingle{
-    margin-left:5%;
+    margin: 0 5vw 3vw 5vw;
     font-weight: 900;
     font-size: 28px;
     letter-spacing: 2px;
@@ -1160,18 +1163,19 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .divRecipeSingle{
     border-radius: 5px;
-    margin: 20px 5%;
+    margin: 0 5vw;
 }
 
 .divTopRecipeSingle{
     /*margin-top:15px;*/
     overflow:hidden;
-    margin-bottom:10px;
+    margin-bottom: 2vw;
 }
 .pixRecipeSingle{
     /*width:44%;/*240px;*
     height:250px; /* a modifier dynamiquement (avec javascript en recuperant la largeur et en faisant 2/3)*/
 
+    display: inline-block;
     width:40vw;
     height:23vw;
     min-width:400px;
@@ -1180,17 +1184,14 @@ select::selection,option::selection { /* ne fonctionne pas  */
     background-size:100% 100%;
     background-position:top left;
     /*background-image:url("../images/burger2.jpg");*/
-    display: inline-block;
-    margin-left:2%;
     border-radius:3px;
 
 }
 .ingredientRecipeSingle{
     display: inline-block;
-    width:50%;
-    margin-left:2%;
+    //width:50%;
+    margin-left:5%;
     vertical-align:top;
-
     font-size: 20px;
     /*font-style:bold;
     font-size:large;*/
