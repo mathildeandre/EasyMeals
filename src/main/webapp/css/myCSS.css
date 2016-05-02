@@ -900,12 +900,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     padding:3vw 1vw 2vw 3vw;
     /* 1 seul vw padding a droite car il y a deja le margin-right:2vw; du .divRecipesBlock inevitable
     donc on ajoute egalement un margin-right:2vw; */
-    border : 2px solid purple;
 }
 .divTopListRecipe{
     margin-bottom:2vw;
     margin-right:2vw;
-    border : 2px solid red;
 }
 .buttonCreate{
     display:inline-block;
@@ -926,7 +924,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .divRecipes{
     border-radius: 5px;
     margin: 1vw 2vw 1vw 0;
-    border : 2px solid green;
 }
 .divRecipes:hover{
     background-color: lightgrey;
@@ -1046,7 +1043,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .divRecipesBlock{
     display:inline-block;
     margin: 1vw 2vw 1vw 0;
-    border : 2px solid blue;
 }
 .divRecipesBlock:hover{
     cursor:pointer;
