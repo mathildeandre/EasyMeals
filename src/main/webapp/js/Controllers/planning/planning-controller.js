@@ -5,8 +5,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, fourTypeMeal, units, steps) {
-
+myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, restRecipeService, fourTypeMeal, units, steps) {
 
     $scope.sayBoom = function(category){
         alert("sayyy boom u fucking ash.."+category)
@@ -18,9 +17,16 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, fourTy
      */
     $scope.recipeType = 'course';
     var getRecipes = function(recipeType){
+        /*if (!restRecipeService.getIsCoursesReady()){
+            //---WAIT---
+            $log.error("ON ATTEND LES DATA1");
+            setTimeout(function(){$log.debug("ON ATTEND LES DATA");}, 5000);
+            $log.error("ON ATTEND LES DATA1");
+        }
+        $log.error("sorti du if");*/
         switch(recipeType){
             case 'starter' : return RecipeService.getStarters();
-            case 'course' :  return RecipeService.getCourses();
+            case 'course' : return restRecipeService.getCourses();
             case 'dessert' : return RecipeService.getDesserts();
             case 'breakfast' : return RecipeService.getBreakfasts();
             case 'cocktail' : return RecipeService.getCocktails();

@@ -64,7 +64,7 @@
             <!--<div class="separatorSelection" ng-show="separateMyList()"></div>-->
             <div class="divSubSelection" ng-repeat="category in filterMySelection.categories | orderBy:'toString()'">
 
-                <span class="txtTitleSelectionPlanning">- Categorie :</span> {{category}}
+                <span class="txtTitleSelectionPlanning">- Categorie :</span> {{category.name}}
                 &nbsp &nbsp
                 <button  type="button" class="myBtnEmpty myBtnEmptyPlanning btnMinusFilter" ng-click="removeCategoryFromSelection(category)">
                     <span class="glyphicon glyphicon-minus"></span>
@@ -73,7 +73,7 @@
             <!--<div class="separatorSelection" ng-show="separateCategorie()"></div>-->
             <div class="divSubSelection" ng-repeat="origin in filterMySelection.origins | orderBy:'toString()'">
 
-                <span class="txtTitleSelectionPlanning">- Spécialité :</span> {{origin}}
+                <span class="txtTitleSelectionPlanning">- Spécialité :</span> {{origin.name}}
                 &nbsp &nbsp
                 <button  type="button" class="myBtnEmpty myBtnEmptyPlanning btnMinusFilter" ng-click="removeOriginFromSelection(origin)">
                     <span class="glyphicon glyphicon-minus"></span>
@@ -147,19 +147,15 @@
 
                 <span class="blockFilterPlanningRecipe">
                     Categories :
-                    <select ng- class="fieldPlanning"  ng-model='myCategory' ng-init="'Viande'" ng-change="moveCategoryToSelection(myCategory)">
-                        <!--<option value="" selected>Categorie</option>-->
-                        <option ng-repeat="category in filterSearch.categories" value="{{category}}" >{{category}}</option>
-                    </select>
+                    <select class="fieldPlanning"  ng-model='myCategory' ng-change="moveCategoryToSelection(myCategory)"
+                        ng-options='category.name for category in filterSearch.categories' ></select>
                 </span>
 
 
                 <span class="blockFilterPlanningRecipe">
-                    Nationalités :
-                    <select class="fieldPlanning"  ng-model='myOrigin' ng-change="moveOriginToSelection(myOrigin)">
-                        <!--<option value="" selected>Nationalité</option>-->
-                        <option ng-repeat="origin in filterSearch.origins" value="{{origin}}">{{origin}}</option>
-                    </select>
+                    Spécialités :
+                    <select class="fieldPlanning"  ng-model='myOrigin' ng-change="moveOriginToSelection(myOrigin)"
+                            ng-options='origin.name for origin in filterSearch.origins' ></select>
                 </span>
             </div>
     </article>

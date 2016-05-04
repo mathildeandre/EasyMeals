@@ -6,7 +6,7 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService) {
+myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService, restRecipeService) {
 
     /**
      * ICI on a uniquement besoin la liste complete des recette : $scope.recipes (correspondante à recipeType (plat, dessert etc))
@@ -34,8 +34,8 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     /************************* FILTRE *********************************/
     $scope.filterSearch = {
         myLists:[ {id:'myFavorite', name:'Mes recettes préférées'}, {id:'myPlanning', name:'Mes recettes planning'}], /*{id:'myMeal', name:'Mes plats'},*/
-        categories:['Viande','Poisson', 'Legume', 'Vegetarien', 'Four', 'Poêle', 'Gratin', 'Sucré Salé', 'Facile', 'Rapide'],
-        origins:['Francais', 'Italien', 'Americain', 'Mexicain', 'Thai', 'Indien']//, 'Thai', 'Indien', 'Marocain']
+        categories: restRecipeService.getCategories(),//['Viande','Poisson', 'Legume', 'Vegetarien', 'Four', 'Poêle', 'Gratin', 'Sucré Salé', 'Facile', 'Rapide'],
+        origins:restRecipeService.getOrigins()//['Francais', 'Italien', 'Americain', 'Mexicain', 'Thai', 'Indien']//, 'Thai', 'Indien', 'Marocain']
     };
     $scope.filterMySelection = {
         myLists:[],
@@ -120,6 +120,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         }
     }
     $scope.moveCategoryToSelection = function(category){
+        $log.warn($scope.myTypeOf(category));
         $scope.filterMySelection.categories.push(category);
         var index =  $scope.filterSearch.categories.indexOf(category); //fonctionne aussi tres bien
         $scope.filterSearch.categories.splice(index, 1);
@@ -206,14 +207,14 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
                     // recipesNew a ete rempli donc on fait l'intersection avec origin
                     for(var k=recipesNew.length-1; k>=0; k--) {
                         //REMOVE //si l elem ne repond pas au critere selection avec origin -> out!
-                        if(filterMySelection.origins.indexOf(recipesNew[k].origin) == -1){//si origins contient pas recipesNew[k].origin (sinon renvoi pos. index > 0)
+                        if(! originsContains(filterMySelection.origins, recipesNew[k].origin)){//si origins contient pas recipesNew[k].origin , on delete l'elem de la list
                             recipesNew.splice(k,1);
                         }
                     }
                 }else{//si il n'y a pas de filtre myList dans selection, alr on construit recipesNew avec origin
                     for(var k=0; k<recipes.length; k++){
                         //hence we check for each item of the recipes if it can be selected ! (and added to the new recipes)
-                        if(filterMySelection.origins.indexOf(recipes[k].origin) != -1){//si origins contient pas recipesNew[k].origin (sinon renvoi pos. index > 0)
+                        if(originsContains(filterMySelection.origins, recipes[k].origin)){//si origins contient recipesNew[k].origin, on lajoute a la liste
                             recipesNew.push(recipes[k]);
                         }
                     }
@@ -271,11 +272,19 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     }
     $scope.$watch('filterMySelection', updateFilter, true);
 
+    var originsContains = function(origins, origin){
+        for(var i=0; i<origins.length; i++){
+            if(origins[i].id == origin.id){
+                return true;
+            }
+        }
+        return false;
+    }
     var intersectExistUnion = function(arr1, arr2){//on veut ici au moins 1 elem de arr1 contenut ds arr2
         var intersect = false;
         for(var i=0; i<arr1.length; i++){
             for(var j=0; j<arr2.length; j++){
-                if(arr1[i].toUpperCase() === arr2[j].toUpperCase()){
+                if(arr1[i].id === arr2[j].id){
                     intersect = true;
                 }
             }
@@ -288,7 +297,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         for(var i=0; i<arr1.length; i++){
             intersect = false;
             for(var j=0; j<arr2.length; j++){
-                if(arr1[i].toUpperCase() === arr2[j].toUpperCase()){
+                if(arr1[i].id === arr2[j].id){
                     intersect = true;
                 }
             }

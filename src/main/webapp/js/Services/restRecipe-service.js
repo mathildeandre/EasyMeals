@@ -6,6 +6,9 @@ var myService = angular.module('services');
 
 myService.service("restRecipeService", function ($http, $q, $log) {
     var isDataReady = false;
+    var isCoursesReady = false;
+    var categories = [];
+    var origins = [];
     var starters = [];
     var courses = [];
     var desserts = [];
@@ -14,6 +17,18 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     function getIsDataReady(){
         return isDataReady;
     }
+    function getIsCoursesReady(){
+        return isCoursesReady;
+    }
+
+
+    function getCategories(){
+        return categories;
+    }
+    function getOrigins(){
+        return origins;
+    }
+
 
     function getStarters(){
         return starters;
@@ -28,6 +43,26 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
     function initLoadData(){
         $log.warn("[RECIPE SERVICE] INIT - LOADING DATA")
+
+        /* CATEGORIES */
+        if(categories == undefined || categories.length == 0){
+            getObjFromServer('/rest/recipeCategories').then(function(data){ //2 = idUser
+                categories = data;
+                $log.warn("categories loaded!")
+
+            })
+        }
+        /* ORIGINS */
+        if(origins == undefined || origins.length == 0){
+            getObjFromServer('/rest/recipeOrigins').then(function(data){ //2 = idUser
+                origins = data;
+                $log.warn("origins loaded!")
+
+            })
+        }
+
+
+
         /* STARTERS */
         if(starters == undefined || starters.length == 0){
             getObjFromServer('/rest/recipes/starter/2').then(function(data){ //2 = idUser
@@ -40,7 +75,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         if(courses == undefined || courses.length == 0){
             getObjFromServer('/rest/recipes/course/2').then(function(data){ //2 = idUser
                 courses = data;
+                isCoursesReady = true;
                 $log.warn("courses loaded!")
+                $log.info("isCoursesReady : "+isCoursesReady);
 
             })
         }
@@ -52,7 +89,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
             })
         }
+        $log.info("isDataReady : "+isDataReady);
         isDataReady = true;
+        $log.info("isDataReady : "+isDataReady);
     }
 
 
@@ -70,10 +109,13 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     };
 
     return {
+        getCategories: getCategories,
+        getOrigins: getOrigins,
         getStarters: getStarters,
         getCourses: getCourses,
         getDesserts: getDesserts,
         initLoadData: initLoadData,
-        getIsDataReady: getIsDataReady
+        getIsDataReady: getIsDataReady,
+        getIsCoursesReady: getIsCoursesReady
     };
 });

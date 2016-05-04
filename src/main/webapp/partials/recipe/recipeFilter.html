@@ -60,7 +60,7 @@
                 <div class="separatorSelection" ng-show="separateIngredient()"></div>
                 <div class="divSubSelection" ng-repeat="category in filterMySelection.categories | orderBy:'toString()'">
 
-                    <span class="txtTitleSelection">- Categorie :</span> {{category}}
+                    <span class="txtTitleSelection">- Categorie :</span> {{category.name}}
                     &nbsp &nbsp
                     <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeCategoryFromSelection(category)">
                         <span class="glyphicon glyphicon-minus"></span>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="separatorSelection" ng-show="separateCategorie()"></div>
                 <div class="divSubSelection" ng-repeat="origin in filterMySelection.origins | orderBy:'toString()'">
-                    <span class="txtTitleSelection">- Spécialité :</span> {{origin}}
+                    <span class="txtTitleSelection">- Spécialité :</span> {{origin.name}}
                     &nbsp &nbsp
                     <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeOriginFromSelection(origin)">
                         <span class="glyphicon glyphicon-minus"></span>
@@ -129,14 +129,14 @@
                 <div class="txtTitleSubFilter" >Categories recettes</div>
                 <div class="elemCategorieVrac" ng-repeat="category in filterSearch.categories | orderBy:'toString()'"
                      ng-click="moveCategoryToSelection(category)">
-                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category}}</button-filter>
+                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category.name}}</button-filter>
                 </div>
             </div>
             <div class="divSubFilter">
                 <div class="txtTitleSubFilter" >Spécialités</div>
                 <div class="elemColonneX2" ng-repeat="origin in filterSearch.origins | orderBy:'toString()'"
                      ng-click="moveOriginToSelection(origin)"><!--track by $index ne fonctionne pas : $index en argument de moveOr..() correspond pas-->
-                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{origin}}</button-filter>
+                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{origin.name}}</button-filter>
                 </div>
             </div>
         </div>

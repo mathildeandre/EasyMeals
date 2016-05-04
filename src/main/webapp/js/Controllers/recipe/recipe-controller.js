@@ -16,9 +16,9 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     $scope.recipeSelection = recipeSelection;
 
     var getRecipes = function(recipeType){
-        while (!restRecipeService.getIsDataReady()){
+        /*while (!restRecipeService.getIsCoursesReady()){
             //---WAIT---
-        }
+        }*/
         switch(recipeType){
             case 'starter' : return RecipeService.getStarters();
             case 'course' :  return restRecipeService.getCourses();//restGETFactory.getCourses();
