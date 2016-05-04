@@ -44,7 +44,7 @@ public class ListShoppingDao {
 
   /*
     listShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
-    listShoppingCategory = {id:0, name:'Autre', noRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
+    listShoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
  */
     /**
      * On trouve ici toutes les planning pour un idUser
@@ -55,14 +55,14 @@ public class ListShoppingDao {
         try {
 
             /* on recup toutes les listShoppingCategory   */
-            stm = conn.prepareStatement("SELECT lsc.id as id, idFoodCategory, name as nameFoodCategory, noRank  FROM ListShopping_Category as lsc JOIN Food_Category as fc ON lsc.idFoodCategory = fc.id WHERE idListShop = "+idListShopping);
+            stm = conn.prepareStatement("SELECT lsc.id as id, idFoodCategory, name as nameFoodCategory, numRank  FROM ListShopping_Category as lsc JOIN Food_Category as fc ON lsc.idFoodCategory = fc.id WHERE idListShop = "+idListShopping);
             ResultSet res = stm.executeQuery();
 
             List<ListShoppingCategory> list_listShoppingCategory = new ArrayList<ListShoppingCategory>();
             while(res.next()){
                 int idListShoppingCategory = res.getInt("id");
                 String nameFoodCategory = res.getString("nameFoodCategory");
-                int noRank = res.getInt("noRank");
+                int numRank = res.getInt("numRank");
 
                 /* INGREDIENTS */
                 List<Ingredient> ingredientList = new ArrayList<Ingredient>();;
@@ -80,10 +80,10 @@ public class ListShoppingDao {
                     nameFood = resIngredient.getString("name");
                     idCategoryIngr = resIngredient.getInt("idCategory");
                     isValidated = resIngredient.getBoolean("isValidated");
-                    ingr = new Ingredient(qty, unit, new Food(new Long(idFood), nameFood, idCategoryIngr, isValidated), idCategoryIngr);
+                    ingr = new Ingredient(qty, unit, new Food(new Long(idFood), nameFood, idCategoryIngr, isValidated));
                     ingredientList.add(ingr);
                 }
-                ListShoppingCategory listShoppingCategory = new ListShoppingCategory(idListShoppingCategory, nameFoodCategory, noRank, ingredientList);
+                ListShoppingCategory listShoppingCategory = new ListShoppingCategory(idListShoppingCategory, nameFoodCategory, numRank, ingredientList);
                 list_listShoppingCategory.add(listShoppingCategory);
             }
             listShopping = new ListShopping("nameListShopping", list_listShoppingCategory);

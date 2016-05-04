@@ -7,6 +7,7 @@ package com.toobe.dto;
 import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.dto.info.RecipeType;
+import com.toobe.dto.info.RelUserRecipe;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,15 +18,21 @@ import java.util.List;
         "pixName":"burritos.jpg",
         "recipeType":"course",
         "nbPerson":9,
-        "ingredients":[{"qty":200,"unit":"g","food":"steack hachÃ©","rayonId":2},{"qty":4,"unit":"","food":"sauce burger","rayonId":14}],
+        "ingredients":[{"qty":200,"unit":"g","food":{"id":1,"name":"cabillaud","idCategory":5, validated:true}},{..},...],
         "descriptions":[{"name":"faire cuire steack","noDescip":1},{"name":"mettre dans crepe avec legumes","noDescip":2},{"name":"Votre burritos est pret !","noDescip":3}],
-        "descriptionOpen":false,
-        "origin":"mexicain",
-        "categories":[{"id":1,"name":"viande","noRank":1},{"id":3,"name":"legume","noRank":8}],
+    x   "descriptionOpen":false,
+        "origin":{"id":1,"name":"viande","numRank":5},
+        "categories":[{"id":1,"name":"viande","numRank":1},{"id":3,"name":"legume","numRank":8}],
         "isFavorite":false,
         "isForPlanning":false,
         "rating":0,
-        "nbVoter":0}
+        "nbVoter":0,
+        ratingUser:3
+        timeCooking:120,
+        timePreparation:170,
+        isHide: false;
+        isValidated: true;
+        }
 
  */
 
@@ -42,20 +49,28 @@ public class Recipe implements Serializable{
     //private boolean descriptionOpen;
     private RecipeOrigin origin;
     private List<RecipeCategory> categories;
-    private boolean isFavorite; //coeur
-    private boolean isForPlanning;
     private int nbPerson;
     private int rating;
     private int nbVoter;
+    private int timeCooking;
+    private int timePreparation;
     private boolean isValidated;
+
+    /* ceci sera l'obj RelUserRecipe dans le constructor */
+    private boolean isFavorite; //coeur
+    private boolean isForPlanning;
+    private int ratingUser;
+    private boolean isHide;
+
 
     public Recipe(){
 
     }
-    public Recipe(int id, String name, boolean isPublic, int idUser, String pixName, RecipeType recipeType, int nbPerson,
+
+    public Recipe(int id, String name, boolean isPublic, int idUser, String pixName, RecipeType recipeType,
                   List<Ingredient> ingredients, List<RecipeDescription> descriptions, RecipeOrigin origin,
-                  List<RecipeCategory> categories, boolean isFavorite, boolean isForPlanning, int rating, int nbVoter,
-                  boolean isValidated) {
+                  List<RecipeCategory> categories, int nbPerson, int rating, int nbVoter, int timeCooking,
+                  int timePreparation, boolean isValidated, RelUserRecipe relUserRecipe) {
         this.id = id;
         this.name = name;
         this.isPublic = isPublic;
@@ -64,15 +79,19 @@ public class Recipe implements Serializable{
         this.recipeType = recipeType;
         this.ingredients = ingredients;
         this.descriptions = descriptions;
-        //this.descriptionOpen = false;
         this.origin = origin;
         this.categories = categories;
-        this.isFavorite = isFavorite;
-        this.isForPlanning = isForPlanning;
         this.nbPerson = nbPerson;
         this.rating = rating;
         this.nbVoter = nbVoter;
+        this.timeCooking = timeCooking;
+        this.timePreparation = timePreparation;
         this.isValidated = isValidated;
+
+        this.isFavorite = relUserRecipe.isFavorite();
+        this.isForPlanning = relUserRecipe.isForPlanning();
+        this.ratingUser = relUserRecipe.getRatingUser();
+        this.isHide = relUserRecipe.isHide();
     }
 
     public int getId() {
@@ -83,12 +102,12 @@ public class Recipe implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getPixName() {
@@ -107,14 +126,6 @@ public class Recipe implements Serializable{
         this.recipeType = recipeType;
     }
 
-    public int getNbPerson() {
-        return nbPerson;
-    }
-
-    public void setNbPerson(int nbPerson) {
-        this.nbPerson = nbPerson;
-    }
-
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -131,11 +142,11 @@ public class Recipe implements Serializable{
         this.descriptions = descriptions;
     }
 
-    public RecipeOrigin getRecipeOrigin() {
+    public RecipeOrigin getOrigin() {
         return origin;
     }
 
-    public void setRecipeOrigin(RecipeOrigin origin) {
+    public void setOrigin(RecipeOrigin origin) {
         this.origin = origin;
     }
 
@@ -147,20 +158,12 @@ public class Recipe implements Serializable{
         this.categories = categories;
     }
 
-    public boolean getIsFavorite() {
-        return isFavorite;
+    public int getNbPerson() {
+        return nbPerson;
     }
 
-    public void setIsFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
-
-    public boolean getIsForPlanning() {
-        return isForPlanning;
-    }
-
-    public void setIsForPlanning(boolean forPlanning) {
-        isForPlanning = forPlanning;
+    public void setNbPerson(int nbPerson) {
+        this.nbPerson = nbPerson;
     }
 
     public int getRating() {
@@ -179,27 +182,77 @@ public class Recipe implements Serializable{
         this.nbVoter = nbVoter;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getRatingUser() {
+        return ratingUser;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setRatingUser(int ratingUser) {
+        this.ratingUser = ratingUser;
     }
 
-    public boolean isPublic() {
+    public int getTimeCooking() {
+        return timeCooking;
+    }
+
+    public void setTimeCooking(int timeCooking) {
+        this.timeCooking = timeCooking;
+    }
+
+    public int getTimePreparation() {
+        return timePreparation;
+    }
+
+    public void setTimePreparation(int timePreparation) {
+        this.timePreparation = timePreparation;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /* BOOLEANS */
+
+    public boolean getIsPublic() {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
+    public void setIsPublic(boolean aPublic) {
         isPublic = aPublic;
     }
 
-    public boolean isValidated() {
+    public boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public boolean getIsForPlanning() {
+        return isForPlanning;
+    }
+
+    public void setIsForPlanning(boolean forPlanning) {
+        isForPlanning = forPlanning;
+    }
+
+    public boolean getIsHide() {
+        return isHide;
+    }
+
+    public void setIsHide(boolean hide) {
+        isHide = hide;
+    }
+
+    public boolean getIsValidated() {
         return isValidated;
     }
 
-    public void setValidated(boolean validated) {
+    public void setIsValidated(boolean validated) {
         isValidated = validated;
     }
 }

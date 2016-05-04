@@ -47,11 +47,11 @@ public class Food {
         this.idCategory = idCategory;
     }
 
-    public boolean isValidated() {
+    public boolean getIsValidated() {
         return isValidated;
     }
 
-    public void setValidated(boolean validated) {
+    public void setIsValidated(boolean validated) {
         isValidated = validated;
     }
 

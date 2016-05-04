@@ -116,7 +116,7 @@ myService.service('RecipeService', function($http, $q, $log) {
  "Votre burger est pret !"],
  "descriptionOpen":false,
  "origin":"americain",
- "categories":[{"id":1,"name":"viande","noRank":1},{"id":2,"name":"four","noRank":5}],
+ "categories":[{"id":1,"name":"viande","numRank":1},{"id":2,"name":"four","numRank":5}],
  "rating":0,"nbVoter":0,
  "favorite":false,
  "forPlanning":false}

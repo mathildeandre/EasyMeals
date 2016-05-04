@@ -8,19 +8,19 @@ import java.util.List;
 
 /**
 {
-    {"id":1,"name":"viande","noRank":5}
+    {"id":1,"name":"viande","numRank":5}
 */
 
 public class RecipeCategory {
 
     private int id;
     private String name;
-    private int noRank;
+    private int numRank;
 
-    public RecipeCategory(int id, String name, int noRank) {
+    public RecipeCategory(int id, String name, int numRank) {
         this.id = id;
         this.name = name;
-        this.noRank = noRank;
+        this.numRank = numRank;
     }
 
     public int getId() {
@@ -39,11 +39,11 @@ public class RecipeCategory {
         this.name = name;
     }
 
-    public int getNoRank() {
-        return noRank;
+    public int getNumRank() {
+        return numRank;
     }
 
-    public void setNoRank(int noRank) {
-        this.noRank = noRank;
+    public void setNumRank(int numRank) {
+        this.numRank = numRank;
     }
 }

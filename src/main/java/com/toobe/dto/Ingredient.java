@@ -5,19 +5,17 @@ package com.toobe.dto;
  */
 
 /**
- * {qty:4, unit:'', food:'crepe a burritos', rayonId:3}
+ * {qty:4, unit:'', food:{"id":1,"name":"cabillaud","idCategory":5, validated:true}}
  */
 public class Ingredient {
     private int qty;
     private String unit;
     private Food food;
-    private int rayonId;
 
-    public Ingredient(int qty, String unit, Food food, int rayonId) {
+    public Ingredient(int qty, String unit, Food food) {
         this.qty = qty;
         this.unit = unit;
         this.food = food;
-        this.rayonId = rayonId;
     }
 
     public int getQty() {
@@ -42,13 +40,5 @@ public class Ingredient {
 
     public void setFood(Food food) {
         this.food = food;
-    }
-
-    public int getRayonId() {
-        return rayonId;
-    }
-
-    public void setRayonId(int rayonId) {
-        this.rayonId = rayonId;
     }
 }

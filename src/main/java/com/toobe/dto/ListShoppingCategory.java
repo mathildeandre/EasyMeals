@@ -9,18 +9,18 @@ import java.util.List;
 
 
   /*
-    listShoppingCategory = {id:0, name:'Autre', noRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
+    listShoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
  */
 public class ListShoppingCategory {
       private int id;
       private String name;
-      private int noRank;
+      private int numRank;
       private List<Ingredient> ingredients;
 
-      public ListShoppingCategory(int id, String name, int noRank, List<Ingredient> ingredients) {
+      public ListShoppingCategory(int id, String name, int numRank, List<Ingredient> ingredients) {
           this.id = id;
           this.name = name;
-          this.noRank = noRank;
+          this.numRank = numRank;
           this.ingredients = ingredients;
       }
 
@@ -40,12 +40,12 @@ public class ListShoppingCategory {
           this.name = name;
       }
 
-      public int getNoRank() {
-          return noRank;
+      public int getNumRank() {
+          return numRank;
       }
 
-      public void setNoRank(int noRank) {
-          this.noRank = noRank;
+      public void setNumRank(int numRank) {
+          this.numRank = numRank;
       }
 
       public List<Ingredient> getIngredients() {

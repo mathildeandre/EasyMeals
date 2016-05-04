@@ -26,13 +26,13 @@ public class RecipeCategoryDao {
 
             int idCategory;
             String nameCategory;
-            int noRankCategory;
+            int numRankCategory;
             RecipeCategory recipeCategory;
             while(res.next()){
                 idCategory = res.getInt("id");
                 nameCategory = res.getString("name");
-                noRankCategory = res.getInt("noRank");
-                recipeCategory = new RecipeCategory(idCategory, nameCategory, noRankCategory);
+                numRankCategory = res.getInt("numRank");
+                recipeCategory = new RecipeCategory(idCategory, nameCategory, numRankCategory);
                 recipeCategoryList.add(recipeCategory);
             }
 

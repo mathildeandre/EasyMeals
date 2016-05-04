@@ -103,13 +103,13 @@ public class FoodDao {
             stm = conn.prepareStatement("SELECT * FROM FOOD_CATEGORY");
             ResultSet res = stm.executeQuery();
 
-            int id, noRank;
+            int id, numRank;
             String name;
             while(res.next()){
                 id = res.getInt("id");
-                noRank = res.getInt("noRank");
+                numRank = res.getInt("numRank");
                 name = res.getString("name");
-                foodCategory = new FoodCategory(id, name, noRank);
+                foodCategory = new FoodCategory(id, name, numRank);
                 foodCategoryList.add(foodCategory);
             }
 

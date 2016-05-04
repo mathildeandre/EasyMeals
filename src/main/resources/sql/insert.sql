@@ -1,22 +1,22 @@
 
 
 /* FOOD CATEGORY */
-INSERT INTO Food_Category( name, noRank) VALUES ('Autre', 1);
-INSERT INTO Food_Category( name, noRank) VALUES ('Viande',2);
-INSERT INTO Food_Category( name, noRank) VALUES ('Poisson',3);
-INSERT INTO Food_Category( name, noRank) VALUES ('Fruit/Legume',4);
-INSERT INTO Food_Category( name, noRank) VALUES ('Pain/Viennoiserie/Patisserie',5);
-INSERT INTO Food_Category( name, noRank) VALUES ('Farine/Lait/Oeuf',6);
-INSERT INTO Food_Category( name, noRank) VALUES ('Frais',7);
-INSERT INTO Food_Category( name, noRank) VALUES ('Fromage/Yaourt',8);
-INSERT INTO Food_Category( name, noRank) VALUES ('Surgelé',9);
-INSERT INTO Food_Category( name, noRank) VALUES ('Petit dej/Biscuit',10);
-INSERT INTO Food_Category( name, noRank) VALUES ('Epicerie Pate/Riz',11);
-INSERT INTO Food_Category( name, noRank) VALUES ('Epicerie Conserve',12);
-INSERT INTO Food_Category( name, noRank) VALUES ('Epicerie Produit du monde',13);
-INSERT INTO Food_Category( name, noRank) VALUES ('Epicerie Condiment',14);
-INSERT INTO Food_Category( name, noRank) VALUES ('Biscuit apéritif',15);
-INSERT INTO Food_Category( name, noRank) VALUES ('Boisson',16);
+INSERT INTO Food_Category( name, numRank) VALUES ('Autre', 1);
+INSERT INTO Food_Category( name, numRank) VALUES ('Viande',2);
+INSERT INTO Food_Category( name, numRank) VALUES ('Poisson',3);
+INSERT INTO Food_Category( name, numRank) VALUES ('Fruit/Legume',4);
+INSERT INTO Food_Category( name, numRank) VALUES ('Pain/Viennoiserie/Patisserie',5);
+INSERT INTO Food_Category( name, numRank) VALUES ('Farine/Lait/Oeuf',6);
+INSERT INTO Food_Category( name, numRank) VALUES ('Frais',7);
+INSERT INTO Food_Category( name, numRank) VALUES ('Fromage/Yaourt',8);
+INSERT INTO Food_Category( name, numRank) VALUES ('Surgelé',9);
+INSERT INTO Food_Category( name, numRank) VALUES ('Petit dej/Biscuit',10);
+INSERT INTO Food_Category( name, numRank) VALUES ('Epicerie Pate/Riz',11);
+INSERT INTO Food_Category( name, numRank) VALUES ('Epicerie Conserve',12);
+INSERT INTO Food_Category( name, numRank) VALUES ('Epicerie Produit du monde',13);
+INSERT INTO Food_Category( name, numRank) VALUES ('Epicerie Condiment',14);
+INSERT INTO Food_Category( name, numRank) VALUES ('Biscuit apéritif',15);
+INSERT INTO Food_Category( name, numRank) VALUES ('Boisson',16);
 
 
 
@@ -66,17 +66,17 @@ INSERT INTO Food(name, idCategory) VALUES ('sauce burger', 14);
 
 
 /* SPECIALITES */
-INSERT INTO Recipe_Origin(name, noRank) VALUES ('français',1); /*id 1*/
-INSERT INTO Recipe_Origin(name, noRank) VALUES ('italien',2);
-INSERT INTO Recipe_Origin(name, noRank) VALUES ('thai',3);
-INSERT INTO Recipe_Origin(name, noRank) VALUES ('indien',4);
-INSERT INTO Recipe_Origin(name, noRank) VALUES ('americain',5);
-INSERT INTO Recipe_Origin(name, noRank) VALUES ('mexicain',6);
+INSERT INTO Recipe_Origin(name, numRank) VALUES ('français',1); /*id 1*/
+INSERT INTO Recipe_Origin(name, numRank) VALUES ('italien',2);
+INSERT INTO Recipe_Origin(name, numRank) VALUES ('thai',3);
+INSERT INTO Recipe_Origin(name, numRank) VALUES ('indien',4);
+INSERT INTO Recipe_Origin(name, numRank) VALUES ('americain',5);
+INSERT INTO Recipe_Origin(name, numRank) VALUES ('mexicain',6);
 
 
-INSERT INTO Recipe_Category(name, noRank) VALUES ('viande', 1);
-INSERT INTO Recipe_Category(name, noRank) VALUES ('four', 5);
-INSERT INTO Recipe_Category(name, noRank) VALUES ('legume', 8);
+INSERT INTO Recipe_Category(name, numRank) VALUES ('viande', 1);
+INSERT INTO Recipe_Category(name, numRank) VALUES ('four', 5);
+INSERT INTO Recipe_Category(name, numRank) VALUES ('legume', 8);
 
 INSERT INTO Recipe_Type(name) VALUES ('starter'); /*id 1*/
 INSERT INTO Recipe_Type(name) VALUES ('course');
@@ -175,7 +175,7 @@ INSERT INTO ListShopPlanning_User (name, idListShop, idPlanning, idUser )VALUES 
 
 
 INSERT INTO Food(id, name, idCategory, isValidated) VALUES (?, ?, ?, ?);
-INSERT INTO Food_Category(id, name, noRank) VALUES (?, ?, ?);
+INSERT INTO Food_Category(id, name, numRank) VALUES (?, ?, ?);
 INSERT INTO Food_Recipe(id, name, idType, idFood, quantity, unit, nbPerson, pixName, idOrigin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (?, ?, ?, ?);
 INSERT INTO Ingredient_Custom(idRecipe, idFood, idUser, quantity, unit, isHide) VALUES (?, ?, ?, ?, ?, ?);
@@ -187,13 +187,13 @@ INSERT INTO Planning(id, lastOpen, name, idUser) VALUES (?, ?, ?, ?);
 INSERT INTO Planning_CaseMeal(id, noDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?, ?);
 INSERT INTO Planning_WeekMeal(id, weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?, ?);
 INSERT INTO Recipe(id, name, idType, isPublic, idUser, rating, nbVoter, nbPerson, pixName, idOrigin, isValidated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-INSERT INTO Recipe_Category(id, name, noRank) VALUES (?, ?, ?);
+INSERT INTO Recipe_Category(id, name, numRank) VALUES (?, ?, ?);
 INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (?, ?, ?);
-INSERT INTO Recipe_Origin(id, name, noRank) VALUES (?, ?, ?);
+INSERT INTO Recipe_Origin(id, name, numRank) VALUES (?, ?, ?);
 INSERT INTO Recipe_Type(id, name) VALUES (?, ?);
 INSERT INTO Rel_Food_Category(idCategory, idFoodRecipe) VALUES (?, ?);
 INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);
 INSERT INTO Rel_Recipe_Category(idCategory, idRecipe) VALUES (?, ?);
-INSERT INTO Rel_User_Recipe(idRecipe, idUser, isFavorite, isForPlanning, rating, isHide) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO Rel_User_Recipe(idRecipe, idUser, isFavorite, isForPlanning, ratingUser, isHide) VALUES (?, ?, ?, ?, ?, ?);
 INSERT INTO `User`(id, name, pwd, email) VALUES (?, ?, ?, ?);
 

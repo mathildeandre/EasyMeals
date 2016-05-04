@@ -26,13 +26,13 @@ public class RecipeOriginDao {
 
             int id;
             String name;
-            int noRank;
+            int numRank;
             RecipeOrigin recipeOrigin;
             while(res.next()){
                 id = res.getInt("id");
                 name = res.getString("name");
-                noRank = res.getInt("noRank");
-                recipeOrigin = new RecipeOrigin(id, name, noRank);
+                numRank = res.getInt("numRank");
+                recipeOrigin = new RecipeOrigin(id, name, numRank);
                 recipeOriginList.add(recipeOrigin);
             }
 

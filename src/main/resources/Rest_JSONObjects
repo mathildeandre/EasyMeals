@@ -28,12 +28,12 @@ Java classes from package /rest/
 Java classes from package /dto/
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
- - FoodCategory = {"id":1,"name":"viande","noRank":5}
+ - FoodCategory = {"id":1,"name":"viande","numRank":5}
 
  - Ingredient = {qty:4, unit:'', food:'crepe a burritos', rayonId:3}
 
  - ListShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
-   ListShoppingCategory = {id:0, name:'Autre', noRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
+   ListShoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
 
 
 
@@ -57,8 +57,8 @@ Java classes from package /dto/
 
   - ListShoppingPlanning = {id:4 , name:"", date:"16/07/16", listShopping:{name:.., listShoppingCategories}, planning:{name:.., lastOpen:.. , weekMeals: ...}}
 
-  - RecipeCategory = {"id":1,"name":"viande","noRank":5}
-  - RecipeOrigin = {"id":1,"name":"viande","noRank":5}
+  - RecipeCategory = {"id":1,"name":"viande","numRank":5}
+  - RecipeOrigin = {"id":1,"name":"viande","numRank":5}
   - RecipeDescription = {"name":"faite cuire 5min","noDescript":1}
 
 
@@ -73,7 +73,7 @@ Java classes from package /dto/
         "descriptions":[{"name":"faire cuire steack","noDescip":1},{"name":"mettre dans crepe avec legumes","noDescip":2},{"name":"Votre burritos est pret !","noDescip":3}],
         "descriptionOpen":false,
         "origin":"mexicain",
-        "categories":[{"id":1,"name":"viande","noRank":1},{"id":3,"name":"legume","noRank":8}],
+        "categories":[{"id":1,"name":"viande","numRank":1},{"id":3,"name":"legume","numRank":8}],
         "isFavorite":false,
         "isForPlanning":false,
         "rating":0,
