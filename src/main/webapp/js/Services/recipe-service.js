@@ -418,23 +418,3 @@ myService.service('RecipeService', function($http, $q, $log) {
         };
     })
 
-    /*
-    attention les units et step sont en lien, les 2 tableaux doivent correspondrent
-     */
-    .constant('units',
-        ['', 'g', 'kg', 'cl', 'l']
-    )
-    .constant('steps',
-        [1, 25, 0.5, 5, 0.5]
-    )
-
-    .constant('rayonMagasin', [
-        'Fruit & Legumes',
-        'Boucherie',
-        'Poissonnerie',
-        'Epicerie',
-        'Boites',
-        'Surgeles',
-        'Petit dejeune',
-        'Autres'
-    ]);

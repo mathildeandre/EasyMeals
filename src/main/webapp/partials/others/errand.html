@@ -90,7 +90,7 @@
                 <!--<b style="border-bottom:1px solid grey; " >{{category.name}}</b>-->
                 <div class="divBodyCategory">
                     <div ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}">
-                        - {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food}}
+                        - {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
 
                         &nbsp
                         <span ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-remove ingrDone glyphiconBtn" ></span>
