@@ -5,7 +5,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location, GlobalService, restGETFactory, restRecipeService) {
+myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location, GlobalService, restRecipeService, restFoodService, restListShoppingService) {
 
     /**
      * Pour avoir une variable "global" utilisable entre les differentes section/view
@@ -15,9 +15,8 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
      */
 
     restRecipeService.initLoadData();
-
-
-    restGETFactory.loadAllData();
+    restFoodService.initLoadData();
+    restListShoppingService.initLoadData();
 
     $scope.classBody = "bodyEasyMeals";
 

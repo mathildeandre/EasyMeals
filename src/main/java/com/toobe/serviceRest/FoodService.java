@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/")
-public class Foods {
+public class FoodService {
 
     @Path("/foods")
     @GET

@@ -4,11 +4,11 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restGETFactory) {
+myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restListShoppingService) {
 
 
 
-    $scope.listsShoppingPlanning = restGETFactory.getListsShoppingPlanning();
+    $scope.listsShoppingPlanning = restListShoppingService.getListsShoppingPlanning();
 
     $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[$scope.listsShoppingPlanning.length-1];
 

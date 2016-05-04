@@ -4,7 +4,7 @@
 
 var myService = angular.module('services');
 
-myService.service("restGETFactory", function ($http, $q, $log) {
+myService.service("restListShoppingService", function ($http, $q, $log) {
 
 
 
@@ -22,7 +22,7 @@ myService.service("restGETFactory", function ($http, $q, $log) {
         listsShoppingPlanning.push(listSP);
     }
 
-    function loadAllData(){
+    function initLoadData(){
         $log.warn("ON LOAD TOUTES LES DONN2ES")
 
         /* LIST SHOPPING PLANNING _ user */
@@ -51,7 +51,7 @@ myService.service("restGETFactory", function ($http, $q, $log) {
     return {
         getListsShoppingPlanning: getListsShoppingPlanning,
         addListShoppingPlanning: addListShoppingPlanning,
-        loadAllData : loadAllData
+        initLoadData : initLoadData
     };
 
 });

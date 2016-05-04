@@ -2,7 +2,124 @@
  * Created by fabien on 14/03/2016.
  */
 
-myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll, $log, PlanningService, RecipeService, fourTypeMeal, units, steps) {
+myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll, $log, PlanningService, RecipeService, ErrandService , restFoodService, restListShoppingService, fourTypeMeal, units, steps) {
+
+
+    /*  $scope.categories =  [
+     {id:0, name:'Autre',"numRank":1, ingredients:[]},
+     {id:1, name:'Boucherie',"numRank":2, ingredients:[]},
+     {id:2, name:'Poissonnerie',"numRank":4, ingredients:[]}
+      ... ];*/
+    $scope.categories = restFoodService.getFoodCategories();
+
+    /* Reinitialise et initialise au tt debut les categories en ajoutant le champ ingredients  */
+    var resetIngredientsOfCategories = function(){
+        for(var i=0; i<$scope.categories.length; i++){
+            $scope.categories[i].ingredients = [];
+        }
+    }
+    $scope.initCategories = resetIngredientsOfCategories();
+
+
+
+
+
+    var idList = 12;
+    $scope.saveListShopping = function(){
+        var listSP = {id : idList++, name : 'listShop_01/05/16',
+            listShopping:{name:"boom", listShoppingCategories:$scope.categories},
+            planning:{name:"boom", lastOpen:true, weekMeals: $scope.fourWeekMeals}
+        }
+        restListShoppingService.addListShoppingPlanning(listSP);
+        ErrandService.setIngrCategories($scope.categories);
+        ErrandService.setPlanning($scope.fourWeekMeals);
+        alert("list sauvegarder");
+
+        $location.path("/errand");//$location.hash(recipe.id);
+    }
+
+
+    $scope.modifQty = false;
+    $scope.toggleModifQty = function(){
+        $scope.modifQty = ! $scope.modifQty;
+    }
+
+
+    $scope.showListShopping = function(){
+        for(var i=0; i<$scope.categories.length; i++){
+            if($scope.categories[i].ingredients.length > 0 ){
+                return true;
+            }
+        }
+        return false;
+    }
+    /* display for "showListShopping()"
+     $scope.elemNotEmptyListShopping = function(){
+     for(var i=0; i<$scope.categories.length; i++){
+     if($scope.categories[i].ingredients.length > 0){
+     return $scope.categories[i].name;
+     }
+     }
+     return "list shop not empty ";//+$scope.listShop.[0].food;
+     }
+     */
+
+
+    //the parent scope (ListShoppingCtrl) sent broadcast to say we need to recalculate categories lists
+    $scope.$on('reCalculateCategories', function(event, listShop) {
+        //reset all categories
+        for(var i=0; i<$scope.categories.length; i++){
+            $scope.categories[i].ingredients = [];
+        }
+
+        var aListShop = [];
+        var aCategory = [];
+        var hasCategory = false;
+
+        for(var i=0; i<listShop.length; i++){
+            aListShop = listShop[i];//aListShop = {qty:newQtity, unit:newUnit, food:newFood, rayonId:newRayonId};
+
+            hasCategory = false; //ne devrait pas etre utilisé: il est important de mettre par default une categorie (=0) lors de creation de recettes
+            for(var j=0; j<$scope.categories.length; j++){
+                aCategory = $scope.categories[j];
+                if(aListShop.rayonId == aCategory.id){
+                    aCategory.ingredients.push(aListShop);
+                    hasCategory = true;
+                }
+            }
+            if(!hasCategory){
+                $scope.categories[0].ingredients.push(aListShop);
+            }
+        }
+        $scope.listShop = [];
+    });
+
+
+    $scope.newIngredient = {qty:null, unit:'', food:''};
+
+
+    $scope.addNewIngr = function(ingr, categoryName){
+        var newIngr = JSON.parse(JSON.stringify(ingr));//NEW OBJECT
+
+        for(var i=0; i<$scope.categories.length; i++){
+            if($scope.categories[i].name == categoryName){
+                $scope.categories[i].ingredients.push(newIngr);
+            }
+        }
+    }
+    $scope.trashIngredientFromCategorie = function(category, ingr){
+        var index = category.ingredients.indexOf(ingr); //fonctionne aussi tres bien
+        category.ingredients.splice(index, 1);
+    }
+
+
+
+    /*************************************************************************************
+     * ************************* CUSTOMIZE ABOVE ********************************************
+     * ***********************************************************************************/
+
+
+
 
     /**
      * LIST SHOPPING
@@ -23,6 +140,8 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
     ng-click : "Générer liste de course"
      */
     $scope.calculListShopping = function(){
+        resetIngredientsOfCategories();
+
         var meals = [];
         var recipes = [];
         var nbPersTmp = 0;
@@ -32,10 +151,9 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         var ingrTmp = {};
         var newQtity = 0;
         var newUnit = '';
-        var newFood = '';
-        var newRayonId = 0;
+        var newIngrFood = '';
 
-        var listShop = [];
+        //var listShop = [];
         var fourMeals = $scope.fourWeekMeals;// [$scope.breakfasts, $scope.lunchs, $scope.snacks, $scope.dinners];
         for(var a=0; a<fourMeals.length; a++){
             meals = fourMeals[a].weekMeals;
@@ -44,28 +162,31 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
                 nbPersTmp = meals[i].nbPers;
                 for(var j=0; j<recipes.length; j++){
                     recipe = recipes[j];
-                    if(typeof recipe != 'number'){
-                        multIngr = nbPersTmp/recipe.nbPerson;
-                        for(var k=0; k<recipe.ingredients.length; k++){
-                            ingredient = recipe.ingredients[k];
-                            newQtity = multIngr*ingredient.qty;
-                            newUnit = ingredient.unit;
-                            newFood = ingredient.food;
-                            newRayonId = ingredient.rayonId;
-                            ingrTmp = {qty:newQtity, unit:newUnit, food:newFood, rayonId:newRayonId};
-                            listShop.push(ingrTmp);
+                    multIngr = nbPersTmp/recipe.nbPerson;
+                    for(var k=0; k<recipe.ingredients.length; k++){
+                        ingredient = recipe.ingredients[k];
+                        newQtity = multIngr*ingredient.qty;
+                        newUnit = ingredient.unit;
+                        newIngrFood = ingredient.food;
+                        ingrTmp = {qty:newQtity, unit:newUnit, food:newIngrFood};
+                        for(var b=0; b<$scope.categories.length; b++){
+                            if($scope.categories[b].id == ingredient.food.idCategory){
+                                //on va ajouter l'ingredient ds la categorie correspondante
+                                addIngrIntoCategorieAndFusionIfDuplicate(ingrTmp, $scope.categories[b].ingredients);
+
+                                //$scope.categories[b].ingredients.push(ingrTmp);
+                            }
                         }
-                    }else{
-                        //ON ne traite pas if its a number
+                        //listShop.push(ingrTmp);
                     }
                 }
             }
         }
 
-        $scope.listShop = mergeDuplicateIngredients(listShop);
+        //$scope.listShop = mergeDuplicateIngredients(listShop);
 
 
-        $scope.$broadcast('reCalculateCategories', $scope.listShop); //will tell to child (CustomizeShoppingCtrl to recalculate categories lists)
+        //$scope.$broadcast('reCalculateCategories', $scope.listShop); //will tell to child (CustomizeShoppingCtrl to recalculate categories lists)
 
 
         //$location.path("/creationPlanning");$location.hash('listShopping'); //?????? fonctionne pas
@@ -73,7 +194,31 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
        // $location.hash("yo");
        // $anchorScroll();   => NE FONCTIONNE PAS : recharge la page et perd les données...
 
+        setAllIngrWithGoodUnitAndQty();
 
+
+    }
+
+    var setAllIngrWithGoodUnitAndQty = function(){
+        for(var i=0; i<$scope.categories.length; i++){
+            for(var j=0; j<$scope.categories[i].ingredients.length; j++){
+                setIngrWithGoodUnitAndQty($scope.categories[i].ingredients[j]);
+            }
+        }
+    }
+    var addIngrIntoCategorieAndFusionIfDuplicate = function(ingrTmp, ingredients){
+        var isMerged = false;
+        for(var i=0; i<ingredients.length; i++){
+            var ingrFromCategory = ingredients[i];
+            //if ingr already into this category and units of them compatible -> merge
+            if(ingrFromCategory.food.id == ingrTmp.food.id && ingrUnitsCompatible(ingrFromCategory, ingrTmp)){
+                ingrFromCategory.qty = calculQty(ingrFromCategory, ingrTmp);
+                isMerged = true;
+            }
+        }
+        if(!isMerged){
+            ingredients.push(ingrTmp);
+        }
     }
     $scope.testAnchor = function(){
 
@@ -110,6 +255,13 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         return listShop;
     }
 
+    var ingrUnitsCompatible = function(ing1, ing2){
+        return ((ing1.unit == ing2.unit) ||
+                (ing1.unit=='g' && ing1.unit=='kg') ||
+                (ing1.unit=='kg' && ing1.unit=='g') ||
+                (ing1.unit=='cl' && ing1.unit=='l') ||
+                (ing1.unit=='l' && ing1.unit=='cl'))
+    }
     var calculQty = function(ing1, ing2){
         var unit1=ing1.unit;
         var unit2=ing2.unit;
@@ -169,11 +321,11 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
     }
     $scope.displayIngrUnitAndFood = function(ingr){
         switch(ingr.unit){
-            case 'g' : return ingr.unit+' de '+ingr.food;
-            case 'kg' : return ingr.unit+' de '+ingr.food;
-            case 'cl' : return ingr.unit+' de '+ingr.food;
-            case 'l' : return ingr.unit+' de '+ingr.food;
-            default: return ingr.unit+' '+ingr.food;
+            case 'g' : return ingr.unit+' de '+ingr.food.name;
+            case 'kg' : return ingr.unit+' de '+ingr.food.name;
+            case 'cl' : return ingr.unit+' de '+ingr.food.name;
+            case 'l' : return ingr.unit+' de '+ingr.food.name;
+            default: return ingr.unit+' '+ingr.food.name;
         /*On naffiche pas de 's' apres nom en cas de pluriel car ex : 6 crepe a burritos => 6 crepe a burritoss
          * Il faudrait plutot avoir un mode pluriel definit pour chaque food et l'activer en fonction.. */
         }
