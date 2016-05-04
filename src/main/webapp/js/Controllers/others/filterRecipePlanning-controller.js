@@ -131,23 +131,20 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     }
 
 
+    /** si on a select coeur/pushPin depuis NAVBAR */
     var directParamSelection = function(recipeSelection){
-
         if(recipeSelection != undefined ){
             for(var i=0; i<$scope.filterSearch.myLists.length; i++){
                 if($scope.filterSearch.myLists[i].id == recipeSelection){
                     $scope.moveMyListToSelection($scope.filterSearch.myLists[i]);
                 }
             }
-
             for(var i=0; i<$scope.filterSearch.categories.length; i++){
                 if($scope.filterSearch.categories[i].toUpperCase() == recipeSelection.toUpperCase()){
                     $scope.moveCategoryToSelection($scope.filterSearch.categories[i]);
                 }
             }
         }
-
-
     }
     directParamSelection($scope.recipeSelection);
 

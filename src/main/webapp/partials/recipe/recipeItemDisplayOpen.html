@@ -15,7 +15,7 @@
         <div class="ingredientRecipe">
             <div class="subTitleOfDescrip"> Ingrédients </div>
             <ul ng-repeat="ingr in recipe.ingredients">
-                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food}}</span> </li>
+                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food.name}}</span> </li>
             </ul>
         </div>
     </div>

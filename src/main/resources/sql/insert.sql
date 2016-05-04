@@ -121,6 +121,7 @@ INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 2, 400, 'g')
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 31, 0.2, '');
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 12, 1, '');
 
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 31, 0.2, '');
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 32, 4, '');
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 2, 200, 'g');
 
