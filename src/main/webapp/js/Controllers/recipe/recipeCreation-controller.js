@@ -3,7 +3,7 @@
  */
 var myModule = angular.module('controllers');
 
-myModule.controller('RecipeCreationCtrl', function($scope, $location, $routeParams, RecipeService, units, steps) {
+myModule.controller('RecipeCreationCtrl', function($scope, $location, $routeParams, RecipeService, AppendixFunctionsService, units, steps) {
 
     var recipeType = $routeParams.recipeType;
     $scope.recipeType =  recipeType;
@@ -17,15 +17,9 @@ myModule.controller('RecipeCreationCtrl', function($scope, $location, $routePara
             ingredients:[{qty:50, unit:units[1], food:''}],
             description:''
         };
-    $scope.displayRecipeType = function(){
-        switch($scope.recipeType){
-            case 'starter' : return 'Entrées';
-            case 'course' :  return 'Plats';
-            case 'dessert' : return 'Desserts';
-            case 'breakfast' : return 'Déjeuners - Goûters';
-            case 'cocktail' : return 'Cocktails';
-        }
-    }
+
+    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
+
         $scope.addRowIngredient = function(){
             var ingredient = {unit:'g'};//{qty:20, unit:units[2], food:'steack'};
             $scope.recipe.ingredients.push(ingredient);

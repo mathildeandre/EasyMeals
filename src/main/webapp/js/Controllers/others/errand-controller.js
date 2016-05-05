@@ -4,7 +4,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restListShoppingService) {
+myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, AppendixFunctionsService, restListShoppingService) {
 
 
 
@@ -39,21 +39,19 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, restList
 
 
     /* copy of planning-controller.js -> for th row */
+
+
+    /* mealType = breakfast, lunch, snack, dinner*/
     $scope.displayMealType = function(mealType){
-        switch(mealType){
-            case 'breakfast' : return 'Petit déjeuner';
-            case 'lunch' :  return 'Repas du midi';
-            case 'snack' : return 'Goûter';
-            case 'dinner' : return 'Dîner';
-        }
+        return AppendixFunctionsService.displayMealType(mealType);
     }
 
     $scope.recipesToDisplay = [];
     $scope.nbPersOfMeal = 1;
-    $scope.displayMeal = function(myMeal){
-        $log.debug(myMeal.recipes[0].name);
-        $scope.recipesToDisplay = myMeal.recipes;
-        $scope.nbPersOfMeal = myMeal.nbPers;
+    $scope.displayMealsOfCaseMeal = function(myCaseMeal){
+        $log.debug(myCaseMeal.recipes[0].name);
+        $scope.recipesToDisplay = myCaseMeal.recipes;
+        $scope.nbPersOfMeal = myCaseMeal.nbPers;
         createIngredientsAdapt($scope.recipesToDisplay, $scope.nbPersOfMeal);
     }
 

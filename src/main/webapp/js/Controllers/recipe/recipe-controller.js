@@ -5,64 +5,21 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService, restGETFactory,restRecipeService, restFactory, $http, $q) {
+myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService, AppendixFunctionsService, restRecipeService, restFactory, $http, $q) {
 
     $scope.$emit('intoRecipe'); //will tell to parents (global-controller.js) to modify pix
 
     var recipeType = $routeParams.recipeType;
     $scope.recipeType = recipeType;
+    $scope.recipes = restRecipeService.getRecipes(recipeType);
 
     var recipeSelection = $routeParams.selection; /*depuis navBar clique ds recette sur le coeur/pinTab...*/
     $scope.recipeSelection = recipeSelection;
 
-    var getRecipes = function(recipeType){
-        /*while (!restRecipeService.getIsCoursesReady()){
-            //---WAIT---
-        }*/
-        switch(recipeType){
-            case 'starter' : return RecipeService.getStarters();
-            case 'course' :  return restRecipeService.getCourses();//restGETFactory.getCourses();
-            case 'dessert' : return RecipeService.getDesserts();
-            case 'breakfast' : return RecipeService.getBreakfasts();
-            case 'cocktail' : return RecipeService.getCocktails();
-            default:  $scope.recipeType = 'ERROR';
-        }
-    }
-    $scope.recipes = getRecipes(recipeType);
 
+    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
+    $scope.displayButtonCreationRecipeType = AppendixFunctionsService.displayButtonCreationRecipeType($scope.recipeType);
 
-    $scope.displayRecipeType = function(){
-        switch($scope.recipeType){
-            case 'starter' : return 'Entrées';
-            case 'course' :  return 'Plats';
-            case 'dessert' : return 'Desserts';
-            case 'breakfast' : return 'Déjeuners - Goûters';
-            case 'cocktail' : return 'Cocktails';
-        }
-    }
-    $scope.displayCreationRecipeType = function(){
-        switch($scope.recipeType){
-            case 'starter' : return 'Créer une nouvelle Entrée';
-            case 'course' :  return 'Créer un nouveau Plat';
-            case 'dessert' : return 'Créer un nouveau Dessert';
-            case 'breakfast' : return 'Créer un nouveau Dej/Goûter';
-            case 'cocktail' : return 'Créer un nouveau Cocktail';
-        }
-    }
-   // $scope.courses = RecipeService.getCourses();
-
-
-    /*
-    $scope.getIngrUnitDisplay = function(ingredientUnit){
-        if(ingredientUnit != ''){
-            return (ingredientUnit + ' of');
-        }
-        else {
-
-            return ' piece(s) of';
-        }
-    }
-    */
 
     $scope.toggleDescOpen = function(recipe){
         recipe.descriptionOpen = !recipe.descriptionOpen;

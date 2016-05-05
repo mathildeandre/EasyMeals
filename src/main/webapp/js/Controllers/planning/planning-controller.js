@@ -5,75 +5,43 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, restRecipeService, fourTypeMeal, units, steps) {
+myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, AppendixFunctionsService, restRecipeService, fourTypeMeal, units, steps) {
 
-    $scope.sayBoom = function(category){
-        alert("sayyy boom u fucking ash.."+category)
-    }
     $scope.$emit('intoPlanning'); //will tell to parents (global-controller.js) to modify pix
 
     /**
      * RECIPES LIST ...
      */
     $scope.recipeType = 'course';
-    var getRecipes = function(recipeType){
-        /*if (!restRecipeService.getIsCoursesReady()){
-            //---WAIT---
-            $log.error("ON ATTEND LES DATA1");
-            setTimeout(function(){$log.debug("ON ATTEND LES DATA");}, 5000);
-            $log.error("ON ATTEND LES DATA1");
-        }
-        $log.error("sorti du if");*/
-        switch(recipeType){
-            case 'starter' : return RecipeService.getStarters();
-            case 'course' : return restRecipeService.getCourses();
-            case 'dessert' : return RecipeService.getDesserts();
-            case 'breakfast' : return RecipeService.getBreakfasts();
-            case 'cocktail' : return RecipeService.getCocktails();
-            default:  $scope.recipeType = 'ERROR';
-        }
-    }
-    $scope.recipes = getRecipes($scope.recipeType);
-    $scope.selectRecipes = function(recipeType){
+    $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
+
+    $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
         $scope.recipeType = recipeType;
-        $scope.recipes = getRecipes(recipeType);
+        $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
         $scope.$broadcast('updateFilter');
     }
     $scope.isRecipeTypeSelected = function(recipeType){
         return $scope.recipeType == recipeType;
     }
 
-    $scope.displayRecipeType = function(){
-        switch($scope.recipeType){
-            case 'starter' : return 'Entrees';
-            case 'course' :  return 'Plats';
-            case 'dessert' : return 'Desserts';
-            case 'breakfast' : return 'Petit Dej - Gouter';
-            case 'cocktail' : return 'Cocktails';
-        }
-    }
 
-
+    /** lors de souris hover : title = ... */
     $scope.displayIngredientsOfRecipeByTitle = function(recipe){
-        var str='';
-        str = str+"\n - "+recipe.nbPerson+" pers. -";
+        var str="\n - "+recipe.nbPerson+" pers. -";
         for(var i=0; i<recipe.ingredients.length; i++){
             str = str+"\n"+recipe.ingredients[i].qty+recipe.ingredients[i].unit+' '+recipe.ingredients[i].food.name;
         }
         return str;
     }
 
-
+    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
     /**
      * PLANNING Construction
      */
+
+    /* mealType = breakfast, lunch, snack, dinner*/
     $scope.displayMealType = function(mealType){
-        switch(mealType){
-            case 'breakfast' : return 'Petit déjeuner';
-            case 'lunch' :  return 'Repas du midi';
-            case 'snack' : return 'Goûter';
-            case 'dinner' : return 'Dîner';
-        }
+        return AppendixFunctionsService.displayMealType(mealType);
     }
 
     $scope.planningInitialized = false;
@@ -117,9 +85,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, restRe
         return fourWeekMeals;
     }
 
-
     $scope.fourWeekMeals = initFourWeekMeals(7);
-
 
     $scope.onOverTrash = function(){
         document.getElementById("trashPlanning").style.color = 'orange';
@@ -133,27 +99,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, restRe
     }*/
 
     $scope.dataDropTrash = true; //pas vraiment utilisé mais ne pas supprimer cette ligne sans enlever {{dataDropTrash}} du data-drop de la trash
-    $scope.trash = []
-
-    $scope.quickRecipe = {
-        id:'',
-        name:'',
-        nbPerson:1,
-        ingredients:[{qty:100, unit:'g', food:'chocolate'}],
-        description:''
-    }
-    $scope.units = units;
-    $scope.step = 25;
-    $scope.changeValSelect = function(ingredient){
-        var unit = ingredient.unit;
-        for(var i=0; i<units.length; i++){
-            if(unit == units[i]){
-                //ingredient.qty = 0;
-                $scope.step = steps[i];
-            }
-        }
-        return 0;
-    }
+    $scope.trash = [];
 });
 
 myModule.filter('orderByRecipeType', function($log){

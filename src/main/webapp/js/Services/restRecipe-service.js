@@ -13,6 +13,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     var courses = [];
     var desserts = [];
     //var breakfasts = [];
+    //var cocktails = [];
 
     function getIsDataReady(){
         return isDataReady;
@@ -30,6 +31,16 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     }
 
 
+    function getRecipes(recipeType) {
+        switch (recipeType) {
+            case 'starter' :return starters;
+            case 'course' :return courses;
+            case 'dessert' :return desserts;
+            case 'breakfast' :return [];
+            case 'cocktail' :return [];
+        }
+    }
+    /*
     function getStarters(){
         return starters;
     }
@@ -40,6 +51,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     function getDesserts(){
         return desserts;
     }
+    */
 
     function initLoadData(){
         $log.warn("[RECIPE SERVICE] INIT - LOADING DATA")
@@ -111,9 +123,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     return {
         getCategories: getCategories,
         getOrigins: getOrigins,
-        getStarters: getStarters,
-        getCourses: getCourses,
-        getDesserts: getDesserts,
+        getRecipes:getRecipes,
         initLoadData: initLoadData,
         getIsDataReady: getIsDataReady,
         getIsCoursesReady: getIsCoursesReady

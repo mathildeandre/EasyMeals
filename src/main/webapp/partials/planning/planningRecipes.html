@@ -2,33 +2,33 @@
 
     <div class="divRecipesType">
 
-        <button  ng-click="selectRecipes('starter')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+        <button  ng-click="changeRecipeType('starter')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('starter'), classicCursor: isRecipeTypeSelected('starter') }">
             Entrees
         </button>
-        <button  ng-click="selectRecipes('course')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+        <button  ng-click="changeRecipeType('course')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('course'), classicCursor: isRecipeTypeSelected('course') }">
             Plats
         </button>
-        <button  ng-click="selectRecipes('dessert')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+        <button  ng-click="changeRecipeType('dessert')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('dessert'), classicCursor: isRecipeTypeSelected('dessert') }">
             Desserts
         </button>
-        <button  ng-click="selectRecipes('breakfast')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+        <button  ng-click="changeRecipeType('breakfast')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('breakfast'), classicCursor: isRecipeTypeSelected('breakfast') }">
             Dej- Goûters
         </button>
-        <button  ng-click="selectRecipes('cocktail')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+        <button  ng-click="changeRecipeType('cocktail')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('cocktail'), classicCursor: isRecipeTypeSelected('cocktail') }">
             Cocktails
         </button>
 
         <!--
-        <button class="btn btn-info btnRecipeType" ng-click="selectRecipes('starter')" >Entrees</button>
-        <button class="btn btn-info btnRecipeType" ng-click="selectRecipes('course')" >Plats</button>
-        <button class="btn btn-info btnRecipeType" ng-click="selectRecipes('dessert')" >Desserts</button>
-        <button class="btn btn-info btnRecipeType" ng-click="selectRecipes('breakfast')"  >Dej- Goûters</button>
-        <button class="btn btn-info btnRecipeType" ng-click="selectRecipes('cocktail')">Cocktails</button>
+        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('starter')" >Entrees</button>
+        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('course')" >Plats</button>
+        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('dessert')" >Desserts</button>
+        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('breakfast')"  >Dej- Goûters</button>
+        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('cocktail')">Cocktails</button>
         -->
     </div>
 
@@ -170,7 +170,7 @@
 
             <div class="myArticleHeading" >
 
-                <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType()}}</div>
+                <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType}}</div>
                 <div class="rightInlineBlock rightHeadingSearch">
                     <span class="sortPlanningRecipeList" >
                         <span   class="glyphicon glyphicon-sort" ></span>

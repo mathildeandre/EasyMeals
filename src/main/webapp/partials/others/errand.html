@@ -144,10 +144,10 @@
 
                     <th class="myTh thErrand" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(aWeekMeal.typeMeal)}}</th>
 
-                    <td ng-repeat="meal in aWeekMeal.weekMeals"  style="width:13%" data-drop="true" ng-click="displayMeal(meal)" class="tdMeal" >
-                        <span ng-show="showNbPers" class="nbPers">{{meal.nbPers}} pers.</span>
+                    <td ng-repeat="caseMeal in aWeekMeal.weekMeals"  style="width:13%" data-drop="true" ng-click="displayMealsOfCaseMeal(caseMeal)" class="tdMeal" >
+                        <span ng-show="showNbPers" class="nbPers">{{caseMeal.nbPers}} pers.</span>
                         <br ng-show="showNbPers">
-                        <div ng-repeat="recipe in meal.recipes track by $index " class="itemToDragPlanning itemColorErrand" style="display: inline-block;" ng-show="recipe.name">
+                        <div ng-repeat="recipe in caseMeal.recipes track by $index " class="itemToDragPlanning itemColorErrand" style="display: inline-block;" ng-show="recipe.name">
                             {{recipe.name}} <br>
                         </div>
                     </td>
