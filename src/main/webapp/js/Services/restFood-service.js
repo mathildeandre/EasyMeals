@@ -6,6 +6,9 @@ var myService = angular.module('services');
 
 myService.service("restFoodService", function ($http, $q, $log) {
 
+    /*
+    foods = [{"id":1,"name":"steack","idCategory":2,"isValidated":false},{..}]
+     */
     var foods = [];
     var foodCategories = [];
 

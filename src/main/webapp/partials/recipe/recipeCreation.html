@@ -23,20 +23,43 @@
 
             </div>
             <div class="form-group">
-                <div><label>Ingrédient(s): (quantité, unité, nourriture)</label></div>
+                <div><label>Ingrédient(s): (quantité, unité, aliment)</label></div>
 
-                <div ng-repeat="ingredient in recipe.ingredients | ">
+                <div ng-repeat="ingredient in recipe.ingredients ">
                     <input style="width:60px" type="number" ng-model ='ingredient.qty' min="0"  step="{{step}}" placeholder="Ex: 50"  required />
                     <select ng-model='ingredient.unit' ng-change="changeValSelect(ingredient)" ng-options='unit for unit in units' ></select>
-                    <input type="text" ng-model ='ingredient.food' placeholder="Ex: tomato" required />
+                    <input type="text" ng-model ='ingredient.food.name' class="foodName"  ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}" ng-blur="onBlurInputIngredient()"
+                           ng-keyup="keyUpdateFilter(ingredient)" placeholder="Ex: tomato" required />
                     <button type="button" class="btn btn-default" ng-click="removeRowIngredient($index,ingredient)"> <!-- $index indique l'index du ng-repeat -->
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
+
                 <button type="button" class="btn btn-default" ng-click="addRowIngredient()">
                     <span class="glyphicon glyphicon-plus"></span> ingredients
                 </button>
             </div>
+
+            <div class="myBlockFoodProposition">
+                <span class="foodProposition"  ng-show="showFoods" ng-repeat="food in foods | filter : filterFood">
+                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe"  ng-mousedown="fillUpIngrWithFood($index, $event, food) ">
+                        <span class="txtFilter">{{food.name}}</span>
+                    </button>
+                </span>
+            </div>
+
+
+
+
+
+            <!-- DEBUG -->
+            <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+                INGREDIENTS :::
+                <div ng-repeat="ingredient in recipe.ingredients ">
+                    {{ingredient}}
+                </div>
+            </div>
+
             <div class="form-group">
                 <div><label>Description:</label></div>
                 <textarea name="comment" ng-model ='recipe.description' placeholder="Ex: Recette tip top" style="width:25vw; min-width:200px;">Enter text here...</textarea>

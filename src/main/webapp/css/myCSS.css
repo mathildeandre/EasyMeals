@@ -556,7 +556,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 
-
+.inlineBlock{
+    display:inline-block;
+}
 .titleInlineBlock{
     display:inline-block;
 }
@@ -1251,7 +1253,18 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .artHeadingRecipeCreation{
     //height: 58px;
 }
-
+.myBlockFoodProposition{
+    //border: 2px solid red;
+}
+.backgroundGreen{
+    background-color: limegreen;
+}
+.backgroundRed{
+    background-color: indianred;
+}
+.foodName{
+    color: white;
+}
 
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
