@@ -25,11 +25,40 @@ myService.service('AppendixFunctionsService', function($http, $q, $log) {
              * Il faudrait plutot avoir un mode pluriel definit pour chaque food et l'activer en fonction.. */
         }
 
+        function displayRecipeType(recipeType){
+            switch(recipeType){
+                case 'starter' : return 'Entrées';
+                case 'course' :  return 'Plats';
+                case 'dessert' : return 'Desserts';
+                case 'breakfast' : return 'Déjeuners - Goûters';
+                case 'cocktail' : return 'Cocktails';
+            }
+        }
+        function displayButtonCreationRecipeType(recipeType){
+            switch(recipeType){
+                case 'starter' : return 'Créer une nouvelle Entrée';
+                case 'course' :  return 'Créer un nouveau Plat';
+                case 'dessert' : return 'Créer un nouveau Dessert';
+                case 'breakfast' : return 'Créer un nouveau Dej/Goûter';
+                case 'cocktail' : return 'Créer un nouveau Cocktail';
+            }
+        }
+        function displayMealType(mealType){
+            switch(mealType){
+                case 'breakfast' : return 'Petit déjeuner';
+                case 'lunch' :  return 'Repas du midi';
+                case 'snack' : return 'Goûter';
+                case 'dinner' : return 'Dîner';
+            }
+        }
 
 
         return {
             unitStep: unitStep,
-            displayIngrUnitAndFood: displayIngrUnitAndFood
+            displayIngrUnitAndFood: displayIngrUnitAndFood,
+            displayRecipeType: displayRecipeType,
+            displayButtonCreationRecipeType: displayButtonCreationRecipeType,
+            displayMealType: displayMealType
         };
     })
 

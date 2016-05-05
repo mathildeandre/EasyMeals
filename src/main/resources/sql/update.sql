@@ -4,7 +4,7 @@ UPDATE Ingredient SET quantity = ?, unit = ? WHERE idRecipe = ? AND idFood = ?;
 UPDATE Ingredient_Custom SET quantity = ?, unit = ?, isHide = ? WHERE idRecipe = ? AND idFood = ? AND idUser = ?;
 UPDATE Recipe SET name = ?, type = ?, nbPerson = ?, rating = ?, nbVoter = ?, idUser = ?, idOldUser = ?, idOrigin = ? WHERE id = ?;
 UPDATE Recipe_Category SET name = ? WHERE id = ?;
-UPDATE Recipe_Description SET description = ? WHERE idRecipe = ? AND noDescription = ?;
+UPDATE Recipe_Description SET description = ? WHERE idRecipe = ? AND numDescription = ?;
 UPDATE Recipe_Origin SET name = ? WHERE id = ?;
 UPDATE Rel_Recipe_Category SET  WHERE idCategory = ? AND idRecipe = ?;
 UPDATE Rel_User_Recipe SET isFavorite = ?, isForPlanning = ?, rating = ?, isHide = ? WHERE idRecipe = ? AND idUser = ?;

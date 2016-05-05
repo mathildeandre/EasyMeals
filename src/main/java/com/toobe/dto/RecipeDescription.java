@@ -6,17 +6,17 @@ package com.toobe.dto;
 
 /**
 {
-    {"name":"faite cuire 5min","noDescript":1}
+    {"name":"faite cuire 5min","numDescrip":1}
 */
 
 public class RecipeDescription {
 
     private String name;
-    private int noDescip;
+    private int numDescrip;
 
-    public RecipeDescription(String name, int noDescip) {
+    public RecipeDescription(String name, int numDescrip) {
         this.name = name;
-        this.noDescip = noDescip;
+        this.numDescrip = numDescrip;
     }
 
     public String getName() {
@@ -27,11 +27,12 @@ public class RecipeDescription {
         this.name = name;
     }
 
-    public int getNoDescip() {
-        return noDescip;
+
+    public int getNumDescrip() {
+        return numDescrip;
     }
 
-    public void setNoDescip(int noDescip) {
-        this.noDescip = noDescip;
+    public void setNumDescrip(int noDescrip) {
+        this.numDescrip = numDescrip;
     }
 }

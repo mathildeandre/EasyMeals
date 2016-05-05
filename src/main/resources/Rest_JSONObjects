@@ -59,7 +59,7 @@ Java classes from package /dto/
 
   - RecipeCategory = {"id":1,"name":"viande","numRank":5}
   - RecipeOrigin = {"id":1,"name":"viande","numRank":5}
-  - RecipeDescription = {"name":"faite cuire 5min","noDescript":1}
+  - RecipeDescription = {"name":"faite cuire 5min","numDescrip":1}
 
 
   - Recipe =

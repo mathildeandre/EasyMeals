@@ -10,7 +10,7 @@ CREATE TABLE Ingredient_Custom (idRecipe int(10) NOT NULL, idFood int(10) NOT NU
 CREATE TABLE Recipe (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idType int(10) NOT NULL, isPublic tinyint NOT NULL, idUser int(10) NOT NULL, rating int(10),
   nbVoter int(10) DEFAULT 0 NOT NULL, nbPerson int(10) DEFAULT 1 NOT NULL, pixName varchar(255), idOrigin int(10) NOT NULL, PRIMARY KEY (id), INDEX (idType), INDEX (isPublic), INDEX (idUser));
 CREATE TABLE Recipe_Category (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, noRank int(10), PRIMARY KEY (id));
-CREATE TABLE Recipe_Description (idRecipe int(10) NOT NULL, noDescription int(10) NOT NULL, description varchar(255), PRIMARY KEY (idRecipe, noDescription));
+CREATE TABLE Recipe_Description (idRecipe int(10) NOT NULL, numDescription int(10) NOT NULL, description varchar(255), PRIMARY KEY (idRecipe, numDescription));
 CREATE TABLE Recipe_Origin (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, noRank int(10), PRIMARY KEY (id));
 CREATE TABLE Recipe_Type (id int(10) NOT NULL AUTO_INCREMENT, name varchar(25) NOT NULL, PRIMARY KEY (id));
 

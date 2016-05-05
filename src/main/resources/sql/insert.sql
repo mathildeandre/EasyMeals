@@ -101,16 +101,16 @@ INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (2, 1);
 INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (2, 3);
 
 
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (1, 1, 'cuire steack à la poêle');
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (1, 2, 'preparer salade,couper tomates en rondelle et ouvrir les pains à burger et mettre du fromage sur chaque partie');
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (1, 3, 'quand les steack sont pret, mettre pains au four 2min');
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (1, 4, 'tout est pret, mettre sauce au choix sur chaque partie du pain, steack, tomate salade');
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (1, 5, 'Votre burger est pret !');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 1, 'cuire steack à la poêle');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 2, 'preparer salade,couper tomates en rondelle et ouvrir les pains à burger et mettre du fromage sur chaque partie');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 3, 'quand les steack sont pret, mettre pains au four 2min');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 4, 'tout est pret, mettre sauce au choix sur chaque partie du pain, steack, tomate salade');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 5, 'Votre burger est pret !');
 
 
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (2, 1, 'faire cuire steack');
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (2, 2, 'mettre dans crepe avec legumes');
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (2, 3, 'Votre burritos est pret !');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (2, 1, 'faire cuire steack');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (2, 2, 'mettre dans crepe avec legumes');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (2, 3, 'Votre burritos est pret !');
 
 
 /* INGREDIENTS */
@@ -189,7 +189,7 @@ INSERT INTO Planning_CaseMeal(id, noDay, nbPers, idPlanningWeekMeal) VALUES (?, 
 INSERT INTO Planning_WeekMeal(id, weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?, ?);
 INSERT INTO Recipe(id, name, idType, isPublic, idUser, rating, nbVoter, nbPerson, pixName, idOrigin, isValidated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 INSERT INTO Recipe_Category(id, name, numRank) VALUES (?, ?, ?);
-INSERT INTO Recipe_Description(idRecipe, noDescription, description) VALUES (?, ?, ?);
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (?, ?, ?);
 INSERT INTO Recipe_Origin(id, name, numRank) VALUES (?, ?, ?);
 INSERT INTO Recipe_Type(id, name) VALUES (?, ?);
 INSERT INTO Rel_Food_Category(idCategory, idFoodRecipe) VALUES (?, ?);

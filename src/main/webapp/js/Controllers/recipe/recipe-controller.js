@@ -35,7 +35,6 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     }
 
 
-
     /* ICI !!!! doit communiquer avec filter controller (broadcast) */
     $scope.toggleIsFavorite = function(recipe, event){
         event.stopPropagation();

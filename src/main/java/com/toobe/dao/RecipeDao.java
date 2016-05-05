@@ -333,16 +333,16 @@ public class RecipeDao {
     private List<RecipeDescription> getDescriptionList(Connection conn, int idRecipe) {
         List<RecipeDescription> descriptionList = new ArrayList<RecipeDescription>();
         String descr;
-        int noDescrip;
+        int numDescrip;
         RecipeDescription recipeDescrip;
         PreparedStatement stm;
         try {
-            stm = conn.prepareStatement("SELECT description, noDescription FROM Recipe_Description WHERE idRecipe = " + idRecipe + " ORDER BY noDescription");
+            stm = conn.prepareStatement("SELECT description, numDescription FROM Recipe_Description WHERE idRecipe = " + idRecipe + " ORDER BY numDescription");
             ResultSet resDescription = stm.executeQuery();
             while (resDescription.next()) {
                 descr = resDescription.getString("description");
-                noDescrip = resDescription.getInt("noDescription");
-                recipeDescrip = new RecipeDescription(descr, noDescrip);
+                numDescrip = resDescription.getInt("numDescription");
+                recipeDescrip = new RecipeDescription(descr, numDescrip);
                 descriptionList.add(recipeDescrip);
             }
         } catch (SQLException e) {
