@@ -11,14 +11,17 @@
                 <div class="ingredientRecipeSingle">
                     <div class="subTitleSingle"> Ingrédients </div>
                     <ul ng-repeat="ingr in recipe.ingredients">
-                        <li > <span>{{ingr.qty}}</span>{{ingr.unit}}<span></span> <span>{{ingr.food}}</span> </li>
+                        <li > <span>{{ingr.qty}}</span>{{ingr.unit}}<span></span> <span>{{ingr.food.name}}</span> </li>
                     </ul>
                 </div>
             </div>
 
+
             <div class="preparationRecipeSingle">
                 <div class="subTitleSingle"> Préparation</div>
-                <div> {{recipe.description}} </div>
+                <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
+                    {{descript.numDescrip}} - {{descript.name}}
+                </div>
             </div>
         </div>
     </div>

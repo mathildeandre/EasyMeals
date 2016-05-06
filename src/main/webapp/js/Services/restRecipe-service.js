@@ -40,6 +40,23 @@ myService.service("restRecipeService", function ($http, $q, $log) {
             case 'cocktail' :return [];
         }
     }
+
+    function getSingleRecipe(recipeType, recipeId){
+        var arr;
+        switch (recipeType) {
+            case 'starter' : arr = starters; break;
+            case 'course' : arr = courses; break;
+            case 'dessert' : arr = desserts; break;
+            case 'breakfast' : arr = []; break;
+            case 'cocktail' : arr = []; break;
+        }
+        for(var i=0; i<arr.length; i++){
+            if(arr[i].id == recipeId){
+                return arr[i];
+            }
+        }
+        return null;
+    }
     /*
     function getStarters(){
         return starters;
@@ -124,6 +141,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         getCategories: getCategories,
         getOrigins: getOrigins,
         getRecipes:getRecipes,
+        getSingleRecipe: getSingleRecipe,
         initLoadData: initLoadData,
         getIsDataReady: getIsDataReady,
         getIsCoursesReady: getIsCoursesReady

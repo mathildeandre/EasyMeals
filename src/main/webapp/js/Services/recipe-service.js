@@ -330,14 +330,6 @@ myService.service('RecipeService', function($http, $q, $log) {
             }
         ];
 
-        getSingleRecipe = function(recipeType, recipeId){
-            for(var i=0; i<courses.length; i++){
-                if(courses[i].id == recipeId){
-                    return courses[i];
-                }
-            }
-            return null;
-        }
         getCoursesInMyFct = function(){
             return courses;
         };
@@ -413,7 +405,6 @@ myService.service('RecipeService', function($http, $q, $log) {
             addDessert: addDessert,
             addBreakfast: addBreakfast,
             addCocktail: addCocktail,
-            getSingleRecipe: getSingleRecipe,
             createRecipe: createRecipe
         };
     })

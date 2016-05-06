@@ -94,6 +94,11 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
 
     /** modifier xxxxxxxxxxxx    FAIRE TT DIRECT DS SERVICE RECIPE   xxxxxxxxxxxxx..... */
     $scope.addRecipe = function(recipe){
+
+
+        restRecipeService.
+
+
         alert("blabla");
         recipe.recipeType = recipeType;
         RecipeService.createRecipe(recipe);
