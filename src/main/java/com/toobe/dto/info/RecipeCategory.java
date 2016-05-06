@@ -17,6 +17,9 @@ public class RecipeCategory {
     private String name;
     private int numRank;
 
+    public RecipeCategory(){
+
+    }
     public RecipeCategory(int id, String name, int numRank) {
         this.id = id;
         this.name = name;

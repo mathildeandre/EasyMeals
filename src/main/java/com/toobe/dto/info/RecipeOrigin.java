@@ -15,6 +15,10 @@ public class RecipeOrigin {
     private String name;
     private int numRank;
 
+    public RecipeOrigin(){
+
+    }
+
     public RecipeOrigin(int id, String name, int numRank) {
         this.id = id;
         this.name = name;

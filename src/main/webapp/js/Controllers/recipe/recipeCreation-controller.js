@@ -3,7 +3,7 @@
  */
 var myModule = angular.module('controllers');
 
-myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $routeParams, RecipeService, AppendixFunctionsService, restRecipeService, restFoodService, units) {
+myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $location, $routeParams, RecipeService, AppendixFunctionsService, restRecipeService, restFoodService, units) {
 
     /*RECIPE = {
         name:"Burritos",
@@ -39,7 +39,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
 
     $scope.recipe =  {
         name:'',
-        recipeType:recipeType,
+        recipeType:{idType:0,nameType:recipeType},
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":0,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
@@ -60,7 +60,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
         for(var i=0; i<$scope.categories.length; i++){
             if($scope.categories[i].checked){
                 /// category inserted : {"id":2,"name":"four","numRank":5,"checked":true}
-                /// we need to remove the field "checked"  maybe ? (=> new category = {id: ..,...} )
+                /// maybe we need to remove the field "checked" ? (=> new category = {id: ..,...} )
                 $scope.recipe.categories.push($scope.categories[i]);
             }
         }
@@ -97,6 +97,11 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
     }
 
     $scope.createRecipe = function(){
+
+        for(var i=0; i<$scope.recipe.categories.length; i++){
+            delete $scope.recipe.categories[i].checked;
+        }
+
         restRecipeService.createRecipe($scope.recipe, recipeType);
         /*switch(recipeType){
             case 'starter' : RecipeService.addStarter(recipe); break;
@@ -108,10 +113,6 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
         }*/
         $location.path("/recipe/"+recipeType);//$location.hash(recipe.id);
     }
-
-
-
-
 
 
 

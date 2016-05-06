@@ -12,6 +12,9 @@ public class Ingredient {
     private String unit;
     private Food food;
 
+    public Ingredient(){
+
+    }
     public Ingredient(int qty, String unit, Food food) {
         this.qty = qty;
         this.unit = unit;

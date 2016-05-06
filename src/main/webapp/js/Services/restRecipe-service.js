@@ -51,7 +51,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         }
 
         // Web service
-        //insertRecipe(recipe);
+        insertRecipe(recipe);
     }
 
 
@@ -155,14 +155,24 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
 
     function insertRecipe(recipe){
-        alert("cerate :"+recipe.name);
-        var dataObj = {
+        $log.warn("REQUETE with RECIPE ----  ENVOYE !!! "+recipe.name);
+        /*var dataObj = {
             name : recipe.name
-        };
+        };*/
         return $http({
             method: 'POST',
             url: '/rest/recipe/create',
-            data: dataObj
+            data: recipe/* {
+                name:recipe.name,
+                recipeType:recipe.recipeType,
+                origin:recipe.origin,//recipe.origin
+                categories:recipe.categories,
+                timeCooking:recipe.timeCooking,
+                timePreparation:recipe.timePreparation,
+                nbPerson:recipe.nbPerson,
+                descriptions:recipe.descriptions,
+                ingredients:[{qty:1, unit:'g', food:{"id":1,"name":"dd","idCategory":0,"isValidated":false}}]
+            }*/
         })
             .then(function (response) {
                 if (response.status == 200) {

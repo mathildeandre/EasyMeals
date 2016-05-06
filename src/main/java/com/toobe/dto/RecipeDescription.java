@@ -14,6 +14,9 @@ public class RecipeDescription {
     private String name;
     private int numDescrip;
 
+    public RecipeDescription(){
+
+    }
     public RecipeDescription(String name, int numDescrip) {
         this.name = name;
         this.numDescrip = numDescrip;
@@ -32,7 +35,7 @@ public class RecipeDescription {
         return numDescrip;
     }
 
-    public void setNumDescrip(int noDescrip) {
+    public void setNumDescrip(int numDescrip) {
         this.numDescrip = numDescrip;
     }
 }

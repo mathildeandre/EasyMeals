@@ -64,7 +64,6 @@ public class Recipe implements Serializable{
 
 
     public Recipe(){
-
     }
 
     public Recipe(int id, String name, boolean isPublic, int idUser, String pixName, RecipeType recipeType,

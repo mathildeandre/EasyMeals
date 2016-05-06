@@ -14,7 +14,9 @@ public class Food {
     private String name;
     private int idCategory;
     private boolean isValidated;
+    public Food(){
 
+    }
     public Food(Long id, String name, int idCategory, boolean isValidated) {
         this.id = id;
         this.name = name;
