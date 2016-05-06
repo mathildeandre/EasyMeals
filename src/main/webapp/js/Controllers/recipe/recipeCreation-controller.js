@@ -3,7 +3,7 @@
  */
 var myModule = angular.module('controllers');
 
-myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $routeParams, RecipeService, AppendixFunctionsService, restFoodService, units, steps) {
+myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $routeParams, RecipeService, AppendixFunctionsService, restRecipeService, restFoodService, units) {
 
 
     /*{
@@ -12,7 +12,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
         recipeType:"course",
         nbPerson:9,
         ingredients:[{qty:200,unit:"g",food:{id:1,name:"cabillaud",idCategory:5, validated:true}},{..}],
-        descriptions:[{name:"faire cuire steack",noDescip:1},{..}],
+        descriptions:[{name:"faire cuire steack",numDescrip:1},{..}],
         origin:{id:1,name:"viande",numRank:5},
         categories:[{id:1,name:"viande",numRank:1},{..}],
         timeCooking:120,
@@ -32,43 +32,140 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
     var recipeType = $routeParams.recipeType;
     $scope.recipeType =  recipeType;
     $scope.foods = restFoodService.getFoods();
+    $scope.origins = restRecipeService.getOrigins();
+    $scope.categories = restRecipeService.getCategories();
+
+
+
+    $scope.recipe =  {
+        name:'',
+        recipeType:recipeType,
+        nbPerson:4,
+        ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":0,"isValidated":false}}],
+        descriptions:[{name:"",numDescrip:1}],
+        origin:$scope.origins[0],
+        categories:[],
+        timeCooking:30,
+        timePreparation:20
+
+    };
+
+    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
+
+
+
+
+    var updateCategories = function(){
+        $scope.recipe.categories = [];
+        for(var i=0; i<$scope.categories.length; i++){
+            if($scope.categories[i].checked){
+                /// category inserted : {"id":2,"name":"four","numRank":5,"checked":true}
+                /// we need to remove the field "checked"  maybe ? (=> new category = {id: ..,...} )
+                $scope.recipe.categories.push($scope.categories[i]);
+            }
+        }
+    }
+    $scope.$watch('categories', updateCategories, true);
+
+    $scope.addRowIngredient = function(){
+        var ingredient = {qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":0,"isValidated":false}};//{qty:20, unit:units[2], food:'steack'};
+        $scope.recipe.ingredients.push(ingredient);
+    }
+    $scope.removeRowIngredient = function(index,ingredient){
+        //var index = $scope.recipe.ingredients.indexOf(ingredient); //fonctionne aussi tres bien
+        $scope.recipe.ingredients.splice(index, 1); //le 1 indique combien d'element on remove a partir de index
+    }
+
+
+    var nextNumDescrip = 2;
+    $scope.addDescription = function(){
+        $scope.recipe.descriptions.push({name:"",numDescrip:nextNumDescrip++});
+    }
+    $scope.removeDescription = function(index,ingredient){
+        $scope.recipe.descriptions.splice(index, 1);
+        for(var i=index; i<$scope.recipe.descriptions.length; i++){
+            $scope.recipe.descriptions[i].numDescrip--;
+        }
+        nextNumDescrip--;
+
+    }
+
+
+
+    /** modifier xxxxxxxxxxxx    FAIRE TT DIRECT DS SERVICE RECIPE   xxxxxxxxxxxxx..... */
+    $scope.addRecipe = function(recipe){
+        alert("blabla");
+        recipe.recipeType = recipeType;
+        RecipeService.createRecipe(recipe);
+        switch(recipeType){
+            case 'starter' : RecipeService.addStarter(recipe); break;
+            case 'course' :  RecipeService.addCourse(recipe); break;
+            case 'dessert' : RecipeService.addDessert(recipe); break;
+            case 'breakfast' : RecipeService.addBreakfast(recipe); break;
+            case 'cocktail' : RecipeService.addCocktail(recipe); break;
+
+        }
+        $location.path("/recipe/"+recipeType);$location.hash(recipe.id);
+    }
+
+    $scope.units = units;
+    $scope.unitStep = function(aUnit){
+        return AppendixFunctionsService.unitStep(aUnit);
+    }
+
+
+
 
 
 
 
     /******************************************************
-     * *************** FILTER WITH FOODS ******************
+     * *************** FILTER WITH FOODS for ingredients ******************
      * ****************************************************/
 
     $scope.filterFood = '';
-    $scope.currentIngr = {};
+    $scope.currentIngr = {};//{food:{"id":0,"name":"","idCategory":0,"isValidated":false}};
     $scope.showFoods = false;
 
-    /* lorsque lon commence a ecrire ds input foodName */
-    $scope.keyUpdateFilter = function(ingr){
-        $scope.showFoods = true;
-        $scope.filterFood = ingr.food.name;
-        $scope.currentIngr = ingr;
-    }
-    /* lorsque l'on quitte le input foodName */
-    $scope.onBlurInputIngredient = function(){
-        $scope.showFoods = false;
-        //check if food still valid!
-        for(var i=0; i<$scope.foods.length; i++){
-            if ($scope.currentIngr.food.id == $scope.foods[i].id){
-                if($scope.currentIngr.food.name != $scope.foods[i].name){
-                    var name = $scope.currentIngr.food.name;
-                    $scope.currentIngr.food = {"id":0,"name":name,"idCategory":0,"isValidated":false};
+    /* lorsque on ecrit ds input foodName */
+    $scope.keyUpdateFilter = function(nameIngr){
+        $scope.filterFood = nameIngr; //update filter
+        if(nameIngr == undefined || nameIngr == ""){
+            //$log.warn(">>keyUpdateFilter<< is nameIngr == ''?: "+nameIngr);
+            $scope.currentIngr.food.id=-1;
+        }else{
+            var foodFound = false;
+            var id, name, idCategory;
+            //on check si le mot correspond a une food a chaque nouvelle lettre entre/suppr.
+            for(var i=0; i<$scope.foods.length; i++){
+                if (nameIngr == $scope.foods[i].name){
+                    foodFound = true;
+                    id = $scope.foods[i].id;
+                    name = $scope.foods[i].name;
+                    idCategory = $scope.foods[i].idCategory;
                 }
+            }
+            if(foodFound){
+                $scope.currentIngr.food.id = id;
+                $scope.currentIngr.food.idCategory = idCategory;
+            }else{
+                $scope.currentIngr.food.id=0;
             }
         }
     }
+    $scope.onFocusInputIngredient = function(ingr){
+        $scope.showFoods = true;
+        $scope.filterFood = ingr.food.name; //on initialise le filtre
+        $scope.currentIngr = ingr; //on initialise currentIngr
+    }
+    $scope.onBlurInputIngredient = function(){
+        $scope.showFoods = false;
+    }
+
     /* lorsque click on foodName proposition */
     $scope.fillUpIngrWithFood = function(index, evt, food){
         if(evt.which === 1) {
-            $log.warn("BOOM fillUpIngrWithFood ---- "+food.id+food.name+food.idCategory);
             var newFood = JSON.parse(JSON.stringify(food));//NEW OBJECT
-            $log.info("fillUpIngrWithFood ----NEW FOOOOD "+newFood.id+newFood.name+newFood.idCategory);
             $scope.currentIngr.food = newFood;
         }
     }
@@ -77,48 +174,12 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
      * ************* end FILTER WITH FOODS ****************
      * ****************************************************/
 
+    /*
 
+    [html]
+    <input.. step="{{step}}"
+    <select .. ng-change="changeValSelect(ingredient)"
 
-
-
-
-
-    $scope.units = units;
-
-    $scope.recipe =  {
-        id:'MyRecipe',
-        name:'',
-        nbPerson:2,
-        ingredients:[{qty:1, unit:'g', food:{"id":0,"name":"","idCategory":0,"isValidated":false}}],
-        description:''
-    };
-
-    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
-
-        $scope.addRowIngredient = function(){
-            var ingredient = {qty:1, unit:'g', food:{"id":0,"name":"","idCategory":0,"isValidated":false}};//{qty:20, unit:units[2], food:'steack'};
-            $scope.recipe.ingredients.push(ingredient);
-        }
-        $scope.removeRowIngredient = function(index,ingredient){
-            //var index = $scope.recipe.ingredients.indexOf(ingredient); //fonctionne aussi tres bien
-            $scope.recipe.ingredients.splice(index, 1); //le 1 indique combien d'element on remove a partir de index
-        }
-
-
-        $scope.addRecipe = function(recipe){
-            alert("blabla");
-            recipe.recipeType = recipeType;
-            RecipeService.createRecipe(recipe);
-            switch(recipeType){
-                case 'starter' : RecipeService.addStarter(recipe); break;
-                case 'course' :  RecipeService.addCourse(recipe); break;
-                case 'dessert' : RecipeService.addDessert(recipe); break;
-                case 'breakfast' : RecipeService.addBreakfast(recipe); break;
-                case 'cocktail' : RecipeService.addCocktail(recipe); break;
-
-            }
-            $location.path("/recipe/"+recipeType);$location.hash(recipe.id);
-        }
 
         $scope.step = 25;
         $scope.changeValSelect = function(ingredient){
@@ -132,22 +193,22 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
             return 0;
         }
 
-
-
-    $scope.listFood = [
-        'tomate',
-        'salade',
-        'steack',
-        'salami',
-        'saucisson',
-        'saucisse',
-        'courgette',
-        'courge',
-        'poireaux',
-        'pomme de terre',
-        'patate',
-        'pate',
-        'pate feuillete',
-        'pate à lasagne'
-    ]
+    */
 });
+
+
+
+/*
+
+ {"name":"Lasagnes",
+ "recipeType":"course",
+ "nbPerson":4,
+ "ingredients":[{"qty":75,"unit":"g","food":{"id":20,"name":"oeuf","idCategory":6,"isValidated":false}},
+ {"qty":1.3,"unit":"kg","food":{"id":26,"name":"reblochon","idCategory":8,"isValidated":false}}],
+ "descriptions":[{"name":"faire cuire le reblochon","numDescrip":1},{"name":"puis le manger","numDescrip":2}],
+ "origin":{"id":4,"name":"indien","numRank":4},
+ "categories":[{"id":1,"name":"viande","numRank":1,"checked":true},
+ {"id":2,"name":"four","numRank":5,"checked":true}],
+ "timeCooking":50,
+ "timePreparation":20}
+ */

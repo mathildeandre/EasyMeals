@@ -15,21 +15,47 @@
     <div class="myArticleBody">
         <form role="form" class="css-form">
             <div class="form-group">
-                <div><label>Nom recette:</label></div>
-                <input type="text" ng-model ='recipe.name' maxlength="20" placeholder="Ex: Lasagnes" required />
+                <label>Nom recette :</label>
+                <input type="text" ng-model ='recipe.name' maxlength="40" placeholder="Nom recette" required />
             </div>
             <div class="form-group">
-                <div><label>Recette pour <input style="width:40px" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" required/> personne(s)</label></div>
-
+                <label>Nombre de personnes : </label>
+                <input style="width:40px" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" required/>
             </div>
+
+            <div class="form-group">
+                Temps de Préparation :
+                <input style="width:60px" type="number" ng-model ='recipe.timePreparation' min="0" step="5" required />
+                <br>
+                Temps de Cuisson :
+                <input style="width:60px" type="number" ng-model ='recipe.timeCooking' min="0"  step="5" required />
+            </div>
+
+            <div class="form-group">
+                Spécialité :
+                <select class="fieldPlanning"  ng-model='recipe.origin' ng-options='origin.name for origin in origins' ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
+            </div>
+
+            <div class="form-group">
+                Categories :
+                <span ng-repeat="category in categories" class="checkbox checkbox-info checkbox-inline">
+                    <input type="checkbox"  ng-model="category.checked" id="{{category.id}}">
+                    <label for="{{category.id}}" >{{category.name}}</label>
+                </span>
+            </div>
+
+
+            <br>
+
             <div class="form-group">
                 <div><label>Ingrédient(s): (quantité, unité, aliment)</label></div>
 
                 <div ng-repeat="ingredient in recipe.ingredients ">
-                    <input style="width:60px" type="number" ng-model ='ingredient.qty' min="0"  step="{{step}}" placeholder="Ex: 50"  required />
-                    <select ng-model='ingredient.unit' ng-change="changeValSelect(ingredient)" ng-options='unit for unit in units' ></select>
-                    <input type="text" ng-model ='ingredient.food.name' class="foodName"  ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}" ng-blur="onBlurInputIngredient()"
-                           ng-keyup="keyUpdateFilter(ingredient)" placeholder="Ex: tomato" required />
+                    <input style="width:60px" type="number" ng-model ='ingredient.qty' min="0"   step="{{unitStep(ingredient.unit)}}" placeholder="Ex: 50"  required />
+                    <select ng-model='ingredient.unit'  ng-options='unit for unit in units' ></select>
+
+                    <input type="text" ng-model ='ingredient.food.name' class="foodName"  ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}"
+                          ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()" ng-keyup="keyUpdateFilter(ingredient.food.name)" placeholder="aliment" required />
                     <button type="button" class="btn btn-default" ng-click="removeRowIngredient($index,ingredient)"> <!-- $index indique l'index du ng-repeat -->
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
@@ -51,22 +77,62 @@
 
 
 
-
-            <!-- DEBUG -->
-            <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-                INGREDIENTS :::
-                <div ng-repeat="ingredient in recipe.ingredients ">
-                    {{ingredient}}
-                </div>
-            </div>
+            <br>
 
             <div class="form-group">
                 <div><label>Description:</label></div>
-                <textarea name="comment" ng-model ='recipe.description' placeholder="Ex: Recette tip top" style="width:25vw; min-width:200px;">Enter text here...</textarea>
+
+                <div ng-repeat="description in recipe.descriptions ">
+                    {{description.numDescrip}} -
+
+                    <textarea ng-model ='description.name' placeholder="Etape n°{{description.numDescrip}}" rows="1" style="width:25vw; min-width:200px;"></textarea>
+                    <button type="button" class="btn btn-default" ng-click="removeDescription($index,ingredient)"> <!-- $index indique l'index du ng-repeat -->
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+
+                <button type="button" class="btn btn-default" ng-click="addDescription()">
+                    <span class="glyphicon glyphicon-plus"></span> etape description
+                </button>
             </div>
+
             <br>
-            <input type="submit" value="Add recipe : {{recipe.name}}" ng-click="addRecipe(recipe)" class="btn btn-success"/>
+
+            <input type="submit" value="Créer la recetter : {{recipe.name}}" ng-click="addRecipe(recipe)" class="btn btn-success"/>
         </form>
     </div>
 
+
+
+
+
+
+    <!-- DEBUG -->
+    <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+        <div >
+            SPECIALITE ::: <div> {{recipe.origin}}</div>
+            CATEGORIES :::
+            <div ng-repeat="category in recipe.categories ">
+                {{category}}
+            </div>
+        </div>
+        <div>
+            INGREDIENTS :::
+            <div ng-repeat="ingredient in recipe.ingredients ">
+                {{ingredient}}
+            </div>
+        </div>
+        <div>
+            DESCRIPTIONS :::
+            <div ng-repeat="description in recipe.descriptions ">
+                {{description}}
+            </div>
+        </div>
+        <br>
+        <br>
+        <div>
+            RECIPE :::
+            {{recipe}}
+        </div>
+    </div>
 </article>
