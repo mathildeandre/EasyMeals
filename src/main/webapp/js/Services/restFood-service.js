@@ -22,7 +22,6 @@ myService.service("restFoodService", function ($http, $q, $log) {
 
 
     function addFood(food){
-        food.idCategory = 1; //par defaut category : 'Autre'
         foods.push(food);
     }
 

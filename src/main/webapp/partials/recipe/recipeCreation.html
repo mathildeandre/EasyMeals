@@ -6,68 +6,73 @@
             <a href="#/recipe/{{recipeTypeName}}"  class="btn btn-warning">
                 Revenir aux recettes
                 &nbsp
-                <span   class="glyphicon glyphicon-share-alt " ></span>
+                <span class="glyphicon glyphicon-share-alt " ></span>
             </a> <!--creer nouveau plat-->
 
         </div>
     </div>
 
+
+
     <div class="myArticleBody">
         <form role="form" class="css-form">
             <div class="form-group">
-                <label>Nom recette :</label>
-                <input type="text" ng-model ='recipe.name' maxlength="40" placeholder="Nom recette" required />
+                Nom recette :
+                <input class="fieldRecipeCreation nameRecipe"  type="text" ng-model ='recipe.name' placeholder="Nom recette" required />
             </div>
             <div class="form-group">
-                <label>Nombre de personnes : </label>
-                <input style="width:40px" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" required/>
+                Nombre de personnes :
+                <input class="fieldRecipeCreation" style="width:60px" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" required/>
             </div>
-
             <div class="form-group">
                 Temps de Préparation :
-                <input style="width:60px" type="number" ng-model ='recipe.timePreparation' min="0" step="5" required />
-                <br>
+                <input class="fieldRecipeCreation" style="width:60px" type="number" ng-model ='recipe.timePreparation' min="0" step="5" required />
+            </div>
+            <div class="form-group">
                 Temps de Cuisson :
-                <input style="width:60px" type="number" ng-model ='recipe.timeCooking' min="0"  step="5" required />
+                <input class="fieldRecipeCreation" style="width:60px" type="number" ng-model ='recipe.timeCooking' min="0"  step="5" required />
             </div>
 
             <div class="form-group">
                 Spécialité :
-                <select class="fieldPlanning"  ng-model='recipe.origin' ng-options='origin.name for origin in origins' ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
+                <select class="fieldRecipeCreation" ng-model='recipe.origin' ng-options='origin.name for origin in origins' ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
             </div>
 
+
+            <!---- ------------------------- CATEGORIE ----------------------------->
             <div class="form-group">
                 Categories :
-                <span ng-repeat="category in categories" class="checkbox checkbox-info checkbox-inline">
+                <span ng-repeat="category in categories" class="checkbox checkbox-warning checkbox-inline">
                     <input type="checkbox"  ng-model="category.checked" id="{{category.id}}">
                     <label for="{{category.id}}" >{{category.name}}</label>
                 </span>
             </div>
 
 
-            <br>
-
+            <!---- ------------------------- INGREDIENTS - ---------------------------->
             <div class="form-group">
-                <div><label>Ingrédient(s): (quantité, unité, aliment)</label></div>
+                <div>Ingrédient(s): (quantité, unité, aliment)</div>
 
                 <div ng-repeat="ingredient in recipe.ingredients ">
-                    <input style="width:60px" type="number" ng-model ='ingredient.qty' min="0"   step="{{unitStep(ingredient.unit)}}" placeholder="Ex: 50"  required />
-                    <select ng-model='ingredient.unit'  ng-options='unit for unit in units' ></select>
+                    <input class="fieldRecipeCreation" style="width:60px" type="number" ng-model ='ingredient.qty' min="0"   step="{{unitStep(ingredient.unit)}}" placeholder="Ex: 50"  required />
+                    <select class="fieldRecipeCreation" ng-model='ingredient.unit'  ng-options='unit for unit in units' ></select>
 
-                    <input type="text" ng-model ='ingredient.food.name' class="foodName"  ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}"
+                    <input class="fieldRecipeCreation nameFood" type="text" ng-model ='ingredient.food.name' class="foodName"  ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}"
                           ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()" ng-keyup="keyUpdateFilter(ingredient.food.name)" placeholder="aliment" required />
-                    <button type="button" class="btn btn-default" ng-click="removeRowIngredient($index,ingredient)"> <!-- $index indique l'index du ng-repeat -->
+
+                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeRowIngredient($index,ingredient)">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
 
-                <button type="button" class="btn btn-default" ng-click="addRowIngredient()">
-                    <span class="glyphicon glyphicon-plus"></span> ingredients
+                <button  type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="addRowIngredient()">
+                    <span class="glyphicon glyphicon-plus littlePlus"></span>
+                    <span class="txtFilter">INGREDIENT</span>
                 </button>
             </div>
 
             <div class="myBlockFoodProposition">
-                <span class="foodProposition"  ng-show="showFoods" ng-repeat="food in foods | filter : filterFood">
+                <span class="foodProposition"  ng-show="showFoods" ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
                     <button  type="button" class="myBtnEmpty myBtnEmptyRecipe"  ng-mousedown="fillUpIngrWithFood($index, $event, food) ">
                         <span class="txtFilter">{{food.name}}</span>
                     </button>
@@ -75,30 +80,36 @@
             </div>
 
 
-
-
-            <br>
+            <!---- ------------------------- DESCRIPTIONS - ---------------------------->
 
             <div class="form-group">
-                <div><label>Description:</label></div>
-
-                <div ng-repeat="description in recipe.descriptions ">
-                    {{description.numDescrip}} -
-
-                    <textarea ng-model ='description.name' placeholder="Etape n°{{description.numDescrip}}" rows="1" style="width:25vw; min-width:200px;"></textarea>
-                    <button type="button" class="btn btn-default" ng-click="removeDescription($index,ingredient)"> <!-- $index indique l'index du ng-repeat -->
-                        <span class="glyphicon glyphicon-minus"></span>
-                    </button>
+                <div style="display: inline-block; vertical-align: top;">
+                    Description: &nbsp &nbsp &nbsp
                 </div>
 
-                <button type="button" class="btn btn-default" ng-click="addDescription()">
-                    <span class="glyphicon glyphicon-plus"></span> etape description
-                </button>
+                <div style="display: inline-block;">
+                    <div ng-repeat="description in recipe.descriptions " >
+                        {{description.numDescrip}} -
+
+                        <textarea class="fieldRecipeCreation nameDescript" ng-model ='description.name' placeholder="Etape n°{{description.numDescrip}}" rows="1" style="width:22vw; min-width:200px;"></textarea>
+
+                        <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeDescription($index,ingredient)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </div>
+
+                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="addDescription()">
+                        <span class="glyphicon glyphicon-plus littlePlus"></span>
+                        <span class="txtFilter">ETAPE DESCRIPTION</span>
+                    </button>
+
+                </div>
+
             </div>
 
             <br>
 
-            <input type="submit" value="Créer la recetter : {{recipe.name}}" ng-click="createRecipe()" class="btn btn-success"/>
+            <input type="submit" class="btn btn-warning" value="Créer la recette : {{recipe.name}}" ng-click="createRecipe()" />
         </form>
     </div>
 

@@ -51,7 +51,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
         recipeType:{idType:getIdType(),nameType:recipeTypeName},
         idUser:2, /* <---------- idUser A AFFINER ----------------------- */
         nbPerson:4,
-        ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":0,"isValidated":false}}],
+        ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
         origin:$scope.origins[0],
         categories:[],
@@ -84,7 +84,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
     }
 
     $scope.addRowIngredient = function(){
-        var ingredient = {qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":0,"isValidated":false}};//{qty:20, unit:units[2], food:'steack'};
+        var ingredient = {qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}};//{qty:20, unit:units[2], food:'steack'};
         $scope.recipe.ingredients.push(ingredient);
     }
     $scope.removeRowIngredient = function(index,ingredient){
@@ -147,7 +147,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
     mais qd on passe une nouvelle food, le pointeur currentFood ira ailleur et perd l'ingredient!
      */
     $scope.filterFood = '';
-    $scope.currentIngr = {};//{food:{"id":0,"name":"","idCategory":0,"isValidated":false}};
+    $scope.currentIngr = {};//{food:{"id":0,"name":"","idCategory":1,"isValidated":false}};
     $scope.showFoods = false;
 
     /* lorsque on ecrit ds input foodName */

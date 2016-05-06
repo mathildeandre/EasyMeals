@@ -418,6 +418,34 @@ h6 {
 }
 
 
+.fieldRecipeCreation{
+    padding: 5px;
+    border-radius:3px;
+    text-align: center;
+
+    border:1px solid lightgrey;
+    color: #f0ad4e;
+}
+.fieldRecipeCreation:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #f5c88a ;
+}
+.nameRecipe{
+    text-align: left;
+}
+.nameFood{
+    text-align: left;
+    color:white;
+}
+.nameFood:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: none;
+}
+.nameDescript{
+    text-align: left;
+}
+
+
 .fieldPlanning{
     padding: 5px;
     width:130px;
@@ -1257,10 +1285,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     //border: 2px solid red;
 }
 .backgroundGreen{
-    background-color: limegreen;
+    background-color: #c1e2b3;
 }
 .backgroundRed{
-    background-color: indianred;
+    background-color: #e89996;
 }
 .foodName{
     color: white;
