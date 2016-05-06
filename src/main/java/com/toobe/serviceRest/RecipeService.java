@@ -6,10 +6,11 @@ package com.toobe.serviceRest;
 
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
-import com.toobe.dto.RecipeDescription;
 import com.toobe.dto.TestObj;
+import com.toobe.dto.info.RecipeDescription;
 import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.info.RecipeOrigin;
+import com.toobe.dto.info.RecipeType;
 import com.toobe.model.ManagerGet;
 
 import javax.ws.rs.*;
@@ -30,7 +31,7 @@ public class RecipeService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getRecipes(@PathParam("recipeType") String recipeType, @PathParam("idUser") int idUser){
 
-        System.out.println("PUTIIIIIIIIIIIIIIIIIIINNNNNN  ");
+        System.out.println("[WEB SERVICE] - fct getRecipes - @Path : 'recipes/"+recipeType+"/"+idUser+"'");
         List<Recipe> list = ManagerGet.getInstance().getRecipes(recipeType, idUser);
         return Response.ok(list).build();
     }
@@ -75,43 +76,37 @@ public class RecipeService {
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getRecipeTypes(){
-        List<String> list = ManagerGet.getInstance().getRecipeTypes();
+        List<RecipeType> list = ManagerGet.getInstance().getRecipeTypes();
         return Response.ok(list).build();
     }
 
-
-    @Path("recipe/createNotUsed")
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response createRecipe(Recipe r){
-        System.out.println(" zzzzzzzzzzzzzzzzzz    My recipe name !!! : "+r.getName());
-        return null;
-    }
     @Path("recipe/create")
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response insertObjTest(Recipe r){
-        System.out.println(" recipe.name "+r.getName());
-        System.out.println(" recipe.recipeType "+r.getRecipeType().getNameType());
-        System.out.println(" recipe.nbPers "+r.getNbPerson());
-        System.out.println(" recipe.timeCooking "+r.getTimeCooking());
-        System.out.println(" recipe.timePreparation "+r.getTimePreparation());
-        System.out.println(" recipe.origin "+r.getOrigin().getName());
-        List<Ingredient> listIngredient = r.getIngredients();
+    public Response createRecipe(Recipe recipe){
+        ManagerGet.getInstance().createRecipe(recipe);
+        System.out.println(" recipe.name "+recipe.getName());
+        System.out.println(" recipe.pixName "+recipe.getPixName());
+        System.out.println(" recipe.recipeType "+recipe.getRecipeType().getNameType());
+        System.out.println(" recipe.nbPers "+recipe.getNbPerson());
+        System.out.println(" recipe.timeCooking "+recipe.getTimeCooking());
+        System.out.println(" recipe.timePreparation "+recipe.getTimePreparation());
+        System.out.println(" recipe.origin "+recipe.getOrigin().getName());
+        List<Ingredient> listIngredient = recipe.getIngredients();
         for(int i=0; i<listIngredient.size(); i++){
             System.out.println(" ingredient : "+listIngredient.get(i).getQty()+listIngredient.get(i).getUnit()
                     +" de "+listIngredient.get(i).getFood().getName());
         }
 
 
-        List<RecipeCategory> listCategory = r.getCategories();
+        List<RecipeCategory> listCategory = recipe.getCategories();
         for(int i=0; i<listCategory.size(); i++){
             System.out.println(" category : "+listCategory.get(i).getName());
         }
 
 
-        List<RecipeDescription> listDescription = r.getDescriptions();
+        List<RecipeDescription> listDescription = recipe.getDescriptions();
         for(int i=0; i<listDescription.size(); i++){
             System.out.println(" description no "+listDescription.get(i).getNumDescrip()+" : "+listDescription.get(i).getName());
         }

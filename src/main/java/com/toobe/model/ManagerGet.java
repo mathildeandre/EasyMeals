@@ -4,6 +4,7 @@ import com.toobe.dao.*;
 import com.toobe.dto.*;
 import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.info.RecipeOrigin;
+import com.toobe.dto.info.RecipeType;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -64,7 +65,7 @@ public class ManagerGet {
     }
 
 
-    public List<String> getRecipeTypes(){
+    public List<RecipeType> getRecipeTypes(){
         startConnection();
         return recipeDao.getRecipeTypes(conn);
     }
@@ -77,9 +78,9 @@ public class ManagerGet {
         return recipeOriginDao.getRecipeOrigins(conn);
     }
 
-    public boolean createRecipe(Recipe r){
+    public boolean createRecipe(Recipe recipe){
         startConnection();
-        return recipeDao.createRecipe(conn,r);
+        return recipeDao.createRecipe(conn,recipe);
     }
 
 

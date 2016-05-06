@@ -7,8 +7,11 @@ var myService = angular.module('services');
 myService.service("restRecipeService", function ($http, $q, $log) {
     var isDataReady = false;
     var isCoursesReady = false;
+
     var categories = [];
     var origins = [];
+    var recipeTypes = [];
+
     var starters = [];
     var courses = [];
     var desserts = [];
@@ -28,6 +31,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     }
     function getOrigins(){
         return origins;
+    }
+    function getRecipeTypes(){
+        return recipeTypes;
     }
 
 
@@ -100,6 +106,14 @@ myService.service("restRecipeService", function ($http, $q, $log) {
             getObjFromServer('/rest/recipeOrigins').then(function(data){ //2 = idUser
                 origins = data;
                 $log.warn("origins loaded!")
+
+            })
+        }
+        /* RECIPE TYPES */
+        if(recipeTypes == undefined || recipeTypes.length == 0){
+            getObjFromServer('/rest/recipeTypes').then(function(data){ //2 = idUser
+                recipeTypes = data;
+                $log.warn("recipeTypes loaded!")
 
             })
         }
@@ -187,6 +201,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     return {
         getCategories: getCategories,
         getOrigins: getOrigins,
+        getRecipeTypes: getRecipeTypes,
         getRecipes:getRecipes,
         getSingleRecipe: getSingleRecipe,
         initLoadData: initLoadData,

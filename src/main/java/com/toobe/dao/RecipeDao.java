@@ -4,7 +4,7 @@ import com.toobe.dto.Food;
 import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
-import com.toobe.dto.RecipeDescription;
+import com.toobe.dto.info.RecipeDescription;
 import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.dto.info.RecipeType;
 import com.toobe.dto.info.RelUserRecipe;
@@ -20,31 +20,93 @@ public class RecipeDao {
 
     private FoodDao foodDao;
 
-    private final static String CREATE_RECIPE = "INSERT INTO Recipe(id, name, idType, isPublic, " +
-            "idUser, rating, nbVoter, nbPerson, pixName, idOrigin, isValidated) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
-
 
     public RecipeDao() {
         foodDao = new FoodDao();
     }
 
+
+
+    /**
+     * Creation of a new recipe
+     *
+     * @param conn
+     * @param recipe
+     * @return
+     */
+    private final static String CREATE_RECIPE = "INSERT INTO Recipe( name, idType, isPublic, " +
+            "idUser, rating, nbVoter, nbPerson, pixName, idOrigin, isValidated) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
+
+    public boolean createRecipe(Connection conn, Recipe recipe) {
+        PreparedStatement stm;
+        ResultSet resultRecipe;
+        int isOk = 0;
+        Long idRecipe = null; //PK long ?
+        try {
+            //1. INSERT into RECIPE
+            stm = conn.prepareStatement(CREATE_RECIPE, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, recipe.getName());
+            stm.setInt(2, recipe.getRecipeType().getIdType());//
+            stm.setBoolean(3, true); //recipe.getIsPublic()
+            stm.setInt(4, 2);//recipe.getIdUser()
+            stm.setInt(5, 4);//recipe.getRating()
+            stm.setInt(6, 1);//recipe.getNbVoter()
+            stm.setInt(7, recipe.getNbPerson());
+            stm.setString(8, recipe.getPixName());
+            stm.setInt(9, recipe.getOrigin().getId());
+            stm.setBoolean(10, false);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("Creating Recipe failed, no rows affected, recipe="+recipe.toString());
+            }
+            resultRecipe = stm.getGeneratedKeys();
+            if(resultRecipe.next()){
+                idRecipe = resultRecipe.getLong(1);
+            }
+
+            //2. INSERT INGREDIENTS (with insert FOOD if needed)
+            List<Ingredient> listIngredient = recipe.getIngredients();
+            insertsIngredient(conn, listIngredient, idRecipe);
+
+            //3. INSERT rel CATEGORIES
+            List<RecipeCategory> listCategory = recipe.getCategories();
+            insertsRelRecipeCategory(conn, listCategory, idRecipe);
+
+            //4. INSERT DESCRIPTION
+            List<RecipeDescription> listDescription = recipe.getDescriptions();
+            insertsRecipeDescription(conn, listDescription, idRecipe);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isOk != 0;
+    }
+
+
+
+
+
+
+
+
     /****************************/
     /******* RECIPE TYPE *******/
     /****************************/
-    public List<String> getRecipeTypes(Connection conn) {
-        List<String> list = new ArrayList<String>();
+    public List<RecipeType> getRecipeTypes(Connection conn) {
+        List<RecipeType> list = new ArrayList<RecipeType>();
         PreparedStatement stm;
         try {
             stm = conn.prepareStatement("SELECT * FROM recipe_type");
             ResultSet res = stm.executeQuery();
 
-            String name;
+            int idType; String name;
             while (res.next()) {
+                idType = res.getInt("id");
                 name = res.getString("name");
-                list.add(name);
+                list.add(new RecipeType(idType, name));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -380,75 +442,69 @@ public class RecipeDao {
         return categoryList;
     }
 
-    /**
-     * Creation of a new recipe
-     *
-     * @param conn
-     * @param recipe
-     * @return
-     */
-    public boolean createRecipe(Connection conn, Recipe recipe) {
-        PreparedStatement stm;
-        ResultSet resultRecipe;
-        int isOk = 0;
-        Long idRecipe = null;
-        try {
-            //1. insert into recipe
-            stm = conn.prepareStatement(CREATE_RECIPE, Statement.RETURN_GENERATED_KEYS);
-            stm.setString(1, recipe.getName());
-            stm.setInt(2, recipe.getRecipeType().getIdType());
-            stm.setBoolean(3, recipe.getIsPublic());
-            stm.setInt(4, recipe.getIdUser());
-            stm.setInt(5, recipe.getRating());
-            stm.setInt(6, recipe.getNbVoter());
-            stm.setInt(7, recipe.getNbPerson());
-            stm.setString(8, recipe.getPixName());
-            //stm.setInt(9, recipe.getRecipeOrigin().getId());
-            stm.setBoolean(10, false);
-            isOk = stm.executeUpdate();
-            if (isOk == 0) {
-                throw new SQLException("Creating Recipe failed, no rows affected, recipe="+recipe.toString());
-            }
-            resultRecipe = stm.getGeneratedKeys();
-            if(resultRecipe.next()){
-                idRecipe = resultRecipe.getLong(1);
-            }
-
-            //2. INSERT INGREDIENTS
-            List<Ingredient> listIngredients = recipe.getIngredients();
-            insertIntoIngredients(conn, listIngredients, idRecipe);
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isOk != 0;
-    }
-
+    /* INSERT INGREDIENTS (function called by CREATION RECIPE) */
     private static final String INSERT_INGREDIENT = "INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (?, ?, ?, ?)";
-
-    private boolean insertIntoIngredients(Connection conn, List<Ingredient> listIngr, Long idRecipe) throws SQLException {
+    private boolean insertsIngredient(Connection conn, List<Ingredient> listIngr, Long idRecipe) throws SQLException {
         PreparedStatement stmIngr;
         int insertIngrOk = 0;
         for (Ingredient ingr : listIngr) {
             // insert new food
             Long idFood = ingr.getFood().getId();
-            if (idFood == -1) {
+            //idFood = -1 -> string empty
+            //idFood = 0 -> new food
+            //idFood > 0 -> existing food
+            if (idFood == 0) {
                 idFood = foodDao.createFood(conn, ingr.getFood().getName());
             }
-            if (idFood == 0) {
-                throw new SQLException("No Row have been inserted in FOOD table for food = " + ingr.getFood().toString());
+            if(idFood == null){
+                throw new SQLException("PB : idFood is NULL -> either idFood is null from json format or,  No Row have been inserted in FOOD table for food = " + ingr.getFood().toString());
             }
-            // insert ingredient
-            stmIngr = conn.prepareStatement(INSERT_INGREDIENT);
-            stmIngr.setLong(1, idRecipe);
-            stmIngr.setLong(2, idFood);
-            stmIngr.setInt(3, ingr.getQty());
-            stmIngr.setString(4, ingr.getUnit());
-            insertIngrOk = stmIngr.executeUpdate();
+            if(idFood > 0){
+                // insert ingredient
+                stmIngr = conn.prepareStatement(INSERT_INGREDIENT);
+                stmIngr.setLong(1, idRecipe);
+                stmIngr.setLong(2, idFood);
+                stmIngr.setInt(3, ingr.getQty());
+                stmIngr.setString(4, ingr.getUnit());
+                insertIngrOk = stmIngr.executeUpdate();
+            }else{
+                //Empty foodName -> no treatment
+                //throw new SQLException("No Row have been inserted in FOOD table for food = " + ingr.getFood().toString());
+            }
+
         }
         return insertIngrOk != 0;
     }
 
+    /* INSERT rel CATEGORIES (function called by CREATION RECIPE) */
+    private static final String INSERT_REL_RECIPE_CATEGORY = "INSERT INTO Rel_Recipe_Category(idCategory, idRecipe) VALUES (?, ?)";
+    private boolean insertsRelRecipeCategory(Connection conn, List<RecipeCategory> listCategory, Long idRecipe) throws SQLException {
+        PreparedStatement stmIngr;
+        int insertOk = 0;
+        for (RecipeCategory category : listCategory) {
+            stmIngr = conn.prepareStatement(INSERT_REL_RECIPE_CATEGORY);
+            stmIngr.setLong(1, category.getId());
+            stmIngr.setLong(2, idRecipe);
+            insertOk = stmIngr.executeUpdate();
+        }
+        return insertOk != 0;
+    }
 
+
+    /* INSERT rel DESCRIPTION (function called by CREATION RECIPE) */
+    private static final String INSERT_RECIPE_DESCRIPTION = "INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (?, ?, ?)";
+    private boolean insertsRecipeDescription(Connection conn, List<RecipeDescription> listDescription, Long idRecipe) throws SQLException {
+        PreparedStatement stmIngr;
+        int insertOk = 0;
+        for (RecipeDescription description : listDescription) {
+            stmIngr = conn.prepareStatement(INSERT_RECIPE_DESCRIPTION);
+            stmIngr.setLong(1, idRecipe);
+            stmIngr.setInt(2, description.getNumDescrip());
+            stmIngr.setString(3, description.getName());
+            insertOk = stmIngr.executeUpdate();
+        }
+        return insertOk != 0;
+    }
 }

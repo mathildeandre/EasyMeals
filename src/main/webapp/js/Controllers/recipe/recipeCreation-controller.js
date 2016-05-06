@@ -29,17 +29,27 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
     }
     */
 
-    var recipeType = $routeParams.recipeType;
-    $scope.recipeType =  recipeType;
+    var recipeTypeName = $routeParams.recipeType;
+    $scope.recipeTypeName =  recipeTypeName;
     $scope.foods = restFoodService.getFoods();
-    $scope.origins = restRecipeService.getOrigins();
     $scope.categories = restRecipeService.getCategories();
+    $scope.origins = restRecipeService.getOrigins();
+    var recipeTypes = restRecipeService.getRecipeTypes();
 
 
+    var getIdType = function(){
+        for(var i=0; i<recipeTypes.length; i++){
+            if(recipeTypes[i].nameType == recipeTypeName){
+                return recipeTypes[i].idType;
+            }
+        }
+        return 0; //erreur..
+    }
 
     $scope.recipe =  {
         name:'',
-        recipeType:{idType:0,nameType:recipeType},
+        recipeType:{idType:getIdType(),nameType:recipeTypeName},
+        idUser:2, /* <---------- idUser A AFFINER ----------------------- */
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":0,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
@@ -50,7 +60,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
 
     };
 
-    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
+    $scope.displayRecipeTypeName = AppendixFunctionsService.displayRecipeType($scope.recipeTypeName);
 
 
 
@@ -98,12 +108,19 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
 
     $scope.createRecipe = function(){
 
+        //suppression du champ .checked de category (initil pour la base et povoquerait une erreur car non existant en java)
         for(var i=0; i<$scope.recipe.categories.length; i++){
             delete $scope.recipe.categories[i].checked;
         }
+        //ajout en local des nouvelles foods (s'il y en a) car on ne reload pas la bdd avec les new food
+        for(var i=0; i<$scope.recipe.ingredients.length; i++){
+            if($scope.recipe.ingredients[i].food.id == 0){
+                restFoodService.addFood($scope.recipe.ingredients[i].food);
+            }
+        }
 
-        restRecipeService.createRecipe($scope.recipe, recipeType);
-        /*switch(recipeType){
+        restRecipeService.createRecipe($scope.recipe, recipeTypeName);
+        /*switch(recipeTypeName){
             case 'starter' : RecipeService.addStarter(recipe); break;
             case 'course' :  RecipeService.addCourse(recipe); break;
             case 'dessert' : RecipeService.addDessert(recipe); break;
@@ -111,7 +128,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
             case 'cocktail' : RecipeService.addCocktail(recipe); break;
 
         }*/
-        $location.path("/recipe/"+recipeType);//$location.hash(recipe.id);
+        $location.path("/recipe/"+recipeTypeName);//$location.hash(recipe.id);
     }
 
 

@@ -1,4 +1,4 @@
-package com.toobe.dto;
+package com.toobe.dto.info;
 
 /**
  * Created by mathilde on 27/03/2016.

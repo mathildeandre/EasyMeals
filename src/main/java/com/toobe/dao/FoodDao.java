@@ -128,7 +128,7 @@ public class FoodDao {
         try {
             stm = conn.prepareStatement(INSERT_FOOD, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1,name);
-            stm.setNull(2, Types.INTEGER);
+            stm.setInt(2, 1); //par defaut dans 'Autre'
             stm.setBoolean(3, false);
             stm.executeUpdate();
             resultSet = stm.getGeneratedKeys();

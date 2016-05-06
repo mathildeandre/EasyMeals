@@ -20,6 +20,13 @@ myService.service("restFoodService", function ($http, $q, $log) {
         return foods;
     }
 
+
+    function addFood(food){
+        food.idCategory = 1; //par defaut category : 'Autre'
+        foods.push(food);
+    }
+
+
     function initLoadData(){
         $log.warn("[FOOD SERVICE] INIT - LOADING DATA")
 
@@ -58,6 +65,7 @@ myService.service("restFoodService", function ($http, $q, $log) {
     return {
         getFoodCategories: getFoodCategories,
         getFoods: getFoods,
+        addFood: addFood,
         initLoadData: initLoadData
     };
 });

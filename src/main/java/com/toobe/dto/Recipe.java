@@ -4,10 +4,7 @@ package com.toobe.dto;
  * Created by mathilde on 27/03/2016.
  */
 
-import com.toobe.dto.info.RecipeCategory;
-import com.toobe.dto.info.RecipeOrigin;
-import com.toobe.dto.info.RecipeType;
-import com.toobe.dto.info.RelUserRecipe;
+import com.toobe.dto.info.*;
 
 import java.io.Serializable;
 import java.util.List;
