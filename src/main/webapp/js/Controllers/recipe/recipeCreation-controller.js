@@ -122,7 +122,16 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
     /******************************************************
      * *************** FILTER WITH FOODS for ingredients ******************
      * ****************************************************/
-
+    /*
+    PETIT EXERCICE interessant sur les pointeurs : si on remplace
+    $scope.currentIngr directement par $scope.currentFood (pour eviter de faire $scope.currentIngr.food a chaque fois)
+    => eh bien ca ne marchera pas !
+    Explication :
+    - Lorsque le pointeur de $scope.currentIngr se met sur la var ingr (ds la fct $scope.onFocusInputIngredient)
+    il est ensuite possible de lui modifier son champ .food car on pointe tjrs sur le mm INGREDIENT donc c bon (ds fct $scope.fillUpIngrWithFood)
+    - Si on avait directement $scope.currentFood, lors de l'initialisation on pointe bien sur la bonne food,
+    mais qd on passe une nouvelle food, le pointeur currentFood ira ailleur et perd l'ingredient!
+     */
     $scope.filterFood = '';
     $scope.currentIngr = {};//{food:{"id":0,"name":"","idCategory":0,"isValidated":false}};
     $scope.showFoods = false;

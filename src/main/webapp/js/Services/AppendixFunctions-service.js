@@ -66,7 +66,7 @@ myService.service('AppendixFunctionsService', function($http, $q, $log) {
     attention les units et step sont en lien, les 2 tableaux doivent correspondrent
      */
     .constant('units',
-        ['', 'g', 'kg', 'cl', 'l']
+        ['', 'g', 'kg', 'cl', 'l', 'cuillère à soupe']
     )
     .constant('steps',
         [1, 25, 0.5, 5, 0.5]
