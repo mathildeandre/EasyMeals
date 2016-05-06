@@ -5,8 +5,7 @@ var myModule = angular.module('controllers');
 
 myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $routeParams, RecipeService, AppendixFunctionsService, restRecipeService, restFoodService, units) {
 
-
-    /*{
+    /*RECIPE = {
         name:"Burritos",
      xx pixName:"burritos.jpg",
         recipeType:"course",
@@ -27,7 +26,8 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
          ratingUser:3
          isHide: false;
          isValidated: true;
-    }*/
+    }
+    */
 
     var recipeType = $routeParams.recipeType;
     $scope.recipeType =  recipeType;
@@ -67,6 +67,12 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
     }
     $scope.$watch('categories', updateCategories, true);
 
+
+    $scope.units = units;
+    $scope.unitStep = function(aUnit){
+        return AppendixFunctionsService.unitStep(aUnit);
+    }
+
     $scope.addRowIngredient = function(){
         var ingredient = {qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":0,"isValidated":false}};//{qty:20, unit:units[2], food:'steack'};
         $scope.recipe.ingredients.push(ingredient);
@@ -90,32 +96,17 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $location, $rou
 
     }
 
-
-
-    /** modifier xxxxxxxxxxxx    FAIRE TT DIRECT DS SERVICE RECIPE   xxxxxxxxxxxxx..... */
-    $scope.addRecipe = function(recipe){
-
-
-        restRecipeService.
-
-
-        alert("blabla");
-        recipe.recipeType = recipeType;
-        RecipeService.createRecipe(recipe);
-        switch(recipeType){
+    $scope.createRecipe = function(){
+        restRecipeService.createRecipe($scope.recipe, recipeType);
+        /*switch(recipeType){
             case 'starter' : RecipeService.addStarter(recipe); break;
             case 'course' :  RecipeService.addCourse(recipe); break;
             case 'dessert' : RecipeService.addDessert(recipe); break;
             case 'breakfast' : RecipeService.addBreakfast(recipe); break;
             case 'cocktail' : RecipeService.addCocktail(recipe); break;
 
-        }
-        $location.path("/recipe/"+recipeType);$location.hash(recipe.id);
-    }
-
-    $scope.units = units;
-    $scope.unitStep = function(aUnit){
-        return AppendixFunctionsService.unitStep(aUnit);
+        }*/
+        $location.path("/recipe/"+recipeType);//$location.hash(recipe.id);
     }
 
 

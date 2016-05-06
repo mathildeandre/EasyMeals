@@ -41,6 +41,20 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         }
     }
 
+    function createRecipe(recipe, recipeType){
+        switch(recipeType){
+            case 'starter' : starters.push(recipe); break;
+            case 'course' :  courses.push(recipe); break;
+            case 'dessert' : desserts.push(recipe); break;
+            case 'breakfast' :  break;
+            case 'cocktail' : break;
+        }
+
+        // Web service
+        //insertRecipe(recipe);
+    }
+
+
     function getSingleRecipe(recipeType, recipeId){
         var arr;
         switch (recipeType) {
@@ -137,6 +151,29 @@ myService.service("restRecipeService", function ($http, $q, $log) {
             })
     };
 
+
+
+
+    function insertRecipe(recipe){
+        alert("cerate :"+recipe.name);
+        var dataObj = {
+            name : recipe.name
+        };
+        return $http({
+            method: 'POST',
+            url: '/rest/recipe/create',
+            data: dataObj
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    }
+
+
+
     return {
         getCategories: getCategories,
         getOrigins: getOrigins,
@@ -144,6 +181,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         getSingleRecipe: getSingleRecipe,
         initLoadData: initLoadData,
         getIsDataReady: getIsDataReady,
-        getIsCoursesReady: getIsCoursesReady
+        getIsCoursesReady: getIsCoursesReady,
+        createRecipe: createRecipe
     };
 });

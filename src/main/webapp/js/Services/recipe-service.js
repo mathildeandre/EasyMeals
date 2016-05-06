@@ -375,23 +375,7 @@ myService.service('RecipeService', function($http, $q, $log) {
             cocktails.push(cocktail);
         };
 
-        createRecipe = function (recipe){
-            alert("cerate :"+recipe.name);
-            var dataObj = {
-                name : recipe.name
-            };
-            return $http({
-                method: 'POST',
-                url: '/rest/recipe/create',
-                data: dataObj
-            })
-                .then(function (response) {
-                    if (response.status == 200) {
-                        return response.data;
-                    }
-                    return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
-                })
-        }
+
 
 
         return {
@@ -404,8 +388,7 @@ myService.service('RecipeService', function($http, $q, $log) {
             addStarter: addStarter,
             addDessert: addDessert,
             addBreakfast: addBreakfast,
-            addCocktail: addCocktail,
-            createRecipe: createRecipe
+            addCocktail: addCocktail
         };
     })
 
