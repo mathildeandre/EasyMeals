@@ -1,36 +1,216 @@
 <section class="mySectionBlock" ng-controller="FilterCtrl">
 
-    <div class="divRecipesType">
 
-        <button  ng-click="changeRecipeType('starter')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
-                 ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('starter')}">
-            Entrees
-        </button>
-        <button  ng-click="changeRecipeType('course')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
-                 ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('course')}">
-            Plats
-        </button>
-        <button  ng-click="changeRecipeType('dessert')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
-                 ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('dessert')}">
-            Desserts
-        </button>
-        <button  ng-click="changeRecipeType('breakfast')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
-                 ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('breakfast')}">
-            Dej- Goûters
-        </button>
-        <button  ng-click="changeRecipeType('cocktail')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
-                 ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('cocktail')}">
-            Cocktails
-        </button>
+    <div class="inlineBlockAlignTop divPlanningRecipeLeft">
 
         <!--
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('starter')" >Entrees</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('course')" >Plats</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('dessert')" >Desserts</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('breakfast')"  >Dej- Goûters</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('cocktail')">Cocktails</button>
-        -->
+   ----------------------------------------------------------------------------------------------------------
+   -------------------------   MA SELECTION   ---------------------------------------------------------------
+   ----------------------------------------------------------------------------------------------------------
+   -->
+
+
+        <article class="myArticle artMySelectionNew">
+            <div class="myArticleHeading">
+                <div class="myArticleTitle titleInlineBlock">Ma Selection</div>
+                <div class="rightInlineBlock">
+                    <span ng-click="emptyFilterSelection()" class="glyphicon glyphicon-trash trashFilterPlanning glyphiconBtn" ></span>
+                </div>
+            </div>
+
+            <div class="myArticleBody">
+                <div class="divSubSelection" ng-repeat="myList in filterMySelection.myLists | orderBy:'name'">
+                    - {{myList.name}}
+                    &nbsp
+                    <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
+                    <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-pushpin thListNoBtn"></span>
+                    &nbsp &nbsp
+                    <button  type="button" class="myBtnEmpty myBtnEmptyPlanning btnMinusFilter" ng-click="removeMyListFromSelection(myList)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+                <!--<div class="separatorSelection" ng-show="separateMyList()"></div>-->
+                <div class="divSubSelection" ng-repeat="category in filterMySelection.categories | orderBy:'toString()'">
+
+                    <span class="txtTitleSelectionPlanning">- Categorie :</span> {{category.name}}
+                    &nbsp &nbsp
+                    <button  type="button" class="myBtnEmpty myBtnEmptyPlanning btnMinusFilter" ng-click="removeCategoryFromSelection(category)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+                <!--<div class="separatorSelection" ng-show="separateCategorie()"></div>-->
+                <div class="divSubSelection" ng-repeat="origin in filterMySelection.origins | orderBy:'toString()'">
+
+                    <span class="txtTitleSelectionPlanning">- Spécialité :</span> {{origin.name}}
+                    &nbsp &nbsp
+                    <button  type="button" class="myBtnEmpty myBtnEmptyPlanning btnMinusFilter" ng-click="removeOriginFromSelection(origin)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+
+                </div>
+            </div>
+
+        </article>
+
+
+
+
+
+
+
+        <!--
+            ----------------------------------------------------------------------------------------------------------
+            -------------------------   FILTERS   ---------------------------------------------------------------
+            ----------------------------------------------------------------------------------------------------------
+            -->
+        <article  class="myArticle" >
+            <div class="myArticleHeading" >
+                <div class="myArticleTitle">Affiner la recherche</div>
+            </div>
+
+            <div class="myArticleBody">
+
+                <span class="blockFilterPlanningRecipe"   ng-repeat="myList in filterSearch.myLists | orderBy:'name'" ng-click="moveMyListToSelection(myList)">
+                        <button-filter mybtn-emptysection="myBtnEmptyPlanning">
+                            {{myList.name}}
+                            <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
+                            &nbsp
+                            <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-pushpin thListNoBtn"></span>
+                        </button-filter>
+                    </span>
+
+                <span class="blockFilterPlanningRecipe">
+                    Categories :
+                    <select class="fieldPlanning"  ng-model='myCategory' ng-change="moveCategoryToSelection(myCategory)"
+                            ng-options='category.name for category in filterSearch.categories' ></select>
+                </span>
+
+
+                <span class="blockFilterPlanningRecipe">
+                    Spécialités :
+                    <select class="fieldPlanning"  ng-model='myOrigin' ng-change="moveOriginToSelection(myOrigin)"
+                            ng-options='origin.name for origin in filterSearch.origins' ></select>
+                </span>
+            </div>
+        </article>
+
     </div>
+
+
+    <div class="inlineBlockAlignTop divPlanningRecipeRight">
+
+            <div class="divRecipesType">
+                <button  ng-click="changeRecipeType('starter')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+                         ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('starter')}">
+                    Entrees
+                </button>
+                <button  ng-click="changeRecipeType('course')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+                         ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('course')}">
+                    Plats
+                </button>
+                <button  ng-click="changeRecipeType('dessert')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+                         ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('dessert')}">
+                    Desserts
+                </button>
+                <button  ng-click="changeRecipeType('breakfast')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType"
+                         ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('breakfast')}">
+                    Dej- Goûters
+                </button>
+                <button  ng-click="changeRecipeType('cocktail')" type="button" class="myBtnEmpty myBtnEmptyPlanning myBtnRecipeType noMarginRight"
+                         ng-class="{myBtnRecipeTypePlanningFull : isRecipeTypeSelected('cocktail')}">
+                    Cocktails
+                </button>
+            </div>
+
+            <!--
+              ----------------------------------------------------------------------------------------------------------
+              -------------------------   RECIPES LIST   ---------------------------------------------------------------
+              ----------------------------------------------------------------------------------------------------------
+            -->
+            <article class="myArticle">
+
+                <div class="myArticleHeading" >
+
+                    <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType}}</div>
+                    <div class="rightInlineBlock rightHeadingSearch">
+                    <span class="sortPlanningRecipeList" >
+                        <span   class="glyphicon glyphicon-sort" ></span>
+                        &nbsp
+                        <select class="fieldPlanning"  ng-model='recipeOrderBy'  >
+                            <option ng-repeat="orderby in listOrderBy" value="{{orderby.value}}">{{orderby.name}}</option>
+                        </select>
+                    </span >
+
+                        &nbsp
+                        &nbsp
+
+                        <span   class="glyphicon glyphicon-search " ></span>
+                        &nbsp
+                        <input class="inputRecipePlanning" type="text" ng-model="searchRecipe" placeholder="recette, ingredient etc..">
+                    </div>
+
+
+                </div>
+
+                <div class="myArticleBody">
+
+                    <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
+                        <div style="font-size: 12px;">@ le mode accompagnement peut être désactivé dans l'accueil "EASYMEALS"</div>
+                        <div>Il est possible de creer de nouvelles recettes dans l'onglet Recettes, il sera également possible d'ajouter un simple ingredient à la liste de course à la fin</div>
+                        <div><b>Faire glisser les recettes dans le planning ci-dessous</b></div>
+                        <br>
+                    </div>
+                    <div ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy" style="display:inline-block "> <!-- track by $index-->
+                        <div  class="itemToDragPlanning itemRecipesPlanning itemDrag"
+                              data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="recipe" ng-show="recipe.name"
+                              jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:'true'}"
+                              title="{{displayIngredientsOfRecipeByTitle(recipe)}}">
+                            {{recipe.name}}
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+<!--
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/************************                                                  ********************************************************
+/************************                                                  ********************************************************
+/************************            OLD DISPLAY  :                         ********************************************************
+/************************                                                  ********************************************************
+/************************     ----recipeType name-------                   *********************************************************
+/************************    -Ma selection-    -affiner recherche-         *********************************************************
+/************************                      - liste plats-              ***************************************************************************************
+/************************                                                  ********************************************************
+/************************                                                  ********************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+/**********************************************************************************************************************************
+
+
+-->
+
+
 
 
 
@@ -39,7 +219,7 @@
     ----------------------------------------------------------------------------------------------------------
     -------------------------   MA SELECTION   ---------------------------------------------------------------
     ----------------------------------------------------------------------------------------------------------
-    -->
+    ->
 
 
     <article class="myArticle artMySelection">
@@ -61,7 +241,7 @@
                     <span class="glyphicon glyphicon-minus"></span>
                 </button>
             </div>
-            <!--<div class="separatorSelection" ng-show="separateMyList()"></div>-->
+            <!--<div class="separatorSelection" ng-show="separateMyList()"></div>->
             <div class="divSubSelection" ng-repeat="category in filterMySelection.categories | orderBy:'toString()'">
 
                 <span class="txtTitleSelectionPlanning">- Categorie :</span> {{category.name}}
@@ -70,7 +250,7 @@
                     <span class="glyphicon glyphicon-minus"></span>
                 </button>
             </div>
-            <!--<div class="separatorSelection" ng-show="separateCategorie()"></div>-->
+            <!--<div class="separatorSelection" ng-show="separateCategorie()"></div>->
             <div class="divSubSelection" ng-repeat="origin in filterMySelection.origins | orderBy:'toString()'">
 
                 <span class="txtTitleSelectionPlanning">- Spécialité :</span> {{origin.name}}
@@ -84,40 +264,6 @@
 
     </article>
 
-    <!-- OLD FILTER MA SELECTION AVEC le button sur tout le texte tout encadré avec un ' - ' (minus) au debut...
-    <article class="myArticle artMySelection">
-        <div class="myArticleHeading">
-            <div class="myArticleTitle titleInlineBlock">Ma Selection</div>
-            <div class="rightInlineBlock">
-                <span ng-click="emptyFilterSelection()" class="glyphicon glyphicon-trash trashFilterPlanning glyphiconBtn" ></span>
-            </div>
-        </div>
-
-        <div class="myArticleBody">
-            <div class="divSubSelection" ng-repeat="myList in filterMySelection.myLists | orderBy:'name'"
-                 ng-click="removeMyListFromSelection(myList)">
-                <button-selection mybtn-emptysection="myBtnEmptyPlanning">
-                    {{myList.name}}
-                    <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
-                    &nbsp
-                    <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-pushpin thListNoBtn"></span>
-                </button-selection>
-            </div>
-            <!--<div class="separatorSelection" ng-show="separateMyList()"></div>->
-            <div class="divSubSelection" ng-repeat="category in filterMySelection.categories | orderBy:'toString()'"
-                 ng-click="removeCategoryFromSelection(category)">
-                <button-selection filter-type="Categorie :" mybtn-emptysection="myBtnEmptyPlanning">{{category}}</button-selection>
-            </div>
-            <!--<div class="separatorSelection" ng-show="separateCategorie()"></div>->
-            <div class="divSubSelection" ng-repeat="origin in filterMySelection.origins | orderBy:'toString()'"
-                 ng-click="removeOriginFromSelection(origin)">
-                <button-selection filter-type="Recette :" mybtn-emptysection="myBtnEmptyPlanning">{{origin}}</button-selection>
-            </div>
-        </div>
-
-    </article>
-    -->
-
 
 
 
@@ -128,7 +274,7 @@
         ----------------------------------------------------------------------------------------------------------
         -------------------------   FILTERS   ---------------------------------------------------------------
         ----------------------------------------------------------------------------------------------------------
-        -->
+        ->
     <article  class="myArticle artFilters" >
             <div class="myArticleHeading" >
                 <div class="myArticleTitle">Affiner la recherche</div>
@@ -165,7 +311,7 @@
            ----------------------------------------------------------------------------------------------------------
            -------------------------   RECIPES LIST   ---------------------------------------------------------------
            ----------------------------------------------------------------------------------------------------------
-     -->
+     ->
     <article class="myArticle artRecipes">
 
             <div class="myArticleHeading" >
@@ -199,7 +345,7 @@
                     <div><b>Faire glisser les recettes dans le planning ci-dessous</b></div>
                     <br>
                 </div>
-                <div ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy" style="display:inline-block "> <!-- track by $index-->
+                <div ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy" style="display:inline-block "> <!-- track by $index->
                     <div  class="itemToDragPlanning itemRecipesPlanning itemDrag"
                           data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="recipe" ng-show="recipe.name"
                           jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:'true'}"
@@ -210,7 +356,7 @@
             </div>
     </article>
 
-
+-->
 
 </section>
 
