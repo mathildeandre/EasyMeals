@@ -310,7 +310,7 @@ h6 {
     color:#f0ad4e;
 }
 .myBtnEmptyRecipe:hover,
-.myBtnFilterRecipe:focus{
+.myBtnEmptyRecipe:focus{
     color:darkslategrey;
     background-color: #f5c88a;
     outline: 0;
@@ -337,19 +337,24 @@ h6 {
     //text-transform: lowercase;
 }
 .myBtnRecipeType{
-
     text-transform: uppercase;
     font-size: 18px;
     margin-right:2vw;
     width: 200px;
     color:white;
+    background-color: rgba(230, 239, 230, 0.5);
 }
 .myBtnRecipeType:hover,
 .myBtnRecipeType:focus{
     color:white;
 }
-.myBtnRecipeTypeFull{
+.myBtnRecipeTypePlanningFull{
     background-color: #95d6e9;
+    cursor: auto; //.classicCursor;
+}
+.myBtnRecipeTypeFull{
+    background-color: #f5c88a;
+    cursor: auto; //.classicCursor;
 }
 
 .myBtnEmptyErrand{

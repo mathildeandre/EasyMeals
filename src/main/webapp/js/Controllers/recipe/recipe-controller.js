@@ -16,6 +16,14 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     var recipeSelection = $routeParams.selection; /*depuis navBar clique ds recette sur le coeur/pinTab...*/
     $scope.recipeSelection = recipeSelection;
 
+    $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
+        $scope.recipeType = recipeType;
+        $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
+        $scope.$broadcast('updateFilter');
+    }
+    $scope.isRecipeTypeSelected = function(recipeType){
+        return $scope.recipeType == recipeType;
+    }
 
     $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
     $scope.displayButtonCreationRecipeType = AppendixFunctionsService.displayButtonCreationRecipeType($scope.recipeType);
