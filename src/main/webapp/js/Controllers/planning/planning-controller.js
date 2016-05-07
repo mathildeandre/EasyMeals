@@ -24,6 +24,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         return $scope.recipeType == recipeType;
     }
 
+    $scope.collapseFilterPlanning = false;
 
     /** lors de souris hover : title = ... */
     $scope.displayIngredientsOfRecipeByTitle = function(recipe){

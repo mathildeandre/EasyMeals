@@ -14,7 +14,7 @@
             <div class="myArticleHeading">
                 <div class="myArticleTitle titleInlineBlock">Ma Selection</div>
                 <div class="rightInlineBlock">
-                    <span ng-click="emptyFilterSelection()" class="glyphicon glyphicon-trash trashFilterPlanning glyphiconBtn" ></span>
+                    <span ng-click="emptyFilterSelection()" class="glyphicon glyphicon-trash glyphiconFilterPlanning glyphiconBtn" ></span>
                 </div>
             </div>
 
@@ -65,10 +65,14 @@
             -->
         <article  class="myArticle" >
             <div class="myArticleHeading" >
-                <div class="myArticleTitle">Affiner la recherche</div>
+                <div class="myArticleTitle titleInlineBlock">Affiner la recherche</div>
+                <div class="rightInlineBlock">
+                    <span ng-show="!collapseFilterPlanning" ng-click="collapseFilterPlanning = !collapseFilterPlanning" class="glyphicon glyphicon-resize-small glyphiconFilterPlanning glyphiconBtn" ></span>
+                    <span ng-show="collapseFilterPlanning" ng-click="collapseFilterPlanning = !collapseFilterPlanning" class="glyphicon glyphicon-resize-full glyphiconFilterPlanning glyphiconBtn" ></span>
+                </div>
             </div>
 
-            <div class="myArticleBody">
+            <div class="myArticleBody" ng-show="!collapseFilterPlanning">
 
                 <span class="blockFilterPlanningRecipe"   ng-repeat="myList in filterSearch.myLists | orderBy:'name'" ng-click="moveMyListToSelection(myList)">
                         <button-filter mybtn-emptysection="myBtnEmptyPlanning">
