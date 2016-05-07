@@ -131,7 +131,10 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         for(var i=0; i<ingredients.length; i++){
             var ingrFromCategory = ingredients[i];
             //if ingr already into this category and units of them compatible -> merge
-            if(ingrFromCategory.food.id == ingrTmp.food.id && ingrUnitsCompatible(ingrFromCategory, ingrTmp)){
+            if(ingrFromCategory.food.id == ingrTmp.food.id &&
+                ingrFromCategory.food.name == ingrTmp.food.name &&
+                ingrUnitsCompatible(ingrFromCategory, ingrTmp)){
+
                 ingrFromCategory.qty = calculQty(ingrFromCategory, ingrTmp);
                 isMerged = true;
             }

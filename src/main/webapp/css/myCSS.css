@@ -430,6 +430,9 @@ h6 {
     outline: 0; /*2px solid #d9534f;*/
     border: 1px solid #f5c88a ;
 }
+.fieldRecipeCreationWidth{
+    width:60px;
+}
 .nameRecipe{
     text-align: left;
 }
@@ -439,12 +442,8 @@ h6 {
 }
 .nameFood:focus {
     outline: 0; /*2px solid #d9534f;*/
-    border: none;
+    //border: none;
 }
-.nameDescript{
-    text-align: left;
-}
-
 
 .fieldPlanning{
     padding: 5px;
@@ -586,6 +585,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .inlineBlock{
     display:inline-block;
+}
+.inlineBlockAlignTop{
+    display:inline-block;
+    vertical-align: top;
 }
 .titleInlineBlock{
     display:inline-block;
@@ -1281,8 +1284,20 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .artHeadingRecipeCreation{
     //height: 58px;
 }
+.formIngredients{
+    margin:20px 0 30px 0;
+}
 .myBlockFoodProposition{
-    //border: 2px solid red;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding:10px;
+    margin: 15px 0;
+}
+.myBlockFoodPropositionTitle{
+    border-bottom:1px solid lightgrey;
+    margin-bottom:10px;
+    //font-size: 18px;
+    //font-weight: 600;
 }
 .backgroundGreen{
     background-color: #c1e2b3;
@@ -1290,8 +1305,21 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .backgroundRed{
     background-color: #e89996;
 }
-.foodName{
+.inputIngredientFoodName{
     color: white;
+}
+
+.descriptArea{
+    text-align: left;
+    width:22vw;
+    min-width:200px;
+}
+
+.rowIngredientInput{
+    margin-bottom: 10px;
+}
+.rowDescriptionInput{
+    margin-bottom: 10px;
 }
 
 /***********************************************************************************************************************************************************************************************/
