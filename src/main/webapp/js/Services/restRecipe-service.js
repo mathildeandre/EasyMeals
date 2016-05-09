@@ -35,6 +35,11 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     function getRecipeTypes(){
         return recipeTypes;
     }
+    function initComplement(array){
+        for(var i=0; i<array.length; i++){
+            array[i].ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]}
+        }
+    }
 
 
     function getRecipes(recipeType) {
@@ -124,6 +129,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         if(starters == undefined || starters.length == 0){
             getObjFromServer('/rest/recipes/starter/2').then(function(data){ //2 = idUser
                 starters = data;
+                initComplement(starters);
                 $log.warn("starters loaded!")
 
             })
@@ -132,6 +138,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         if(courses == undefined || courses.length == 0){
             getObjFromServer('/rest/recipes/course/2').then(function(data){ //2 = idUser
                 courses = data;
+                initComplement(courses);
                 isCoursesReady = true;
                 $log.warn("courses loaded!")
                 $log.info("isCoursesReady : "+isCoursesReady);
@@ -142,6 +149,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         if(desserts == undefined || desserts.length == 0){
             getObjFromServer('/rest/recipes/dessert/2').then(function(data){ //2 = idUser
                 desserts = data;
+                initComplement(desserts);
                 $log.warn("desserts loaded!")
 
             })

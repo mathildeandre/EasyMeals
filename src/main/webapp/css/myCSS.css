@@ -1051,10 +1051,29 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .divTopRecipe{
     /*margin-top:15px;*/
     overflow:hidden;
+    margin-bottom:20px;
+}
+.divMiddleRecipe{
+    /*margin-top:15px;*/
+    overflow:hidden;
     margin-bottom:10px;
 }
 
+.divTopRecipeLeft{
+    display: inline-block;
+    margin-left:2%;
+    width:25vw;/*240px;*/
+
+}
+.divTopRecipeRight{
+    display: inline-block;
+    margin-left:2%;
+    vertical-align:top;
+
+}
 .pixRecipeWithDescrip{
+    display: inline-block;
+    margin-left:2%;
     width:25vw;/*240px;*/
     height:14vw;
     min-width : 240px;
@@ -1063,8 +1082,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
     background-size:100% 100%; /*100% not enought*/
     background-position:top left;
     /*background-image:url("../images/burger2.jpg");*/
-    display: inline-block;
-    margin-left:2%;
     border-radius:3px;
 }
 .ingredientRecipe{
@@ -1090,14 +1107,39 @@ select::selection,option::selection { /* ne fonctionne pas  */
     letter-spacing: 1px;
 }
 
-.subTitleOfDescrip{
+.subTitleRecipeOpen{
     margin-bottom:10px;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 600; /*normal;*/
+    font-size: 22px;
     letter-spacing: 1px;
 }
+.divPreparationCooking{
+    font-weight: 500; /*normal;*/
+    font-size: 16px;
 
+}
+.glyphiconstar{
+    color:purple;
+}
+.glyphiconstarempty{
+    color:red;
+}
+.blueColor{
+    color: yellow;
+}
+.divRatingStar {
+    margin-top: 10px;
+
+}
+.stars{
+    font-size: 35px;
+    color: yellow;
+}
+.starsEditing{
+    font-size: 35px;
+    color: #f5c88a;
+}
 /************************************************************************************************************/
 /********************************  BLOCK custom  ***********************************************************/
 /**********************************************************************************************************/
@@ -1853,6 +1895,16 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .modifyListNameOk:hover{
     color: #5cb85c;
     transform: scale(1.5);
+}
+.pencilRatingEdit{
+    font-size: 20px;
+}
+.pencilRatingEdit:hover{
+    transform: scale(1.5);
+}
+.pencilRatingCancel{
+    font-size: 20px;
+    color : #f5c88a;
 }
 
 .pencilModifyListName{

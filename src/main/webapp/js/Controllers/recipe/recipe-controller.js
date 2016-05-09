@@ -32,6 +32,86 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     }
 
 
+
+    /**********************************************************************************************************/
+    /************************************** RATING MODE ******************************************************/
+    /********************************************************************************************************/
+
+    $scope.isStarFull = function(numStar, rating){
+        //$log.info("numstar : "+numStar+" rating : "+Math.round(rating));
+        return numStar <= Math.round(rating);
+    }
+    $scope.editRatingUser = function($index, starsEdit){
+        for(var i=0; i<starsEdit.length; i++){
+            starsEdit[i] = (i<=$index);
+        }
+    }
+
+    $scope.validateRatingUser = function(index, recipe, event){
+        event.stopPropagation();
+        recipe.ratingUser = index+1;
+        var result = (recipe.rating * recipe.nbVoter + recipe.ratingUser)/(recipe.nbVoter+1);
+        recipe.rating =  Number(result.toFixed(1));
+        recipe.nbVoter = recipe.nbVoter+1;
+        recipe.ratingSystem.isUserEditing = false;
+    }
+    $scope.displayRatingOfRecipeByTitle = function(recipe){
+        var ratingUser = recipe.ratingUser;
+        if(ratingUser == 0){ratingUser = "-"}
+        return ("Note : "+recipe.rating+"\nMa note : "+ratingUser);
+    }
+
+    $scope.toggleEditingRate = function(recipe, event){
+        event.stopPropagation();
+        recipe.ratingSystem.isUserEditing = !recipe.ratingSystem.isUserEditing ;
+    }
+
+
+
+    /*
+    var initStars = function(){
+        for(var i=0; i<$scope.recipes.length; i++){
+            $scope.recipes[i].starsIsFull = [false, false, false, false, false];
+        }
+    }
+    initStars();
+    */
+
+    $scope.isUserEditRating = true;
+    $scope.ratingUserEdit = 0;
+    $scope.starsEdit = [true, false, false, false, false];
+
+    $scope.changeRatingUser = function(numStar){
+        $log.debug("ratingUserEdit : "+$scope.ratingUserEdit+" numstar:"+numStar);
+        $scope.ratingUserEdit = numStar;
+        $log.debug("ratingUserEdit : "+$scope.ratingUserEdit+" numstar:"+numStar);
+        //$scope.apply();
+    }
+    //$scope.overRating = false;
+
+
+    $scope.hoverStar = function(numStar){
+        alert(numStar);
+    }
+
+    $scope.getNumberStarsFull = function(num){
+        var newNum = Math.round(num);
+        return new Array(newNum);
+    }
+    $scope.getNumberStarsEmpty = function(num){
+        var newNum = Math.round(5 - num);
+        return new Array(newNum);
+    }
+
+
+
+
+    /**********************************************************************************************************/
+    /************************************** end RATING MODE **************************************************/
+    /********************************************************************************************************/
+
+
+
     $scope.toggleDescOpen = function(recipe){
         recipe.descriptionOpen = !recipe.descriptionOpen;
     }
@@ -61,6 +141,7 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         event.stopPropagation();
         $window.open('http://localhost:8080/#/singleRecipe/'+$scope.recipeType+'/'+id);
     };
+
     /*$scope.reloadRoute = function() {
         alert("bjr");
         $route.reload();
