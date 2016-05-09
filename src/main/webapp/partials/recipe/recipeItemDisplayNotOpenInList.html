@@ -25,4 +25,36 @@
         &nbsp
         <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
     </div>
+
+    <div class="divTimeNoDescription">
+        <div class="timeTotalNoDescrip">Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>
+        <div class="divPreparationCooking">
+            <div>Preparation : {{displayTime(recipe.timePreparation)}}</div>
+            <div>Cuisson : {{displayTime(recipe.timeCooking)}}</div>
+        </div>
+    </div>
+
+    <div class="divRatingAndOwner">
+
+        <div class="divRatingStarNoDescrip" title="{{displayRatingOfRecipeByTitle(recipe)}}">
+                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
+                          class="starsNoDescrip glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
+                                                       'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),
+                                                       'starEmpty' : !isStarFull(numStar, recipe.rating)}">
+                    </span>
+            ({{recipe.nbVoter}} votes)
+        </div>
+        <div class="divOwner">
+            <div ng-show="recipe.isPublic" class="divOwnerRecipePublic ">
+                <span class="glyphicon glyphicon glyphicon-cloud"></span>
+                by {{recipe.user.pseudo}}
+            </div>
+
+            <div ng-show="!recipe.isPublic" class="divOwnerRecipePrivate ">
+                <span class="glyphicon glyphicon glyphicon-lock"></span>
+                recette privée
+            </div>
+        </div>
+
+    </div>
 </div>

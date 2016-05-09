@@ -337,16 +337,36 @@ h6 {
     //text-transform: lowercase;
 }
 .myBtnRecipeType{
-    padding: 8px 12px;
+    padding: 8px 0;
+    text-align: center;
     text-transform: uppercase;
     font-size: 18px;
-    margin-right:2vw;
-    width: 200px;
+    margin-right:2%;
+    //width: 200px;
+    width: 14.5%;
     color:white;
-    background-color: rgba(230, 239, 230, 0.5);
+    //background-color: rgba(230, 239, 230, 0.6);
+    background-color: rgba(0,0,0,0.4);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.myBtnRecipeTypePlanning{
+    padding: 8px 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-right:3%;
+    width: 17%;
+    color:white;
+    background-color: rgba(230, 239, 230, 0.4);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 .noMarginRight{
-    margin-right:0vw;
+    margin-right:0;
 }
 .myBtnRecipeType:hover,
 .myBtnRecipeType:focus{
@@ -833,7 +853,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 #filterRecipe{
     float: left;
-    width:24vw; /* stay at 64vw in any case*/
+    width:26vw; /* stay at 64vw in any case*/
     overflow: auto;
     /*margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
 }
@@ -995,7 +1015,12 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /*********************************  NO DESCRIPTION custom  *************************************************/
 /**********************************************************************************************************/
 
-
+.recipeWithNoDescr{
+    border: 2px solid #f5f5f5; /* impossible de voir dou vient le petit espace sous la pix..*/
+    height: 150px;
+    white-space: nowrap;
+    overflow: hidden; /* -->>overflow-x: : scroll <<-- pr tablette !!! // auto pr ordi */
+}
 .pixRecipeNoDescription{
     width:220px;
     height:140px;
@@ -1011,11 +1036,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 .titleAndSoNoDescription{
-
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     letter-spacing: 1px;
     display: inline-block;/*block sera a droite de la pix*/
-    margin-left:5%;
+    margin-left:3%;
     vertical-align:top;
     font-size: 22px;
 }
@@ -1026,6 +1050,47 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:darkslategrey; /*darkorange*/
 
 }
+.divTimeNoDescription{
+    vertical-align:top;
+    margin-top: 30px;
+    display: inline-block;/*block sera a droite de la pix*/
+    margin-left:3%;
+
+}
+.timeTotalNoDescrip{
+    margin-bottom: 5px;
+    //font-weight: 500; /*normal;*/
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+.divPreparationCooking{
+    font-size: 15px;
+
+}
+.divRatingAndOwner{
+    vertical-align:top;
+    margin-top: 15px;
+    display: inline-block;/*block sera a droite de la pix*/
+    margin-left:3%;
+}
+.divRatingStarNoDescrip{
+    margin-top: 10px;
+}
+.starsNoDescrip{
+    font-size: 35px;
+    color: #ffbf00;
+}
+.divOwner{
+    margin-top: 20px;
+    font-size: 18px;
+}
+.divOwnerRecipePublic{
+    //color: #f5f5f5;
+    text-align: right;
+}.divOwnerRecipePrivate{
+     color: #f0ad4e;
+     text-align: right;
+ }
 
 /************************************************************************************************************/
 /********************************  WITH DESCRIPTION custom  ************************************************/
@@ -1038,7 +1103,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:white;
     border-radius:3px;
     //padding:10px;
-    padding-bottom:20px;
+    //padding-bottom:20px;
 }
 
 .recipeWithDescrip .heart[title]:hover:after,
@@ -1049,29 +1114,40 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 .headingRecipeWithDescrip{
-//margin: 5px 0 20px 2%;
+    //margin: 5px 0 20px 2%;
     text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    //font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 600;
     font-size: 24px;
     letter-spacing: 1px;
 
 
     padding: 10px 1vw;
-    border-radius: 3px;
-//border-top-left-radius: 3px;
-//border-top-right-radius: 3px;
-    background-color: rgba(245, 245, 245, 0.2); //#f5f5f5;
-    //border-bottom: 1px solid transparent;
-    border-color: #ddd;
-    //color:black;
+    border-radius: 5px;
+    background-color: rgba(245, 245, 245, 0.1); //#f5f5f5;
+    //background-color: rgba(0,0,0, 0.3); //black;
+    border-bottom: 1px solid #ddd;
 }
 .bodyRecipeWithDescrip{
-    padding:10px;
+    padding:3%;
 }
 .footerRecipeWithDescrip{
-
+    padding: 10px 3vw;
+    border-radius: 5px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    background-color: rgba(0,0,0, 0.3); //black;
+    //border-bottom: 1px solid #ddd;
 }
+.footerRecipePublic{
+    color: #f5f5f5;
+    text-align: right;
+}.footerRecipePrivate{
+     //color: black;
+     color: #f5c88a;
+     text-align: right;
+}
+
 .divTopRecipe{
     /*margin-top:15px;*/
     overflow:hidden;
@@ -1092,7 +1168,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .divTopRecipeRight{
     display: inline-block;
-    margin-left:2%;
+    margin-left:3%;
     vertical-align:top;
 
 }
@@ -1112,7 +1188,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .ingredientRecipe{
     display: inline-block;
     //width:50%;
-    margin-left:2%;
+    margin-left:3%;
     vertical-align:top;
     /*font-style:bold;
     font-size:large;*/
@@ -1134,20 +1210,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .divPreparationCooking{
     font-weight: 500; /*normal;*/
     font-size: 16px;
-
-}
-.glyphiconstar{
-    color:purple;
-}
-.glyphiconstarempty{
-    color:red;
-}
-.blueColor{
-    color: yellow;
 }
 .divRatingStar {
     margin-top: 10px;
-
 }
 .stars{
     font-size: 35px;
@@ -1176,7 +1241,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     vertical-align: top;
 
 }.divRecipesBlockDescription{
-     width: 57.5vw;
+     width: 57.5vw; /*permet de forcer a prendre tte la place en largeur!;*/
  }
 
 .pixRecipeBlock{
@@ -1913,6 +1978,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color: #5cb85c;
     transform: scale(1.5);
 }
+.starEmpty{
+    //color: rgba(255, 255, 0, 0.5);
+    opacity: 0.5;
+}
 .pencilRatingEdit{
     font-size: 20px;
 }
@@ -1963,7 +2032,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 
-/** .titleAndSoNoDescription > **/
 .heart{
     color: #bfbfbf ;/*lightgrey++*/
 }
@@ -1979,7 +2047,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
     transform: scale(1.5);
 }
 .newWindow{
-    color: #f5c88a;
+    //color: #f5c88a;
+    color: #bfbfbf;
+
 }
 .newWindow:hover{
     color: #f0ad4e;

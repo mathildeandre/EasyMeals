@@ -53,8 +53,8 @@ public class RecipeDao {
             stm.setLong(2, recipe.getRecipeType().getIdType());
             stm.setBoolean(3, recipe.getIsPublic()); //recipe.getIsPublic()
             stm.setLong(4, recipe.getUser().getId());//recipe.getIdUser()
-            stm.setInt(5, 4);//recipe.getRating()
-            stm.setInt(6, 1);//recipe.getNbVoter()
+            stm.setInt(5, 0);//recipe.getRating()
+            stm.setInt(6, 0);//recipe.getNbVoter()
             stm.setInt(7, recipe.getNbPerson());
             stm.setString(8, recipe.getPixName());
             stm.setInt(9, recipe.getOrigin().getId());

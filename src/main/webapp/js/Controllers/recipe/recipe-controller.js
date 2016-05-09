@@ -31,6 +31,9 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         return AppendixFunctionsService.displayButtonCreationRecipeType($scope.recipeType);
     }
 
+    $scope.displayTime = function(timeInMinute){
+        return AppendixFunctionsService.displayTime(timeInMinute);
+    }
 
 
     /**********************************************************************************************************/
@@ -38,7 +41,7 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     /********************************************************************************************************/
 
     $scope.isStarFull = function(numStar, rating){
-        //$log.info("numstar : "+numStar+" rating : "+Math.round(rating));
+        //$log.info("---------------numstar : "+numStar+" rating : "+Math.round(rating)+"------------- RESULT ::: ");
         return numStar <= Math.round(rating);
     }
     $scope.editRatingUser = function($index, starsEdit){
@@ -47,7 +50,7 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         }
     }
 
-    $scope.validateRatingUser = function(index, recipe, event){
+    $scope.validateRatingUser = function(index, recipe, eventisStarFull){
         event.stopPropagation();
         recipe.ratingUser = index+1;
         var result = (recipe.rating * recipe.nbVoter + recipe.ratingUser)/(recipe.nbVoter+1);

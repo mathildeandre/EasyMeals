@@ -10,8 +10,11 @@
     <div class="bodyRecipeWithDescrip">
         <div class="divTopRecipe">
             <div class="divTopRecipeLeft" >
-                <div class="subTitleRecipeOpen">Temps total : {{recipe.timeCooking+recipe.timePreparation}}min</div>
-                <div class="divPreparationCooking">Preparation : {{recipe.timePreparation}}min - Cuisson : {{recipe.timeCooking}}min</div>
+                <div class="subTitleRecipeOpen">Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>
+                <div class="divPreparationCooking">
+                    <div class="inlineBlockAlignTop">Preparation : {{displayTime(recipe.timePreparation)}}</div> &nbsp &nbsp
+                    <div class="inlineBlockAlignTop">Cuisson : {{displayTime(recipe.timeCooking)}}</div>
+                </div>
             </div>
 
             <div class="divTopRecipeRight">
@@ -20,7 +23,8 @@
                 <div class="divRatingStar" ng-show="!recipe.ratingSystem.isUserEditing" title="{{displayRatingOfRecipeByTitle(recipe)}}">
                     <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
                           class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
-                                                       'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}">
+                                                       'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),
+                                                       'starEmpty' : !isStarFull(numStar, recipe.rating)}">
                     </span>
                     <span ng-show="recipe.ratingUser==0" ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingEdit" title=""></span>
                     ({{recipe.nbVoter}} votes)
@@ -30,7 +34,7 @@
                 <div class="divRatingStar" ng-show="recipe.ratingSystem.isUserEditing">
                     <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
                           ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
-                          class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit}">
+                          class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit, starEmpty:!starEdit}">
                     </span>
                     <span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>
 
@@ -82,6 +86,17 @@
             <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
                 {{descript.numDescrip}} - {{descript.name}}
             </div>
+        </div>
+    </div>
+    <div class="footerRecipeWithDescrip" >
+        <div ng-show="recipe.isPublic" class="footerRecipePublic ">
+            <span class="glyphicon glyphicon glyphicon-cloud"></span>
+            by {{recipe.user.pseudo}}
+        </div>
+
+        <div ng-show="!recipe.isPublic" class="footerRecipePrivate ">
+            <span class="glyphicon glyphicon glyphicon-lock"></span>
+            recette privée
         </div>
     </div>
 </div>

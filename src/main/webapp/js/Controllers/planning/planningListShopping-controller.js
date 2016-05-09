@@ -190,7 +190,10 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         /* Number((ingr.qty).toFixed(3)); => permet de limiter a 3 nb apres la virgule au MAX et eventuellement moins !
          .toFixed indique le nb de chiffre apres le virgule(force mm en mettant des zero : 32 sera 32.000)
          mais toFixed transform en String donc il est important ensuite d'englober le tout par Nummber()
-         Number() enleve le nb de 0 inutile dc c'est le parfait mixe (ex : 32.000 redeviendra 32! 1.300 sera 1.3) */
+         Number() enleve le nb de 0 inutile dc c'est le parfait mixe (ex : 32.000 redeviendra 32! 1.300 sera 1.3)
+         - Math.round arrond a l'entier le plus proche
+         Math.floor(x) arrondi a l'entier inferieur (ou egal)
+         Math.ceil() arrond a l'entier superieur (ou egal)*/
     }
 
 
