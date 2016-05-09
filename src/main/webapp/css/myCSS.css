@@ -1037,7 +1037,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     background-size:cover;
     color:white;
     border-radius:3px;
-    padding:10px;
+    //padding:10px;
     padding-bottom:20px;
 }
 
@@ -1048,6 +1048,30 @@ select::selection,option::selection { /* ne fonctionne pas  */
     left:-60px;
 }
 
+.headingRecipeWithDescrip{
+//margin: 5px 0 20px 2%;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: 1px;
+
+
+    padding: 10px 1vw;
+    border-radius: 3px;
+//border-top-left-radius: 3px;
+//border-top-right-radius: 3px;
+    background-color: rgba(245, 245, 245, 0.2); //#f5f5f5;
+    //border-bottom: 1px solid transparent;
+    border-color: #ddd;
+    //color:black;
+}
+.bodyRecipeWithDescrip{
+    padding:10px;
+}
+.footerRecipeWithDescrip{
+
+}
 .divTopRecipe{
     /*margin-top:15px;*/
     overflow:hidden;
@@ -1062,6 +1086,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .divTopRecipeLeft{
     display: inline-block;
     margin-left:2%;
+    vertical-align:top;
     width:25vw;/*240px;*/
 
 }
@@ -1098,14 +1123,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
     font-size:large;*/
 }
 
-.titleOfDescrip{
-    margin: 5px 0 20px 2%;
-    text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
 
 .subTitleRecipeOpen{
     margin-bottom:10px;

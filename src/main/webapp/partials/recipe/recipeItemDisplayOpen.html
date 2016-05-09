@@ -1,5 +1,5 @@
 <div ng-show="recipe.descriptionOpen" class="recipeWithDescrip" ng-click="toggleDescOpen(recipe)"  >
-    <div class="titleOfDescrip" >{{recipe.name}}
+    <div class="headingRecipeWithDescrip" >{{recipe.name}}
         &nbsp&nbsp <span  ng-click="toggleIsFavorite(recipe, $event);" title=""   class="glyphicon glyphicon-heart heart glyphiconBtn"
                           ng-class="{heartTaken: recipe.isFavorite}"></span>
         &nbsp&nbsp <span ng-click="toggleIsForPlanning(recipe, $event);" title="" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
@@ -7,80 +7,81 @@
         &nbsp
         <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
     </div>
-
-    <div class="divTopRecipe">
-        <div class="divTopRecipeLeft" >
-
-            <div class="divRatingStar" ng-show="!recipe.ratingSystem.isUserEditing" title="{{displayRatingOfRecipeByTitle(recipe)}}">
-                <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
-                      class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
-                                                   'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}">
-                </span>
-                <span ng-show="recipe.ratingUser==0" ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingEdit" title=""></span>
-                ({{recipe.nbVoter}} votes)
+    <div class="bodyRecipeWithDescrip">
+        <div class="divTopRecipe">
+            <div class="divTopRecipeLeft" >
+                <div class="subTitleRecipeOpen">Temps total : {{recipe.timeCooking+recipe.timePreparation}}min</div>
+                <div class="divPreparationCooking">Preparation : {{recipe.timePreparation}}min - Cuisson : {{recipe.timeCooking}}min</div>
             </div>
 
+            <div class="divTopRecipeRight">
 
-            <div class="divRatingStar" ng-show="recipe.ratingSystem.isUserEditing">
-                <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
-                      ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
-                    class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit}">
-                </span>
-                <span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>
 
+                <div class="divRatingStar" ng-show="!recipe.ratingSystem.isUserEditing" title="{{displayRatingOfRecipeByTitle(recipe)}}">
+                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
+                          class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
+                                                       'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}">
+                    </span>
+                    <span ng-show="recipe.ratingUser==0" ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingEdit" title=""></span>
+                    ({{recipe.nbVoter}} votes)
+                </div>
+
+
+                <div class="divRatingStar" ng-show="recipe.ratingSystem.isUserEditing">
+                    <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
+                          ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
+                          class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit}">
+                    </span>
+                    <span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>
+
+                </div>
+
+                <!--<input style="color:black" type="int" ng-model="recipe.rating">
+                ratingUser : {{recipe.ratingUser}} <br>
+                rating : {{recipe.rating}}<br>
+                nbVoter : {{recipe.nbVoter}}<br>
+
+
+                <br>
+                isUserEditRating : {{isUserEditRating}}
+                <br>
+                ratingUserEdit : {{ratingUserEdit}}
+                <br>
+                <div ng-show="recipe.ratingUser == 0" >
+                    VOTE AVAILABLE
+                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index" ng-mouseover="hoverStar(numStar)">
+                        <span class="glyphicon " ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating), 'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}"> </span>
+                    </span>
+                </div>
+                <div ng-show="recipe.ratingUser == 0">
+                    VOTE AVAILABLE
+                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index" ng-mouseover="hoverStar(numStar)">
+                        <span class="glyphicon " ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating), 'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}"> </span>
+                    </span>
+                </div>
+                <div ng-show="recipe.ratingUser > 0">
+                    NO VOTE
+                </div>
+                -->
+            </div>
+        </div>
+        <div class="divMiddleRecipe">
+            <div class="pixRecipeWithDescrip" style="background-image:url('../images/course/{{recipe.pixName}}'),url('../../images/no-image.png') ;">
             </div>
 
-            <!--<input style="color:black" type="int" ng-model="recipe.rating">
-            ratingUser : {{recipe.ratingUser}} <br>
-            rating : {{recipe.rating}}<br>
-            nbVoter : {{recipe.nbVoter}}<br>
-
-
-            <br>
-            isUserEditRating : {{isUserEditRating}}
-            <br>
-            ratingUserEdit : {{ratingUserEdit}}
-            <br>
-            <div ng-show="recipe.ratingUser == 0" >
-                VOTE AVAILABLE
-                <span ng-repeat="numStar in [1,2,3,4,5] track by $index" ng-mouseover="hoverStar(numStar)">
-                    <span class="glyphicon " ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating), 'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}"> </span>
-                </span>
+            <div class="ingredientRecipe">
+                <div class="subTitleRecipeOpen"> Ingrédients ({{recipe.nbPerson}} pers.) </div>
+                <ul ng-repeat="ingr in recipe.ingredients">
+                    <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food.name}}</span> </li>
+                </ul>
             </div>
-            <div ng-show="recipe.ratingUser == 0">
-                VOTE AVAILABLE
-                <span ng-repeat="numStar in [1,2,3,4,5] track by $index" ng-mouseover="hoverStar(numStar)">
-                    <span class="glyphicon " ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating), 'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}"> </span>
-                </span>
-            </div>
-            <div ng-show="recipe.ratingUser > 0">
-                NO VOTE
-            </div>
-            -->
         </div>
 
-        <div class="divTopRecipeRight">
-            <div class="subTitleRecipeOpen">Temps total : {{recipe.timeCooking+recipe.timePreparation}}min</div>
-            <div class="divPreparationCooking">Preparation : {{recipe.timePreparation}}min - Cuisson : {{recipe.timeCooking}}min</div>
-
-        </div>
-    </div>
-    <div class="divMiddleRecipe">
-        <div class="pixRecipeWithDescrip" style="background-image:url('../images/course/{{recipe.pixName}}'),url('../../images/no-image.png') ;">
-        </div>
-
-        <div class="ingredientRecipe">
-            <div class="subTitleRecipeOpen"> Ingrédients ({{recipe.nbPerson}} pers.) </div>
-            <ul ng-repeat="ingr in recipe.ingredients">
-                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food.name}}</span> </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="preparationRecipe">
-        <div class="subTitleRecipeOpen"> Préparation</div>
-        <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
-            {{descript.numDescrip}} - {{descript.name}}
+        <div class="preparationRecipe">
+            <div class="subTitleRecipeOpen"> Préparation</div>
+            <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
+                {{descript.numDescrip}} - {{descript.name}}
+            </div>
         </div>
     </div>
 </div>
