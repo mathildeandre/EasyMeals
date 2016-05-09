@@ -44,6 +44,17 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         origins:[]
     };
 
+    var addInitFirstElemenIntoFilterSearch = function(){
+        $scope.filterSearch.categories.splice(0,0,{name:'Categories :'}); //INSERT EN POSITION 0
+        //var index = $scope.filterSearch.categories.indexOf({name:'boom'}); //fonctionne aussi tres bien
+        $scope.myCategory = $scope.filterSearch.categories[0];
+
+        $scope.filterSearch.origins.splice(0,0,{name:'Spécialités :'}); //INSERT EN POSITION 0
+        $scope.myOrigin = $scope.filterSearch.origins[0];
+    }
+    //addInitFirstElemenIntoFilterSearch(); instancie plusieurs fois au debut donc ajoute trop de fois le mm elm...
+    // => essayer un elm en disable dans le select..
+
     $scope.isRecipeFavorite = function(myListId){
         return myListId == 'myFavorite';
     }
@@ -99,11 +110,15 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         $scope.filterSearch.categories.push(category);
         var index = $scope.filterMySelection.categories.indexOf(category); //fonctionne aussi tres bien
         $scope.filterMySelection.categories.splice(index, 1);
+        //init select avec elem fictif  "choisir"
+        //$scope.myCategory = $scope.filterSearch.categories[0];
     }
     $scope.removeOriginFromSelection = function(origin){
         $scope.filterSearch.origins.push(origin);
         var index = $scope.filterMySelection.origins.indexOf(origin); //fonctionne aussi tres bien
         $scope.filterMySelection.origins.splice(index, 1);
+        //init select avec elem fictif  "choisir"
+        //$scope.myOrigin = $scope.filterSearch.origins[0];
     }
 
 
@@ -123,11 +138,15 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         $scope.filterMySelection.categories.push(category);
         var index =  $scope.filterSearch.categories.indexOf(category); //fonctionne aussi tres bien
         $scope.filterSearch.categories.splice(index, 1);
+        //init select avec elem fictif  "choisir"
+        //$scope.myCategory = $scope.filterSearch.categories[0];
     }
     $scope.moveOriginToSelection = function(origin){
         $scope.filterMySelection.origins.push(origin);
         var index =  $scope.filterSearch.origins.indexOf(origin); //fonctionne aussi tres bien
         $scope.filterSearch.origins.splice(index, 1);
+        //init select avec elem fictif  "choisir"
+        //$scope.myOrigin = $scope.filterSearch.origins[0];
     }
 
 

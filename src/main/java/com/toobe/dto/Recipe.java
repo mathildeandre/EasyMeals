@@ -12,6 +12,8 @@ import java.util.List;
 /**
         {"id":2,
         "name":"Burritos",
+         isPublic : true;
+         idUser : {id:2, pseudo: 'mathou', email:'math@gmail.fr'};
         "pixName":"burritos.jpg",
         "recipeType":"course",
         "nbPerson":9,
@@ -38,7 +40,7 @@ public class Recipe implements Serializable{
     private int id;
     private String name;
     private boolean isPublic;
-    private int idUser;
+    private User user;
     private String pixName;
     private RecipeType recipeType; //STARTER / COURSE / DESERT
     private List<Ingredient> ingredients;
@@ -63,14 +65,14 @@ public class Recipe implements Serializable{
     public Recipe(){
     }
 
-    public Recipe(int id, String name, boolean isPublic, int idUser, String pixName, RecipeType recipeType,
+    public Recipe(int id, String name, boolean isPublic, User user, String pixName, RecipeType recipeType,
                   List<Ingredient> ingredients, List<RecipeDescription> descriptions, RecipeOrigin origin,
                   List<RecipeCategory> categories, int nbPerson, int rating, int nbVoter, int timeCooking,
                   int timePreparation, boolean isValidated, RelUserRecipe relUserRecipe) {
         this.id = id;
         this.name = name;
         this.isPublic = isPublic;
-        this.idUser = idUser;
+        this.user = user;
         this.pixName = pixName;
         this.recipeType = recipeType;
         this.ingredients = ingredients;
@@ -98,12 +100,12 @@ public class Recipe implements Serializable{
         this.id = id;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getPixName() {

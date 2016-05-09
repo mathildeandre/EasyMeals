@@ -176,8 +176,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         return $http({
             method: 'POST',
             url: '/rest/recipe/create',
-            data: recipe/* {
+            data: recipe /*{
                 name:recipe.name,
+                user:recipe.user,
                 recipeType:recipe.recipeType,
                 origin:recipe.origin,//recipe.origin
                 categories:recipe.categories,

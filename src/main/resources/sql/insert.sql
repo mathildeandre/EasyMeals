@@ -86,13 +86,14 @@ INSERT INTO Recipe_Type(name) VALUES ('cocktail');
 
 
 
-INSERT INTO `User`(name, pwd) VALUES ('common', 'common'); /*id 1*/
-INSERT INTO `User`(name, pwd) VALUES ('fab', 'fab'); /*1d 2 */
+INSERT INTO `User`(pseudo, pwd) VALUES ('common', 'common'); /*id 1*/
+INSERT INTO `User`(pseudo, pwd) VALUES ('fab', 'fab'); /*1d 2 */
+INSERT INTO `User`(id, pseudo, pwd) VALUES (2117, 'mathou', 'math@gmail.fr'); /*1d 2 */
 
 
 
-INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin) VALUES ('Burgers Maison', 2, 0, 2, 17, 'burgersMaison.jpeg', 5); /*id 1 */
-INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin) VALUES ('Burritos', 2, 1, 1, 9, 'burritos.jpg', 6);
+INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin) VALUES ('Burgers Maison', 2117, 0, 2, 17, 'burgersMaison.jpeg', 5); /*id 1 */
+INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin) VALUES ('Burritos', 2117, 1, 1, 9, 'burritos.jpg', 6);
 
 
 INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (1, 1);
@@ -196,5 +197,5 @@ INSERT INTO Rel_Food_Category(idCategory, idFoodRecipe) VALUES (?, ?);
 INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);
 INSERT INTO Rel_Recipe_Category(idCategory, idRecipe) VALUES (?, ?);
 INSERT INTO Rel_User_Recipe(idRecipe, idUser, isFavorite, isForPlanning, ratingUser, isHide) VALUES (?, ?, ?, ?, ?, ?);
-INSERT INTO `User`(id, name, pwd, email) VALUES (?, ?, ?, ?);
+INSERT INTO `User`(id, pseudo, pwd, email) VALUES (?, ?, ?, ?);
 

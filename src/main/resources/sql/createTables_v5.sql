@@ -19,7 +19,7 @@ CREATE TABLE Rel_Food_Category (idCategory int(10) NOT NULL, idFoodRecipe int(10
 CREATE TABLE Rel_Recipe_CaseMealPlanning (idRecipe int(10) NOT NULL, idPlanningCaseMeal int(10) NOT NULL, nbPers int(10), PRIMARY KEY (idRecipe, idPlanningCaseMeal));
 CREATE TABLE Rel_Recipe_Category (idCategory int(10) NOT NULL, idRecipe int(10) NOT NULL, PRIMARY KEY (idCategory, idRecipe));
 CREATE TABLE Rel_User_Recipe (idRecipe int(10) NOT NULL, idUser int(10) NOT NULL, isFavorite tinyint(1) NOT NULL, isForPlanning tinyint(1) NOT NULL, ratingUser int(10), isHide tinyint(1) NOT NULL, PRIMARY KEY (idRecipe, idUser));
-CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), PRIMARY KEY (id));
+CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), PRIMARY KEY (id));
 
 ALTER TABLE Ingredient_ListShop ADD INDEX FKIngredient178456 (idFood), ADD CONSTRAINT FKIngredient178456 FOREIGN KEY (idFood) REFERENCES Food (id);
 ALTER TABLE Planning_WeekMeal ADD INDEX FKPlanning_W938841 (idPlanning), ADD CONSTRAINT FKPlanning_W938841 FOREIGN KEY (idPlanning) REFERENCES Planning (id);

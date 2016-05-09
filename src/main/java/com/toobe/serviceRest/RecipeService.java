@@ -86,8 +86,9 @@ public class RecipeService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response createRecipe(Recipe recipe){
         ManagerGet.getInstance().createRecipe(recipe);
-        System.out.println(" recipe.name "+recipe.getName());
+        /*System.out.println(" recipe.name "+recipe.getName());
         System.out.println(" recipe.pixName "+recipe.getPixName());
+        System.out.println(" recipe.Userid "+recipe.getUser().getId());
         System.out.println(" recipe.recipeType "+recipe.getRecipeType().getNameType());
         System.out.println(" recipe.nbPers "+recipe.getNbPerson());
         System.out.println(" recipe.timeCooking "+recipe.getTimeCooking());
@@ -98,18 +99,17 @@ public class RecipeService {
             System.out.println(" ingredient : "+listIngredient.get(i).getQty()+listIngredient.get(i).getUnit()
                     +" de "+listIngredient.get(i).getFood().getName());
         }
-
-
         List<RecipeCategory> listCategory = recipe.getCategories();
         for(int i=0; i<listCategory.size(); i++){
             System.out.println(" category : "+listCategory.get(i).getName());
         }
-
-
         List<RecipeDescription> listDescription = recipe.getDescriptions();
         for(int i=0; i<listDescription.size(); i++){
             System.out.println(" description no "+listDescription.get(i).getNumDescrip()+" : "+listDescription.get(i).getName());
         }
+        */
+
+
         //Boolean rep = new ManagerPost().insertFood();
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }

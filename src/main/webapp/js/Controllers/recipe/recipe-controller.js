@@ -9,9 +9,8 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
 
     $scope.$emit('intoRecipe'); //will tell to parents (global-controller.js) to modify pix
 
-    var recipeType = $routeParams.recipeType;
-    $scope.recipeType = recipeType;
-    $scope.recipes = restRecipeService.getRecipes(recipeType);
+    $scope.recipeType = $routeParams.recipeType;
+    $scope.recipes = restRecipeService.getRecipes( $scope.recipeType);
 
     var recipeSelection = $routeParams.selection; /*depuis navBar clique ds recette sur le coeur/pinTab...*/
     $scope.recipeSelection = recipeSelection;
@@ -25,8 +24,12 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         return $scope.recipeType == recipeType;
     }
 
-    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
-    $scope.displayButtonCreationRecipeType = AppendixFunctionsService.displayButtonCreationRecipeType($scope.recipeType);
+    $scope.displayRecipeType = function(){
+        return AppendixFunctionsService.displayRecipeType($scope.recipeType);
+    }
+    $scope.displayButtonCreationRecipeType = function(){
+        return AppendixFunctionsService.displayButtonCreationRecipeType($scope.recipeType);
+    }
 
 
     $scope.toggleDescOpen = function(recipe){

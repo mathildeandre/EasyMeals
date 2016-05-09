@@ -1,7 +1,7 @@
 <article id="listRecipe" class="myArticle">
 
         <div class="myArticleHeading" >
-            <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType}}</div>
+            <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType()}}</div>
             <div class="rightInlineBlock rightHeadingSearch">
                 <span   class="glyphicon glyphicon-search " ></span>
                 &nbsp
@@ -18,7 +18,7 @@
 
 
                 <div class="buttonCreate" >
-                    <a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayButtonCreationRecipeType}}</a> <!--creer nouveau plat-->
+                    <a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayButtonCreationRecipeType()}}</a> <!--creer nouveau plat-->
                 </div>
                 <div class="buttonsDisplayListRecipe">
                     Affichage : &nbsp

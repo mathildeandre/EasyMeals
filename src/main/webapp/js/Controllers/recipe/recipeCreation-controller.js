@@ -49,14 +49,15 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
     $scope.recipe =  {
         name:'',
         recipeType:{idType:getIdType(),nameType:recipeTypeName},
-        idUser:2, /* <---------- idUser A AFFINER ----------------------- */
+        user:{id:2117, pseudo:'', email:''}, /* <---------- idUser A AFFINER ----------------------- */
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
         origin:$scope.origins[0],
         categories:[],
         timeCooking:30,
-        timePreparation:20
+        timePreparation:20,
+        isPublic: true
 
     };
 
