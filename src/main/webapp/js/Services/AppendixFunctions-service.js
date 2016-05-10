@@ -52,13 +52,35 @@ myService.service('AppendixFunctionsService', function($http, $q, $log) {
             }
         }
 
+        //CETTE FONCTION EST APPELlé bcp trop souvent, entrer directement le str dans
+                // les $scope de chaque recette avec le init ds restService recipe...
+        function displayTime(timeInMinute){
+            var hour = Math.floor(timeInMinute/60);
+            var minLeft = Math.round(timeInMinute%60);
+            $log.debug("hour : "+hour+" - min left : "+minLeft);
+            var strReturn;
+            if(hour > 0  && minLeft > 0){
+                strReturn = hour+"h"+minLeft;
+            }
+            else if(hour > 0){
+                strReturn = hour+"h"
+            }
+            else if(minLeft > 0){
+                strReturn = minLeft+"min"
+            }
+            else{
+                strReturn = "-";
+            }
+            return strReturn;
+        }
 
         return {
             unitStep: unitStep,
             displayIngrUnitAndFood: displayIngrUnitAndFood,
             displayRecipeType: displayRecipeType,
             displayButtonCreationRecipeType: displayButtonCreationRecipeType,
-            displayMealType: displayMealType
+            displayMealType: displayMealType,
+            displayTime: displayTime
         };
     })
 

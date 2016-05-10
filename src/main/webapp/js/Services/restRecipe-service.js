@@ -37,7 +37,8 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     }
     function initComplement(array){
         for(var i=0; i<array.length; i++){
-            array[i].ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]}
+            array[i].ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]};
+            array[i].timeTotal = array[i].timeCooking + array[i].timePreparation;
         }
     }
 

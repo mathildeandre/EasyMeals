@@ -446,6 +446,9 @@ h6 {
     border: 1px solid #f5c88a ;
 }
 
+.fieldOrderBy{
+    width: auto;
+}
 
 .fieldRecipeCreation{
     padding: 5px;

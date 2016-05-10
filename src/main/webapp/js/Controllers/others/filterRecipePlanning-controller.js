@@ -19,7 +19,8 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
      * ORDER BY list
      */
 
-    $scope.listOrderBy = [{name:'nom', value:'name'}, {name:'note', value:'-rating'}]; /*- permet dinverser lordre*/
+    $scope.listOrderBy = [{name:'nom', value:'name'}, {name:'note', value:'-rating'}, {name:'nbVote', value:'-nbVoter'},
+        {name:'temps cuisson', value:'+timeCooking'}, {name:'temps préparation', value:'+timePreparation'}, {name:'temps total', value:'+timeTotal'}]; /*- permet dinverser lordre*/
     $scope.recipeOrderBy = 'name'; /* initialisation*/
 
 
