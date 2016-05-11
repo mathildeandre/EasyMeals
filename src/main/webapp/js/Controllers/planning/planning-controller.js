@@ -101,6 +101,15 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
 
     $scope.dataDropTrash = true; //pas vraiment utilisé mais ne pas supprimer cette ligne sans enlever {{dataDropTrash}} du data-drop de la trash
     $scope.trash = [];
+
+
+
+
+    /*****************************    MODAL ***********************/
+
+
+
+
 });
 
 myModule.filter('orderByRecipeType', function($log){

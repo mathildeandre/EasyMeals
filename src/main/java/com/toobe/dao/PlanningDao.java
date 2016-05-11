@@ -104,6 +104,27 @@ public class PlanningDao {
 
 
 
+    /*
+    On recup le planning d'un user avec le boolean lastOPen = true
+     */
+    public Planning getPlanningCurrentOfUser(Connection conn, int idUser){
+        Planning planning = new Planning();
+        PreparedStatement stm;
+        try {
+            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser+" AND lastOpen = true");
+            ResultSet res = stm.executeQuery();
+            int idPlanning;
+            if(res.next()){
+                idPlanning = res.getInt("id");
+                planning =  getPlanningById(conn, idPlanning);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return planning;
+    }
+
 
 
 

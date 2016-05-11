@@ -4,6 +4,7 @@ package com.toobe.dto;
  * Created by fabien on 10/04/2016.
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -70,4 +71,15 @@ public class Planning {
     public void setLastOpen(boolean lastOpen) {
         this.lastOpen = lastOpen;
     }
+
 }
+
+
+
+
+
+
+
+
+
+

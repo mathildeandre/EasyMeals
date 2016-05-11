@@ -69,6 +69,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
     function getSingleRecipe(recipeType, recipeId){
         var arr;
+        $log.debug("PUTIN FUCKING ASSHOLE...+ ")
         switch (recipeType) {
             case 'starter' : arr = starters; break;
             case 'course' : arr = courses; break;
@@ -76,6 +77,8 @@ myService.service("restRecipeService", function ($http, $q, $log) {
             case 'breakfast' : arr = []; break;
             case 'cocktail' : arr = []; break;
         }
+
+        $log.debug("-- FUCKING ASSHOLE...+ "+arr[0].name)
         for(var i=0; i<arr.length; i++){
             if(arr[i].id == recipeId){
                 return arr[i];

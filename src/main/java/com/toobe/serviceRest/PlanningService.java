@@ -36,5 +36,17 @@ public class PlanningService {
         return Response.ok(planning).build();
     }
 
+    @Path("/planning/currentUser/{idUser}")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getPlanningCurrentOfUser(@PathParam("idUser") int idUser){
+        //localhost:8080/rest/recipe/2
+        Planning planning = new ManagerGet().getPlanningCurrentOfUser(idUser);
+        return Response.ok(planning).build();
+    }
+
+
+
+
 
 }

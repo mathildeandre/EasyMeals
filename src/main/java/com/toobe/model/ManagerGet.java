@@ -95,6 +95,11 @@ public class ManagerGet {
         startConnection();
         return planningDao.getPlanningById(conn, idPlanning);
     }
+    public Planning getPlanningCurrentOfUser(int idUser){
+        startConnection();
+        return planningDao.getPlanningCurrentOfUser(conn, idUser);
+    }
+
 
     /****************************************************/
     /************* LIST SHOPPING ***********************/

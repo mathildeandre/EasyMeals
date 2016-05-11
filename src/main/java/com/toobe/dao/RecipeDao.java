@@ -118,24 +118,41 @@ public class RecipeDao {
         return list;
     }
 
-    //TODO
-    /* INCOMPLETE .... */
+
+
+
+
+
+
+
+    /****************************/
+    /******* RECIPE BY ID *******/
+    /****************************/
+    private static final String SELECT_RECIPE_By_ID =
+            "SELECT recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, " +
+                    "rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser," +
+                    "rt.id as idRecipeType, rt.name as nameRecipeType " +
+            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type rt " +
+            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND rt.id = recipe.idType AND recipe.id = ? ";
+
+
+
     public Recipe getRecipeById(Connection conn, int idRecipe) {
         Recipe recipe = new Recipe();
         PreparedStatement stm;
         try {
-            /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (mnt idType)*/
-            stm = conn.prepareStatement("SELECT recipe.id as idRecipe, recipe.name as recipeName, pixName, nbPerson, recipe_origin.name as recipeOriginName, " +
-                    "recipe_Type.name as recipeTypeName, rating, nbVoter, idUser, user.pseudo as pseudoUser, user.email as emailUser  " +
-                    "FROM RECIPE , Recipe_Origin, Recipe_Type, User " +
-                    "WHERE recipe.idOrigin = recipe_origin.id AND recipe.idType = recipe_Type.id AND recipe.idUser = user.id AND recipe.id = " + idRecipe);
+            /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (: idType)*/
+            stm = conn.prepareStatement(SELECT_RECIPE_By_ID);
+            stm.setInt(1, idRecipe);
             ResultSet resRecipe = stm.executeQuery();
 
-            int nbPerson, rating, nbVoter;
-            String name, recipeType, pixName, origin;
-            boolean isFavorite, isForPlanning;
+            if(resRecipe.next()){
+                int idUser = resRecipe.getInt("idUser");
+                int idRecipeType = resRecipe.getInt("idRecipeType");
+                String nameRecipeType = resRecipe.getString("nameRecipeType");
 
-            if (resRecipe.next()) {
+                /* REL USER RECIPE */
+                RelUserRecipe relUserRecipe = getRelUserRecipe(conn, idRecipe, idUser);
                 /* INGREDIENTS */
                 List<Ingredient> ingredientList = getIngredientList(conn, idRecipe); //new ArrayList<Ingredient>(); //
                 /* DESCRIPTIONS */
@@ -143,21 +160,30 @@ public class RecipeDao {
                 /* CATEGORIES */
                 List<RecipeCategory> categoryList = getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
 
-                /* recipeType en arg de la fct*/
-                ;
-                /* ingredientList, descriptionList & categoryList construitent au dessus */
-                name = resRecipe.getString("recipeName");
-                pixName = resRecipe.getString("pixName");
-                nbPerson = resRecipe.getInt("nbPerson");
-                origin = resRecipe.getString("recipeOriginName");
-                recipeType = resRecipe.getString("recipeTypeName");
-                isFavorite = false;
-                isForPlanning = false;
-                rating = resRecipe.getInt("rating");
-                nbVoter = resRecipe.getInt("nbVoter");
 
-                recipe = new Recipe();//(idRecipe, name, pixName, recipeType, nbPerson, ingredientList, descriptionList, origin, categoryList, isFavorite, isForPlanning, rating, nbVoter);
+                /* recipeType en arg de la fct*/
+
+                /* ingredientList, descriptionList & categoryList construitent au dessus */
+                String name = resRecipe.getString("recipeName");
+                boolean isPublic = resRecipe.getBoolean("isPublic");
+                String pixName = resRecipe.getString("pixName");
+                int nbPerson = resRecipe.getInt("nbPerson");
+                int rating = resRecipe.getInt("rating");
+                int nbVoter = resRecipe.getInt("nbVoter");
+                boolean isValidated = resRecipe.getBoolean("isValidated");
+                int timeCooking = resRecipe.getInt("timeCooking");
+                int timePreparation = resRecipe.getInt("timePreparation");
+
+                User user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
+                RecipeType recipeType = new RecipeType(idRecipeType, nameRecipeType);
+                RecipeOrigin recipeOrigin = new RecipeOrigin(resRecipe.getInt("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"));
+
+                recipe = new Recipe(idRecipe, name, isPublic, user, pixName, recipeType, ingredientList, descriptionList,
+                        recipeOrigin, categoryList, nbPerson, rating, nbVoter, timeCooking, timePreparation, isValidated, relUserRecipe);
+
             }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -165,9 +191,11 @@ public class RecipeDao {
     }
 
 
-    /**
-     * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
-     */
+
+    /****************************/
+    /******* RECIPE PUBLIC NOT VALIDATED *******/
+    /****************************/
+     /* On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)*/
     private static final String SELECT_RECIPES_PUBLIC_NOT_VALIDATED = "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
             "FROM RECIPE, Recipe_Origin ro, User " +
             "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND isValidated = 0 AND idType = ? ";
@@ -202,6 +230,9 @@ public class RecipeDao {
 
 
 
+    /****************************/
+    /******* RECIPES *******/
+    /****************************/
     /**
      * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
      */
@@ -242,6 +273,15 @@ public class RecipeDao {
         }
         return listRecipe;
     }
+
+
+    /****************************************************************************************************************************************************************/
+    /***************************************************************************************************************************************************************/
+    /********************************************************************* FCT ANNEXES UTILISE PR les fct principales *********************************************/
+    /*************************************************************************************************************************************************************/
+    /************************************************************************************************************************************************************/
+    /************************************************************************************************************************************************************/
+    /************************************************************************************************************************************************************/
 
 
 
@@ -298,13 +338,6 @@ public class RecipeDao {
         }
         return listRecipe;
     }
-
-
-    /****************************************************************************************************************************************************************/
-    /***************************************************************************************************************************************************************/
-    /********************************************************************* FCT ANNEXES UTILISE PR les fct principales *********************************************/
-    /*************************************************************************************************************************************************************/
-    /************************************************************************************************************************************************************/
 
 
 
