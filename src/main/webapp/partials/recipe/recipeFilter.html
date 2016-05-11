@@ -121,7 +121,7 @@
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                     <span class="txtFilter">
-                        <input class="inputRecipe" type="text" ng-model ='ingredientName' placeholder="ingredient" />
+                        <input class="inputRecipe" type="text" ng-model ='ingredientName' placeholder="ingredient" ng-keyup="pressEnterInputIngredientFilter($event, ingredientName)" />
                     </span>
                 </div>
             </div>

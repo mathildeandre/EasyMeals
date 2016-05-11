@@ -71,7 +71,7 @@
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>
                 <span ng-show="modifyingListName">
-                    <input class="inputErrand" type="text" ng-model ='currentListShoppingPlanning.name' placeholder="Choissisez un nom" /> &nbsp
+                    <input class="inputErrand" type="text" ng-model ='currentListShoppingPlanning.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
 
@@ -118,7 +118,7 @@
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>
                 <span ng-show="modifyingListName">
-                    <input class="inputErrand" type="text" ng-model ='currentListShoppingPlanning.name' placeholder="Choissisez un nom" /> &nbsp
+                    <input class="inputErrand" type="text" ng-model ='currentListShoppingPlanning.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
             </div>

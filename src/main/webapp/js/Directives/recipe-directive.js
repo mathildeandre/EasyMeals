@@ -103,6 +103,21 @@ myDirective.directive("scroll", function ($window, $log) {
         });
     };
 });
+
+/***** NE FONCTIONNE PAS entre different type d'element (input, button etc...) ?*/
+myDirective.directive('keyEnterbis', function($window, $log) {
+    return function(scope, element, attrs) {
+        element.bind("keyup", function(e) {
+            if(e.keyCode == 13){
+                $log.debug("AIIII__biis22");
+                //element[0].nextElementSibling.focus();
+                //element.next().focus();
+                element.nextElementSibling.addClass('borderBlue');
+            }
+        })
+    }
+});
+
 /*
 myDirective.directive("scroll", function ($window, $log) {
     return function(scope, element, attrs) {

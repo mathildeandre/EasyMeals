@@ -1,4 +1,4 @@
-<article class="myArticle artRecipeCreation" ng-controller="RecipeCreationCtrl">
+<article class="myArticle artRecipeCreation"  ng-controller="RecipeCreationCtrl">
 
     <div class="myArticleHeading artHeadingRecipeCreation" >
         <div class="myArticleTitle titleInlineBlock">Creation {{displayRecipeTypeName}}</div>
@@ -50,7 +50,7 @@
 
 
             <!---- ------------------------- INGREDIENTS - ---------------------------->
-            <div class="form-group formIngredients">
+            <div class="form-group formIngredients" >
 
                 <div class="inlineBlockAlignTop" >
                     Ingrédient(s): &nbsp &nbsp &nbsp
@@ -63,7 +63,7 @@
                         <select class="fieldRecipeCreation" ng-model='ingredient.unit'  ng-options='unit for unit in units' ></select>
 
                         <input class="fieldRecipeCreation nameFood" type="text" ng-model ='ingredient.food.name' class="inputIngredientFoodName"  ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}"
-                               ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()" ng-keyup="keyUpdateFilter(ingredient.food.name)" placeholder="aliment" required />
+                               ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()" ng-keyup="keyUpdateFilter(ingredient.food.name)"  placeholder="aliment" required />
 
                         <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeRowIngredient($index,ingredient)">
                             <span class="glyphicon glyphicon-minus"></span>
@@ -102,7 +102,7 @@
 
                         <div class="inlineBlockAlignTop">
                             <textarea class="fieldRecipeCreation descriptArea" ng-model ='description.name'
-                                      placeholder="Etape n°{{description.numDescrip}}" rows="1"></textarea>
+                                      placeholder="Etape n°{{description.numDescrip}}" rows="1" ng-keyup="pressEnterAreaDescrip($event)" ></textarea>
                         </div>
                         <div class="inlineBlockAlignTop">
                             <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeDescription($index,ingredient)">
@@ -122,7 +122,10 @@
 
             <br>
 
-            <input type="submit" class="btn btn-warning" value="Créer {{recipe.name}}" ng-click="createRecipe()" />
+            <!--<input type="submit" class="btn btn-warning" value="Créer {{recipe.name}}" ng-click="createRecipe()" />-->
+            <button type="button" class="btn btn-warning"  ng-click="createRecipe()">
+                Créer {{recipe.name}}
+            </button>
         </form>
     </div>
 

@@ -130,6 +130,15 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, Appendix
             return "false";
         }
     }
+
+
+    $scope.pressEnterListName = function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.keyCode == 13){
+            $scope.toggleModifyListName();
+        }
+    }
     $scope.modifyingListName = false;
     $scope.toggleModifyListName = function(listName){
         $scope.modifyingListName = !$scope.modifyingListName;

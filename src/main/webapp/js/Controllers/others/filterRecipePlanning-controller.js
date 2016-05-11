@@ -93,6 +93,14 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         filterMySelection.categories = [];
         filterMySelection.origins = [];
     }
+    $scope.pressEnterInputIngredientFilter = function(event, ingredientName){
+        $log.info("BOOM KEYUP pressed on the ingredient name :"+ingredientName+ " event.keyCode : "+event.keyCode);
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.keyCode == 13){
+            $scope.moveIngredientToSelection(ingredientName);
+        }
+    }
 
     /***************************************************************************************************
      FONCTION pour display FILTER

@@ -64,7 +64,19 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
     $scope.displayRecipeTypeName = AppendixFunctionsService.displayRecipeType($scope.recipeTypeName);
 
 
+    /*keyUpdateFilter  pr food*/
+    $scope.pressEnterAreaDescrip = function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.keyCode == 13){
+            $scope.addDescription();
+        }
+    }
+    $scope.pressKey = function(event){
+        alert("KEY PRESSED - no : "+event.keyCode);
 
+        event.stopPropagation();
+    }
 
     var updateCategories = function(){
         $scope.recipe.categories = [];
@@ -153,27 +165,31 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
 
     /* lorsque on ecrit ds input foodName */
     $scope.keyUpdateFilter = function(nameIngr){
-        $scope.filterFood = nameIngr; //update filter
-        if(nameIngr == undefined || nameIngr == ""){
-            //$log.warn(">>keyUpdateFilter<< is nameIngr == ''?: "+nameIngr);
-            $scope.currentIngr.food.id=-1;
+        if(event.keyCode == 13){
+            $scope.addRowIngredient();
         }else{
-            var foodFound = false;
-            var id, name, idCategory;
-            //on check si le mot correspond a une food a chaque nouvelle lettre entre/suppr.
-            for(var i=0; i<$scope.foods.length; i++){
-                if (nameIngr == $scope.foods[i].name){
-                    foodFound = true;
-                    id = $scope.foods[i].id;
-                    name = $scope.foods[i].name;
-                    idCategory = $scope.foods[i].idCategory;
-                }
-            }
-            if(foodFound){
-                $scope.currentIngr.food.id = id;
-                $scope.currentIngr.food.idCategory = idCategory;
+            $scope.filterFood = nameIngr; //update filter
+            if(nameIngr == undefined || nameIngr == ""){
+                //$log.warn(">>keyUpdateFilter<< is nameIngr == ''?: "+nameIngr);
+                $scope.currentIngr.food.id=-1;
             }else{
-                $scope.currentIngr.food.id=0;
+                var foodFound = false;
+                var id, name, idCategory;
+                //on check si le mot correspond a une food a chaque nouvelle lettre entre/suppr.
+                for(var i=0; i<$scope.foods.length; i++){
+                    if (nameIngr == $scope.foods[i].name){
+                        foodFound = true;
+                        id = $scope.foods[i].id;
+                        name = $scope.foods[i].name;
+                        idCategory = $scope.foods[i].idCategory;
+                    }
+                }
+                if(foodFound){
+                    $scope.currentIngr.food.id = id;
+                    $scope.currentIngr.food.idCategory = idCategory;
+                }else{
+                    $scope.currentIngr.food.id=0;
+                }
             }
         }
     }
