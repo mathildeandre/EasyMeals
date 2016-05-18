@@ -490,7 +490,9 @@ h6 {
     outline: 0; /*2px solid #d9534f;*/
     border: 1px solid #95d6e9 ;
 }
-
+.noWidth{
+    width: auto;
+}
 .fieldErrand{
     padding: 5px;
     width-max:250px;
@@ -541,6 +543,21 @@ h6 {
     color: darkslategrey;
 }
 .inputRecipePlanning:focus{
+    /*border: 1px solid #f5c88a ;*/
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #95d6e9 ;
+}
+
+
+.inputPlanning{
+    padding: 2px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    border:none;
+    color: darkslategrey;
+    width: auto;
+}
+.inputPlanning:focus{
     /*border: 1px solid #f5c88a ;*/
     outline: 0; /*2px solid #d9534f;*/
     border: 1px solid #95d6e9 ;
@@ -1587,6 +1604,11 @@ select::selection,option::selection { /* ne fonctionne pas  */
     border:1px solid #5bc0de;
     color: #5bc0de;
 }*/
+.btnNewPlanning{
+
+    vertical-align: top;
+    margin-right : 15px;
+}
 .itemToDragPlanning {
     padding: 6px;
     border-radius:3px;
@@ -1973,6 +1995,15 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .glyphiconBtn{
     cursor: pointer;
+}
+.glyphiconBtn:hover{
+    transform: scale(1.5);
+}
+
+.glyphDeletePlanning{
+    margin-top: 5px;
+    color:indianred;
+    font-size: 22px;
 }
 .trashIngrFromList{
     margin-left: 10px;

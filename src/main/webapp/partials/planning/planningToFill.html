@@ -22,7 +22,34 @@
 
     <article class="myArticle">
         <div class="myArticleHeading" >
-            <div class="myArticleTitle">PLANNING</div>
+            <div class="myArticleTitle">
+                PLANNING : &nbsp
+
+
+                <span ng-show="!modifyingPlanningName">
+                    <select class="fieldPlanning noWidth"  ng-model='currentPlanning' ng-change="changePlanning(currentPlanning)"
+                            ng-options='planning.name for planning in plannings' ></select>
+                    &nbsp
+                    <span ng-click="modifyPlanningName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
+                </span>
+                <span ng-show="modifyingPlanningName">
+                    <input class="inputPlanning" type="text" ng-model ='currentPlanning.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <span ng-click="modificationPlanningNameDONE()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
+                </span>
+
+
+                <span class="rightInlineBlock">
+                    <button  type="button" class="btn btn-info btnNewPlanning" ng-click="createNewPlanning()">
+                        <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
+                    </button>
+                    <span ng-show="plannings.length > 1" class="glyphicon glyphicon-trash glyphDeletePlanning glyphiconBtn" ng-click="deletePlanning()"></span>
+                </span>
+
+
+
+
+
+            </div>
         </div>
 
         <div class="myArticleBody">
@@ -47,7 +74,6 @@
 
                     <td ng-repeat="caseMeal in weekMeal.caseMeals"  style="width:13%;" data-drop="true" ng-model='caseMeal.recipes'
                         jqyoui-droppable="{multiple:true}"> <!--, onOver:'onOverTab(\'hehehe\')' -->
-                                id :  {{caseMeal.id}}
                                 <span ng-show="showNbPers" class="nbPers"  data-drop="true" ng-model='caseMeal.nbPers'
                                       jqyoui-droppable="{multiple:true}">
                                     <input class="inputNbPers" type="number" min="1"  ng-model="caseMeal.nbPers" > pers.

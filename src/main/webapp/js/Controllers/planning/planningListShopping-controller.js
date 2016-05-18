@@ -23,7 +23,7 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
 
 
     /*************************************************************************************
-     * *************************  WITH HTML   ********************************************
+     * *************************  WITH HTML  ?????? TODO ********************************************
      * ***********************************************************************************/
     var idList = 12;
     $scope.saveListShopping = function(){
@@ -96,9 +96,9 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         var newUnit = '';
         var newIngrFood = '';
 
-        var fourMeals = $scope.fourWeekMeals;// [$scope.breakfasts, $scope.lunchs, $scope.snacks, $scope.dinners];
+        var fourMeals = $scope.currentPlanning.weekMeals;// [$scope.breakfasts, $scope.lunchs, $scope.snacks, $scope.dinners];
         for(var a=0; a<fourMeals.length; a++){
-            meals = fourMeals[a].weekMeals;
+            meals = fourMeals[a].caseMeals;
             for(var i=0; i<meals.length; i++){
                 recipes = meals[i].recipes; //list recipe
                 nbPersTmp = meals[i].nbPers;

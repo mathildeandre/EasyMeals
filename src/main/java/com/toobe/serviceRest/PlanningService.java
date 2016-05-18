@@ -55,6 +55,53 @@ public class PlanningService {
         //Boolean rep = new ManagerPost().insertFood();
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
+    @Path("postNewNamePlanning/{namePlanning}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response postNewNamePlanning(Long idPlanning, @PathParam("namePlanning") String namePlanning){
+        System.out.println("POST new NAME PLANNING  ::: idPlanning: "+idPlanning+" ----  namePlanning: "+namePlanning);
+        ManagerGet.getInstance().postNewNamePlanning(idPlanning, namePlanning);
+        //Boolean rep = new ManagerPost().insertFood();
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+    @Path("putLastOpenPlanning")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putLastOpenPlanning(List<Long> listId){
+        System.out.println("POST new NAME PLANNING  ::: idOldOpenPlanning: "+listId.get(0)+" ----  idNewOpenPlanning: "+listId.get(1));
+        ManagerGet.getInstance().putLastOpenPlanning(listId.get(0), listId.get(1));
+        //Boolean rep = new ManagerPost().insertFood();
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+    @Path("putShowWeekMeal/{showWeekMeal}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putShowWeekMeal(Long idWeekMeal,  @PathParam("showWeekMeal") Boolean showWeekMeal){
+        System.out.println("PUT show weekMeal  ::: idWeekMeal: "+idWeekMeal+" ----  showWeekMeal: "+showWeekMeal);
+        ManagerGet.getInstance().putShowWeekMeal(idWeekMeal, showWeekMeal);
+        //Boolean rep = new ManagerPost().insertFood();
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+    @Path("putNbPersCaseMeal/{nbPersCaseMeal}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putNbPersCaseMeal(Long idCaseMeal, @PathParam("nbPersCaseMeal") int nbPersCaseMeal){
+        ManagerGet.getInstance().putNbPersCaseMeal(idCaseMeal, nbPersCaseMeal);
+        //Boolean rep = new ManagerPost().insertFood();
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+    @Path("deletePlanningById")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response deletePlanningById(Long idPlanning){
+        ManagerGet.getInstance().deletePlanningById(idPlanning);
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
 
 
 

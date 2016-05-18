@@ -56,9 +56,9 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         }
     }
     /*NEW ....
-     //Planning = {name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
-     //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
-     //caseMeal = {id: lunch4, nbPers:5 , noDay:4,  recipes:[recipe1, recipe2, ...]}
+     //Planning = {id:.., name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+     //WeekMeal = {id:.., weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
+     //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
      //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
 
      OLD ...
@@ -68,23 +68,60 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
      //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
      */
 
-    $scope.plannings = restPlanningService.getPlannings();
-    $scope.currentPlanning = $scope.plannings[0];
 
+    $scope.plannings = restPlanningService.getPlannings();
+    $scope.currentPlanning = $scope.plannings.filter(function(obj){
+        return obj.lastOpen == true;
+    })[0];
+    $scope.modifyingPlanningName = false;
+    $scope.modifyPlanningName = function(){
+        $scope.modifyingPlanningName = true;
+    }
+    $scope.modificationPlanningNameDONE = function(){
+        var planning = $scope.currentPlanning;
+        $scope.modifyingPlanningName = false;
+        $log.debug("NEW NAME PLANNING ::::::: "+ planning.name+ "(id planning :"+planning.id+")");
+        restPlanningService.postNewNamePlanning(planning.id, planning.name);
+    }
+
+    $scope.pressEnterListName = function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.keyCode == 13){
+            $scope.modificationPlanningNameDONE();
+        }
+    }
+
+
+    // called on $watch '$scope.currentPlanning'
     var updatePlanningBDD = function(newValue, oldValue, scope){
         var newCaseMeal, oldCaseMeal;
-        if(newValue.name != oldValue.name){
-            //updateNamePlanning
+        if(newValue.id != oldValue.id){
+            /** ON effectue le chgt sur les variable de scope car elles pointent sur la var plannings de restPlanning-service donc change aussi labas direct
+             *  >>>>>> oldValue << , a l'inverse, est une copy et ne reference plus notre planning courant! */
+            var oldPlanning = $scope.plannings.filter(function(obj){
+                return obj.lastOpen == true;
+            })[0];
+            oldPlanning.lastOpen = false;
+            newValue.lastOpen = true;
+            //PUT : updateLastOpenPlanning
+            restPlanningService.putLastOpenPlanning(oldValue.id, newValue.id);
+
+        }else if(newValue.name != oldValue.name){
+            //PUT : updateNamePlanning
+            // -> on le fait dans 'modificationPlanningNameDONE()' car ici update a chaque nouvelle lettre ajoutee...
         }else{
             for(var i=0; i<newValue.weekMeals.length; i++){
                 if(newValue.weekMeals[i].show != oldValue.weekMeals[i].show){
-                    //update show of weekmeal
+                    //PUT : update show of weekmeal
+                    restPlanningService.putShowWeekMeal(newValue.weekMeals[i].id, newValue.weekMeals[i].show);
                 }else{
                     for(var j=0; j<newValue.weekMeals[i].caseMeals.length; j++){
                         newCaseMeal = newValue.weekMeals[i].caseMeals[j];
                         oldCaseMeal = oldValue.weekMeals[i].caseMeals[j];
                         if(newCaseMeal.nbPers != oldCaseMeal.nbPers){
-                            //Update nbPers
+                            //PUT nbPers
+                            restPlanningService.putNbPersCaseMeal(newCaseMeal.id, newCaseMeal.nbPers)
                         }else if(newCaseMeal.recipes.length > oldCaseMeal.recipes.length){
                             //POST new recipe caseMealRecipe
                             postNewRecipeCaseMeal(newCaseMeal.id, newCaseMeal.recipes, oldCaseMeal.recipes);
@@ -98,6 +135,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         }
     }
     $scope.$watch('currentPlanning', updatePlanningBDD, true);
+
 
     var postNewRecipeCaseMeal = function(idCaseMeal, newRecipes, oldRecipes){
         var isNewRecipe;
@@ -131,6 +169,28 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
     }
 
 
+    $scope.deletePlanning = function(){
+        var idPlanningToDelete = $scope.currentPlanning.id;
+        var index = $scope.plannings.indexOf($scope.currentPlanning);
+        $scope.plannings.splice(index, 1);
+        $scope.plannings[0].lastOpen = true;
+        $scope.currentPlanning = $scope.plannings[0];
+        restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
+        restPlanningService.deletePlanningById(idPlanningToDelete);
+    }
+    $scope.createNewPlanning = function(){
+
+        restPlanningService.createNewPlanning().then(function(data){
+            var newPlanning = data;
+            $scope.plannings.push(newPlanning);
+            var index = $scope.plannings.indexOf(newPlanning);
+            $scope.currentPlanning = $scope.plannings[index];
+            $log.warn("new planning PUSHED")
+        })
+
+
+
+    }
 
 
 

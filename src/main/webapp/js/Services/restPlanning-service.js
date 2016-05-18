@@ -10,7 +10,44 @@ myService.service("restPlanningService", function ($http, $q, $log) {
 
 
     function getPlannings(){
+        $log.warn("ici on appel getPLannings...")
         return plannings;
+    }
+
+
+
+    function postNewRecipeCaseMeal(idRecipe, idCaseMeal){
+        postObjToServer('POST', '/rest/postNewRecipeCaseMeal', [idRecipe, idCaseMeal])
+    }
+    function deleteOldRecipeCaseMeal(idRecipe, idCaseMeal){
+        postObjToServer('POST', '/rest/deleteOldRecipeCaseMeal', [idRecipe, idCaseMeal])
+    }
+    function postNewNamePlanning(idPlanning, namePlanning){
+        postObjToServer('POST', '/rest/postNewNamePlanning/'+namePlanning, idPlanning)
+    }
+    function putLastOpenPlanning(idOldOpenPlanning, idNewOpenPlanning){
+        postObjToServer('POST', '/rest/putLastOpenPlanning', [idOldOpenPlanning, idNewOpenPlanning])
+    }
+    function putShowWeekMeal(idWeekMeal, showWeekMeal){
+        postObjToServer('POST', '/rest/putShowWeekMeal/'+showWeekMeal, idWeekMeal)
+    }
+    function putNbPersCaseMeal(idCaseMeal, nbPersCaseMeal){
+        postObjToServer('POST', '/rest/putNbPersCaseMeal/'+nbPersCaseMeal, idCaseMeal)
+    }
+    function deletePlanningById(idPlanning){
+        postObjToServer('POST', '/rest/deletePlanningById', idPlanning)
+    }
+    function createNewPlanning(){
+        return $http({
+            method: 'GET',
+            url: '/rest/createPlanning/user/2'
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
     }
 
 
@@ -25,8 +62,6 @@ myService.service("restPlanningService", function ($http, $q, $log) {
             })
         }
     }
-
-
     function getObjFromServer(url) {
         return $http({
             method: 'GET',
@@ -39,12 +74,11 @@ myService.service("restPlanningService", function ($http, $q, $log) {
                 return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
             })
     };
-
-    function postNewRecipeCaseMeal(idRecipe, idCaseMeal){
+    function postObjToServer(method, url, data) {
         return $http({
-            method: 'POST',
-            url: '/rest/postNewRecipeCaseMeal',
-            data: [idRecipe, idCaseMeal]
+            method: method,
+            url: url,
+            data: data
         })
             .then(function (response) {
                 if (response.status == 200) {
@@ -52,27 +86,20 @@ myService.service("restPlanningService", function ($http, $q, $log) {
                 }
                 return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
             })
-    }
-    function deleteOldRecipeCaseMeal(idRecipe, idCaseMeal){
-        return $http({
-            method: 'POST',
-            url: '/rest/deleteOldRecipeCaseMeal',
-            data: [idRecipe, idCaseMeal]
-        })
-            .then(function (response) {
-                if (response.status == 200) {
-                    return response.data;
-                }
-                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
-            })
-    }
-
+    };
 
 
     return {
         getPlannings: getPlannings,
         initLoadData: initLoadData,
         postNewRecipeCaseMeal: postNewRecipeCaseMeal,
-        deleteOldRecipeCaseMeal: deleteOldRecipeCaseMeal
+        deleteOldRecipeCaseMeal: deleteOldRecipeCaseMeal,
+        postNewNamePlanning: postNewNamePlanning,
+        putLastOpenPlanning: putLastOpenPlanning,
+        putShowWeekMeal: putShowWeekMeal,
+        putNbPersCaseMeal: putNbPersCaseMeal,
+        deletePlanningById: deletePlanningById,
+        createNewPlanning: createNewPlanning
+
     };
 });

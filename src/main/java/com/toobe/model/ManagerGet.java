@@ -111,7 +111,28 @@ public class ManagerGet {
     public void deleteOldRecipeCaseMeal(Long idRecipe, Long idCaseMeal){
         startConnection();
         planningDao.deleteOldRecipeCaseMeal(conn, idRecipe, idCaseMeal);
+    }
+    public void postNewNamePlanning(Long idPlanning, String namePlanning){
 
+        System.out.println("POST new NAME PLANNING into manager....");
+        startConnection();
+        planningDao.postNewNamePlanning(conn, idPlanning, namePlanning);
+    }
+    public void putLastOpenPlanning(Long idOldOpenPlanning, Long idNewOpenPlanning){
+        startConnection();
+        planningDao.putLastOpenPlanning(conn, idOldOpenPlanning, idNewOpenPlanning);
+    }
+    public void putShowWeekMeal(Long idWeekMeal, Boolean showWeekMeal) {
+        startConnection();
+        planningDao.putShowWeekMeal(conn, idWeekMeal, showWeekMeal);
+    }
+    public void putNbPersCaseMeal(Long idCaseMeal, int nbPersCaseMeal) {
+        startConnection();
+        planningDao.putNbPersCaseMeal(conn, idCaseMeal, nbPersCaseMeal);
+    }
+    public void deletePlanningById(Long idPlanning) {
+        startConnection();
+        planningDao.deletePlanningById(conn, idPlanning);
     }
 
 

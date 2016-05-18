@@ -40,7 +40,7 @@ public class PlanningDao {
             //1. INSERT PLANNING
             stm = conn.prepareStatement(CREATE_PLANNING, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, "nouveauPlanning");
-            stm.setBoolean(2, false);
+            stm.setBoolean(2, true);
             stm.setLong(3, idUser);
             isOk = stm.executeUpdate();
             if (isOk == 0) {
@@ -246,9 +246,95 @@ public class PlanningDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+    private final static String UPDATE_NAME_PLANNING = "UPDATE Planning SET name = ? WHERE id = ?;\n";
+    public void postNewNamePlanning(Connection conn, Long idPlanning, String namePlanning){
 
+        System.out.println("POST new NAME PLANNING into DAO....");
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDATE_NAME_PLANNING);
+            stm.setString(1, namePlanning);
+            stm.setLong(2, idPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("postNewNamePlanning failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDATE_LASTOPEN_PLANNING = "UPDATE Planning SET lastOpen = ? WHERE id = ?;\n";
+    public void putLastOpenPlanning(Connection conn, Long idOldOpenPlanning, Long idNewOpenPlanning){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDATE_LASTOPEN_PLANNING);
+            stm.setBoolean(1, false);
+            stm.setLong(2, idOldOpenPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putLastOpenPlanning failed, no rows affected");
+            }
+            stm = conn.prepareStatement(UPDATE_LASTOPEN_PLANNING);
+            stm.setBoolean(1, true);
+            stm.setLong(2, idNewOpenPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putLastOpenPlanning failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDATE_SHOW_WEEKMEAL = "UPDATE Planning_WeekMeal SET showWeekMeal = ? WHERE id = ?;\n";
+    public void putShowWeekMeal(Connection conn, Long idWeekMeal, Boolean showWeekMeal){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDATE_SHOW_WEEKMEAL);
+            stm.setBoolean(1, showWeekMeal);
+            stm.setLong(2, idWeekMeal);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putShowWeekMeal failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDATE_NbPers_CASEMEAL = "UPDATE Planning_CaseMeal SET nbPers = ? WHERE id = ?;\n";
+    public void putNbPersCaseMeal(Connection conn, Long idCaseMeal, int nbPersCaseMeal){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDATE_NbPers_CASEMEAL);
+            stm.setInt(1, nbPersCaseMeal);
+            stm.setLong(2, idCaseMeal);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putNbPersCaseMeal failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String DELETE_NbPers_CASEMEAL = "DELETE FROM Planning WHERE id = ?;\n";
+    public void deletePlanningById(Connection conn, Long idPlanning){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(DELETE_NbPers_CASEMEAL);
+            stm.setLong(1, idPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("deletePlanningById failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
