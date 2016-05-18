@@ -26,11 +26,24 @@ public class PlanningService {
         List<Planning> list = new ManagerGet().getPlanningsOfUser(idUser);
         return Response.ok(list).build();
     }
+    @Path("/createPlanning/user/{idUser}")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response createPlanning(@PathParam("idUser") int idUser){
+        //localhost:8080/rest/recipe/2
+        Planning planning = new ManagerGet().createPlanning(idUser);
+        return Response.ok(planning).build();
+    }
+
+
+
+
+
 
     @Path("/planning/{idPlanning}")
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response getPlanningById(@PathParam("idPlanning") int idPlanning){
+    public Response getPlanningById(@PathParam("idPlanning") Long idPlanning){
         //localhost:8080/rest/recipe/2
         Planning planning = new ManagerGet().getPlanningById(idPlanning);
         return Response.ok(planning).build();
@@ -46,6 +59,10 @@ public class PlanningService {
     }
 
 
+    //POST new rel  recipe-caseMeal
+    //DELETE rel recipe-caseMeal
+    //PUT change name planning
+    //DELETE planning
 
 
 

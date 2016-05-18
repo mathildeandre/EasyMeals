@@ -91,13 +91,17 @@ public class ManagerGet {
         startConnection();
         return planningDao.getPlanningsOfUser(conn, idUser);
     }
-    public Planning getPlanningById(int idPlanning){
+    public Planning getPlanningById(Long idPlanning){
         startConnection();
         return planningDao.getPlanningById(conn, idPlanning);
     }
     public Planning getPlanningCurrentOfUser(int idUser){
         startConnection();
         return planningDao.getPlanningCurrentOfUser(conn, idUser);
+    }
+    public Planning createPlanning(int idUser){
+        startConnection();
+        return planningDao.createPlanning(conn, idUser);
     }
 
 

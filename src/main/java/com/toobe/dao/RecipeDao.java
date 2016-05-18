@@ -457,7 +457,6 @@ public class RecipeDao {
     }
 
 
-
     /* INSERT INGREDIENTS (function called by CREATION RECIPE) */
     private static final String INSERT_INGREDIENT = "INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (?, ?, ?, ?)";
     private boolean insertsIngredient(Connection conn, List<Ingredient> listIngr, Long idRecipe) throws SQLException {

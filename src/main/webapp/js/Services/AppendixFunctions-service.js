@@ -57,7 +57,7 @@ myService.service('AppendixFunctionsService', function($http, $q, $log) {
         function displayTime(timeInMinute){
             var hour = Math.floor(timeInMinute/60);
             var minLeft = Math.round(timeInMinute%60);
-            $log.debug("hour : "+hour+" - min left : "+minLeft);
+            //$log.debug("hour : "+hour+" - min left : "+minLeft);
             var strReturn;
             if(hour > 0  && minLeft > 0){
                 strReturn = hour+"h"+minLeft;

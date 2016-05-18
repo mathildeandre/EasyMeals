@@ -30,7 +30,7 @@ public class ListShoppingDao {
                 String name = res.getString("name");
                 int date  = res.getInt("date");
                 ListShopping listShopping = getListShoppingById(conn, res.getInt("idListShop"));
-                Planning planning = planningDao.getPlanningById(conn, res.getInt("idPlanning"));
+                Planning planning = planningDao.getPlanningById(conn, res.getLong("idPlanning"));
                 ListShoppingPlanning listShoppingPlanning = new ListShoppingPlanning(id, name, date, listShopping, planning);
                 list_listShoppingPlanning.add(listShoppingPlanning);
             }

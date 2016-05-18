@@ -1,11 +1,9 @@
 package com.toobe.dao;
 
 import com.toobe.dto.*;
+import com.toobe.dto.info.RecipeCategory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,31 +12,93 @@ import java.util.List;
  */
 public class PlanningDao {
 
-
-
-
-  /*
-
-  NEW ....
+  /*NEW ....
   //Planning = {name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
   //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
   //caseMeal = {id: lunch4, nbPers:5 , noDay:4,  recipes:[recipe1, recipe2, ...]}
   //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
 
-               OLD ...
-            //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
-            //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
-            //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
-            //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+    OLD ...
+    //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
+    //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
+    //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
+    //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
    */
 
+    private final static String CREATE_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser) VALUES (?, ?, ?);\n";
+    private final static String CREATE_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
+    private final static String CREATE_CASEMEAL = "INSERT INTO Planning_CaseMeal(noDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
 
+    public Planning createPlanning(Connection conn, int idUser) {
+        PreparedStatement stm, stmWM, stmCM;
+        ResultSet res;
+        int isOk = 0;
+        Long idPlanning = null;
+        Long idWeekMeal = null;
+        try {
+            //1. INSERT PLANNING
+            stm = conn.prepareStatement(CREATE_PLANNING, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, "nouveauPlanning");
+            stm.setBoolean(2, false);
+            stm.setLong(3, idUser);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("Creating Planning failed, no rows affected");
+            }
+            res = stm.getGeneratedKeys();
+            if(res.next()){
+                idPlanning  = res.getLong(1);
+            }
+
+            //2. INSERT WEEKMEAL & CASEMEAL
+            List<String> list = new ArrayList<String>();
+            list.add("lunch"); list.add("dinner"); list.add("breakfast"); list.add("snack");
+            for(String str : list){//loop on lunch, dinner etc
+                stmWM = conn.prepareStatement(CREATE_WEEKMEAL, Statement.RETURN_GENERATED_KEYS);
+                stmWM.setString(1, str);
+                stmWM.setBoolean(2, false);
+                stmWM.setLong(3, idPlanning);
+                isOk = stmWM.executeUpdate();
+                if (isOk == 0) {
+                    throw new SQLException("Creating WeekMeal failed, no rows affected");
+                }
+                res = stmWM.getGeneratedKeys();
+                if(res.next()){
+                    idWeekMeal  = res.getLong(1);
+                    for(int i=1; i<=7; i++){
+                        stmCM = conn.prepareStatement(CREATE_CASEMEAL);
+                        stmCM.setInt(1, i); //noDay
+                        stmCM.setInt(2, 4); //nbPers
+                        stmCM.setLong(3, idWeekMeal); //idPlanningWeekMeal
+                        isOk = stmCM.executeUpdate();
+                        if (isOk == 0) {
+                            throw new SQLException("Creating WeekMeal failed, no rows affected");
+                        }
+                    }
+                }else{
+                    throw new SQLException("getGeneratedKeys of WEEK_MEAL did not work");
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return getPlanningById(conn, idPlanning);
+    }
+
+
+
+    /*
+
+     */
 
 
     /**
      * On trouve ici toutes les planning pour un idUser
      */
-    public Planning getPlanningById(Connection conn, int idPlanning){
+    public Planning getPlanningById(Connection conn, Long idPlanning){
         RecipeDao recipeDao = new RecipeDao();
         Recipe recipe;
         Planning planning = new Planning();
@@ -113,9 +173,9 @@ public class PlanningDao {
         try {
             stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser+" AND lastOpen = true");
             ResultSet res = stm.executeQuery();
-            int idPlanning;
+            Long idPlanning;
             if(res.next()){
-                idPlanning = res.getInt("id");
+                idPlanning = res.getLong("id");
                 planning =  getPlanningById(conn, idPlanning);
             }
 
@@ -138,9 +198,9 @@ public class PlanningDao {
         try {
             stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser);
             ResultSet res = stm.executeQuery();
-            int idPlanning;
+            Long idPlanning;
             while(res.next()){
-                idPlanning = res.getInt("id");
+                idPlanning = res.getLong("id");
                 Planning planning =  getPlanningById(conn, idPlanning);
                 listPlanning.add(planning);
             }

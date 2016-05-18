@@ -5,7 +5,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, AppendixFunctionsService, restRecipeService, fourTypeMeal, units, steps) {
+myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, AppendixFunctionsService, restRecipeService, restPlanningService, fourTypeMeal, units, steps) {
 
     $scope.$emit('intoPlanning'); //will tell to parents (global-controller.js) to modify pix
 
@@ -67,6 +67,25 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
      //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
      //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
      */
+
+
+    /*NEW ....
+     //Planning = {name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+     //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
+     //caseMeal = {id: lunch4, nbPers:5 , noDay:4,  recipes:[recipe1, recipe2, ...]}
+     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+
+     OLD ...
+     //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
+     //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
+     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
+     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+     */
+
+    $scope.plannings = restPlanningService.getPlannings();
+    $scope.currentPlanning = $scope.plannings[0];
+
+
     var initFourWeekMeals = function(nbDay){
         var fourWeekMeals = [];
         for(var i=0; i<fourTypeMeal.length; i++){
