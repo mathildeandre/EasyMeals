@@ -104,6 +104,16 @@ public class ManagerGet {
         return planningDao.createPlanning(conn, idUser);
     }
 
+    public void postNewRecipeCaseMeal(Long idRecipe, Long idCaseMeal){
+        startConnection();
+        planningDao.postNewRecipeCaseMeal(conn, idRecipe, idCaseMeal);
+    }
+    public void deleteOldRecipeCaseMeal(Long idRecipe, Long idCaseMeal){
+        startConnection();
+        planningDao.deleteOldRecipeCaseMeal(conn, idRecipe, idCaseMeal);
+
+    }
+
 
     /****************************************************/
     /************* LIST SHOPPING ***********************/

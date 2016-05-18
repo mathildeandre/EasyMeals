@@ -18,9 +18,6 @@
         </span>
     </div>
 
-    bonjour
-    {{currentPlanning}}
-    bonjour
 
 
     <article class="myArticle">
@@ -44,21 +41,22 @@
                      //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
                      //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
                  -->
-                <tr ng-repeat="aWeekMeal in fourWeekMeals" ng-show="aWeekMeal.show" >
+                <tr ng-repeat="weekMeal in currentPlanning.weekMeals" ng-show="weekMeal.show" >
 
-                    <th class="info myTh" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(aWeekMeal.typeMeal)}}</th>
+                    <th class="info myTh" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(weekMeal.weekMealName)}}</th>
 
-                    <td ng-repeat="meal in aWeekMeal.weekMeals"  style="width:13%;" data-drop="true" ng-model='meal.recipes'  jqyoui-droppable="{multiple:true}"> <!--, onOver:'onOverTab(\'hehehe\')' -->
-
-                                <span ng-show="showNbPers" class="nbPers"  data-drop="true" ng-model='meal.nbPers'
+                    <td ng-repeat="caseMeal in weekMeal.caseMeals"  style="width:13%;" data-drop="true" ng-model='caseMeal.recipes'
+                        jqyoui-droppable="{multiple:true}"> <!--, onOver:'onOverTab(\'hehehe\')' -->
+                                id :  {{caseMeal.id}}
+                                <span ng-show="showNbPers" class="nbPers"  data-drop="true" ng-model='caseMeal.nbPers'
                                       jqyoui-droppable="{multiple:true}">
-                                    <input class="inputNbPers" type="number" min="1"  ng-model="meal.nbPers" > pers.
+                                    <input class="inputNbPers" type="number" min="1"  ng-model="caseMeal.nbPers" > pers.
                                 </span>
                         <br ng-show="showNbPers">
-                        <!--ng-repeat="recipe in meal.recipes  | orderByRecipeType" -->
+                        <!--ng-repeat="recipe in caseMeal.recipes  | orderByRecipeType" -->
                         <!--track by $index permet d'avoir 2x le mm element dans un drop sans bug -->
-                        <div ng-repeat="recipe in meal.recipes  track by $index " class="itemToDragPlanning itemDrag"   style="display: inline-block;"
-                             data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="meal.recipes" ng-show="recipe.name"
+                        <div ng-repeat="recipe in caseMeal.recipes  track by $index " class="itemToDragPlanning itemDrag"   style="display: inline-block;"
+                             data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="caseMeal.recipes" ng-show="recipe.name"
                              jqyoui-draggable="{index: {{$index}},placeholder:false , deepCopy:'true'}"  >
                             {{recipe.name}}
 
@@ -71,7 +69,7 @@
 
             <!-- DEBUG -->
             <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-                <div ng-repeat="recipe in fourWeekMeals[1].weekMeals[0].recipes">
+                <div ng-repeat="recipe in currentPlanning.weekMeals[1].caseMeals[0].recipes">
                     {{recipe.name}}
                 </div>
             </div>
@@ -82,9 +80,9 @@
                 <div style="display:inline-block">
                     <div>
                         <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
-                        <span ng-repeat="aWeekMeal in fourWeekMeals" class="checkbox checkbox-info checkbox-inline">
-                            <input type="checkbox"  ng-model="aWeekMeal.show" id="{{aWeekMeal.id}}">
-                            <label for="{{aWeekMeal.id}}" ><b>{{displayMealType(aWeekMeal.typeMeal)}}</b> &nbsp&nbsp</label>
+                        <span ng-repeat="weekMeal in currentPlanning.weekMeals" class="checkbox checkbox-info checkbox-inline">
+                            <input type="checkbox"  ng-model="weekMeal.show" id="{{weekMeal.id}}">
+                            <label for="{{weekMeal.id}}" ><b>{{displayMealType(weekMeal.weekMealName)}}</b> &nbsp&nbsp</label>
                         </span>
                     </div>
                     <div>

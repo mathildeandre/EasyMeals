@@ -8,7 +8,7 @@ CREATE TABLE List_Shopping (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255
 CREATE TABLE ListShopping_Category (id int(10) NOT NULL AUTO_INCREMENT, idListShop int(10) NOT NULL, idFoodCategory int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE ListShopPlanning_User (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255), `date` int(11), idListShop int(10) NOT NULL, idPlanning int(10) NOT NULL, idUser int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Planning (id int(10) NOT NULL AUTO_INCREMENT, lastOpen tinyint DEFAULT false NOT NULL, name varchar(255) NOT NULL, idUser int(10) NOT NULL, PRIMARY KEY (id), INDEX (idUser));
-CREATE TABLE Planning_CaseMeal (id int(10) NOT NULL AUTO_INCREMENT, noDay int(10) NOT NULL, nbPers int(10) NOT NULL, idPlanningWeekMeal int(10) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE Planning_CaseMeal (id int(10) NOT NULL AUTO_INCREMENT, numDay int(10) NOT NULL, nbPers int(10) NOT NULL, idPlanningWeekMeal int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Planning_WeekMeal (id int(10) NOT NULL AUTO_INCREMENT, weekMealName varchar(255) NOT NULL, showWeekMeal tinyint NOT NULL, idPlanning int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Recipe (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idType int(10) NOT NULL, isPublic tinyint NOT NULL, idUser int(10) NOT NULL, rating int(10), nbVoter int(10) DEFAULT 0 NOT NULL, nbPerson int(10) DEFAULT 1 NOT NULL, pixName varchar(255), idOrigin int(10) NOT NULL, isValidated tinyint DEFAULT 0 NOT NULL, timeCooking int(10), timePreparation int(10), PRIMARY KEY (id), INDEX (idType), INDEX (isPublic), INDEX (idUser));
 CREATE TABLE Recipe_Category (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, numRank int(10), PRIMARY KEY (id));
@@ -21,17 +21,22 @@ CREATE TABLE Rel_Recipe_Category (idCategory int(10) NOT NULL, idRecipe int(10) 
 CREATE TABLE Rel_User_Recipe (idRecipe int(10) NOT NULL, idUser int(10) NOT NULL, isFavorite tinyint(1) NOT NULL, isForPlanning tinyint(1) NOT NULL, ratingUser int(10), isHide tinyint(1) NOT NULL, PRIMARY KEY (idRecipe, idUser));
 CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), PRIMARY KEY (id));
 
+
+
+ALTER TABLE Planning ADD INDEX FKPlanning761199 (idUser), ADD CONSTRAINT FKPlanning761199 FOREIGN KEY (idUser) REFERENCES `User` (id) ON DELETE CASCADE;
+ALTER TABLE Planning_WeekMeal ADD INDEX FKPlanning_W938841 (idPlanning), ADD CONSTRAINT FKPlanning_W938841 FOREIGN KEY (idPlanning) REFERENCES Planning (id) ON DELETE CASCADE;
+ALTER TABLE Planning_CaseMeal ADD INDEX FKPlanning_C546459 (idPlanningWeekMeal), ADD CONSTRAINT FKPlanning_C546459 FOREIGN KEY (idPlanningWeekMeal) REFERENCES Planning_WeekMeal (id) ON DELETE CASCADE;
+ALTER TABLE Rel_Recipe_CaseMealPlanning ADD INDEX FKRel_Recipe36474 (idPlanningCaseMeal), ADD CONSTRAINT FKRel_Recipe36474 FOREIGN KEY (idPlanningCaseMeal) REFERENCES Planning_CaseMeal (id) ON DELETE CASCADE;
+
+ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl355885 (idPlanning), ADD CONSTRAINT FKListShopPl355885 FOREIGN KEY (idPlanning) REFERENCES Planning (id) ON DELETE NO ACTION;
+
+
 ALTER TABLE Ingredient_ListShop ADD INDEX FKIngredient178456 (idFood), ADD CONSTRAINT FKIngredient178456 FOREIGN KEY (idFood) REFERENCES Food (id);
-ALTER TABLE Planning_WeekMeal ADD INDEX FKPlanning_W938841 (idPlanning), ADD CONSTRAINT FKPlanning_W938841 FOREIGN KEY (idPlanning) REFERENCES Planning (id);
-ALTER TABLE Planning ADD INDEX FKPlanning761199 (idUser), ADD CONSTRAINT FKPlanning761199 FOREIGN KEY (idUser) REFERENCES `User` (id);
-ALTER TABLE Planning_CaseMeal ADD INDEX FKPlanning_C546459 (idPlanningWeekMeal), ADD CONSTRAINT FKPlanning_C546459 FOREIGN KEY (idPlanningWeekMeal) REFERENCES Planning_WeekMeal (id);
-ALTER TABLE Rel_Recipe_CaseMealPlanning ADD INDEX FKRel_Recipe36474 (idPlanningCaseMeal), ADD CONSTRAINT FKRel_Recipe36474 FOREIGN KEY (idPlanningCaseMeal) REFERENCES Planning_CaseMeal (id);
 ALTER TABLE Rel_Recipe_CaseMealPlanning ADD INDEX FKRel_Recipe821448 (idRecipe), ADD CONSTRAINT FKRel_Recipe821448 FOREIGN KEY (idRecipe) REFERENCES Recipe (id);
 ALTER TABLE ListShopping_Category ADD INDEX FKListShoppi989241 (idListShop), ADD CONSTRAINT FKListShoppi989241 FOREIGN KEY (idListShop) REFERENCES List_Shopping (id);
 ALTER TABLE Ingredient_ListShop ADD INDEX FKIngredient293299 (idListShopCategory), ADD CONSTRAINT FKIngredient293299 FOREIGN KEY (idListShopCategory) REFERENCES ListShopping_Category (id);
 ALTER TABLE ListShopping_Category ADD INDEX FKListShoppi31201 (idFoodCategory), ADD CONSTRAINT FKListShoppi31201 FOREIGN KEY (idFoodCategory) REFERENCES Food_Category (id);
 ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl179177 (idListShop), ADD CONSTRAINT FKListShopPl179177 FOREIGN KEY (idListShop) REFERENCES List_Shopping (id);
-ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl355885 (idPlanning), ADD CONSTRAINT FKListShopPl355885 FOREIGN KEY (idPlanning) REFERENCES Planning (id);
 ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl181909 (idUser), ADD CONSTRAINT FKListShopPl181909 FOREIGN KEY (idUser) REFERENCES `User` (id);
 ALTER TABLE Food_Recipe ADD INDEX FKFood_Recip918613 (idFood), ADD CONSTRAINT FKFood_Recip918613 FOREIGN KEY (idFood) REFERENCES Food (id);
 ALTER TABLE Recipe ADD INDEX FKRecipe65078 (idType), ADD CONSTRAINT FKRecipe65078 FOREIGN KEY (idType) REFERENCES Recipe_Type (id);

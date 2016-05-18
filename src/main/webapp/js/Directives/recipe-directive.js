@@ -74,7 +74,7 @@ myDirective.directive("scroll", function ($window, $log) {
         angular.element($window).bind("scroll", function() {
             var filterRecipe = document.getElementById('filterRecipe');
             //$log.debug("taille de lengin :  "+filterRecipe.clientHeight);
-            if(filterRecipe.clientHeight < 700){
+            if(filterRecipe != undefined && filterRecipe.clientHeight < 700){
                 if (this.pageYOffset >= 100) {
                     scope.boolNavFixed = true;
                 }else {
@@ -82,7 +82,7 @@ myDirective.directive("scroll", function ($window, $log) {
                 }
                 scope.$apply();
             }else{
-                $log.debug("ON LE LAISSE FIXE CE CON !!");
+                //$log.debug("ON LE LAISSE FIXE CE CON !!");
                 scope.boolNavFixed = false;
             }
             /*

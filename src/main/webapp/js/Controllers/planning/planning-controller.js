@@ -45,30 +45,16 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         return AppendixFunctionsService.displayMealType(mealType);
     }
 
-    $scope.planningInitialized = false;
-
 
     $scope.globalNbPers = 4;
+    $scope.showNbPers = false;
     $scope.spreadGlobalNbPers = function(nb){
-        var fourWeekMeals = $scope.fourWeekMeals;
-        for(var i=0; i<fourWeekMeals.length; i++){
-            var weekMeals = fourWeekMeals[i].weekMeals;
-            for(var j=0; j<weekMeals.length; j++){
-                weekMeals[j].nbPers = nb; //fonctionne par reference :) (pointeurs)
+        for(var i=0; i<$scope.currentPlanning.weekMeals.length; i++){
+            for(var j=0; j<$scope.currentPlanning.weekMeals[i].caseMeals.length; j++){
+                $scope.currentPlanning.weekMeals[i].caseMeals[j].nbPers = nb;
             }
         }
     }
-    $scope.showNbPers = false;
-    $scope.nbPers = 4;
-
-    /*
-     //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
-     //aWeekMeal = {id: , typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
-     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
-     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
-     */
-
-
     /*NEW ....
      //Planning = {name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
      //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
@@ -85,7 +71,90 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
     $scope.plannings = restPlanningService.getPlannings();
     $scope.currentPlanning = $scope.plannings[0];
 
+    var updatePlanningBDD = function(newValue, oldValue, scope){
+        var newCaseMeal, oldCaseMeal;
+        if(newValue.name != oldValue.name){
+            //updateNamePlanning
+        }else{
+            for(var i=0; i<newValue.weekMeals.length; i++){
+                if(newValue.weekMeals[i].show != oldValue.weekMeals[i].show){
+                    //update show of weekmeal
+                }else{
+                    for(var j=0; j<newValue.weekMeals[i].caseMeals.length; j++){
+                        newCaseMeal = newValue.weekMeals[i].caseMeals[j];
+                        oldCaseMeal = oldValue.weekMeals[i].caseMeals[j];
+                        if(newCaseMeal.nbPers != oldCaseMeal.nbPers){
+                            //Update nbPers
+                        }else if(newCaseMeal.recipes.length > oldCaseMeal.recipes.length){
+                            //POST new recipe caseMealRecipe
+                            postNewRecipeCaseMeal(newCaseMeal.id, newCaseMeal.recipes, oldCaseMeal.recipes);
+                        }else if(newCaseMeal.recipes.length < oldCaseMeal.recipes.length){
+                            //DELETE old recipe
+                            deleteOldRecipeCaseMeal(newCaseMeal.id, newCaseMeal.recipes, oldCaseMeal.recipes);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    $scope.$watch('currentPlanning', updatePlanningBDD, true);
 
+    var postNewRecipeCaseMeal = function(idCaseMeal, newRecipes, oldRecipes){
+        var isNewRecipe;
+        for(var i=0; i<newRecipes.length; i++){
+            isNewRecipe = true;
+            for(var j=0; j<oldRecipes.length; j++){
+                if(newRecipes[i].id == oldRecipes[j].id){
+                    isNewRecipe = false;
+                }
+            }
+            if(isNewRecipe){
+                $log.debug("BOOM ------- new recipe (id):  "+newRecipes[i].id + "(id :"+idCaseMeal+")");
+                restPlanningService.postNewRecipeCaseMeal(newRecipes[i].id, idCaseMeal);
+            }
+        }
+    }
+    var deleteOldRecipeCaseMeal = function(idCaseMeal, newRecipes, oldRecipes){
+        var isDeletedRecipe;
+        for(var i=0; i<oldRecipes.length; i++){
+            isDeletedRecipe = true;
+            for(var j=0; j<newRecipes.length; j++){
+                if(oldRecipes[i].id == newRecipes[j].id){
+                    isDeletedRecipe = false;
+                }
+            }
+            if(isDeletedRecipe){
+                $log.debug("BOOM ------- deleted recipe :  "+oldRecipes[i].name + "(id :"+idCaseMeal+")");
+                restPlanningService.deleteOldRecipeCaseMeal(oldRecipes[i].id, idCaseMeal);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* NO USEFULL ANYMORE
     var initFourWeekMeals = function(nbDay){
         var fourWeekMeals = [];
         for(var i=0; i<fourTypeMeal.length; i++){
@@ -104,8 +173,10 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         }
         return fourWeekMeals;
     }
-
     $scope.fourWeekMeals = initFourWeekMeals(7);
+
+ */
+
 
     $scope.onOverTrash = function(){
         document.getElementById("trashPlanning").style.color = 'orange';

@@ -12,9 +12,9 @@ import java.util.List;
   /*
 
   NEW ....
-  //Planning = {name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
-  //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
-  //caseMeal = {id: lunch4, nbPers:5 , noDay:4,  recipes:[recipe1, recipe2, ...]}
+  //Planning = {id: .., name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+  //WeekMeal = {id: .. weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
+  //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
   //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
 
                OLD ...
@@ -35,6 +35,7 @@ import java.util.List;
      ::::::::::::::::::::::   il faudra CONSTRUIRE les cases vide dans ANGULAR...
  */
 public class Planning {
+    private Long id;
     private String name;
     private boolean lastOpen;
     private List<WeekMeal> weekMeals;
@@ -42,10 +43,19 @@ public class Planning {
     public Planning(){
 
     }
-    public Planning(String name, boolean lastOpen, List<WeekMeal> weekMeals) {
+    public Planning(Long id, String name, boolean lastOpen, List<WeekMeal> weekMeals) {
+        this.id = id;
         this.name = name;
         this.lastOpen = lastOpen;
         this.weekMeals = weekMeals;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -5,6 +5,7 @@ import com.toobe.dto.info.RecipeCategory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class PlanningDao {
   /*NEW ....
   //Planning = {name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
   //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
-  //caseMeal = {id: lunch4, nbPers:5 , noDay:4,  recipes:[recipe1, recipe2, ...]}
+  //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
   //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
 
     OLD ...
@@ -27,9 +28,9 @@ public class PlanningDao {
 
     private final static String CREATE_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser) VALUES (?, ?, ?);\n";
     private final static String CREATE_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
-    private final static String CREATE_CASEMEAL = "INSERT INTO Planning_CaseMeal(noDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
+    private final static String CREATE_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
 
-    public Planning createPlanning(Connection conn, int idUser) {
+    public Planning createPlanning(Connection conn, int idUser) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
         PreparedStatement stm, stmWM, stmCM;
         ResultSet res;
         int isOk = 0;
@@ -52,11 +53,11 @@ public class PlanningDao {
 
             //2. INSERT WEEKMEAL & CASEMEAL
             List<String> list = new ArrayList<String>();
-            list.add("lunch"); list.add("dinner"); list.add("breakfast"); list.add("snack");
+            list.add("breakfast");list.add("lunch"); list.add("snack");list.add("dinner");
             for(String str : list){//loop on lunch, dinner etc
                 stmWM = conn.prepareStatement(CREATE_WEEKMEAL, Statement.RETURN_GENERATED_KEYS);
                 stmWM.setString(1, str);
-                stmWM.setBoolean(2, false);
+                stmWM.setBoolean(2, (str.equals("lunch")||str.equals("dinner")));
                 stmWM.setLong(3, idPlanning);
                 isOk = stmWM.executeUpdate();
                 if (isOk == 0) {
@@ -67,7 +68,7 @@ public class PlanningDao {
                     idWeekMeal  = res.getLong(1);
                     for(int i=1; i<=7; i++){
                         stmCM = conn.prepareStatement(CREATE_CASEMEAL);
-                        stmCM.setInt(1, i); //noDay
+                        stmCM.setInt(1, i); //numDay
                         stmCM.setInt(2, 4); //nbPers
                         stmCM.setLong(3, idWeekMeal); //idPlanningWeekMeal
                         isOk = stmCM.executeUpdate();
@@ -139,19 +140,19 @@ public class PlanningDao {
                             listRecipe.add(recipe);
                         }
                         int nbPers = resCaseMeal.getInt("nbPers");
-                        int noDay = resCaseMeal.getInt("noDay");
-                        CaseMeal caseMeal = new CaseMeal(idCaseMeal, nbPers, noDay, listRecipe);
+                        int numDay = resCaseMeal.getInt("numDay");
+                        CaseMeal caseMeal = new CaseMeal(idCaseMeal, nbPers, numDay, listRecipe);
                         listCaseMeal.add(caseMeal);
                     }
                     String weekMealName = resWeekMeal.getString("weekMealName");
                     boolean show = resWeekMeal.getInt("showWeekMeal") == 1;
-                    WeekMeal weekMeal = new WeekMeal(weekMealName, show, listCaseMeal);
+                    WeekMeal weekMeal = new WeekMeal(idWeekMeal, weekMealName, show, listCaseMeal);
                     listWeekMeal.add(weekMeal);
                 }
 
                 String name = res.getString("name");
                 boolean lastOpen = res.getInt("lastOpen") == 1;
-                planning = new Planning(name, lastOpen, listWeekMeal);
+                planning = new Planning(idPlanning, name, lastOpen, listWeekMeal);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,6 +212,42 @@ public class PlanningDao {
         return listPlanning;
     }
 
+
+
+
+    private final static String CREATE_REL_RECIPECASEMEAL = "INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal) VALUES (?, ?);\n";
+    public void postNewRecipeCaseMeal(Connection conn, Long idRecipe, Long idCaseMeal){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(CREATE_REL_RECIPECASEMEAL);
+            stm.setLong(1, idRecipe);
+            stm.setLong(2, idCaseMeal);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("postNewRecipeCaseMeal failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String DELETE_REL_RECIPECASEMEAL = "DELETE FROM Rel_Recipe_CaseMealPlanning WHERE idRecipe = ? AND idPlanningCaseMeal = ?;\n";
+    public void deleteOldRecipeCaseMeal(Connection conn, Long idRecipe, Long idCaseMeal){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(DELETE_REL_RECIPECASEMEAL);
+            stm.setLong(1, idRecipe);
+            stm.setLong(2, idCaseMeal);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("deleteOldRecipeCaseMeal failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 

@@ -7,17 +7,27 @@ package com.toobe.dto;
 import java.util.List;
 
 /**
- * //WeekMeal = {weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
+ * //WeekMeal = {id:.., weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
  */
 public class WeekMeal {
+    private int id;
     private String weekMealName;
     private boolean show;
     private List<CaseMeal> caseMeals;
 
-    public WeekMeal(String weekMealName, boolean show, List<CaseMeal> caseMeals) {
+    public WeekMeal(int id, String weekMealName, boolean show, List<CaseMeal> caseMeals) {
+        this.id = id;
         this.weekMealName = weekMealName;
         this.show = show;
         this.caseMeals = caseMeals;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getWeekMealName() {

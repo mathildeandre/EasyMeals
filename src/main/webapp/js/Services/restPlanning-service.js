@@ -40,30 +40,11 @@ myService.service("restPlanningService", function ($http, $q, $log) {
             })
     };
 
-
-
-
-    /*
-    function insertRecipe(recipe){
-        $log.warn("REQUETE with RECIPE ----  ENVOYE !!! "+recipe.name);
-        /*var dataObj = {
-            name : recipe.name
-        };*
+    function postNewRecipeCaseMeal(idRecipe, idCaseMeal){
         return $http({
             method: 'POST',
-            url: '/rest/recipe/create',
-            data: recipe /*{
-                name:recipe.name,
-                user:recipe.user,
-                recipeType:recipe.recipeType,
-                origin:recipe.origin,//recipe.origin
-                categories:recipe.categories,
-                timeCooking:recipe.timeCooking,
-                timePreparation:recipe.timePreparation,
-                nbPerson:recipe.nbPerson,
-                descriptions:recipe.descriptions,
-                ingredients:[{qty:1, unit:'g', food:{"id":1,"name":"dd","idCategory":0,"isValidated":false}}]
-            }*
+            url: '/rest/postNewRecipeCaseMeal',
+            data: [idRecipe, idCaseMeal]
         })
             .then(function (response) {
                 if (response.status == 200) {
@@ -72,11 +53,26 @@ myService.service("restPlanningService", function ($http, $q, $log) {
                 return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
             })
     }
-*/
+    function deleteOldRecipeCaseMeal(idRecipe, idCaseMeal){
+        return $http({
+            method: 'POST',
+            url: '/rest/deleteOldRecipeCaseMeal',
+            data: [idRecipe, idCaseMeal]
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    }
+
 
 
     return {
         getPlannings: getPlannings,
-        initLoadData: initLoadData
+        initLoadData: initLoadData,
+        postNewRecipeCaseMeal: postNewRecipeCaseMeal,
+        deleteOldRecipeCaseMeal: deleteOldRecipeCaseMeal
     };
 });

@@ -1039,7 +1039,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     border: 2px solid #f5f5f5; /* impossible de voir dou vient le petit espace sous la pix..*/
     height: 150px;
     white-space: nowrap;
-    overflow-x: auto; /* -->>overflow-x: : scroll <<-- pr tablette !!! // auto pr ordi */
+    overflow-x: hidden; /* -->>overflow-x: : scroll <<-- pr tablette !!! // auto pr ordi */
 }
 .pixRecipeNoDescription{
     width:220px;

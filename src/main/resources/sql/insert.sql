@@ -92,8 +92,10 @@ INSERT INTO `User`(id, pseudo, pwd) VALUES (2117, 'mathou', 'math@gmail.fr'); /*
 
 
 
-INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin) VALUES ('Burgers Maison', 2117, 0, 2, 17, 'burgersMaison.jpeg', 5); /*id 1 */
-INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin) VALUES ('Burritos', 2117, 1, 1, 9, 'burritos.jpg', 6);
+INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin, rating, nbVoter, isValidated, timeCooking, timePreparation)
+VALUES ('Burgers Maison', 2, 1, 2117, 5, 'burgersMaison.jpeg', 5, 3.7, 10, 1, 15, 20); /*id 1 */
+INSERT INTO Recipe(name, idType, isPublic,  idUser, nbPerson,  pixName,  idOrigin, rating, nbVoter, isValidated, timeCooking, timePreparation)
+VALUES ('Burritos', 2, 1, 2117, 4, 'burritos.jpg', 6, 4.2, 18, 1, 10, 15);
 
 
 INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (1, 1);
@@ -153,6 +155,10 @@ INSERT INTO Ingredient_ListShop (idFood, idListShopCategory, quantity, unit) VAL
 
 
 
+/*****************************************************************************************/
+/*****************************************************************************************/
+/******************** NO USE ANYMORE ********************************************************/
+/*****************************************************************************************/
 /** PLANNING **/
 INSERT INTO Planning (name, idUser )VALUES ('myPlanning1', 2);
 

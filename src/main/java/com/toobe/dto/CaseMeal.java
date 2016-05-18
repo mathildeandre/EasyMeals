@@ -7,18 +7,18 @@ package com.toobe.dto;
 import java.util.List;
 
 /**
- * //caseMeal = {id: lunch4, nbPers:5 , noDay:4,  recipes:[recipe1, recipe2, ...]}
+ * //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
  */
 public class CaseMeal {
     private int id;
     private int nbPers;
-    private int noDay;
+    private int numDay;
     private List<Recipe> recipes;
 
-    public CaseMeal(int id, int nbPers, int noDay, List<Recipe> recipes) {
+    public CaseMeal(int id, int nbPers, int numDay, List<Recipe> recipes) {
         this.id = id;
         this.nbPers = nbPers;
-        this.noDay = noDay;
+        this.numDay = numDay;
         this.recipes = recipes;
     }
 
@@ -38,12 +38,12 @@ public class CaseMeal {
         this.nbPers = nbPers;
     }
 
-    public int getNoDay() {
-        return noDay;
+    public int getNumDay() {
+        return numDay;
     }
 
-    public void setNoDay(int noDay) {
-        this.noDay = noDay;
+    public void setNumDay(int numDay) {
+        this.numDay = numDay;
     }
 
     public List<Recipe> getRecipes() {
