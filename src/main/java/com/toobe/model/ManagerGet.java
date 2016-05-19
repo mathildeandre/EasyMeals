@@ -130,6 +130,10 @@ public class ManagerGet {
         startConnection();
         planningDao.putNbPersCaseMeal(conn, idCaseMeal, nbPersCaseMeal);
     }
+    public void putNbPersGlobalPlanning(Long idPlanning, int nbPersGlobal) {
+        startConnection();
+        planningDao.putNbPersGlobalPlanning(conn, idPlanning, nbPersGlobal);
+    }
     public void deletePlanningById(Long idPlanning) {
         startConnection();
         planningDao.deletePlanningById(conn, idPlanning);
@@ -147,6 +151,11 @@ public class ManagerGet {
     public List<ListShoppingPlanning> getListsShoppingPlanning(int idUser){
         startConnection();
         return listShoppingDao.getListsShoppingPlanning(conn, idUser);
+    }
+
+    public ListShoppingPlanning createListShoppingPlanning(Long idPlanning, int idUser, List<ListShoppingCategory> listShoppingCategories){
+        startConnection();
+        return listShoppingDao.createListShoppingPlanning(conn, idPlanning, idUser, listShoppingCategories);
     }
 
 

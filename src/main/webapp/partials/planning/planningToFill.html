@@ -27,7 +27,7 @@
 
 
                 <span ng-show="!modifyingPlanningName">
-                    <select class="fieldPlanning noWidth"  ng-model='currentPlanning' ng-change="changePlanning(currentPlanning)"
+                    <select class="fieldPlanning noWidth"  ng-model='currentPlanning'
                             ng-options='planning.name for planning in plannings' ></select>
                     &nbsp
                     <span ng-click="modifyPlanningName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
@@ -62,12 +62,7 @@
                 <th class="info myTh">Vendredi</th>
                 <th class="info myTh">Samedi</th>
                 <th class="info myTh">Dimanche</th>
-                <!--
-                     //fourWeekMeals = [aWeekMealLunch, aWeekMealDinner, .., ..]
-                     //aWeekMeal = {typeMeal: lunch, show:true, weekMeals:[meal1, meal2, ..., meal7]}
-                     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
-                     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
-                 -->
+
                 <tr ng-repeat="weekMeal in currentPlanning.weekMeals" ng-show="weekMeal.show" >
 
                     <th class="info myTh" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(weekMeal.weekMealName)}}</th>
@@ -113,7 +108,7 @@
                     </div>
                     <div>
                         Nombre global de personnes : &nbsp&nbsp
-                        <input class="inputGlobalNbPers" type="number" ng-model="globalNbPers" ng-change="spreadGlobalNbPers(globalNbPers)" min="1" style="width:40px">
+                        <input class="inputGlobalNbPers" type="number" ng-model="currentPlanning.nbPersGlobal" ng-change="spreadGlobalNbPers(currentPlanning.nbPersGlobal)" min="1" style="width:40px">
                     </div>
                     <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
                         <div>Apres avoir choisi le nombre de personne global, il est possible de le modifier pour un repas en particulier : cocher "afficher nb pers." puis modifier directement le nb dans le repas ou y faire glisser le nb ci-dessous  </div>

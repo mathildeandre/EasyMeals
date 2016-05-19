@@ -6,6 +6,8 @@ var myModule = angular.module('controllers');
 
 myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, AppendixFunctionsService, restListShoppingService) {
 
+    $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
+
 
 
     $scope.listsShoppingPlanning = restListShoppingService.getListsShoppingPlanning();
@@ -14,6 +16,7 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, Appendix
 
     //$scope.listName = $scope.currentListShoppingPlanning.name;
 
+    /*
     $scope.changeList = function(listSelected){
         $log.debug("changeLIst : id "+listSelected.id)
         for(var i=0; i<$scope.listsShoppingPlanning.length; i++){
@@ -23,13 +26,11 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, Appendix
             }
         }
     }
+    */
 
 
 
 
-
-
-    $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
 
 
     //$scope.myLists = ErrandService.getLists();
@@ -55,6 +56,7 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, Appendix
         createIngredientsAdapt($scope.recipesToDisplay, $scope.nbPersOfMeal);
     }
 
+    // called from $scope.displayMealsOfCaseMeal()
     var createIngredientsAdapt = function(recipes, newNbPers){
         for(var i=0; i<recipes.length; i++){
             recipes[i].ingredientsAdapt = [];

@@ -56,7 +56,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         }
     }
     /*NEW ....
-     //Planning = {id:.., name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+     //Planning = {id:.., name: myVeganPlanning, lastOpen: true, nbPersGlobal:4, weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
      //WeekMeal = {id:.., weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
      //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
      //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
@@ -111,6 +111,10 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
             //PUT : updateNamePlanning
             // -> on le fait dans 'modificationPlanningNameDONE()' car ici update a chaque nouvelle lettre ajoutee...
         }else{
+            if(newValue.nbPersGlobal != oldValue.nbPersGlobal){
+                //PUT : updateNbPersGlobalPlanning
+                restPlanningService.putNbPersGlobalPlanning(newValue.id, newValue.nbPersGlobal)
+            }
             for(var i=0; i<newValue.weekMeals.length; i++){
                 if(newValue.weekMeals[i].show != oldValue.weekMeals[i].show){
                     //PUT : update show of weekmeal

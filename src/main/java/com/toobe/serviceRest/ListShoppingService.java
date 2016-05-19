@@ -5,13 +5,11 @@ package com.toobe.serviceRest;
  */
 
 import com.toobe.dto.ListShopping;
+import com.toobe.dto.ListShoppingCategory;
 import com.toobe.dto.ListShoppingPlanning;
 import com.toobe.model.ManagerGet;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -35,6 +33,15 @@ public class ListShoppingService {
         //localhost:8080/rest/recipe/2
         List<ListShoppingPlanning> listShopping = new ManagerGet().getListsShoppingPlanning(idUser);
         return Response.ok(listShopping).build();
+    }
+    @Path("/createListShoppingPlanning/{idPlanning}/{idUser}")
+    @POST
+    @Produces({ MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response createListShoppingPlanning(@PathParam("idPlanning") Long idPlanning, @PathParam("idUser") int idUser, List<ListShoppingCategory> listShoppingCategories){
+        System.out.println("idPlanning : "+idPlanning+" -- idUser : "+idUser+" -- listShopCat[0].name : "+ listShoppingCategories.get(0).getName());
+        ListShoppingPlanning listShoppingPlanning = new ManagerGet().createListShoppingPlanning(idPlanning, idUser, listShoppingCategories);
+        return Response.ok(listShoppingPlanning).build();
     }
 
 

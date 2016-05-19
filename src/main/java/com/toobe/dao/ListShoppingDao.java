@@ -2,10 +2,7 @@ package com.toobe.dao;
 
 import com.toobe.dto.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +10,121 @@ import java.util.List;
  * Created by mathilde on 27/03/2016.
  */
 public class ListShoppingDao {
+
+
+    private final static String CREATE_LISTSHOPPLANNING = "INSERT INTO ListShopPlanning_User(name, idListShop, idPlanning, idUser) VALUES (?, ?, ?, ?);\n";
+    public ListShoppingPlanning createListShoppingPlanning(Connection conn, Long idPlanning, int idUser, List<ListShoppingCategory> listShoppingCategories){
+        PreparedStatement stm;
+        ResultSet res;
+        Long idListShopPlanning = null;
+        int isOk = 0;
+        PlanningDao planningDao = new PlanningDao();
+        ListShoppingPlanning listShopPlanning = new ListShoppingPlanning();
+        try {
+
+
+            Planning planning = planningDao.copyOfPlanning(conn, idPlanning);
+            Long idNewPlanning = planning.getId();
+            String nameNewPlanning = planning.getName();
+
+            ListShopping listShopping = new ListShopping("", listShoppingCategories);
+            Long idNewListShopping = createBddListShopping(conn, listShopping);
+
+
+            //1. INSERT LIST_SHOP_PLANNING
+            stm = conn.prepareStatement(CREATE_LISTSHOPPLANNING, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, nameNewPlanning); //name
+            stm.setLong(2, idNewListShopping); //idListShop
+            stm.setLong(3, idNewPlanning); //idPlanning
+            stm.setInt(4, idUser); //idUser
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("Creating LIST_SHOP_PLANNING failed, no rows affected");
+            }
+            res = stm.getGeneratedKeys();
+            if(res.next()){
+                idListShopPlanning  = res.getLong(1);
+            }
+
+            listShopPlanning = new ListShoppingPlanning(idListShopPlanning, nameNewPlanning, 0, listShopping, planning);
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listShopPlanning;
+    }
+
+
+
+
+
+
+
+    private final static String INSERT_LIST_SHOPPING = "INSERT INTO List_Shopping(name) VALUES (?);\n";
+    private final static String INSERT_LIST_SHOPPING_CATEGORY = "INSERT INTO ListShopping_Category(idListShop, idFoodCategory) VALUES (?, ?);\n";
+    private final static String INSERT_INGREDIENT_LISTSHOP = "INSERT INTO Ingredient_ListShop(idFood, idListShopCategory, quantity, unit) VALUES (?, ?, ?, ?);\n";
+    public Long createBddListShopping(Connection conn, ListShopping listShopping){
+        PreparedStatement stm;
+        ResultSet res;
+        int isOk = 0;
+        Long idListShopping = null;
+        Long idListShoppingCategory = null;
+        try {
+
+            //1. INSERT LIST_SHOPPING
+            stm = conn.prepareStatement(INSERT_LIST_SHOPPING, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, listShopping.getName()); //name
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("Creating LIST_SHOPPING failed, no rows affected");
+            }
+            res = stm.getGeneratedKeys();
+            if(res.next()){
+                idListShopping  = res.getLong(1);
+            }
+
+
+
+            for (ListShoppingCategory listShopCat : listShopping.getListShoppingCategories()) {
+                if(listShopCat.getIngredients().size() > 0){//only if the category contains elements
+
+                    //2. INSERT LIST_SHOPPING_CATEGORY
+                    stm = conn.prepareStatement(INSERT_LIST_SHOPPING_CATEGORY, Statement.RETURN_GENERATED_KEYS);
+                    stm.setLong(1, idListShopping); //idListShop
+                    stm.setInt(2, listShopCat.getId()); //idFoodCategory
+                    isOk = stm.executeUpdate();
+                    if (isOk == 0) {
+                        throw new SQLException("Creating LIST_SHOPPING_CATEGORY failed, no rows affected");
+                    }
+                    res = stm.getGeneratedKeys();
+                    if(res.next()){
+                        idListShoppingCategory  = res.getLong(1);
+                    }
+
+                    for(Ingredient ingr :listShopCat.getIngredients()){
+                        //3. INSERT INGREDIENT_LISTSHOP
+                        stm = conn.prepareStatement(INSERT_INGREDIENT_LISTSHOP);
+                        stm.setLong(1, ingr.getFood().getId()); //idFood
+                        stm.setLong(2, idListShoppingCategory); //idListShopCategory
+                        stm.setInt(3, ingr.getQty()); //quantity
+                        stm.setString(4, ingr.getUnit()); //unit
+                        isOk = stm.executeUpdate();
+                        if (isOk == 0) {
+                            throw new SQLException("Creating INGREDIENT_LISTSHOP failed, no rows affected");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idListShopping;
+    }
+
+
+
 
     public List<ListShoppingPlanning> getListsShoppingPlanning(Connection conn, int idUser){
         PreparedStatement stm;
@@ -26,7 +138,7 @@ public class ListShoppingDao {
             ResultSet res = stm.executeQuery();
 
             while(res.next()){
-                int id = res.getInt("id");
+                Long id = res.getLong("id");
                 String name = res.getString("name");
                 int date  = res.getInt("date");
                 ListShopping listShopping = getListShoppingById(conn, res.getInt("idListShop"));
@@ -39,8 +151,6 @@ public class ListShoppingDao {
         }
         return list_listShoppingPlanning;
     }
-
-
 
   /*
     listShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
@@ -55,7 +165,10 @@ public class ListShoppingDao {
         try {
 
             /* on recup toutes les listShoppingCategory   */
-            stm = conn.prepareStatement("SELECT lsc.id as id, idFoodCategory, name as nameFoodCategory, numRank  FROM ListShopping_Category as lsc JOIN Food_Category as fc ON lsc.idFoodCategory = fc.id WHERE idListShop = "+idListShopping);
+            stm = conn.prepareStatement(
+                    "SELECT lsc.id as id, idFoodCategory, name as nameFoodCategory, numRank  " +
+                    "FROM ListShopping_Category as lsc JOIN Food_Category as fc ON lsc.idFoodCategory = fc.id " +
+                    "WHERE idListShop = "+idListShopping);
             ResultSet res = stm.executeQuery();
 
             List<ListShoppingCategory> list_listShoppingCategory = new ArrayList<ListShoppingCategory>();

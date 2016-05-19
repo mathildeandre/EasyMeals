@@ -34,6 +34,9 @@ myService.service("restPlanningService", function ($http, $q, $log) {
     function putNbPersCaseMeal(idCaseMeal, nbPersCaseMeal){
         postObjToServer('POST', '/rest/putNbPersCaseMeal/'+nbPersCaseMeal, idCaseMeal)
     }
+    function putNbPersGlobalPlanning(idPlanning, nbPersGlobal){
+        postObjToServer('POST', '/rest/putNbPersGlobalPlanning/'+nbPersGlobal, idPlanning)
+    }
     function deletePlanningById(idPlanning){
         postObjToServer('POST', '/rest/deletePlanningById', idPlanning)
     }
@@ -99,7 +102,8 @@ myService.service("restPlanningService", function ($http, $q, $log) {
         putShowWeekMeal: putShowWeekMeal,
         putNbPersCaseMeal: putNbPersCaseMeal,
         deletePlanningById: deletePlanningById,
-        createNewPlanning: createNewPlanning
+        createNewPlanning: createNewPlanning,
+        putNbPersGlobalPlanning: putNbPersGlobalPlanning
 
     };
 });

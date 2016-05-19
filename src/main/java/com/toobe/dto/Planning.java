@@ -12,7 +12,7 @@ import java.util.List;
   /*
 
   NEW ....
-  //Planning = {id: .., name: myVeganPlanning, lastOpen: true,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+  //Planning = {id: .., name: myVeganPlanning, lastOpen: true, nbPersGlobal:4,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
   //WeekMeal = {id: .. weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
   //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
   //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
@@ -38,15 +38,17 @@ public class Planning {
     private Long id;
     private String name;
     private boolean lastOpen;
+    private int nbPersGlobal;
     private List<WeekMeal> weekMeals;
 
     public Planning(){
 
     }
-    public Planning(Long id, String name, boolean lastOpen, List<WeekMeal> weekMeals) {
+    public Planning(Long id, String name, boolean lastOpen, int nbPersGlobal, List<WeekMeal> weekMeals) {
         this.id = id;
         this.name = name;
         this.lastOpen = lastOpen;
+        this.nbPersGlobal = nbPersGlobal;
         this.weekMeals = weekMeals;
     }
 
@@ -82,6 +84,13 @@ public class Planning {
         this.lastOpen = lastOpen;
     }
 
+    public int getNbPersGlobal() {
+        return nbPersGlobal;
+    }
+
+    public void setNbPersGlobal(int nbPersGlobal) {
+        this.nbPersGlobal = nbPersGlobal;
+    }
 }
 
 

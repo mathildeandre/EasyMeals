@@ -16,7 +16,8 @@ public class ListShoppingCategory {
       private String name;
       private int numRank;
       private List<Ingredient> ingredients;
-
+      public ListShoppingCategory() {
+      }
       public ListShoppingCategory(int id, String name, int numRank, List<Ingredient> ingredients) {
           this.id = id;
           this.name = name;

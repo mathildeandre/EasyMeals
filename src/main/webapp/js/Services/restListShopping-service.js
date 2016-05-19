@@ -8,7 +8,7 @@ myService.service("restListShoppingService", function ($http, $q, $log) {
 
 
 
-    var idListShop = 14;
+    //var idListShop = 14;
 
     var listsShoppingPlanning = [];
 
@@ -17,10 +17,26 @@ myService.service("restListShoppingService", function ($http, $q, $log) {
         return listsShoppingPlanning;
     }
     function addListShoppingPlanning(listSP){
-        listSP.id = idListShop++;
-        idListShop = idListShop+1;
+        //listSP.id = idListShop++;
+        //idListShop = idListShop+1;
         listsShoppingPlanning.push(listSP);
     }
+
+    function createListShoppingPlanning(idPlanning, idUser, listShoppingCategories){
+        return $http({
+            method: 'POST',
+            url:  '/rest/createListShoppingPlanning/'+idPlanning+'/'+idUser,
+            data: listShoppingCategories
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    }
+
+
 
     function initLoadData(){
         $log.warn("ON LOAD TOUTES LES DONN2ES")
@@ -48,10 +64,12 @@ myService.service("restListShoppingService", function ($http, $q, $log) {
             })
     };
 
+
     return {
         getListsShoppingPlanning: getListsShoppingPlanning,
         addListShoppingPlanning: addListShoppingPlanning,
-        initLoadData : initLoadData
+        initLoadData : initLoadData,
+        createListShoppingPlanning: createListShoppingPlanning
     };
 
 });

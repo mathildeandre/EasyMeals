@@ -94,6 +94,14 @@ public class PlanningService {
         //Boolean rep = new ManagerPost().insertFood();
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
+    @Path("putNbPersGlobalPlanning/{nbPersGlobal}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putNbPersGlobalPlanning(Long idPlanning, @PathParam("nbPersGlobal") int nbPersGlobal){
+        ManagerGet.getInstance().putNbPersGlobalPlanning(idPlanning, nbPersGlobal);
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
     @Path("deletePlanningById")
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })

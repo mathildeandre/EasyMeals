@@ -23,10 +23,24 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
 
 
     /*************************************************************************************
-     * *************************  WITH HTML  ?????? TODO ********************************************
+     * *************************  WITH HTML  ??????  ********************************************
      * ***********************************************************************************/
     var idList = 12;
     $scope.saveListShopping = function(){
+        //ListShoppingCategories -> $scope.categories
+        restListShoppingService.createListShoppingPlanning($scope.currentPlanning.id, 2, $scope.categories).then(function(data){
+            //return obj ListShoppingPlanning
+            var newListShoppingPlanning = data;
+            restListShoppingService.addListShoppingPlanning(newListShoppingPlanning);
+
+            $location.path("/errand");
+        })
+
+
+
+
+
+        /****** NO USE ANYMORE (BELOW)
         var listSP = {id : idList++, name : 'listShop_01/05/16',
             listShopping:{name:"boom", listShoppingCategories:$scope.categories},
             planning:{name:"boom", lastOpen:true, weekMeals: $scope.fourWeekMeals}
@@ -34,9 +48,10 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         restListShoppingService.addListShoppingPlanning(listSP);
         ErrandService.setIngrCategories($scope.categories);
         ErrandService.setPlanning($scope.fourWeekMeals);
-        alert("list sauvegarder");
+        alert("list sauvegardee");
 
         $location.path("/errand");//$location.hash(recipe.id);
+        // **/
     }
 
 

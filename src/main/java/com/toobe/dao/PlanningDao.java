@@ -25,6 +25,133 @@ public class PlanningDao {
     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
    */
+  private final static String CREATE_COPY_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser, nbPersGlobal) VALUES (?, ?, ?, ?);\n";
+    private final static String CREATE_COPY_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
+    private final static String CREATE_COPY_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
+    private final static String CREATE_COPY_REL_RECIPE_CASEMEAL = "INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);\n";
+
+    public Planning copyOfPlanning(Connection conn, Long idPlanning) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
+        PreparedStatement stm, stmWM, stmCM;
+        ResultSet res;
+        int isOk = 0;
+        Long idPlanningCopy = null;
+        Long idWeekMealCopy = null;
+        Long idCaseMealCopy = null;
+        try {
+            /*************************/
+            /******* PLANNING *******/
+            /***********************/
+            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE id = "+idPlanning);
+            res = stm.executeQuery();
+            if(res.next()) {
+                /**************************** CREATION NEW PLANNING COPY ******************************/
+                //1. recup info
+                String name = res.getString("name");
+                //boolean lastOpen = res.getInt("lastOpen") == 1;
+                int nbPersGlobal = res.getInt("nbPersGlobal");
+                int idUser = res.getInt("idUser");
+                //2. create copy
+                stm = conn.prepareStatement(CREATE_COPY_PLANNING, Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, name);
+                stm.setBoolean(2, false);
+                stm.setLong(3, idUser);
+                stm.setInt(4, nbPersGlobal);
+                isOk = stm.executeUpdate();
+                if (isOk == 0) {
+                    throw new SQLException("Creating COPY Planning failed, no rows affected");
+                }
+                res = stm.getGeneratedKeys();
+                if (res.next()) {
+                    idPlanningCopy = res.getLong(1);
+                }
+                /************************ end CREATION NEW PLANNING COPY ******************************/
+
+                /*************************/
+                /******* WEEK MEAL ******/
+                /***********************/
+                stm = conn.prepareStatement("SELECT * FROM PLANNING_WEEKMEAL  WHERE idPlanning = " + idPlanning);
+                ResultSet resWeekMeal = stm.executeQuery();
+                while (resWeekMeal.next()) {
+                    Long idWeekMeal = resWeekMeal.getLong("id");
+
+
+                    /**************************** CREATION WEEKMEAL COPY ******************************/
+                    //1. recup info
+                    String weekMealName = resWeekMeal.getString("weekMealName");
+                    boolean show = resWeekMeal.getInt("showWeekMeal") == 1;
+                    //2. create copy
+                    stmWM = conn.prepareStatement(CREATE_COPY_WEEKMEAL, Statement.RETURN_GENERATED_KEYS);
+                    stmWM.setString(1, weekMealName);
+                    stmWM.setBoolean(2, show);
+                    stmWM.setLong(3, idPlanningCopy);
+                    isOk = stmWM.executeUpdate();
+                    if (isOk == 0) {
+                        throw new SQLException("Creating COPY WeekMeal failed, no rows affected");
+                    }
+                    res = stmWM.getGeneratedKeys();
+                    if (res.next()) {
+                        idWeekMealCopy = res.getLong(1);
+                    }
+                    /************************ end CREATION WEEKMEAL COPY ******************************/
+
+
+                    /*************************/
+                    /******* CASE MEAL ******/
+                    /***********************/
+                    stm = conn.prepareStatement("SELECT * FROM PLANNING_CASEMEAL  WHERE idPlanningWeekMeal = " + idWeekMeal);
+                    ResultSet resCaseMeal = stm.executeQuery();
+                    while (resCaseMeal.next()) {
+                        Long idCaseMeal = resCaseMeal.getLong("id");
+
+                        /**************************** CREATION CASEMEAL COPY ******************************/
+                        //1. recup info
+                        int nbPers = resCaseMeal.getInt("nbPers");
+                        int numDay = resCaseMeal.getInt("numDay");
+                        //2. create copy
+                        stmCM = conn.prepareStatement(CREATE_COPY_CASEMEAL,  Statement.RETURN_GENERATED_KEYS);
+                        stmCM.setInt(1, numDay); //numDay
+                        stmCM.setInt(2, nbPers); //nbPers
+                        stmCM.setLong(3, idWeekMealCopy); //idPlanningWeekMeal
+                        isOk = stmCM.executeUpdate();
+                        if (isOk == 0) {
+                            throw new SQLException("Creating COPY CaseMeal failed, no rows affected");
+                        }
+                        res = stmCM.getGeneratedKeys();
+                        if (res.next()) {
+                            idCaseMealCopy = res.getLong(1);
+                        }
+                        /************************ end CREATION CASEMEAL COPY ******************************/
+
+
+                        /***************************************/
+                        /******* RECIPES into CASE MEAL *******/
+                        /***************************************/
+                        stm = conn.prepareStatement("SELECT * FROM Rel_recipe_caseMealPlanning  WHERE idPlanningCaseMeal = " + idCaseMeal);
+                        ResultSet resRelRecipeCaseMeal = stm.executeQuery();
+                        while (resRelRecipeCaseMeal.next()) {
+                            /**************************** CREATION REL RECIPE_CASEMEAL COPY ******************************/
+                            //1. recup info
+                            int idRecipe = resRelRecipeCaseMeal.getInt("idRecipe");
+                            int nbPersRelRCM = resRelRecipeCaseMeal.getInt("nbPers");
+                            //2. create copy
+                            stm = conn.prepareStatement(CREATE_COPY_REL_RECIPE_CASEMEAL);
+                            stm.setInt(1, idRecipe); //idRecipe
+                            stm.setLong(2, idCaseMealCopy); //idPlanningCaseMeal
+                            stm.setInt(3, nbPersRelRCM); //nbPers
+                            isOk = stm.executeUpdate();
+                            if (isOk == 0) {
+                                throw new SQLException("Creating COPY Rel_Recipe_CaseMeal failed, no rows affected");
+                            }
+                            /************************ end CREATION REL RECIPE_CASEMEAL COPY ******************************/
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return getPlanningById(conn, idPlanning);
+    }
 
     private final static String CREATE_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser) VALUES (?, ?, ?);\n";
     private final static String CREATE_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
@@ -90,12 +217,6 @@ public class PlanningDao {
     }
 
 
-
-    /*
-
-     */
-
-
     /**
      * On trouve ici toutes les planning pour un idUser
      */
@@ -152,7 +273,8 @@ public class PlanningDao {
 
                 String name = res.getString("name");
                 boolean lastOpen = res.getInt("lastOpen") == 1;
-                planning = new Planning(idPlanning, name, lastOpen, listWeekMeal);
+                int nbPersGlobal = res.getInt("nbPersGlobal");
+                planning = new Planning(idPlanning, name, lastOpen, nbPersGlobal, listWeekMeal);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -312,6 +434,22 @@ public class PlanningDao {
             stm = conn.prepareStatement(UPDATE_NbPers_CASEMEAL);
             stm.setInt(1, nbPersCaseMeal);
             stm.setLong(2, idCaseMeal);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putNbPersCaseMeal failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDATE_NbPersGlobal = "UPDATE Planning SET nbPersGlobal = ? WHERE id = ?;\n";
+    public void putNbPersGlobalPlanning(Connection conn, Long idPlanning, int nbPersGlobal){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDATE_NbPersGlobal);
+            stm.setInt(1, nbPersGlobal);
+            stm.setLong(2, idPlanning);
             isOk = stm.executeUpdate();
             if (isOk == 0) {
                 throw new SQLException("putNbPersCaseMeal failed, no rows affected");
