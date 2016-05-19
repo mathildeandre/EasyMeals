@@ -39,16 +39,18 @@ public class Planning {
     private String name;
     private boolean lastOpen;
     private int nbPersGlobal;
+    private boolean isForListShop;
     private List<WeekMeal> weekMeals;
 
     public Planning(){
 
     }
-    public Planning(Long id, String name, boolean lastOpen, int nbPersGlobal, List<WeekMeal> weekMeals) {
+    public Planning(Long id, String name, boolean lastOpen, int nbPersGlobal, boolean isForListShop, List<WeekMeal> weekMeals) {
         this.id = id;
         this.name = name;
         this.lastOpen = lastOpen;
         this.nbPersGlobal = nbPersGlobal;
+        this.isForListShop = isForListShop;
         this.weekMeals = weekMeals;
     }
 
@@ -90,6 +92,14 @@ public class Planning {
 
     public void setNbPersGlobal(int nbPersGlobal) {
         this.nbPersGlobal = nbPersGlobal;
+    }
+
+    public boolean getIsForListShop() {
+        return isForListShop;
+    }
+
+    public void setIsForListShop(boolean isForListShop) {
+        this.isForListShop = isForListShop;
     }
 }
 

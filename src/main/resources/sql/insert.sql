@@ -129,6 +129,11 @@ INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 32, 4, '');
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 2, 200, 'g');
 
 
+
+/*****************************************************************************************/
+/*****************************************************************************************/
+/******************** NO USE ANYMORE ********************************************************/
+/*****************************************************************************************/
 /** LIST SHOPPING **/
 INSERT INTO List_Shopping(name)VALUES ('myListShopping1');
 INSERT INTO ListShopping_Category (idListShop, idFoodCategory) VALUES (1, 1); /* category autre*/
@@ -154,11 +159,6 @@ INSERT INTO Ingredient_ListShop (idFood, idListShopCategory, quantity, unit) VAL
 INSERT INTO Ingredient_ListShop (idFood, idListShopCategory, quantity, unit) VALUES (12, 6, 99, '');
 
 
-
-/*****************************************************************************************/
-/*****************************************************************************************/
-/******************** NO USE ANYMORE ********************************************************/
-/*****************************************************************************************/
 /** PLANNING **/
 INSERT INTO Planning (name, idUser )VALUES ('myPlanning1', 2);
 

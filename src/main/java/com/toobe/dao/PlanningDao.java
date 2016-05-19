@@ -25,12 +25,12 @@ public class PlanningDao {
     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
    */
-  private final static String CREATE_COPY_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser, nbPersGlobal) VALUES (?, ?, ?, ?);\n";
+  private final static String CREATE_COPY_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser, nbPersGlobal, isForListShop) VALUES (?, ?, ?, ?, ?);\n";
     private final static String CREATE_COPY_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
     private final static String CREATE_COPY_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
     private final static String CREATE_COPY_REL_RECIPE_CASEMEAL = "INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);\n";
 
-    public Planning copyOfPlanning(Connection conn, Long idPlanning) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
+    public Planning copyOfPlanning(Connection conn, Long idPlanning, boolean isForListShop) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
         PreparedStatement stm, stmWM, stmCM;
         ResultSet res;
         int isOk = 0;
@@ -56,6 +56,7 @@ public class PlanningDao {
                 stm.setBoolean(2, false);
                 stm.setLong(3, idUser);
                 stm.setInt(4, nbPersGlobal);
+                stm.setBoolean(5, isForListShop);
                 isOk = stm.executeUpdate();
                 if (isOk == 0) {
                     throw new SQLException("Creating COPY Planning failed, no rows affected");
@@ -274,7 +275,8 @@ public class PlanningDao {
                 String name = res.getString("name");
                 boolean lastOpen = res.getInt("lastOpen") == 1;
                 int nbPersGlobal = res.getInt("nbPersGlobal");
-                planning = new Planning(idPlanning, name, lastOpen, nbPersGlobal, listWeekMeal);
+                boolean isForListShop = res.getInt("isForListShop") == 1;
+                planning = new Planning(idPlanning, name, lastOpen, nbPersGlobal, isForListShop, listWeekMeal);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -288,7 +290,7 @@ public class PlanningDao {
 
 
     /*
-    On recup le planning d'un user avec le boolean lastOPen = true
+    NO USE .... -- On recup le planning d'un user avec le boolean lastOPen = true
      */
     public Planning getPlanningCurrentOfUser(Connection conn, int idUser){
         Planning planning = new Planning();
@@ -312,14 +314,14 @@ public class PlanningDao {
 
 
     /**
-     * On trouve ici toutes les planning pour un idUser
+     * On trouve ici toutes les planning pour un idUser QUI NE SONT PAS pour la listShoppingPlanning
      * => pas forcement optimal...
      */
     public List<Planning> getPlanningsOfUser(Connection conn, int idUser){
         List<Planning> listPlanning = new ArrayList<Planning>();
         PreparedStatement stm;
         try {
-            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser);
+            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser+" AND isForListShop = 0");
             ResultSet res = stm.executeQuery();
             Long idPlanning;
             while(res.next()){

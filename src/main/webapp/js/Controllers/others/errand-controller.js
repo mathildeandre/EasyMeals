@@ -48,6 +48,9 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, Appendix
     }
 
     $scope.recipesToDisplay = [];
+    $scope.resetRecipesToDisplay = function(){
+        $scope.recipesToDisplay = [];
+    }
     $scope.nbPersOfMeal = 1;
     $scope.displayMealsOfCaseMeal = function(myCaseMeal){
         $log.debug(myCaseMeal.recipes[0].name);

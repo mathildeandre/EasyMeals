@@ -95,10 +95,12 @@ public class ManagerGet {
         startConnection();
         return planningDao.getPlanningById(conn, idPlanning);
     }
+    /* NO USE
     public Planning getPlanningCurrentOfUser(int idUser){
         startConnection();
         return planningDao.getPlanningCurrentOfUser(conn, idUser);
     }
+     */
     public Planning createPlanning(int idUser){
         startConnection();
         return planningDao.createPlanning(conn, idUser);

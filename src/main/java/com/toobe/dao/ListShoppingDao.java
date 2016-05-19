@@ -23,7 +23,7 @@ public class ListShoppingDao {
         try {
 
 
-            Planning planning = planningDao.copyOfPlanning(conn, idPlanning);
+            Planning planning = planningDao.copyOfPlanning(conn, idPlanning, true);
             Long idNewPlanning = planning.getId();
             String nameNewPlanning = planning.getName();
 

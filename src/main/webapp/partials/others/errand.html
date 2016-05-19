@@ -16,7 +16,7 @@
         <!--<select class="fieldErrand"  ng-model='myListId' ng-change="changeList(myListId)">
             <option ng-repeat="list in listsShoppingPlanning" value="{{list.id}}"> {{list.name}}</option> d(list.id)}}"
         </select>-->
-        <select class="fieldErrand"  ng-model='currentListShoppingPlanning' ng-options='list.name for list in listsShoppingPlanning' ></select>
+        <select class="fieldErrand"  ng-model='currentListShoppingPlanning' ng-change="resetRecipesToDisplay()" ng-options='list.name for list in listsShoppingPlanning' ></select>
                     <!-- ng options : list.name sera l'affichage et list sera passé dans ng-model-->
     </div>
 

@@ -124,6 +124,7 @@ public class PlanningService {
         return Response.ok(planning).build();
     }
 
+    /* NO USE
     @Path("/planning/currentUser/{idUser}")
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
@@ -132,6 +133,7 @@ public class PlanningService {
         Planning planning = new ManagerGet().getPlanningCurrentOfUser(idUser);
         return Response.ok(planning).build();
     }
+    */
 
 
     //POST new rel  recipe-caseMeal
