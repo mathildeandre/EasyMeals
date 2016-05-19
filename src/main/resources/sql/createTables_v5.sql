@@ -7,7 +7,7 @@ CREATE TABLE Ingredient_ListShop (idFood int(10) NOT NULL, idListShopCategory in
 CREATE TABLE List_Shopping (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE ListShopping_Category (id int(10) NOT NULL AUTO_INCREMENT, idListShop int(10) NOT NULL, idFoodCategory int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE ListShopPlanning_User (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255), `date` int(11), idListShop int(10) NOT NULL, idPlanning int(10) NOT NULL, idUser int(10) NOT NULL, PRIMARY KEY (id));
-CREATE TABLE Planning (id int(10) NOT NULL AUTO_INCREMENT, lastOpen tinyint DEFAULT false NOT NULL, name varchar(255) NOT NULL, idUser int(10) NOT NULL, PRIMARY KEY (id), INDEX (idUser));
+CREATE TABLE Planning (id int(10) NOT NULL AUTO_INCREMENT, lastOpen tinyint DEFAULT false NOT NULL, name varchar(255) NOT NULL, idUser int(10) NOT NULL, nbPersGlobal int(10) DEFAULT 4 NOT NULL, PRIMARY KEY (id), INDEX (idUser));
 CREATE TABLE Planning_CaseMeal (id int(10) NOT NULL AUTO_INCREMENT, numDay int(10) NOT NULL, nbPers int(10) NOT NULL, idPlanningWeekMeal int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Planning_WeekMeal (id int(10) NOT NULL AUTO_INCREMENT, weekMealName varchar(255) NOT NULL, showWeekMeal tinyint NOT NULL, idPlanning int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Recipe (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idType int(10) NOT NULL, isPublic tinyint NOT NULL, idUser int(10) NOT NULL, rating int(10), nbVoter int(10) DEFAULT 0 NOT NULL, nbPerson int(10) DEFAULT 1 NOT NULL, pixName varchar(255), idOrigin int(10) NOT NULL, isValidated tinyint DEFAULT 0 NOT NULL, timeCooking int(10), timePreparation int(10), PRIMARY KEY (id), INDEX (idType), INDEX (isPublic), INDEX (idUser));
@@ -19,7 +19,7 @@ CREATE TABLE Rel_Food_Category (idCategory int(10) NOT NULL, idFoodRecipe int(10
 CREATE TABLE Rel_Recipe_CaseMealPlanning (idRecipe int(10) NOT NULL, idPlanningCaseMeal int(10) NOT NULL, nbPers int(10), PRIMARY KEY (idRecipe, idPlanningCaseMeal));
 CREATE TABLE Rel_Recipe_Category (idCategory int(10) NOT NULL, idRecipe int(10) NOT NULL, PRIMARY KEY (idCategory, idRecipe));
 CREATE TABLE Rel_User_Recipe (idRecipe int(10) NOT NULL, idUser int(10) NOT NULL, isFavorite tinyint(1) NOT NULL, isForPlanning tinyint(1) NOT NULL, ratingUser int(10), isHide tinyint(1) NOT NULL, PRIMARY KEY (idRecipe, idUser));
-CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), PRIMARY KEY (id));
+CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), isAdmin tinyint DEFAULT false NOT NULL, PRIMARY KEY (id));
 
 
 

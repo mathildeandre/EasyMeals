@@ -51,3 +51,5 @@ DROP TABLE IF EXISTS Rel_Recipe_CaseMealPlanning;
 DROP TABLE IF EXISTS Rel_Recipe_Category;
 DROP TABLE IF EXISTS Rel_User_Recipe;
 DROP TABLE IF EXISTS `User`;
+
+

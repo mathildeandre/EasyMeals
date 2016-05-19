@@ -87,8 +87,8 @@ INSERT INTO Recipe_Type(name) VALUES ('cocktail');
 
 
 INSERT INTO `User`(pseudo, pwd) VALUES ('common', 'common'); /*id 1*/
-INSERT INTO `User`(pseudo, pwd) VALUES ('fab', 'fab'); /*1d 2 */
-INSERT INTO `User`(id, pseudo, pwd) VALUES (2117, 'mathou', 'math@gmail.fr'); /*1d 2 */
+INSERT INTO `User`(pseudo, pwd, isAdmin) VALUES ('fab', 'fab', 1); /*1d 2 */
+INSERT INTO `User`(id, pseudo, pwd) VALUES (2117, 'mathou', 'mathou'); /*1d 2 */
 
 
 
