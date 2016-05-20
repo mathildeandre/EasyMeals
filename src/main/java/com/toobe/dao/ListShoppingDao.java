@@ -209,4 +209,46 @@ public class ListShoppingDao {
         }
         return listShopping;
     }
+
+
+    private final static String SELECT_ListShoppingPlanning = "SELECT * FROM ListShopPlanning_User WHERE id = ?;\n";
+    private final static String DELETE_ListShoppingPlanning = "DELETE FROM ListShopPlanning_User WHERE id = ?;\n";
+    private final static String DELETE_ListShopping = "DELETE FROM List_Shopping WHERE id = ?;\n";
+    private final static String DELETE_Planning = "DELETE FROM Planning WHERE id = ?;\n";
+    public void deleteListShoppingPlanningById(Connection conn, Long idListShoppingPlanning){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(SELECT_ListShoppingPlanning);
+            stm.setLong(1, idListShoppingPlanning);
+            ResultSet res = stm.executeQuery();
+            Long idListShop = null;
+            Long idPlanning = null;
+            if (res.next()) {
+                idListShop = res.getLong("idListShop");
+                idPlanning = res.getLong("idPlanning");
+            }
+
+            stm = conn.prepareStatement(DELETE_ListShoppingPlanning);
+            stm.setLong(1, idListShoppingPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("deleteListShoppingPlanningById failed, no rows affected");
+            }
+            stm = conn.prepareStatement(DELETE_ListShopping);
+            stm.setLong(1, idListShop);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("deleteListShopping failed, no rows affected");
+            }
+            stm = conn.prepareStatement(DELETE_Planning);
+            stm.setLong(1, idPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("deletePlanning failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

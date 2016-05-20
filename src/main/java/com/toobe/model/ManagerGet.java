@@ -157,6 +157,10 @@ public class ManagerGet {
         startConnection();
         return listShoppingDao.createListShoppingPlanning(conn, idPlanning, idUser, listShoppingCategories);
     }
+    public void deleteListShoppingPlanningById(Long idListShoppingPlanning){
+        startConnection();
+        listShoppingDao.deleteListShoppingPlanningById(conn, idListShoppingPlanning);
+    }
 
 
 

@@ -27,7 +27,8 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
 
 
     /** broadcast provenant de fct : $scope.toggleIsFavorite ()
-     * ->into controller parent 'recipe-controller.js' */
+     * ->into controller parent 'recipe-controller.js'
+     * && [planning-controller.js] : $scope.changeRecipeType() */
     $scope.$on('updateFilter', function() {
         updateFilter();
     });

@@ -18,7 +18,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
     $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
         $scope.recipeType = recipeType;
         $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
-        $scope.$broadcast('updateFilter');
+        $scope.$broadcast('updateFilter'); //pour filterRecipePlanning-controller.js
     }
     $scope.isRecipeTypeSelected = function(recipeType){
         return $scope.recipeType == recipeType;
@@ -70,9 +70,17 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
 
 
     $scope.plannings = restPlanningService.getPlannings();
+
     $scope.currentPlanning = $scope.plannings.filter(function(obj){
         return obj.lastOpen == true;
     })[0];
+
+    $scope.changementCurrentPlanning = function(){
+        //on vide listShop générée
+        $scope.$broadcast('emptyListShop');
+    }
+
+
     $scope.modifyingPlanningName = false;
     $scope.modifyPlanningName = function(){
         $scope.modifyingPlanningName = true;
@@ -192,9 +200,6 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
             $log.warn("new planning PUSHED")
             //putLastOpenPlanning se fait tout seul dans updatePlanningBDD() !
         })
-
-
-
     }
 
 

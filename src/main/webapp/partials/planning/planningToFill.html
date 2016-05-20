@@ -27,7 +27,7 @@
 
 
                 <span ng-show="!modifyingPlanningName">
-                    <select class="fieldPlanning noWidth"  ng-model='currentPlanning'
+                    <select class="fieldPlanning noWidth"  ng-model='currentPlanning' ng-change="changementCurrentPlanning()"
                             ng-options='planning.name for planning in plannings' ></select>
                     &nbsp
                     <span ng-click="modifyPlanningName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>

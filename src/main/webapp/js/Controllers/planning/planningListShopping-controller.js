@@ -18,9 +18,12 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
             $scope.categories[i].ingredients = [];
         }
     }
-    $scope.initCategories = resetIngredientsOfCategories();
+    $scope.initCategories = resetIngredientsOfCategories(); //initCategories useless
 
 
+    $scope.$on('emptyListShop', function() {
+        resetIngredientsOfCategories();
+    });
 
     /*************************************************************************************
      * *************************  WITH HTML  ??????  ********************************************
@@ -35,8 +38,17 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
             var idPlanningToDelete = $scope.currentPlanning.id;
             var index = $scope.plannings.indexOf($scope.currentPlanning);
             $scope.plannings.splice(index, 1);
-            $scope.currentPlanning = $scope.plannings[0];
-            $scope.currentPlanning.lastOpen = true;
+
+            if($scope.plannings.length == 0){//si on a delete last planning, on en cree un new
+                $scope.createNewPlanning();
+                //$scope.currentPlanning.lastOpen = true;
+
+            }else{
+                $scope.currentPlanning = $scope.plannings[0];
+                $scope.currentPlanning.lastOpen = true;
+            }
+
+
             restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
 
 
@@ -45,6 +57,9 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
             //AJOUT DANS VUE
             var newListShoppingPlanning = data;
             restListShoppingService.addListShoppingPlanning(newListShoppingPlanning);
+
+
+
 
             $location.path("/errand");
         })

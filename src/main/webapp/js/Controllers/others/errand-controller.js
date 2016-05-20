@@ -30,6 +30,15 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, Appendix
 
 
 
+    $scope.deleteListShop = function(){
+        var idListShoppingPlanningToDelete = $scope.currentListShoppingPlanning.id;
+        //delete from VIEW
+        var index = $scope.listsShoppingPlanning.indexOf($scope.currentListShoppingPlanning);
+        $scope.listsShoppingPlanning.splice(index, 1);
+        $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[0];
+        //delete from BDD
+        restListShoppingService.deleteListShoppingPlanningById(idListShoppingPlanningToDelete);
+    }
 
 
 

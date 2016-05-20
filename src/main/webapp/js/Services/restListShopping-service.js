@@ -35,6 +35,9 @@ myService.service("restListShoppingService", function ($http, $q, $log) {
                 return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
             })
     }
+    function deleteListShoppingPlanningById(idListShoppingPlanning){
+        postObjToServer('POST', '/rest/deleteListShoppingPlanningById', idListShoppingPlanning)
+    }
 
 
 
@@ -64,12 +67,27 @@ myService.service("restListShoppingService", function ($http, $q, $log) {
             })
     };
 
+    function postObjToServer(method, url, data) {
+        return $http({
+            method: method,
+            url: url,
+            data: data
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    };
+
 
     return {
         getListsShoppingPlanning: getListsShoppingPlanning,
         addListShoppingPlanning: addListShoppingPlanning,
         initLoadData : initLoadData,
-        createListShoppingPlanning: createListShoppingPlanning
+        createListShoppingPlanning: createListShoppingPlanning,
+        deleteListShoppingPlanningById: deleteListShoppingPlanningById
     };
 
 });

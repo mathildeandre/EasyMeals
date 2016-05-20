@@ -2029,6 +2029,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:indianred;
     font-size: 22px;
 }
+.glyphDeleteListShop{
+    color:indianred;
+    font-size: 26px;
+}
 .trashIngrFromList{
     margin-left: 10px;
     color:indianred;

@@ -458,12 +458,12 @@ public class PlanningDao {
             e.printStackTrace();
         }
     }
-    private final static String DELETE_NbPers_CASEMEAL = "DELETE FROM Planning WHERE id = ?;\n";
+    private final static String DELETE_Planning = "DELETE FROM Planning WHERE id = ?;\n";
     public void deletePlanningById(Connection conn, Long idPlanning){
         PreparedStatement stm;
         int isOk = 0;
         try {
-            stm = conn.prepareStatement(DELETE_NbPers_CASEMEAL);
+            stm = conn.prepareStatement(DELETE_Planning);
             stm.setLong(1, idPlanning);
             isOk = stm.executeUpdate();
             if (isOk == 0) {

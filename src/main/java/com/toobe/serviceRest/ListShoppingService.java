@@ -7,6 +7,7 @@ package com.toobe.serviceRest;
 import com.toobe.dto.ListShopping;
 import com.toobe.dto.ListShoppingCategory;
 import com.toobe.dto.ListShoppingPlanning;
+import com.toobe.dto.TestObj;
 import com.toobe.model.ManagerGet;
 
 import javax.ws.rs.*;
@@ -43,6 +44,13 @@ public class ListShoppingService {
         ListShoppingPlanning listShoppingPlanning = new ManagerGet().createListShoppingPlanning(idPlanning, idUser, listShoppingCategories);
         return Response.ok(listShoppingPlanning).build();
     }
-
+    @Path("/deleteListShoppingPlanningById")
+    @POST
+    @Produces({ MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response deleteListShoppingPlanningById(Long idListShoppingPlanning){
+        ManagerGet.getInstance().deleteListShoppingPlanningById(idListShoppingPlanning);
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
 
 }

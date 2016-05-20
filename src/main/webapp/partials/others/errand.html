@@ -3,6 +3,16 @@
     <div><h2>Mes Listes </h2></div>
 
 
+<div ng-show="listsShoppingPlanning.length == 0">
+    Créez votre liste de course en construisant votre planning dans l'onglet "PLANNINGS", puis :
+    <br>
+    -> "Générer liste de course"
+    <br>
+    -> "Aller faire ses courses !"
+</div>
+
+<div ng-show="listsShoppingPlanning.length > 0">
+
 
     <div class="divErrandTop">
         <button  ng-click="displayErrandList()" type="button" class="myBtnEmpty myBtnEmptyErrand" ng-class="{myBtnErrandFull : isDisplayErrandList, classicCursor: isDisplayErrandList}">
@@ -13,11 +23,11 @@
         </button>&nbsp &nbsp
 
         Liste :
-        <!--<select class="fieldErrand"  ng-model='myListId' ng-change="changeList(myListId)">
-            <option ng-repeat="list in listsShoppingPlanning" value="{{list.id}}"> {{list.name}}</option> d(list.id)}}"
-        </select>-->
         <select class="fieldErrand"  ng-model='currentListShoppingPlanning' ng-change="resetRecipesToDisplay()" ng-options='list.name for list in listsShoppingPlanning' ></select>
-                    <!-- ng options : list.name sera l'affichage et list sera passé dans ng-model-->
+
+        &nbsp &nbsp
+        <span class="glyphicon glyphicon-trash glyphDeleteListShop glyphiconBtn" ng-click="deleteListShop()"></span>
+
     </div>
 
     <!---------------------------------------------------------------------------------------------------------------------->
@@ -200,5 +210,5 @@
 
         </div>
     </article>
-
+</div>
 </div>

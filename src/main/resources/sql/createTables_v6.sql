@@ -23,22 +23,27 @@ CREATE TABLE Rel_User_Recipe (idRecipe int(10) NOT NULL, idUser int(10) NOT NULL
 CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), isAdmin tinyint DEFAULT false NOT NULL, PRIMARY KEY (id));
 
 
+/* ON DELETE CASCADE for USER deleted*/
+ALTER TABLE Planning ADD INDEX FKPlanning761199 (idUser), ADD CONSTRAINT FKPlanning761199 FOREIGN KEY (idUser) REFERENCES `User` (id) ON DELETE CASCADE; /*'on delete cascade' veut dire que si on delete un user, tous les planning avec cet idUser correspondant sera deleted*/
+ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl181909 (idUser), ADD CONSTRAINT FKListShopPl181909 FOREIGN KEY (idUser) REFERENCES `User` (id);
 
-ALTER TABLE Planning ADD INDEX FKPlanning761199 (idUser), ADD CONSTRAINT FKPlanning761199 FOREIGN KEY (idUser) REFERENCES `User` (id) ON DELETE CASCADE;
+/* ON DELETE CASCADE for PLANNING deleted*/
 ALTER TABLE Planning_WeekMeal ADD INDEX FKPlanning_W938841 (idPlanning), ADD CONSTRAINT FKPlanning_W938841 FOREIGN KEY (idPlanning) REFERENCES Planning (id) ON DELETE CASCADE;
 ALTER TABLE Planning_CaseMeal ADD INDEX FKPlanning_C546459 (idPlanningWeekMeal), ADD CONSTRAINT FKPlanning_C546459 FOREIGN KEY (idPlanningWeekMeal) REFERENCES Planning_WeekMeal (id) ON DELETE CASCADE;
 ALTER TABLE Rel_Recipe_CaseMealPlanning ADD INDEX FKRel_Recipe36474 (idPlanningCaseMeal), ADD CONSTRAINT FKRel_Recipe36474 FOREIGN KEY (idPlanningCaseMeal) REFERENCES Planning_CaseMeal (id) ON DELETE CASCADE;
 
-ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl355885 (idPlanning), ADD CONSTRAINT FKListShopPl355885 FOREIGN KEY (idPlanning) REFERENCES Planning (id) ON DELETE NO ACTION;
+/* ON DELETE CASCADE for LIST SHOPPING deleted*/
+ALTER TABLE ListShopping_Category ADD INDEX FKListShoppi989241 (idListShop), ADD CONSTRAINT FKListShoppi989241 FOREIGN KEY (idListShop) REFERENCES List_Shopping (id) ON DELETE CASCADE;
+ALTER TABLE Ingredient_ListShop ADD INDEX FKIngredient293299 (idListShopCategory), ADD CONSTRAINT FKIngredient293299 FOREIGN KEY (idListShopCategory) REFERENCES ListShopping_Category (id) ON DELETE CASCADE;
+
+/* ON DELETE NO ACTION for LISTSHOPPLANNING_USER*/
+ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl355885 (idPlanning), ADD CONSTRAINT FKListShopPl355885 FOREIGN KEY (idPlanning) REFERENCES Planning (id) ON DELETE NO ACTION; /* 'on delete cascade' veut dire que si on delete un planning qui a  une reference 'idPlanning' dans listShopPlanning_user : listshop ne sera pas touche et ainsi le planning pas supprime*/
+ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl179177 (idListShop), ADD CONSTRAINT FKListShopPl179177 FOREIGN KEY (idListShop) REFERENCES List_Shopping (id) ON DELETE NO ACTION; /* idem : en d'autres mots, impossible de delete une list_shopping & un planning faisant partie de LSP_user */
 
 
 /*ALTER TABLE Ingredient_ListShop ADD INDEX FKIngredient178456 (idFood), ADD CONSTRAINT FKIngredient178456 FOREIGN KEY (idFood) REFERENCES Food (id);*/
 ALTER TABLE Rel_Recipe_CaseMealPlanning ADD INDEX FKRel_Recipe821448 (idRecipe), ADD CONSTRAINT FKRel_Recipe821448 FOREIGN KEY (idRecipe) REFERENCES Recipe (id);
-ALTER TABLE ListShopping_Category ADD INDEX FKListShoppi989241 (idListShop), ADD CONSTRAINT FKListShoppi989241 FOREIGN KEY (idListShop) REFERENCES List_Shopping (id);
-ALTER TABLE Ingredient_ListShop ADD INDEX FKIngredient293299 (idListShopCategory), ADD CONSTRAINT FKIngredient293299 FOREIGN KEY (idListShopCategory) REFERENCES ListShopping_Category (id);
 ALTER TABLE ListShopping_Category ADD INDEX FKListShoppi31201 (idFoodCategory), ADD CONSTRAINT FKListShoppi31201 FOREIGN KEY (idFoodCategory) REFERENCES Food_Category (id);
-ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl179177 (idListShop), ADD CONSTRAINT FKListShopPl179177 FOREIGN KEY (idListShop) REFERENCES List_Shopping (id);
-ALTER TABLE ListShopPlanning_User ADD INDEX FKListShopPl181909 (idUser), ADD CONSTRAINT FKListShopPl181909 FOREIGN KEY (idUser) REFERENCES `User` (id);
 ALTER TABLE Food_Recipe ADD INDEX FKFood_Recip918613 (idFood), ADD CONSTRAINT FKFood_Recip918613 FOREIGN KEY (idFood) REFERENCES Food (id);
 ALTER TABLE Recipe ADD INDEX FKRecipe65078 (idType), ADD CONSTRAINT FKRecipe65078 FOREIGN KEY (idType) REFERENCES Recipe_Type (id);
 ALTER TABLE Food_Recipe ADD INDEX FKFood_Recip58032 (idOrigin), ADD CONSTRAINT FKFood_Recip58032 FOREIGN KEY (idOrigin) REFERENCES Recipe_Origin (id);
