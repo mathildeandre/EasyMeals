@@ -60,16 +60,17 @@
 
                 <div class="divPlanListShopRight">
                     <div class="divPlanListShopRightAddIngrLeft">
-                        Ajouter Ingredient :
-                        <input style="width:40px" type="number" ng-model ='newIngredient.qty' min="0"  placeholder="50" />
-                        <input style="width:60px" type="text" ng-model ='newIngredient.unit' placeholder="g" />
-                        <input style="width:100px" type="text" ng-model ='newIngredient.food.name' placeholder="chocolat" />
-
-                        <br>
-                        dans Categorie :
-                        <select class="fieldPlanning"  ng-model='categoryChosenCreateIngr'>
-                            <option ng-repeat="category in categories" value="{{category.name}}"> {{category.name}}</option>
-                        </select>
+                        <div class="divPlanListShopRightROWaddIngr">
+                            Ajouter Ingredient :
+                            <input class="inputPlanningBlueTxt width50" type="number" ng-model ='newIngredient.qty' min="0"  placeholder="50" />
+                            <input class="inputPlanningBlueTxt width60" type="text" ng-model ='newIngredient.unit' placeholder="g" />
+                            <input class="inputPlanningBlueTxt width100" type="text" ng-model ='newIngredient.food.name' placeholder="chocolat" />
+                        </div>
+                        <div>
+                            dans Categorie :
+                            <select class="fieldPlanning noWidth"  ng-model='categoryChosenCreateIngr' ng-init="categoryChosenCreateIngr=categories[0] "
+                                    ng-options='category.name for category in categories' ></select>
+                        </div>
                     </div>
                     <div class="divPlanListShopRightAddIngrRight">
                         <button type="button" class="myBtnEmpty myBtnEmptyPlanning btnAddQty" ng-click="addNewIngr(newIngredient, categoryChosenCreateIngr)">
@@ -81,16 +82,17 @@
                     <br>
                     <br>
                     <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="toggleModifQty()" ng-show="!modifQty">Modifier Quantités</button>
-                    <button class="btn btn-info" ng-click="toggleModifQty()" ng-show="modifQty">Valider Modification</button>
+                    <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="toggleModifQty()" ng-show="modifQty">Modification Quantités...OK</button>
+                    <!--<button class="btn btn-info" ng-click="toggleModifQty()" ng-show="modifQty">Valider Modification</button>-->
                     <br>
                     <br>
                     <br>
                     <br>
-                    <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="saveListShopping()">SAUVEGARDER LISTE</button>
+                    <!--<button class="myBtnEmpty myBtnEmptyPlanning" ng-click="saveListShopping()">Aller faire ses courses !</button>-->
+                    <button class="btn btn-info" ng-click="goShopping()">Aller faire ses courses !</button>
 
                 </div>
             </div>
         </div>
     </article>
-
 </div>

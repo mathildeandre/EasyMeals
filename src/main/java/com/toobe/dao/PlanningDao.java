@@ -30,7 +30,7 @@ public class PlanningDao {
     private final static String CREATE_COPY_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
     private final static String CREATE_COPY_REL_RECIPE_CASEMEAL = "INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);\n";
 
-    public Planning copyOfPlanning(Connection conn, Long idPlanning, boolean isForListShop) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
+    public Planning copyOfPlanning(Connection conn, Long idPlanning) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
         PreparedStatement stm, stmWM, stmCM;
         ResultSet res;
         int isOk = 0;
@@ -53,10 +53,10 @@ public class PlanningDao {
                 //2. create copy
                 stm = conn.prepareStatement(CREATE_COPY_PLANNING, Statement.RETURN_GENERATED_KEYS);
                 stm.setString(1, name);
-                stm.setBoolean(2, false);
+                stm.setBoolean(2, false); //lastOpen
                 stm.setLong(3, idUser);
                 stm.setInt(4, nbPersGlobal);
-                stm.setBoolean(5, isForListShop);
+                stm.setBoolean(5, false); //isForListShop
                 isOk = stm.executeUpdate();
                 if (isOk == 0) {
                     throw new SQLException("Creating COPY Planning failed, no rows affected");
@@ -168,7 +168,7 @@ public class PlanningDao {
             //1. INSERT PLANNING
             stm = conn.prepareStatement(CREATE_PLANNING, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, "nouveauPlanning");
-            stm.setBoolean(2, true);
+            stm.setBoolean(2, true); //lastOpen
             stm.setLong(3, idUser);
             isOk = stm.executeUpdate();
             if (isOk == 0) {
@@ -373,8 +373,6 @@ public class PlanningDao {
     }
     private final static String UPDATE_NAME_PLANNING = "UPDATE Planning SET name = ? WHERE id = ?;\n";
     public void postNewNamePlanning(Connection conn, Long idPlanning, String namePlanning){
-
-        System.out.println("POST new NAME PLANNING into DAO....");
         PreparedStatement stm;
         int isOk = 0;
         try {
@@ -470,6 +468,22 @@ public class PlanningDao {
             isOk = stm.executeUpdate();
             if (isOk == 0) {
                 throw new SQLException("deletePlanningById failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDATE_ISFORLISTSHOP_PLANNING = "UPDATE Planning SET isForListShop = ? WHERE id = ?;\n";
+    public void putIsForListShop(Connection conn, Long idPlanning, boolean isForListShop){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDATE_ISFORLISTSHOP_PLANNING);
+            stm.setBoolean(1, isForListShop);
+            stm.setLong(2, idPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putIsForListShop failed, no rows affected");
             }
         } catch (SQLException e) {
             e.printStackTrace();

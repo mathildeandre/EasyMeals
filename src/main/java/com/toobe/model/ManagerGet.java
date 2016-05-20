@@ -115,8 +115,6 @@ public class ManagerGet {
         planningDao.deleteOldRecipeCaseMeal(conn, idRecipe, idCaseMeal);
     }
     public void postNewNamePlanning(Long idPlanning, String namePlanning){
-
-        System.out.println("POST new NAME PLANNING into manager....");
         startConnection();
         planningDao.postNewNamePlanning(conn, idPlanning, namePlanning);
     }

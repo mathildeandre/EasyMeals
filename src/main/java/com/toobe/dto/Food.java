@@ -17,6 +17,10 @@ public class Food {
     public Food(){
 
     }
+    public Food(String name){
+        this.name = name;
+
+    }
     public Food(Long id, String name, int idCategory, boolean isValidated) {
         this.id = id;
         this.name = name;

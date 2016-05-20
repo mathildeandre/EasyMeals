@@ -177,19 +177,20 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         var idPlanningToDelete = $scope.currentPlanning.id;
         var index = $scope.plannings.indexOf($scope.currentPlanning);
         $scope.plannings.splice(index, 1);
-        $scope.plannings[0].lastOpen = true;
         $scope.currentPlanning = $scope.plannings[0];
+        $scope.currentPlanning.lastOpen = true;
         restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
         restPlanningService.deletePlanningById(idPlanningToDelete);
     }
-    $scope.createNewPlanning = function(){
 
+    $scope.createNewPlanning = function(){
         restPlanningService.createNewPlanning().then(function(data){
             var newPlanning = data;
             $scope.plannings.push(newPlanning);
             var index = $scope.plannings.indexOf(newPlanning);
             $scope.currentPlanning = $scope.plannings[index];
             $log.warn("new planning PUSHED")
+            //putLastOpenPlanning se fait tout seul dans updatePlanningBDD() !
         })
 
 

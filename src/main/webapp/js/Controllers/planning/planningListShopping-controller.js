@@ -2,7 +2,7 @@
  * Created by fabien on 14/03/2016.
  */
 
-myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll, $log, PlanningService, RecipeService, AppendixFunctionsService, ErrandService , restFoodService, restListShoppingService, fourTypeMeal, units, steps) {
+myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll, $log, PlanningService, RecipeService, AppendixFunctionsService, ErrandService , restFoodService, restPlanningService, restListShoppingService, fourTypeMeal, units, steps) {
 
 
     /*  $scope.categories =  [
@@ -26,10 +26,23 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
      * *************************  WITH HTML  ??????  ********************************************
      * ***********************************************************************************/
     var idList = 12;
-    $scope.saveListShopping = function(){
+    $scope.goShopping = function(){
         //ListShoppingCategories -> $scope.categories
         restListShoppingService.createListShoppingPlanning($scope.currentPlanning.id, 2, $scope.categories).then(function(data){
             //return obj ListShoppingPlanning
+
+            //retirer currentPLanning of planningList
+            var idPlanningToDelete = $scope.currentPlanning.id;
+            var index = $scope.plannings.indexOf($scope.currentPlanning);
+            $scope.plannings.splice(index, 1);
+            $scope.currentPlanning = $scope.plannings[0];
+            $scope.currentPlanning.lastOpen = true;
+            restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
+
+
+
+
+            //AJOUT DANS VUE
             var newListShoppingPlanning = data;
             restListShoppingService.addListShoppingPlanning(newListShoppingPlanning);
 
@@ -73,10 +86,10 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
     //$scope.newIngredient = {qty:null, unit:'', food:{}}; //pour Ajouter Ingredient mais pas vrt util
 
 
-    $scope.addNewIngr = function(ingr, categoryName){
+    $scope.addNewIngr = function(ingr, category){
         var newIngr = JSON.parse(JSON.stringify(ingr));//NEW OBJECT
         for(var i=0; i<$scope.categories.length; i++){
-            if($scope.categories[i].name == categoryName){
+            if($scope.categories[i].name == category.name){
                 $scope.categories[i].ingredients.push(newIngr);
             }
         }

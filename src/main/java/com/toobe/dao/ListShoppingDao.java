@@ -12,7 +12,7 @@ import java.util.List;
 public class ListShoppingDao {
 
 
-    private final static String CREATE_LISTSHOPPLANNING = "INSERT INTO ListShopPlanning_User(name, idListShop, idPlanning, idUser) VALUES (?, ?, ?, ?);\n";
+    private final static String CREATE_LISTSHOPPLANNING = "INSERT INTO ListShopPlanning_User(name, idListShop, idPlanning, idUser, lastOpen) VALUES (?, ?, ?, ?, ?);\n";
     public ListShoppingPlanning createListShoppingPlanning(Connection conn, Long idPlanning, int idUser, List<ListShoppingCategory> listShoppingCategories){
         PreparedStatement stm;
         ResultSet res;
@@ -21,22 +21,24 @@ public class ListShoppingDao {
         PlanningDao planningDao = new PlanningDao();
         ListShoppingPlanning listShopPlanning = new ListShoppingPlanning();
         try {
-
-
-            Planning planning = planningDao.copyOfPlanning(conn, idPlanning, true);
-            Long idNewPlanning = planning.getId();
-            String nameNewPlanning = planning.getName();
-
+            //modify field isForListShop to TRUE of this planning
+            planningDao.putIsForListShop(conn, idPlanning, true);
+            //get jsonObj Planning in order to return a jsonObj ListShoppingPlanning
+            Planning planning = planningDao.getPlanningById(conn, idPlanning); //copyOfPlanning(conn, idPlanning, true);
+            //Long idNewPlanning = planning.getId();
+            String namePlanning = planning.getName();
+            //get jsonObj ListShopping and then INSERT it into BDD
             ListShopping listShopping = new ListShopping("", listShoppingCategories);
             Long idNewListShopping = createBddListShopping(conn, listShopping);
 
 
             //1. INSERT LIST_SHOP_PLANNING
             stm = conn.prepareStatement(CREATE_LISTSHOPPLANNING, Statement.RETURN_GENERATED_KEYS);
-            stm.setString(1, nameNewPlanning); //name
+            stm.setString(1, namePlanning); //name
             stm.setLong(2, idNewListShopping); //idListShop
-            stm.setLong(3, idNewPlanning); //idPlanning
+            stm.setLong(3, idPlanning); //idPlanning
             stm.setInt(4, idUser); //idUser
+            stm.setBoolean(5, true); //lastOpen
             isOk = stm.executeUpdate();
             if (isOk == 0) {
                 throw new SQLException("Creating LIST_SHOP_PLANNING failed, no rows affected");
@@ -46,7 +48,7 @@ public class ListShoppingDao {
                 idListShopPlanning  = res.getLong(1);
             }
 
-            listShopPlanning = new ListShoppingPlanning(idListShopPlanning, nameNewPlanning, 0, listShopping, planning);
+            listShopPlanning = new ListShoppingPlanning(idListShopPlanning, namePlanning, 0, listShopping, planning, true);
 
 
 
@@ -64,7 +66,7 @@ public class ListShoppingDao {
 
     private final static String INSERT_LIST_SHOPPING = "INSERT INTO List_Shopping(name) VALUES (?);\n";
     private final static String INSERT_LIST_SHOPPING_CATEGORY = "INSERT INTO ListShopping_Category(idListShop, idFoodCategory) VALUES (?, ?);\n";
-    private final static String INSERT_INGREDIENT_LISTSHOP = "INSERT INTO Ingredient_ListShop(idFood, idListShopCategory, quantity, unit) VALUES (?, ?, ?, ?);\n";
+    private final static String INSERT_INGREDIENT_LISTSHOP = "INSERT INTO Ingredient_ListShop(nameFood, idListShopCategory, quantity, unit) VALUES (?, ?, ?, ?);\n";
     public Long createBddListShopping(Connection conn, ListShopping listShopping){
         PreparedStatement stm;
         ResultSet res;
@@ -106,7 +108,7 @@ public class ListShoppingDao {
                     for(Ingredient ingr :listShopCat.getIngredients()){
                         //3. INSERT INGREDIENT_LISTSHOP
                         stm = conn.prepareStatement(INSERT_INGREDIENT_LISTSHOP);
-                        stm.setLong(1, ingr.getFood().getId()); //idFood
+                        stm.setString(1, ingr.getFood().getName()); //nameFood
                         stm.setLong(2, idListShoppingCategory); //idListShopCategory
                         stm.setInt(3, ingr.getQty()); //quantity
                         stm.setString(4, ingr.getUnit()); //unit
@@ -141,9 +143,10 @@ public class ListShoppingDao {
                 Long id = res.getLong("id");
                 String name = res.getString("name");
                 int date  = res.getInt("date");
+                boolean lastOpen  = res.getBoolean("lastOpen");
                 ListShopping listShopping = getListShoppingById(conn, res.getInt("idListShop"));
                 Planning planning = planningDao.getPlanningById(conn, res.getLong("idPlanning"));
-                ListShoppingPlanning listShoppingPlanning = new ListShoppingPlanning(id, name, date, listShopping, planning);
+                ListShoppingPlanning listShoppingPlanning = new ListShoppingPlanning(id, name, date, listShopping, planning, lastOpen);
                 list_listShoppingPlanning.add(listShoppingPlanning);
             }
         } catch (SQLException e) {
@@ -184,16 +187,17 @@ public class ListShoppingDao {
                 int idFood;
                 String unit, nameFood;
                 boolean isValidated;
-                stm = conn.prepareStatement("SELECT quantity, unit, idFood,  name, idCategory, isValidated FROM Ingredient_ListShop JOIN FOOD ON Ingredient_ListShop.idFood = food.id WHERE Ingredient_ListShop.idListShopCategory = "+idListShoppingCategory);
+                stm = conn.prepareStatement("SELECT * FROM Ingredient_ListShop WHERE idListShopCategory = "+idListShoppingCategory);
                 ResultSet resIngredient = stm.executeQuery();
                 while(resIngredient.next()){
                     qty = resIngredient.getInt("quantity");
                     unit = resIngredient.getString("unit");
-                    idFood = resIngredient.getInt("idFood");
-                    nameFood = resIngredient.getString("name");
-                    idCategoryIngr = resIngredient.getInt("idCategory");
-                    isValidated = resIngredient.getBoolean("isValidated");
-                    ingr = new Ingredient(qty, unit, new Food(new Long(idFood), nameFood, idCategoryIngr, isValidated));
+                    //idFood = resIngredient.getInt("idFood");
+                    nameFood = resIngredient.getString("nameFood");
+                    //idCategoryIngr = resIngredient.getInt("idCategory");
+                    //isValidated = resIngredient.getBoolean("isValidated");
+                    //ingr = new Ingredient(qty, unit, new Food(new Long(1), nameFood, 1, false));
+                    ingr = new Ingredient(qty, unit, new Food(nameFood));
                     ingredientList.add(ingr);
                 }
                 ListShoppingCategory listShoppingCategory = new ListShoppingCategory(idListShoppingCategory, nameFoodCategory, numRank, ingredientList);

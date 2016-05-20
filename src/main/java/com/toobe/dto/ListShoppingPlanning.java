@@ -17,16 +17,18 @@ public class ListShoppingPlanning {
     private int date;
     private ListShopping listShopping;
     private Planning planning;
+    private boolean lastOpen;
 
     public ListShoppingPlanning(){
 
     }
-    public ListShoppingPlanning(Long id, String name, int date, ListShopping listShopping, Planning planning) {
+    public ListShoppingPlanning(Long id, String name, int date, ListShopping listShopping, Planning planning, boolean lastOpen) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.listShopping = listShopping;
         this.planning = planning;
+        this.lastOpen = lastOpen;
     }
 
     public Long getId() {
@@ -67,5 +69,13 @@ public class ListShoppingPlanning {
 
     public void setPlanning(Planning planning) {
         this.planning = planning;
+    }
+
+    public boolean isLastOpen() {
+        return lastOpen;
+    }
+
+    public void setLastOpen(boolean lastOpen) {
+        this.lastOpen = lastOpen;
     }
 }

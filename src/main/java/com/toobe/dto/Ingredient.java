@@ -45,3 +45,45 @@ public class Ingredient {
         this.food = food;
     }
 }
+
+/*
+public class IngredientListShop {
+    private int qty;
+    private String unit;
+    private String nameFood;
+
+    public IngredientListShop(){
+
+    }
+    public IngredientListShop(int qty, String unit, String nameFood) {
+        this.qty = qty;
+        this.unit = unit;
+        this.nameFood = nameFood;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getNameFood() {
+        return nameFood;
+    }
+
+    public void setNameFood(String nameFood) {
+        this.nameFood = nameFood;
+    }
+}
+
+ */

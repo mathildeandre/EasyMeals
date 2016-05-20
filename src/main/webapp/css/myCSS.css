@@ -330,10 +330,12 @@ h6 {
 }
 
 .btnAddQty{
-    padding:10px;
+   /* padding:10px;
     padding-right: 15px;
     padding-left: 17px;
-    font-size: 20px;
+    font-size: 20px;*/
+    padding: 10px 12px 8px 14px;
+    font-size: 18px;
     //text-transform: lowercase;
 }
 .myBtnRecipeType{
@@ -553,7 +555,7 @@ h6 {
     padding: 2px;
     border-radius:3px;
     border:1px solid lightgrey;
-    border:none;
+    //border:none;
     color: darkslategrey;
     width: auto;
 }
@@ -562,7 +564,16 @@ h6 {
     outline: 0; /*2px solid #d9534f;*/
     border: 1px solid #95d6e9 ;
 }
-
+.inputPlanningBlueTxt{
+    padding: 3px;
+    border-radius:3px;
+    border:1px solid lightgrey;
+    color: #5bc0de;
+}
+.inputPlanningBlueTxt:focus {
+    outline: 0; /*2px solid #d9534f;*/
+    border: 1px solid #95d6e9 ;
+}
 .inputErrand{
     padding: 2px;
     border-radius:3px;
@@ -575,6 +586,17 @@ h6 {
     /*border: 1px solid #f5c88a ;*/
     outline: 0; /*2px solid #d9534f;*/
     border: 1px solid #d9534f ;
+}
+
+
+.width50{
+    width: 50px;
+}
+.width60{
+    width: 60px;
+}
+.width100{
+    width: 100px;
 }
 
 /**********************************************************************  TRASH  ********************************************************************************************/
@@ -1664,14 +1686,14 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .divPlanListShopLeft{
     display:inline-block;
-    width : 48%;
+    width : 40%; //max : 48%;
     margin-right : 3%;
     //background : red;
     vertical-align: top;
 }
 .divPlanListShopRight{
     display:inline-block;
-    width : 45%;
+    //width : 45%;
     overflow: hidden;
     //background : green;
     vertical-align: top;
@@ -1690,7 +1712,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
     //width : 45%;
     overflow: hidden;
     vertical-align: top;
-
+}
+.divPlanListShopRightROWaddIngr{
+    margin-bottom: 10px;
 }
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
