@@ -211,6 +211,9 @@ h6 {
 .myArticleBody {
     padding: 1vw;
 }
+.myArticlePlanning{
+    //width:80%;
+}
 
 
 
@@ -1682,7 +1685,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 .divPlanningListShop{
-    margin-top:2vw;
+    //margin-top:2vw;
 }
 .divPlanListShopLeft{
     display:inline-block;

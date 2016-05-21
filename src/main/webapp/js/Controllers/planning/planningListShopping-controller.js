@@ -24,6 +24,9 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
     $scope.$on('emptyListShop', function() {
         resetIngredientsOfCategories();
     });
+    $scope.$on('calculListShopping', function() {
+        $scope.calculListShopping();
+    });
 
     /*************************************************************************************
      * *************************  WITH HTML  ??????  ********************************************

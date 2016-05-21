@@ -81,6 +81,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
     }
 
 
+
     $scope.modifyingPlanningName = false;
     $scope.modifyPlanningName = function(){
         $scope.modifyingPlanningName = true;
@@ -103,6 +104,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
 
     // called on $watch '$scope.currentPlanning'
     var updatePlanningBDD = function(newValue, oldValue, scope){
+        $scope.$broadcast('calculListShopping');
         var newCaseMeal, oldCaseMeal;
         if(newValue.id != oldValue.id){
             /** ON effectue le chgt sur les variable de scope car elles pointent sur la var plannings de restPlanning-service donc change aussi labas direct
