@@ -92,6 +92,15 @@
                     <input class="inputErrand" type="text" ng-model ='currentListShoppingPlanning.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
+
+                <span class="rightInlineBlock">
+                    <button  type="button" class="btn btn-danger btnClonePlanning btnHeading" ng-click="cloneIntoMyPlannings()" title="">
+                        <span class="glyphicon glyphicon-edit"></span> &nbsp Editer Planning
+                    </button>
+                </span>
+
+
+
             </div>
         </div>
 
@@ -151,6 +160,7 @@
 
             </div>
 
+            <br>
             <br>
             <br>
 

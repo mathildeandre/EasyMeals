@@ -4,7 +4,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, AppendixFunctionsService, restListShoppingService) {
+myModule.controller('ErrandCtrl', function($scope, $log, $location, ErrandService, AppendixFunctionsService, restPlanningService, restListShoppingService) {
 
     $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
 
@@ -27,6 +27,10 @@ myModule.controller('ErrandCtrl', function($scope, $log, ErrandService, Appendix
         }
     }
     */
+
+    $scope.cloneIntoMyPlannings = function(){
+        restPlanningService.cloneIntoMyPlannings($scope.currentListShoppingPlanning.planning);
+    }
 
 
 

@@ -4,7 +4,7 @@
 
 var myService = angular.module('services');
 
-myService.service("restPlanningService", function ($http, $q, $log) {
+myService.service("restPlanningService", function ($http, $q, $log, $location) {
 
     var plannings = [];
 
@@ -13,7 +13,58 @@ myService.service("restPlanningService", function ($http, $q, $log) {
         $log.warn("ici on appel getPLannings...")
         return plannings;
     }
+    /*function addPlanningToView(planning){
+        plannings.push(planning);
+    }*/
+    function makePlanningCurrent(idPlanningNewCurrent){
+        /************* VIEW ************/
+        //1. SET planning new current && other lastOpen to false
+        var idPlanningOldCurrent = -1;
+        for(var i=0; i<plannings.length; i++){
+            if(plannings[i].id == idPlanningNewCurrent){
+                plannings[i].lastOpen = true;
+            }else if(plannings[i].lastOpen == true){
+                plannings[i].lastOpen = false;
+                idPlanningOldCurrent = plannings[i].id;
+            }
+        }
+        /********* BBD ****************/
+        //2.PUT lastOpen true (& oldCurrent to false)
+        if(idPlanningOldCurrent != -1){
+            $log.info("[makePlanningCurrent] : putLastOpenPlannings OLD & NEW")
+            putLastOpenPlannings(idPlanningOldCurrent, idPlanningNewCurrent); //OLD & NEW
+        }
+        else{
+            $log.info("[makePlanningCurrent] : putLastOpenPlannings just NEW")
+            putLastOpenNewPlanning(idPlanningNewCurrent); //just NEW
+        }
 
+    }
+
+    /*************************************************** CLONE PLANNING ********************************************************/
+    function cloneIntoMyPlannings(planningToClone){
+        clonePlanning(planningToClone.id).then(function(data){
+            var newClonedPlanning = data;
+            plannings.push(newClonedPlanning);
+            makePlanningCurrent(newClonedPlanning.id);//lastOpen..
+            //ATTENTION il faut etre sûr ici que "makePlanningCurrent" s'effectue avt $location.path("/planning") qui chargement les plannigs...
+            //=> loop 1000 pour patienter? -> etre que lastOpen soit bien a jour dans plannings avt daller dans plannings! :p
+            $location.path("/planning");
+        })
+    }
+    function clonePlanning(idPlanning){
+        return $http({
+            method: 'GET',
+            url: '/rest/clonePlanning/'+idPlanning
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    }
+    /*********************************************** end CLONE PLANNING ********************************************************/
 
 
     function postNewRecipeCaseMeal(idRecipe, idCaseMeal){
@@ -25,8 +76,11 @@ myService.service("restPlanningService", function ($http, $q, $log) {
     function postNewNamePlanning(idPlanning, namePlanning){
         postObjToServer('POST', '/rest/postNewNamePlanning/'+namePlanning, idPlanning)
     }
-    function putLastOpenPlanning(idOldOpenPlanning, idNewOpenPlanning){
-        postObjToServer('POST', '/rest/putLastOpenPlanning', [idOldOpenPlanning, idNewOpenPlanning])
+    function putLastOpenPlannings(idOldOpenPlanning, idNewOpenPlanning){ //OLD & NEW
+        postObjToServer('POST', '/rest/putLastOpenPlannings', [idOldOpenPlanning, idNewOpenPlanning])
+    }
+    function putLastOpenNewPlanning(idNewOpenPlanning){ //just NEW
+        postObjToServer('POST', '/rest/putLastOpenNewPlanning', idNewOpenPlanning)
     }
     function putShowWeekMeal(idWeekMeal, showWeekMeal){
         postObjToServer('POST', '/rest/putShowWeekMeal/'+showWeekMeal, idWeekMeal)
@@ -98,12 +152,13 @@ myService.service("restPlanningService", function ($http, $q, $log) {
         postNewRecipeCaseMeal: postNewRecipeCaseMeal,
         deleteOldRecipeCaseMeal: deleteOldRecipeCaseMeal,
         postNewNamePlanning: postNewNamePlanning,
-        putLastOpenPlanning: putLastOpenPlanning,
         putShowWeekMeal: putShowWeekMeal,
         putNbPersCaseMeal: putNbPersCaseMeal,
         deletePlanningById: deletePlanningById,
         createNewPlanning: createNewPlanning,
-        putNbPersGlobalPlanning: putNbPersGlobalPlanning
+        putNbPersGlobalPlanning: putNbPersGlobalPlanning,
+        cloneIntoMyPlannings: cloneIntoMyPlannings,
+        makePlanningCurrent: makePlanningCurrent
 
     };
 });

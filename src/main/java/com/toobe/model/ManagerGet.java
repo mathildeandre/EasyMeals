@@ -114,13 +114,17 @@ public class ManagerGet {
         startConnection();
         planningDao.deleteOldRecipeCaseMeal(conn, idRecipe, idCaseMeal);
     }
-    public void postNewNamePlanning(Long idPlanning, String namePlanning){
+    public void putLastOpenPlannings(Long idOldOpenPlanning, Long idNewOpenPlanning){//OLD & NEW
+        startConnection();
+        planningDao.putLastOpenPlannings(conn, idOldOpenPlanning, idNewOpenPlanning);
+    }
+    public void postNewNamePlanning(Long idPlanning, String namePlanning){//just NEW
         startConnection();
         planningDao.postNewNamePlanning(conn, idPlanning, namePlanning);
     }
-    public void putLastOpenPlanning(Long idOldOpenPlanning, Long idNewOpenPlanning){
+    public void putLastOpenNewPlanning(Long idNewOpenPlanning){
         startConnection();
-        planningDao.putLastOpenPlanning(conn, idOldOpenPlanning, idNewOpenPlanning);
+        planningDao.putLastOpenNewPlanning(conn, idNewOpenPlanning);
     }
     public void putShowWeekMeal(Long idWeekMeal, Boolean showWeekMeal) {
         startConnection();
@@ -137,6 +141,10 @@ public class ManagerGet {
     public void deletePlanningById(Long idPlanning) {
         startConnection();
         planningDao.deletePlanningById(conn, idPlanning);
+    }
+    public Planning clonePlanning(Long idPlanning) {
+        startConnection();
+        return planningDao.clonePlanning(conn, idPlanning);
     }
 
 

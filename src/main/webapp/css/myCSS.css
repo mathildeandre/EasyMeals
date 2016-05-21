@@ -1630,9 +1630,25 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color: #5bc0de;
 }*/
 .btnNewPlanning{
-
     vertical-align: top;
     margin-right : 15px;
+}
+.btnClonePlanning[title]:hover:after{
+    position: absolute;
+    top: 100%;
+    left:-70px;
+    white-space: pre;
+    border-radius: 5px;
+    font-size:12px;
+    color:darkslategrey;
+    content: 'Créé une copie dans vos plannings';
+}
+.btnHeading{
+    vertical-align: top;
+    font-size: 13px;
+    padding-top: 5px;
+    padding-bottom: 6px;
+
 }
 .itemToDragPlanning {
     padding: 6px;

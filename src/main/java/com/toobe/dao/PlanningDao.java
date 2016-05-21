@@ -30,7 +30,7 @@ public class PlanningDao {
     private final static String CREATE_COPY_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
     private final static String CREATE_COPY_REL_RECIPE_CASEMEAL = "INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);\n";
 
-    public Planning copyOfPlanning(Connection conn, Long idPlanning) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
+    public Planning clonePlanning(Connection conn, Long idPlanning) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
         PreparedStatement stm, stmWM, stmCM;
         ResultSet res;
         int isOk = 0;
@@ -53,7 +53,7 @@ public class PlanningDao {
                 //2. create copy
                 stm = conn.prepareStatement(CREATE_COPY_PLANNING, Statement.RETURN_GENERATED_KEYS);
                 stm.setString(1, name);
-                stm.setBoolean(2, false); //lastOpen
+                stm.setBoolean(2, true); //lastOpen
                 stm.setLong(3, idUser);
                 stm.setInt(4, nbPersGlobal);
                 stm.setBoolean(5, false); //isForListShop
@@ -388,7 +388,7 @@ public class PlanningDao {
         }
     }
     private final static String UPDATE_LASTOPEN_PLANNING = "UPDATE Planning SET lastOpen = ? WHERE id = ?;\n";
-    public void putLastOpenPlanning(Connection conn, Long idOldOpenPlanning, Long idNewOpenPlanning){
+    public void putLastOpenPlannings(Connection conn, Long idOldOpenPlanning, Long idNewOpenPlanning){ //OLD & NEW
         PreparedStatement stm;
         int isOk = 0;
         try {
@@ -397,19 +397,30 @@ public class PlanningDao {
             stm.setLong(2, idOldOpenPlanning);
             isOk = stm.executeUpdate();
             if (isOk == 0) {
-                throw new SQLException("putLastOpenPlanning failed, no rows affected");
+                throw new SQLException("putLastOpenOldPlanning failed, no rows affected");
             }
+            putLastOpenNewPlanning(conn, idNewOpenPlanning);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void putLastOpenNewPlanning(Connection conn, Long idNewOpenPlanning){ //just NEW
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
             stm = conn.prepareStatement(UPDATE_LASTOPEN_PLANNING);
             stm.setBoolean(1, true);
             stm.setLong(2, idNewOpenPlanning);
             isOk = stm.executeUpdate();
             if (isOk == 0) {
-                throw new SQLException("putLastOpenPlanning failed, no rows affected");
+                throw new SQLException("putLastOpenNewPlanning failed, no rows affected");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
     private final static String UPDATE_SHOW_WEEKMEAL = "UPDATE Planning_WeekMeal SET showWeekMeal = ? WHERE id = ?;\n";
     public void putShowWeekMeal(Connection conn, Long idWeekMeal, Boolean showWeekMeal){
         PreparedStatement stm;

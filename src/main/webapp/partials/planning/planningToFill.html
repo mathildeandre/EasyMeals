@@ -1,21 +1,18 @@
 <div>
 
-    <!-- DEBUG -->
-    <!--<div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-        ELEMENTS LUNCH :
-        <div>{{fourWeekMeals[1]}}</div>
-        <br>
-        WEEKMEALS LUNCH -> LUNDI :
-        <div >{{fourWeekMeals[1].weekMeals[0]}}</div>
-    </div>-->
-    <!-- DEBUG
-    on affiche les nom de recettes des repas du midi
-    -->
-    <div ng-show="showDebug" ng-repeat="meal in fourWeekMeals[1].weekMeals" style="font-size: 18px; color:darkorange">
-        Recipes of {{meal.id}} :
-        <span ng-repeat="recipe in meal.recipes">
-            {{recipe.name}} -
-        </span>
+    <div ng-show="showDebug"  style="font-size: 18px; color:darkorange">
+        WeekMeal : lunch
+        <div ng-repeat="caseMeal in currentPlanning.weekMeals[1].caseMeals">
+            Recipes of {{caseMeal.id}} :
+            <span ng-repeat="recipe in caseMeal.recipes">
+                {{recipe.name}} -
+            </span>
+        </div>
+
+        <br> lastOpens :
+        <div ng-repeat="planning in plannings">
+            name : {{planning.name}} - lastOpen : {{planning.lastOpen}}
+        </div>
     </div>
 
 
@@ -24,8 +21,6 @@
         <div class="myArticleHeading" >
             <div class="myArticleTitle">
                 PLANNING : &nbsp
-
-
                 <span ng-show="!modifyingPlanningName">
                     <select class="fieldPlanning noWidth"  ng-model='currentPlanning' ng-change="changementCurrentPlanning()"
                             ng-options='planning.name for planning in plannings' ></select>
@@ -44,11 +39,6 @@
                     </button>
                     <span ng-show="plannings.length > 1" class="glyphicon glyphicon-trash glyphDeletePlanning glyphiconBtn" ng-click="deletePlanning()"></span>
                 </span>
-
-
-
-
-
             </div>
         </div>
 
@@ -67,18 +57,18 @@
 
                     <th class="info myTh" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(weekMeal.weekMealName)}}</th>
 
-                    <td ng-repeat="caseMeal in weekMeal.caseMeals"  style="width:13%;" data-drop="true" ng-model='caseMeal.recipes'
-                        jqyoui-droppable="{multiple:true}"> <!--, onOver:'onOverTab(\'hehehe\')' -->
-                                <span ng-show="showNbPers" class="nbPers"  data-drop="true" ng-model='caseMeal.nbPers'
-                                      jqyoui-droppable="{multiple:true}">
-                                    <input class="inputNbPers" type="number" min="1"  ng-model="caseMeal.nbPers" > pers.
-                                </span>
+                    <td ng-repeat="caseMeal in weekMeal.caseMeals"  style="width:13%;" data-drop="true" ng-model='caseMeal.recipes' jqyoui-droppable="{multiple:true}"> <!--, onOver:'onOverTab(\'hehehe\')' -->
+                        <span ng-show="showNbPers" class="nbPers"  data-drop="true" ng-model='caseMeal.nbPers' jqyoui-droppable="{multiple:true}">
+                            <input class="inputNbPers" type="number" min="1"  ng-model="caseMeal.nbPers" > pers.
+                        </span>
                         <br ng-show="showNbPers">
+                        <span ng-show="showDebug"  style="font-size: 18px; color:darkorange">id caseMeal : {{caseMeal.id}}</span>
                         <!--ng-repeat="recipe in caseMeal.recipes  | orderByRecipeType" -->
                         <!--track by $index permet d'avoir 2x le mm element dans un drop sans bug -->
                         <div ng-repeat="recipe in caseMeal.recipes  track by $index " class="itemToDragPlanning itemDrag"   style="display: inline-block;"
                              data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="caseMeal.recipes" ng-show="recipe.name"
                              jqyoui-draggable="{index: {{$index}},placeholder:false , deepCopy:'true'}"  >
+
                             {{recipe.name}}
 
                             <br>

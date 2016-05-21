@@ -107,15 +107,8 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         $scope.$broadcast('calculListShopping');
         var newCaseMeal, oldCaseMeal;
         if(newValue.id != oldValue.id){
-            /** ON effectue le chgt sur les variable de scope car elles pointent sur la var plannings de restPlanning-service donc change aussi labas direct
-             *  >>>>>> oldValue << , a l'inverse, est une copy et ne reference plus notre planning courant! */
-            var oldPlanning = $scope.plannings.filter(function(obj){
-                return obj.lastOpen == true;
-            })[0];
-            oldPlanning.lastOpen = false;
-            newValue.lastOpen = true;
-            //PUT : updateLastOpenPlanning
-            restPlanningService.putLastOpenPlanning(oldValue.id, newValue.id);
+            //ATTENTION oldValue est une copy du dernier planning courant et ne reference plus notre planning....
+            restPlanningService.makePlanningCurrent(newValue.id); //lastOpen...
 
         }else if(newValue.name != oldValue.name){
             //PUT : updateNamePlanning
@@ -150,7 +143,6 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
     }
     $scope.$watch('currentPlanning', updatePlanningBDD, true);
 
-
     var postNewRecipeCaseMeal = function(idCaseMeal, newRecipes, oldRecipes){
         var isNewRecipe;
         for(var i=0; i<newRecipes.length; i++){
@@ -184,12 +176,13 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
 
 
     $scope.deletePlanning = function(){
+
         var idPlanningToDelete = $scope.currentPlanning.id;
         var index = $scope.plannings.indexOf($scope.currentPlanning);
         $scope.plannings.splice(index, 1);
         $scope.currentPlanning = $scope.plannings[0];
-        $scope.currentPlanning.lastOpen = true;
-        restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
+
+        restPlanningService.makePlanningCurrent($scope.currentPlanning.id); //lastOpen...
         restPlanningService.deletePlanningById(idPlanningToDelete);
     }
 

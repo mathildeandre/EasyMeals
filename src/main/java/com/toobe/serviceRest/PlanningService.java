@@ -65,16 +65,30 @@ public class PlanningService {
         //Boolean rep = new ManagerPost().insertFood();
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
-    @Path("putLastOpenPlanning")
+
+
+
+    @Path("putLastOpenPlannings") //OLD & NEW
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response putLastOpenPlanning(List<Long> listId){
-        System.out.println("POST new NAME PLANNING  ::: idOldOpenPlanning: "+listId.get(0)+" ----  idNewOpenPlanning: "+listId.get(1));
-        ManagerGet.getInstance().putLastOpenPlanning(listId.get(0), listId.get(1));
-        //Boolean rep = new ManagerPost().insertFood();
+    public Response putLastOpenPlannings(List<Long> listId){
+        ManagerGet.getInstance().putLastOpenPlannings(listId.get(0), listId.get(1));
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
+    @Path("putLastOpenNewPlanning") //just NEW
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putLastOpenNewPlanning(Long idNewOpenPlanning){
+        ManagerGet.getInstance().putLastOpenNewPlanning(idNewOpenPlanning);
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+
+
+
+
+
     @Path("putShowWeekMeal/{showWeekMeal}")
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -111,6 +125,14 @@ public class PlanningService {
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
 
+    @Path("/clonePlanning/{idPlanning}")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response clonePlanning(@PathParam("idPlanning") Long idPlanning){
+        //localhost:8080/rest/recipe/2
+        Planning planning = new ManagerGet().clonePlanning(idPlanning);
+        return Response.ok(planning).build();
+    }
 
 
 

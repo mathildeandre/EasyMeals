@@ -24,7 +24,7 @@ public class ListShoppingDao {
             //modify field isForListShop to TRUE of this planning
             planningDao.putIsForListShop(conn, idPlanning, true);
             //get jsonObj Planning in order to return a jsonObj ListShoppingPlanning
-            Planning planning = planningDao.getPlanningById(conn, idPlanning); //copyOfPlanning(conn, idPlanning, true);
+            Planning planning = planningDao.getPlanningById(conn, idPlanning); //clonePlanning(conn, idPlanning, true);
             //Long idNewPlanning = planning.getId();
             String namePlanning = planning.getName();
             //get jsonObj ListShopping and then INSERT it into BDD
