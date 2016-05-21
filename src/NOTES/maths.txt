@@ -1,0 +1,70 @@
+MATHILDE !!
+alors le mieux serait d'ajouter nos idées au meme endroit histoire que ce soit lisible ^^ pask ds ton .txt là c pas top :p
+je tai fait un pti paragraphe juste pour toi
+====> partials/others/welcomeMeals.html
+tu cherche >>>'mathou'<<< !! et tu ecris tes ptites phrases ;)
+
+comme ca jpourrai les barrer qd c fait et jles vois direct sur le site !
+(PS : reecris pas tout ske tas ecris dessous tkt ;) la plupart est DONE, sinon ben feu vert!)
+
+
+
+** LAST comenntaires **
+
+- les filtres  : + et - � droite des �l�ments
+- enlever le filtre ingr�dient (on ne sait pas s'il faut mettre un s ou pas et on peut d�j� chercher dans la recherche g�n�rale ? 
+- Affichage icon : centrer le nom de la recette en dessous de l'image + mettre les icon sur la droite de l'image :)
+- Recherche en plus gros au dessus de la liste
+
+
+
+Contenu des filtres :
+ + Nouveaut�s
+ + Meilleures recettes
+ + De saison
+======>> TRIER PAR (note (=meilleur recettes) ; nouveautes etc..)
+
+
+
+Mettre les filtres en plus gros et plus proche de la liste des recettes : faut vraiment qu'on les voie pour les utiliser (par
+exemple sur la fourchettes ils sont plus gros)
+===============> DONE bitch ;)
+
+
+Selection viande : proposition type de viandes ? pas sur ^^
+====> SI ;)
+
+
+- Proposer un custom planning
+	En parcourant les recettes, petit bouton + permettant d'ajouter la recette dans une liste qui sera affich�e lors
+de la cr�ation du planning
+=====> DONE
+
+
+- G�rer das cat�gories
+	* viandes
+	* poissons
+	* quiche/pizza
+	* gratins
+	* p�tes et riz
+	* v�g�tariens
+	* l�ger
+
+- Affichage des recettes:
+	Afficher juste nom de la recette et une photo
+	En cliquant dessus on voit le d�tail de la recette
+
+- Menu d�roulant de recettes : 
+	Pourquoi pas une deuxi�me navbar parral�le � la premi�re avec le choix entre
+	* entr�es, viandes, poissons, accompagnement, dessert
+	- entr�es: froide, chaude, potage/soupe, cakes, feuillet�es/bricks
+	- viandes: boeuf/ volailles/ porc/ veau/ lapin/ 
+	- poissons: fruit de mer / poisson
+	- accompagnements: gratins, riz, pates, 
+	- dessert:
+	Chaque cat�gorie peut avoir une bar d�roulante avec des sous-cat�gories ? 
+	Quand clique sur entr�e, afficher en haut de la page recettes>entr�es>soupe
+
+
+- A long terme...
+	Faire une note sur les recettes (sous forme d'avis)

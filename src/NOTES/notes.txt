@@ -1,0 +1,342 @@
+
+********************************************************************************************************
+********************************************************************************************************
+QUELQUES CONVENTIONS !!
+********************************************************************************************************
+
+ -------------------
+ - un commit / ou commentaire, il commence par [nomDuChantierConcerné] (ex : [recette] ajout de nanana)
+ -------------------
+ - une VARIABLE ou nom n'est JAMAIS AU PLURIEL (pr une question de clarete et simplicite),
+ meme si l'on parle de recettes ou d'un type (ex viandes) : var recette, 'viande'
+ => les var au pluriel sont UNIQUEMENT des lists : var recettes=[a, b, ..]
+ -------------------
+ - sur les noms : le container le plus important avt (ex : planningRecipes, planningListShopping etc...)
+
+
+
+********************************************************************************************************
+********************************************************************************************************
+ -  AJOUT DROP-DOWN MENU dans NAVBAR
+download (puis mettre dans /lib)
+    ui-bootstrap-tpls.min.js
+ajout ds INDEX.HTML de :
+    <script src="lib/ui-bootstrap-tpls.min.js"></script>
+ajouter DEPENDANCE "ui.bootstrap" dans controllers.js :
+    angular.module('controllers', ['services', 'ngDragDrop', "ui.bootstrap"]);
+puis voir exemple <li class="dropdown"> dans navbar.html
+
+
+-- NAVBAR
+il est important de bien garder la mm structure pr utiliser les class bootstrap
+=> dans le <ul dropdown-menu> il est important de faire un
+<li><ul><li> mon item <..
+"navbar-nav" dans le ul  permet de dire si les item des sous li seront en inline ou en block
+********************************************************************************************************
+  - DRAG & DROP by codeformer
+
+(http://codef0rmer.github.io/angular-dragdrop/)
+
+download (puis mettre dans /lib)
+    angular-dragdrop.js
+ajout ds index.html de :
+    <script src="lib/angular-dragdrop.js"></script>
+ajouter dependance "ngDragDrop" dans controller.js :
+  angular.module('controllers', ['services', 'ngDragDrop', "ui.bootstrap"]);
+puis voir exemples (planningToFill.html...etc)
+
+Differentes fonctionnalites
+
+jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:true}"
+options visible dans le liens ci dessus!
+
+deepCopy (true or false) permet de faire une copy de l'obj, le nouvel objet n'aura ainsi pas la mm reference que l'initial.
+placeholder (keep, true or false) indique si l'objet restera egalement dans la source
+                            Sans le 'deepcopy' lobjet resté a la source partagera la reference de l'obj dans le drop
+                            false laisse aucune trace à la source tandis que true laisse un objet vide : {}
+il est egalement possible d'avoir 2x le meme element dans la cible sans avoir fait un deepCopy depuis la source :
+=> 'track by $index' ex planningToFill.html : '<div ng-repeat="recipe in meal.recipes track by $index>'
+permet ainsi de differencier les 2 meme elements et de pouvoir les afficher!
+
+data-jqyoui-options="{revert: 'invalid', helper:'clone'}"
+options de jquery (http://api.jqueryui.com/draggable/)
+revert : indique si l'element reviendra a sa place (animation visuelle)
+    true/false : reviendra toujours/jamais
+    invalid/valid : reviendra si drop non valid / inverse
+helper : "original" or "clone" permet de cloner ou non l'elem to drag (ou possible fonction) cf doc jquery...
+
+
+
+********************************************************************************************************
+  - COPIER OBJET
+
+ex de copie de l'obj 'ingr' dans newIngr :
+var newIngr = JSON.parse(JSON.stringify(ingr));//NEW OBJECT
+
+
+
+********************************************************************************************************
+ - STRUCTURE PLANNING
+
+ HTML :
+ planning.html est divisé en 3 html
+    - recipesPlanning.html qui permet de choisir ses recipes à glisser dans le planning
+    - planningToFill.html : le planning en lui meme où on glisse les recettes
+    - listShopping.html est le module de calcul où un fois le planning remplie on peut calculer la list de shopping correspondante
+
+ LA DIVISION en 3 parties HTML est faite grace aux directives  dans "planning-directive.js"   (cf. explication ci-dessous)
+
+ JS :
+    - planning-controller.js englobe tout le html (ng-controller="PlanningCtrl" dans planning.html)
+    - planningListShopping-controller.js , fils de planning-controller englobe listShopping.html (ou l'on trouve donc ng-controller="ListShoppingCtrl")
+    // - old_customizeShopping-controller.js, fils de listShopping est egalement dans listShopping.html (on l'on trouve donc ng-controller="CustomizeShoppingCtrl")
+
+
+********************************************************************************************************
+ - PASSER VAR avec DIRECTIVES
+ ****************************
+ cf exemple recipe-directive 'PASSER VAR avec DIRECTIVES'
+
+
+********************************************************************************************************
+ - DIVISION HTML avec DIRECTIVES
+
+ dans planning.html nous avons 3 directives :
+    <recipes-planning></recipes-planning>
+    <planning-tofill></planning-tofill>
+    <list-shopping></list-shopping>
+
+    ATTENTION il est important d'avoir UN SEUL <DIV> dans chacun des fichier.html...
+
+Elles sont appelées dans "planning-directive.js"
+
+
+ajout ds >>> INDEX.HTML <<< de :
+    <script src="js/Directives/planning-directive.js"></script>
+
+DEPENDANCE :
+    - pas vraiment de dependance, juste utiliser le module 'controllers' et creer les directives
+      => dans planning-directive.js :
+      var myModule = angular.module('controllers');
+      myModule.directive('recipesPlanning', function(){...}
+
+     OU
+
+    - creer directives.js qui contient : angular.module('directives', []);
+      ajouter dependance "directives" dans controllers.js :
+          angular.module('controllers', ['directives','services', 'ngDragDrop', "ui.bootstrap"]);
+          => dans planning-directive.js :
+          var myDirective = angular.module('directives');
+          myDirective.directive('recipesPlanning', function(){...}
+      ajout ds INDEX.HTML : <script src="js/Directives/directives.js"></script>
+
+
+==> la seconde solution est la meilleure !!!
+
+
+
+********************************************************************************************************
+    DIRECTIVES - ELEMENT modification functions
+
+    (ex : scroll -> recipe-directive.js)
+    A good example to modify an element is when we scroll into recipes and then the leftNavBar is fixed
+    This is done thanks to a directive called "scrollFixedPosition"
+    => recipe.html & recipe-controller.js (directive)
+    And in the directive the element is modify by changing the CSS and the className
+
+    EVERY functiuons on element can be found here :
+    https://docs.angularjs.org/api/ng/function/angular.element
+    => Angular's jqLite
+
+
+
+********************************************************************************************************
+ - GLYPHICON (http://getbootstrap.com/components/)
+
+<span   class="glyphicon glyphicon-search " ></span>
+
+
+
+
+********************************************************************************************************
+  - WATCH
+
+ ex : $scope.$watch('showImprovement', toggleImpr);
+
+ ATTENTION WATCH NE FONCTIONNE PAS sur les $scope pour les FONCTIONS
+  => $scope.toggleImpr = function(){...} //NE FONCTIONNE PAS
+     var toggleImpr = function(){...} //FONCTIONNE!
+
+ !!! ATTENTION WATCH NE FONCTIONNE QUE s'il est placé en dessus de la fonction qu'il appel...
+
+ ********************************************************************************************************
+   - BUTTON
+
+    <button  ng-click="reloadRoute()"   class="btn btn-warning"> reloadRoute </button>
+ ********************************************************************************************************
+   - AWSOME CHECKBOXES
+
+   https://github.com/flatlogic/awesome-bootstrap-checkbox
+
+
+   FORMATTAGE IMPORTANT :
+    - SPAN avec la classe "checkbox checkbox-info" qui contient :
+            - un INPUT suivi d'un LABEL est necessaire, avec le MEME id pour les deux
+
+    EX :
+     <span class="checkbox checkbox-warning" >
+             <input type="checkbox"  ng-model="showDebug"  id="idShowDebug" ng-change="toggleDebug()">
+             <label for="idShowDebug" >
+                 SHOW DEBUG
+             </label>
+     </span>
+
+
+
+ ********************************************************************************************************
+   - ROUTE PARAMS
+
+   ex de $routeParams dans recipe-controller.js
+
+
+ ********************************************************************************************************
+   - EMIT BROADCAST &
+
+   ex de $broadcast-$on entre listShopping.js & customizeShopping.js
+   ex de $emit-$on entre ..planning-controller.js & global-controller.js
+
+    EX with parameter $scope.listShop :
+    $scope.$broadcast('reCalculateCategories', $scope.listShop);
+    $scope.$on('reCalculateCategories', function(event, listShop) {...}
+
+ ********************************************************************************************************
+   - BUG EXPENSES -> INFINITE LOOP   in creationTabCouple()
+
+   => add the stop condition !isTooSmall
+where isTooSmall = zeroFive.toFixed(1) > Math.abs(tabExpense[indexMax]).toFixed(1);
+
+L'exemple qui a permis de deceller ce bug :
+fab 30€ to fab & carine
+fab 15€ to math, eddy, carine
+fab 40€ to fab, math, eddy, carine, person4, person5
+
+********************************************************************************************************
+    CHECKBOX size... cf(notesCSS.txt)
+    *********************************
+
+
+********************************************************************************************************
+    SELECT - OPTION
+    *********************************
+    ex : calculationExpense.html
+    <select class="fieldExpense"  ng-model='row.buyerId'  >
+         <option ng-repeat="person in persons" value="{{person.id}}">{{person.name}}</option>
+    </select>
+
+
+    *********************************
+    SELECT - NG-option
+    *********************************
+    <select class="fieldErrand"  ng-model='currentListShop' ng-change="resetRecipesToDisplay()"
+    ng-options='list.name for list in listsShoppingPlanning' ></select>
+    <!-- ng options : list.name sera l'affichage et list sera passé dans ng-model et AFFECTé à currentListShop
+    possible d'initialiser le 1er elem ds le scope : $scope.currentListShop = ... ou dans html : ng-init="currentListShop = listsShoppingPlanning[2] "-->
+
+
+
+
+
+
+********************************************************************************************************
+    IMAGE IMG PROPORTION
+    *********************************
+    utilisr vw pour width ET HEIGHT (et non %), puisque vw est proportionnel a la LARGEUR de lecran alr que % est different pr width ou height
+
+
+
+********************************************************************************************************
+    VARIABLE CSS
+    *********************************
+    mettre le CSS ds html (style="...") et pouvoir ainsi utiliser des variables angular
+
+
+
+
+********************************************************************************************************
+    PRIORITIES EVENT HTML (onBlur ng-click ...)
+    *********************************
+    Si on veut à la fois effectuer un NG-BLUR (lors que la souris quitte un elt != NG-FOCUS)
+    et en mm tps un NG-CLICK, le le ng-blur est effectué avant le ng-click ! pas possible de changer
+    Il est cependant possible d'y remedier en remplacer le ng-click par un NG-MOUSEDOWN qui passe avt le ng-blur
+
+    ex utilisation :
+    [html] ng-mousedown="fillUpIngrWithFood($index, $event, myParam,...)"
+    [angular] $scope.fillUpIngrWithFood = function(index, evt, food){
+                      if(evt.which === 1) { //==1 indique le clique gauche (?)
+                        //mes instructions..
+                      }
+               }
+    (le pb venait que je voulais cliquer sur des btn affichés en liste, mais lorsque ng-blur je faisais
+      disparaitre la liste...dc pas de clique possible sur les btn car ng-blur effectué avt!)
+
+
+********************************************************************************************************
+    REFERENCE entre scope CTRL & SERVICE
+    *********************************
+    Lors que l'on initialise une var dans le CTRL provenant du SERVICE :
+    $scope.plannings = restPlanningService.getPlannings();
+
+    $scope.plannings reference la var du service, une modif dessus effectué ainsi une modif egalement sur la var du service...!!
+    ATTENTIION : lors d'un watch, la oldValue recup ne reference plus la var du service (au contraire de newValue)
+
+
+
+********************************************************************************************************
+    RETROUVER element contenant une value special
+    *********************************
+    var oldPlanning =   $scope.plannings.filter(function(obj){
+                            return obj.lastOpen == true;
+                        })[0];
+    .filter va filtrer tous les element de $scope.plannings dont le champ "lastOpen" est true
+    -> renvoi un array avec tous les elem répondant à la condition (== true)
+    si on ne cherche que 1 elem repondant à la condition on recup le premier elem de filter : [0]
+
+
+
+
+
+********************************************************************************************************
+    RETROUVER index into array with elem
+    *********************************
+    var index = category.ingredients.indexOf(ingr);
+    category.ingredients.splice(index, 1);
+
+
+
+
+
+********************************************************************************************************
+
+    *********************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
