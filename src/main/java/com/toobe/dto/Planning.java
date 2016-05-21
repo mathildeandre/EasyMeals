@@ -12,7 +12,7 @@ import java.util.List;
   /*
 
   NEW ....
-  //Planning = {id: .., name: myVeganPlanning, lastOpen: true, nbPersGlobal:4,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..], isForListShop: true, shoppingCategory:[...]}
+  //Planning = {id: .., name: myVeganPlanning, lastOpen: true, nbPersGlobal:4,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..], isForListShop: true, shoppingCategories:[...]}
   //WeekMeal = {id: .. weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
   //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
   //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}

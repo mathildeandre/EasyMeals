@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /*
-shoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
+ {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
 */
 public class ShoppingCategory {
     private int id;

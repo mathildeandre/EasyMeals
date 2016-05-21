@@ -321,7 +321,7 @@ public class PlanningDao {
         List<Planning> listPlanning = new ArrayList<Planning>();
         PreparedStatement stm;
         try {
-            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser+" AND isForListShop = 0");
+            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser);
             ResultSet res = stm.executeQuery();
             Long idPlanning;
             while(res.next()){

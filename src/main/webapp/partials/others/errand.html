@@ -3,7 +3,7 @@
     <div><h2>Mes Listes </h2></div>
 
 
-<div ng-show="listsShoppingPlanning.length == 0">
+<div ng-show="planningsShopping.length == 0">
     Créez votre liste de course en construisant votre planning dans l'onglet "PLANNINGS", puis :
     <br>
     -> "Générer liste de course"
@@ -11,7 +11,7 @@
     -> "Aller faire ses courses !"
 </div>
 
-<div ng-show="listsShoppingPlanning.length > 0">
+<div ng-show="planningsShopping.length > 0">
 
 
     <div class="divErrandTop">
@@ -23,7 +23,7 @@
         </button>&nbsp &nbsp
 
         Liste :
-        <select class="fieldErrand"  ng-model='currentListShoppingPlanning' ng-change="resetRecipesToDisplay()" ng-options='list.name for list in listsShoppingPlanning' ></select>
+        <select class="fieldErrand"  ng-model='currentPlanningShopping' ng-change="resetRecipesToDisplay()" ng-options='list.name for list in planningsShopping' ></select>
 
         &nbsp &nbsp
         <span class="glyphicon glyphicon-trash glyphDeleteListShop glyphiconBtn" ng-click="deleteListShop()"></span>
@@ -38,11 +38,11 @@
             <div class="myArticleTitle">
                 Courses &nbsp
                 <span ng-show="!modifyingListName">
-                    ({{currentListShoppingPlanning.name}}) &nbsp
+                    ({{currentPlanningShopping.name}}) &nbsp
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>
                 <span ng-show="modifyingListName">
-                    <input class="inputErrand" type="text" ng-model ='currentListShoppingPlanning.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
 
@@ -53,7 +53,7 @@
 
 
         <div class="myArticleBody" >
-            <div ng-repeat="category in currentListShoppingPlanning.listShopping.listShoppingCategories | orderBy:'name'"
+            <div ng-repeat="category in currentPlanningShopping.shoppingCategories | orderBy:'name'"
                  class="divCategory" ng-show="category.ingredients.length>0" ng-class="{divCategoryDone : isCategoryDone(category)}">
                 <div class="divTitleCategory">
                     {{category.name}}
@@ -85,11 +85,11 @@
             <div class="myArticleTitle">
                 Planning &nbsp
                 <span ng-show="!modifyingListName">
-                    ({{currentListShoppingPlanning.name}}) &nbsp
+                    ({{currentPlanningShopping.name}}) &nbsp
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>
                 <span ng-show="modifyingListName">
-                    <input class="inputErrand" type="text" ng-model ='currentListShoppingPlanning.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
                     <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
 
@@ -120,7 +120,7 @@
                      //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
                      //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
                 -->
-                <tr ng-repeat="weekMeal in currentListShoppingPlanning.planning.weekMeals" ng-show="weekMeal.show" >
+                <tr ng-repeat="weekMeal in currentPlanningShopping.weekMeals" ng-show="weekMeal.show" >
 
                     <th class="myTh thErrand" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(weekMeal.weekMealName)}}</th>
 
@@ -146,7 +146,7 @@
 
             <div>
                 <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
-                        <span ng-repeat="weekMeal in currentListShoppingPlanning.planning.weekMeals" class="checkbox checkbox-danger checkbox-inline">
+                        <span ng-repeat="weekMeal in currentPlanningShopping.weekMeals" class="checkbox checkbox-danger checkbox-inline">
                             <input type="checkbox"  ng-model="weekMeal.show" id="{{weekMeal.id}}">
                             <label for="{{weekMeal.id}}" ><b>{{displayMealType(weekMeal.weekMealName)}}</b> &nbsp&nbsp</label>
                         </span>
