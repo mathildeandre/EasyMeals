@@ -25,7 +25,21 @@ public class PlanningDao {
     //meal = {id: lunch4, nbPers:5 , recipes:[recipe1, recipe2, ...]} //ex lunch of thursday
     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
    */
-  private final static String CREATE_COPY_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser, nbPersGlobal, isForListShop) VALUES (?, ?, ?, ?, ?);\n";
+
+
+
+    public Planning createPlanningShopping(Connection conn, Long idPlanning, List<ShoppingCategory> shoppingCategories) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
+
+        putIsForListShop(conn, idPlanning, true);
+        insertShoppingCategories(conn, idPlanning, shoppingCategories);
+
+        return getPlanningById(conn, idPlanning);
+    }
+
+
+
+
+    private final static String CREATE_COPY_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser, nbPersGlobal, isForListShop) VALUES (?, ?, ?, ?, ?);\n";
     private final static String CREATE_COPY_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
     private final static String CREATE_COPY_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
     private final static String CREATE_COPY_REL_RECIPE_CASEMEAL = "INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal, nbPers) VALUES (?, ?, ?);\n";
@@ -157,7 +171,6 @@ public class PlanningDao {
     private final static String CREATE_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser) VALUES (?, ?, ?);\n";
     private final static String CREATE_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
     private final static String CREATE_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
-
     public Planning createPlanning(Connection conn, int idUser) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
         PreparedStatement stm, stmWM, stmCM;
         ResultSet res;
@@ -236,6 +249,7 @@ public class PlanningDao {
 
                 //idPlanning = res.getInt("id");
 
+                /*TODO - faire une fonction getWeekMeals */
                 /******* WEEK MEAL ******/
                 stm = conn.prepareStatement("SELECT * FROM PLANNING_WEEKMEAL  WHERE idPlanning = "+idPlanning);
                 ResultSet resWeekMeal = stm.executeQuery();
@@ -272,11 +286,18 @@ public class PlanningDao {
                     listWeekMeal.add(weekMeal);
                 }
 
+
+
+                /****** SHOPPING CATEGORY *******/
+                List<ShoppingCategory> shoppingCategories = getShoppingCategories(conn, idPlanning); //arrayPossiblement null
+
+
+
                 String name = res.getString("name");
                 boolean lastOpen = res.getInt("lastOpen") == 1;
                 int nbPersGlobal = res.getInt("nbPersGlobal");
                 boolean isForListShop = res.getInt("isForListShop") == 1;
-                planning = new Planning(idPlanning, name, lastOpen, nbPersGlobal, isForListShop, listWeekMeal);
+                planning = new Planning(idPlanning, name, lastOpen, nbPersGlobal, isForListShop, listWeekMeal, shoppingCategories);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -288,27 +309,6 @@ public class PlanningDao {
 
 
 
-
-    /*
-    NO USE .... -- On recup le planning d'un user avec le boolean lastOPen = true
-     */
-    public Planning getPlanningCurrentOfUser(Connection conn, int idUser){
-        Planning planning = new Planning();
-        PreparedStatement stm;
-        try {
-            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser+" AND lastOpen = true");
-            ResultSet res = stm.executeQuery();
-            Long idPlanning;
-            if(res.next()){
-                idPlanning = res.getLong("id");
-                planning =  getPlanningById(conn, idPlanning);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return planning;
-    }
 
 
 
@@ -335,6 +335,25 @@ public class PlanningDao {
         }
         return listPlanning;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -502,7 +521,151 @@ public class PlanningDao {
     }
 
 
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
+    /***********************************************************************************************************************************************************************************************/
 
+
+    /* ANNEXES */
+
+
+
+    private final static String INSERT_LIST_SHOPPING_CATEGORY = "INSERT INTO ListShopping_Category(idPlanning, idFoodCategory) VALUES (?, ?);\n";
+    private final static String INSERT_INGREDIENT_LISTSHOP = "INSERT INTO Ingredient_ListShop(nameFood, idListShopCategory, quantity, unit) VALUES (?, ?, ?, ?);\n";
+    public Planning insertShoppingCategories(Connection conn, Long idPlanning, List<ShoppingCategory> shoppingCategories) {
+        PreparedStatement stm;
+        ResultSet res;
+        int isOk = 0;
+        Long idShoppingCategory = null;
+        try {
+            for (ShoppingCategory shoppingCategory : shoppingCategories) {
+                if(shoppingCategory.getIngredients().size() > 0){//only if the category contains elements
+                    //1. INSERT LIST_SHOPPING_CATEGORY
+                    stm = conn.prepareStatement(INSERT_LIST_SHOPPING_CATEGORY, Statement.RETURN_GENERATED_KEYS);
+                    stm.setLong(1, idPlanning);
+                    stm.setInt(2, shoppingCategory.getId()); //idFoodCategory
+                    isOk = stm.executeUpdate();
+                    if (isOk == 0) {
+                        throw new SQLException("Creating SHOPPING_CATEGORY failed, no rows affected");
+                    }
+                    res = stm.getGeneratedKeys();
+                    if(res.next()){
+                        idShoppingCategory  = res.getLong(1);
+                    }
+
+                    for(Ingredient ingr :shoppingCategory.getIngredients()){
+                        //2. INSERT INGREDIENT_LISTSHOP
+                        stm = conn.prepareStatement(INSERT_INGREDIENT_LISTSHOP);
+                        stm.setString(1, ingr.getFood().getName()); //nameFood
+                        stm.setLong(2, idShoppingCategory); //idListShopCategory
+                        stm.setInt(3, ingr.getQty()); //quantity
+                        stm.setString(4, ingr.getUnit()); //unit
+                        isOk = stm.executeUpdate();
+                        if (isOk == 0) {
+                            throw new SQLException("Creating INGREDIENT_LISTSHOP failed, no rows affected");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return getPlanningById(conn, idPlanning);
+    }
+
+
+
+
+
+
+
+    public List<ShoppingCategory> getShoppingCategories(Connection conn, Long idPlanning){
+        List<ShoppingCategory> shoppingCategories = new ArrayList<ShoppingCategory>();
+        PreparedStatement stm;
+        try {
+            stm = conn.prepareStatement("SELECT ListShopping_Category.id as id, idFoodCategory, name, numRank  " +
+                            "FROM ListShopping_Category, Food_Category " +
+                            "WHERE idFoodCategory = food_category.id AND idPlanning = "+idPlanning);
+            ResultSet res = stm.executeQuery();
+            while(res.next()){
+                int idListShoppingCategory = res.getInt("id");
+                String nameFoodCategory = res.getString("name");
+                int numRank = res.getInt("numRank");
+
+                /* INGREDIENTS */
+                List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+                Ingredient ingr;
+                int qty, idCategoryIngr;
+                int idFood;
+                String unit, nameFood;
+                boolean isValidated;
+                stm = conn.prepareStatement("SELECT * FROM Ingredient_ListShop WHERE idListShopCategory = "+idListShoppingCategory);
+                ResultSet resIngredient = stm.executeQuery();
+                while(resIngredient.next()){
+                    qty = resIngredient.getInt("quantity");
+                    unit = resIngredient.getString("unit");
+                    //idFood = resIngredient.getInt("idFood");
+                    nameFood = resIngredient.getString("nameFood");
+                    //idCategoryIngr = resIngredient.getInt("idCategory");
+                    //isValidated = resIngredient.getBoolean("isValidated");
+                    //ingr = new Ingredient(qty, unit, new Food(new Long(1), nameFood, 1, false));
+                    ingr = new Ingredient(qty, unit, new Food(nameFood));
+                    ingredientList.add(ingr);
+                }
+                shoppingCategories.add(new ShoppingCategory(idListShoppingCategory, nameFoodCategory, numRank, ingredientList));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return shoppingCategories;
+    }
+
+
+    /*
+    NO USE .... -- On recup le planning d'un user avec le boolean lastOPen = true
+     */
+    public Planning getPlanningCurrentOfUser(Connection conn, int idUser){
+        Planning planning = new Planning();
+        PreparedStatement stm;
+        try {
+            stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE idUser = "+idUser+" AND lastOpen = true");
+            ResultSet res = stm.executeQuery();
+            Long idPlanning;
+            if(res.next()){
+                idPlanning = res.getLong("id");
+                planning =  getPlanningById(conn, idPlanning);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return planning;
+    }
 
 
 

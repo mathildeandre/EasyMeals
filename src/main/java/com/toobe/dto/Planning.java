@@ -12,7 +12,7 @@ import java.util.List;
   /*
 
   NEW ....
-  //Planning = {id: .., name: myVeganPlanning, lastOpen: true, nbPersGlobal:4,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+  //Planning = {id: .., name: myVeganPlanning, lastOpen: true, nbPersGlobal:4,  weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..], isForListShop: true, shoppingCategory:[...]}
   //WeekMeal = {id: .. weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
   //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
   //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
@@ -41,17 +41,19 @@ public class Planning {
     private int nbPersGlobal;
     private boolean isForListShop;
     private List<WeekMeal> weekMeals;
+    private List<ShoppingCategory> shoppingCategories;
 
     public Planning(){
 
     }
-    public Planning(Long id, String name, boolean lastOpen, int nbPersGlobal, boolean isForListShop, List<WeekMeal> weekMeals) {
+    public Planning(Long id, String name, boolean lastOpen, int nbPersGlobal, boolean isForListShop, List<WeekMeal> weekMeals, List<ShoppingCategory> shoppingCategories) {
         this.id = id;
         this.name = name;
         this.lastOpen = lastOpen;
         this.nbPersGlobal = nbPersGlobal;
         this.isForListShop = isForListShop;
         this.weekMeals = weekMeals;
+        this.shoppingCategories = shoppingCategories;
     }
 
     public Long getId() {
@@ -70,17 +72,8 @@ public class Planning {
         this.name = name;
     }
 
-    public List<WeekMeal> getWeekMeals() {
-        return weekMeals;
-    }
 
-    public void setWeekMeals(List<WeekMeal> weekMeals) {
-        this.weekMeals = weekMeals;
-    }
-
-    public boolean isLastOpen() {
-        return lastOpen;
-    }
+    public boolean isLastOpen() { return lastOpen; }
 
     public void setLastOpen(boolean lastOpen) {
         this.lastOpen = lastOpen;
@@ -101,6 +94,18 @@ public class Planning {
     public void setIsForListShop(boolean isForListShop) {
         this.isForListShop = isForListShop;
     }
+
+    public List<WeekMeal> getWeekMeals() {
+        return weekMeals;
+    }
+
+    public void setWeekMeals(List<WeekMeal> weekMeals) {
+        this.weekMeals = weekMeals;
+    }
+
+    public List<ShoppingCategory> getShoppingCategories() { return shoppingCategories; }
+
+    public void setShoppingCategories(List<ShoppingCategory> shoppingCategories) { this.shoppingCategories = shoppingCategories; }
 }
 
 

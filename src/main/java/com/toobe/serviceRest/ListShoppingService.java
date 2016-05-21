@@ -40,7 +40,6 @@ public class ListShoppingService {
     @Produces({ MediaType.APPLICATION_JSON })
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response createListShoppingPlanning(@PathParam("idPlanning") Long idPlanning, @PathParam("idUser") int idUser, List<ListShoppingCategory> listShoppingCategories){
-        System.out.println("idPlanning : "+idPlanning+" -- idUser : "+idUser+" -- listShopCat[0].name : "+ listShoppingCategories.get(0).getName());
         ListShoppingPlanning listShoppingPlanning = new ManagerGet().createListShoppingPlanning(idPlanning, idUser, listShoppingCategories);
         return Response.ok(listShoppingPlanning).build();
     }
