@@ -54,7 +54,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
-        origin:$scope.origins[0],
+        origin:"",
         categories:[],
         timeCooking:30,
         timePreparation:20,
