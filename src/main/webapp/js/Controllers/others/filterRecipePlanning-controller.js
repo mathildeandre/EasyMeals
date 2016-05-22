@@ -8,6 +8,7 @@ var myModule = angular.module('controllers');
 
 myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $window,  $log, restRecipeService) {
 
+    $scope.bonjourrrr = "bonjourMath";
     /**
      * ICI on a uniquement besoin la liste complete des recette : $scope.recipes (correspondante à recipeType (plat, dessert etc))
      *
