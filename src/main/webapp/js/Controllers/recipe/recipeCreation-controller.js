@@ -4,9 +4,8 @@
 var myModule = angular.module('controllers');
 
 myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $location, $routeParams,
-                                                   RecipeService, AppendixFunctionsService,
-                                                   restRecipeService, restFoodService, units,
-                                                    Upload, $timeout) {
+                                                   AppendixFunctionsService, restRecipeService,
+                                                   restFoodService, units, Upload, $timeout) {
 
     /*RECIPE = {
         name:"Burritos",

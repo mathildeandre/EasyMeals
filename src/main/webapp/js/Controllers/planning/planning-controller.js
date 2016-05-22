@@ -5,7 +5,7 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, AppendixFunctionsService, restRecipeService, restPlanningService, fourTypeMeal, units, steps) {
+myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsService, restRecipeService, restPlanningService) {
 
     $scope.$emit('intoPlanning'); //will tell to parents (global-controller.js) to modify pix
 
@@ -75,10 +75,13 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
         return obj.lastOpen == true;
     })[0];
 
+
+    /*
     $scope.changementCurrentPlanning = function(){
         //on vide listShop générée
         $scope.$broadcast('emptyListShop');
     }
+    */
 
 
 
@@ -104,9 +107,9 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
 
     // called on $watch '$scope.currentPlanning'
     var updatePlanningBDD = function(newValue, oldValue, scope){
-        $scope.$broadcast('calculListShopping');
         var newCaseMeal, oldCaseMeal;
         if(newValue.id != oldValue.id){
+            $scope.$broadcast('calculListShopping');
             //ATTENTION oldValue est une copy du dernier planning courant et ne reference plus notre planning....
             restPlanningService.makePlanningCurrent(newValue.id); //lastOpen...
 
@@ -114,6 +117,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
             //PUT : updateNamePlanning
             // -> on le fait dans 'modificationPlanningNameDONE()' car ici update a chaque nouvelle lettre ajoutee...
         }else{
+            $scope.$broadcast('calculListShopping');
             if(newValue.nbPersGlobal != oldValue.nbPersGlobal){
                 //PUT : updateNbPersGlobalPlanning
                 restPlanningService.putNbPersGlobalPlanning(newValue.id, newValue.nbPersGlobal)
@@ -187,60 +191,18 @@ myModule.controller('PlanningCtrl', function($scope, $log, RecipeService, Append
     }
 
     $scope.createNewPlanning = function(){
-        restPlanningService.createNewPlanning().then(function(data){
-            var newPlanning = data;
-            $scope.plannings.push(newPlanning);
-            var index = $scope.plannings.indexOf(newPlanning);
+        restPlanningService.createNewPlanning().then(function(index){ //2 = idUser
+
             $scope.currentPlanning = $scope.plannings[index];
-            $log.warn("new planning PUSHED")
+            $log.warn("new planning PUSHED - index : "+index)
             //putLastOpenPlanning se fait tout seul dans updatePlanningBDD() !
-        })
+        });
     }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* NO USEFULL ANYMORE
-    var initFourWeekMeals = function(nbDay){
-        var fourWeekMeals = [];
-        for(var i=0; i<fourTypeMeal.length; i++){
-            var typeMeal = fourTypeMeal[i];
-            var weekMeals = [];
-            for(var j=0; j<nbDay; j++){
-                var meal = {id: typeMeal+j, nbPers:$scope.globalNbPers, recipes:[]};
-                weekMeals.push(meal);
-            }
-            var varShow=false;
-            if(typeMeal == 'lunch' || typeMeal == 'dinner'){
-                varShow=true;
-            }
-            var aWeekMeal = {id:i, typeMeal:typeMeal, show:varShow, weekMeals:weekMeals};
-            fourWeekMeals.push(aWeekMeal);
-        }
-        return fourWeekMeals;
-    }
-    $scope.fourWeekMeals = initFourWeekMeals(7);
-
- */
 
 
     $scope.onOverTrash = function(){

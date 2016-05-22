@@ -28,7 +28,7 @@ ALTER TABLE Planning_WeekMeal ADD INDEX FKPlanning_W938841 (idPlanning), ADD CON
 ALTER TABLE Planning_CaseMeal ADD INDEX FKPlanning_C546459 (idPlanningWeekMeal), ADD CONSTRAINT FKPlanning_C546459 FOREIGN KEY (idPlanningWeekMeal) REFERENCES Planning_WeekMeal (id) ON DELETE CASCADE;
 ALTER TABLE Rel_Recipe_CaseMealPlanning ADD INDEX FKRel_Recipe36474 (idPlanningCaseMeal), ADD CONSTRAINT FKRel_Recipe36474 FOREIGN KEY (idPlanningCaseMeal) REFERENCES Planning_CaseMeal (id) ON DELETE CASCADE;
 
-ALTER TABLE ListShopping_Category ADD INDEX FKListShoppi989241 (idListShop), ADD CONSTRAINT FKListShoppi989241 FOREIGN KEY (idPlanning) REFERENCES Planning (id) ON DELETE CASCADE;
+ALTER TABLE ListShopping_Category ADD INDEX FKListShoppi989241 (idPlanning), ADD CONSTRAINT FKListShoppi989241 FOREIGN KEY (idPlanning) REFERENCES Planning (id) ON DELETE CASCADE;
 ALTER TABLE Ingredient_ListShop ADD INDEX FKIngredient293299 (idListShopCategory), ADD CONSTRAINT FKIngredient293299 FOREIGN KEY (idListShopCategory) REFERENCES ListShopping_Category (id) ON DELETE CASCADE;
 
 

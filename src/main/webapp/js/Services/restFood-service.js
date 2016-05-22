@@ -4,32 +4,40 @@
 
 var myService = angular.module('services');
 
-myService.service("restFoodService", function ($http, $q, $log) {
+myService.service("restFoodService", function ($http, $q, $log, restGlobalService) {
 
     /*
     foods = [{"id":1,"name":"steack","idCategory":2,"isValidated":false},{..}]
      */
-    var foods = [];
     var foodCategories = [];
+    var foods = [];
 
 
     function getFoodCategories(){
+        if(foodCategories.length == 0){
+            foodCategories = restGlobalService.getFoodCategories();
+            $log.warn("[restFood-service] getFoodCategories() --> on appel restGLobalService");
+        }
         return foodCategories;
     }
     function getFoods(){
+        if(foods.length == 0){
+            foods = restGlobalService.getFoods();
+            $log.warn("[restFood-service] getFoods() --> on appel restGLobalService");
+        }
         return foods;
     }
-
 
     function addFood(food){
         foods.push(food);
     }
 
 
+    /* useless
     function initLoadData(){
         $log.warn("[FOOD SERVICE] INIT - LOADING DATA")
 
-        /* FOOD CATEGORIES */
+        //FOOD CATEGORIES
         if(foodCategories == undefined || foodCategories.length == 0){
             getObjFromServer('/rest/foodCategories').then(function(data){ //2 = idUser
                 foodCategories = data;
@@ -37,7 +45,7 @@ myService.service("restFoodService", function ($http, $q, $log) {
 
             })
         }
-        /* FOODS */
+        // FOODS
         if(foods == undefined || foods.length == 0){
             getObjFromServer('/rest/foods').then(function(data){ //2 = idUser
                 foods = data;
@@ -46,25 +54,11 @@ myService.service("restFoodService", function ($http, $q, $log) {
             })
         }
     }
-
-
-    function getObjFromServer(url) {
-        return $http({
-            method: 'GET',
-            url: url
-        })
-            .then(function (response) {
-                if (response.status == 200) {
-                    return response.data;
-                }
-                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
-            })
-    };
+    */
 
     return {
         getFoodCategories: getFoodCategories,
         getFoods: getFoods,
-        addFood: addFood,
-        initLoadData: initLoadData
+        addFood: addFood
     };
 });

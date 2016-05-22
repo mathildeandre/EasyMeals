@@ -6,7 +6,7 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService, restRecipeService) {
+myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $window,  $log, restRecipeService) {
 
     /**
      * ICI on a uniquement besoin la liste complete des recette : $scope.recipes (correspondante à recipeType (plat, dessert etc))

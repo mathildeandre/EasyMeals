@@ -10,7 +10,11 @@ myModule.controller('SingleRecipeCtrl', function($scope, $routeParams, $location
     var recipeId = $routeParams.id;
     $scope.recipeType = recipeType;
     $scope.recipeId = recipeId;
-    $scope.recipe = restRecipeService.getSingleRecipe(recipeType, recipeId);
+
+    restRecipeService.getBDDSingleRecipe(recipeId).then(function(data){
+        $scope.recipe = data;
+    })
+
     $scope.showRecipe = $scope.recipe != null;
 
 });

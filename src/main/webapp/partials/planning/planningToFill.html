@@ -22,8 +22,8 @@
             <div class="myArticleTitle">
                 PLANNING : &nbsp
                 <span ng-show="!modifyingPlanningName">
-                    <select class="fieldPlanning noWidth"  ng-model='currentPlanning' ng-change="changementCurrentPlanning()"
-                            ng-options='planning.name for planning in plannings' ></select>
+                    <select class="fieldPlanning noWidth"  ng-model='currentPlanning'
+                            ng-options='planning.name for planning in plannings' ></select> <!-- ng-change="changementCurrentPlanning()"-->
                     &nbsp
                     <span ng-click="modifyPlanningName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>

@@ -147,7 +147,7 @@ public class RecipeDao {
             ResultSet resRecipe = stm.executeQuery();
 
             if(resRecipe.next()){
-                int idUser = resRecipe.getInt("idUser");
+                Long idUser = resRecipe.getLong("idUser");
                 int idRecipeType = resRecipe.getInt("idRecipeType");
                 String nameRecipeType = resRecipe.getString("nameRecipeType");
 
@@ -196,29 +196,21 @@ public class RecipeDao {
     /******* RECIPE PUBLIC NOT VALIDATED *******/
     /****************************/
      /* On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)*/
-    private static final String SELECT_RECIPES_PUBLIC_NOT_VALIDATED = "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND isValidated = 0 AND idType = ? ";
-
-    public List<Recipe> getRecipesPublicNotValidated(Connection conn, String nameRecipeType) {
+    private static final String SELECT_RECIPES_PUBLIC_NOT_VALIDATED =
+            "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
+            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND Recipe_Type.id = recipe.idType AND isPublic = 1 AND isValidated = 0 ";
+    public List<Recipe> getRecipesPublicNotValidated(Connection conn) {
         List<Recipe> listRecipe = new ArrayList<Recipe>();
         Recipe recipe;
         PreparedStatement stm;
         try {
-            /* on recup l'id de Recipe_Type correspondant a notre recipeType (ex : course) */
-            stm = conn.prepareStatement("SELECT * FROM RECIPE_TYPE WHERE name = '" + nameRecipeType + "'");
-            ResultSet res = stm.executeQuery();
-            int idRecipeType = 1;
-            if (res.next()) {
-                idRecipeType = res.getInt("id");
-            }
             /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (mnt idType)*/
             stm = conn.prepareStatement(SELECT_RECIPES_PUBLIC_NOT_VALIDATED);
-            stm.setInt(1, idRecipeType);
             ResultSet resRecipe = stm.executeQuery();
 
 
-            listRecipe = buildListRecipe(conn, resRecipe, idRecipeType, nameRecipeType, -1);
+            listRecipe = buildListRecipe(conn, resRecipe, new Long(-1));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -233,39 +225,27 @@ public class RecipeDao {
     /****************************/
     /******* RECIPES *******/
     /****************************/
-    /**
-     * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
-     */
-    private static final String SELECT_All_RECIPES_FOR_USER = "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND idType = ? " +
+
+
+    private static final String SELECT_All_RECIPES_FOR_USER_NoRecipeType =
+            "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
+            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND Recipe_Type.id = recipe.idType " +
             " UNION " +
-            "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id  AND idUser = ? AND idType = ? ";
-
-
-
-    public List<Recipe> getRecipes(Connection conn, String nameRecipeType, int idUser) {
+            "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
+            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id  AND idUser = ? AND Recipe_Type.id = recipe.idType  ";
+    public List<Recipe> getRecipesForUser(Connection conn, Long idUser){
         List<Recipe> listRecipe = new ArrayList<Recipe>();
         Recipe recipe;
         PreparedStatement stm;
         try {
-            /* on recup l'id de Recipe_Type correspondant a notre recipeType (ex : course) */
-            stm = conn.prepareStatement("SELECT * FROM RECIPE_TYPE WHERE name = '" + nameRecipeType + "'");
-            ResultSet res = stm.executeQuery();
-            int idRecipeType = 1;
-            if (res.next()) {
-                idRecipeType = res.getInt("id");
-            }
-            /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (: idType)*/
-            stm = conn.prepareStatement(SELECT_All_RECIPES_FOR_USER);
-            stm.setInt(1, idRecipeType);
-            stm.setInt(2, idUser);
-            stm.setInt(3, idRecipeType);
+            /* on fait la requete pr avoir toutes les recettes pr un user (entree, plat desserts etc)*/
+            stm = conn.prepareStatement(SELECT_All_RECIPES_FOR_USER_NoRecipeType);
+            stm.setLong(1, idUser);
             ResultSet resRecipe = stm.executeQuery();
 
-            listRecipe = buildListRecipe(conn, resRecipe, idRecipeType, nameRecipeType, idUser);
+            listRecipe = buildListRecipe(conn, resRecipe, idUser);
 
 
         } catch (SQLException e) {
@@ -273,7 +253,6 @@ public class RecipeDao {
         }
         return listRecipe;
     }
-
 
     /****************************************************************************************************************************************************************/
     /***************************************************************************************************************************************************************/
@@ -286,13 +265,13 @@ public class RecipeDao {
 
 
 
-    private List<Recipe> buildListRecipe(Connection conn, ResultSet resRecipe, int idRecipeType, String nameRecipeType, int idUser){
+    private List<Recipe> buildListRecipe(Connection conn, ResultSet resRecipe, Long idUser){
         List<Recipe> listRecipe = new ArrayList<Recipe>();
         Recipe recipe;
         try{
 
-            int idRecipe, nbPerson, rating, nbVoter, timeCooking, timePreparation;
-            String name, pixName;
+            int idRecipe, nbPerson, rating, nbVoter, timeCooking, timePreparation, idRecipeType;
+            String name, pixName, nameRecipeType;
             boolean isPublic, isValidated;
             User user;
             RecipeType recipeType;
@@ -323,6 +302,8 @@ public class RecipeDao {
                 isValidated = resRecipe.getBoolean("isValidated");
                 timeCooking = resRecipe.getInt("timeCooking");
                 timePreparation = resRecipe.getInt("timePreparation");
+                idRecipeType = resRecipe.getInt("idType");
+                nameRecipeType = resRecipe.getString("nameRecipeType");
 
                 user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
                 recipeType = new RecipeType(idRecipeType, nameRecipeType);
@@ -343,12 +324,12 @@ public class RecipeDao {
 
     private static final String SELECT_RelUserRecipe = "SELECT * FROM Rel_User_Recipe " +
             " WHERE idUser = ? AND idRecipe = ?";
-    private RelUserRecipe getRelUserRecipe(Connection conn, int idRecipe, int idUser){
+    private RelUserRecipe getRelUserRecipe(Connection conn, int idRecipe, Long idUser){
         RelUserRecipe relUserRecipe = new RelUserRecipe();
         PreparedStatement stm;
         try {
             stm = conn.prepareStatement(SELECT_RelUserRecipe);
-            stm.setInt(1, idUser);
+            stm.setLong(1, idUser);
             stm.setInt(2, idRecipe);
             ResultSet res = stm.executeQuery();
             if (res.next()) {
@@ -520,4 +501,64 @@ public class RecipeDao {
         }
         return insertOk != 0;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    /****************************************************************************************************************************************************************/
+    /***************************************************************************************************************************************************************/
+    /*******************************                     USELESSS below                                ************************************************************/
+    /*************************************************************************************************************************************************************/
+    /************************************************************************************************************************************************************/
+    /************************************************************************************************************************************************************/
+    /************************************************************************************************************************************************************/
+
+    /**
+     * ::::::::::::::::::::::: ATTTTTENTION :::::::::::::::::::       FCT QUI NE FONCTIONNE PAS -> buildListRecipe n'est plus adapté pour cette fct
+     * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
+     *
+    private static final String SELECT_All_RECIPES_FOR_USER = "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+            "FROM RECIPE, Recipe_Origin ro, User " +
+            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND idType = ? " +
+            " UNION " +
+            "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+            "FROM RECIPE, Recipe_Origin ro, User " +
+            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id  AND idUser = ? AND idType = ? ";
+    public List<Recipe> getRecipes(Connection conn, String nameRecipeType, int idUser) {
+        List<Recipe> listRecipe = new ArrayList<Recipe>();
+        Recipe recipe;
+        PreparedStatement stm;
+        try {
+            // on recup l'id de Recipe_Type correspondant a notre recipeType (ex : course)
+            stm = conn.prepareStatement("SELECT * FROM RECIPE_TYPE WHERE name = '" + nameRecipeType + "'");
+            ResultSet res = stm.executeQuery();
+            int idRecipeType = 1;
+            if (res.next()) {
+                idRecipeType = res.getInt("id");
+            }
+            // on fait la requete pr avoir les liste des plats en fonction de notre recipeType (: idType)*
+            stm = conn.prepareStatement(SELECT_All_RECIPES_FOR_USER);
+            stm.setInt(1, idRecipeType);
+            stm.setInt(2, idUser);
+            stm.setInt(3, idRecipeType);
+            ResultSet resRecipe = stm.executeQuery();
+
+            /******************************* ATTENTION FCT CI DESSOUS NE FONCTIONNE PAS.... *
+            //listRecipe = buildListRecipe(conn, resRecipe, idRecipeType, nameRecipeType, idUser);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listRecipe;
+    }
+     */
 }

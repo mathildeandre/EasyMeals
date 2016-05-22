@@ -2,7 +2,7 @@
  * Created by fabien on 14/03/2016.
  */
 
-myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll, $log, PlanningService, RecipeService, AppendixFunctionsService, ErrandService , restFoodService, restPlanningService, restListShoppingService, fourTypeMeal, units, steps) {
+myModule.controller('ListShoppingCtrl', function($scope, $location, $anchorScroll, $log, AppendixFunctionsService, restFoodService, restPlanningService)   {
 
 
     /*  $scope.categories =  [
@@ -12,6 +12,7 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
       ... ];*/
     $scope.categories = restFoodService.getFoodCategories();
 
+
     /* Reinitialise et initialise au tt debut les categories en ajoutant le champ ingredients  */
     var resetIngredientsOfCategories = function(){
         for(var i=0; i<$scope.categories.length; i++){
@@ -19,6 +20,7 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
         }
     }
     $scope.initCategories = resetIngredientsOfCategories(); //initCategories useless
+
 
 
     $scope.$on('emptyListShop', function() {
@@ -33,56 +35,38 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
      * ***********************************************************************************/
     var idList = 12;
     $scope.goShopping = function(){
-        //ListShoppingCategories -> $scope.categories
-        restListShoppingService.createListShoppingPlanning($scope.currentPlanning.id, 2, $scope.categories).then(function(data){
-            //return obj ListShoppingPlanning
 
-            //retirer currentPLanning of planningList
+        /* TODO epurer tout ca */
+        restPlanningService.createPlanningShopping($scope.currentPlanning, $scope.categories);
+        /*restPlanningService.createPlanningShoppingBDD($scope.currentPlanning.id, $scope.categories).then(function(data){
+            // VIEW
             var idPlanningToDelete = $scope.currentPlanning.id;
             var index = $scope.plannings.indexOf($scope.currentPlanning);
             $scope.plannings.splice(index, 1);
 
             if($scope.plannings.length == 0){//si on a delete last planning, on en cree un new
                 $scope.createNewPlanning();
-                //$scope.currentPlanning.lastOpen = true;
-
             }else{
                 $scope.currentPlanning = $scope.plannings[0];
                 $scope.currentPlanning.lastOpen = true;
             }
 
 
-            restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
+            //restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
 
 
 
 
             //AJOUT DANS VUE
             var newListShoppingPlanning = data;
-            restListShoppingService.addListShoppingPlanning(newListShoppingPlanning);
+            restPlanningService.addPlanningShopping(newListShoppingPlanning);
 
 
 
 
             $location.path("/errand");
         })
-
-
-
-
-
-        /****** NO USE ANYMORE (BELOW)
-        var listSP = {id : idList++, name : 'listShop_01/05/16',
-            listShopping:{name:"boom", listShoppingCategories:$scope.categories},
-            planning:{name:"boom", lastOpen:true, weekMeals: $scope.fourWeekMeals}
-        }
-        restListShoppingService.addListShoppingPlanning(listSP);
-        ErrandService.setIngrCategories($scope.categories);
-        ErrandService.setPlanning($scope.fourWeekMeals);
-        alert("list sauvegardee");
-
-        $location.path("/errand");//$location.hash(recipe.id);
-        // **/
+        */
     }
 
 
@@ -129,6 +113,8 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
      * ***********************************************************************************/
 
     $scope.calculListShopping = function(){
+
+        $log.info("[planningListShopping-ctrl] - calculListShopping() - name current planning : "+$scope.currentPlanning.name);
         resetIngredientsOfCategories();
 
         var meals = [];
@@ -243,5 +229,12 @@ myModule.controller('ListShoppingCtrl', function($scope, $location,$anchorScroll
     }
 
 
-    /**********************fin FCT ANNEXES pr calculListShopping()******************************************************************/
+    /********************** APPELEE juste a l'initialisation ******************************************************************/
+    $scope.initCalculListShopping = function(){
+        //$log.info("[planningListShopping-ctrl] - initCalculListShop() - xxx call calculLIstShop();  name current planning : "+$scope.currentPlanning.name);
+        $scope.calculListShopping();
+    }
+    $scope.initCalculListShopping();
+    /**********************************************/
+
 });

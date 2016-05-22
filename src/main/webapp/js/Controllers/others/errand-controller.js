@@ -4,55 +4,31 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('ErrandCtrl', function($scope, $log, $location, ErrandService, AppendixFunctionsService, restPlanningService, restListShoppingService) {
+myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunctionsService, restPlanningService) {
 
     $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
 
+    $scope.planningsShopping = restPlanningService.getPlanningsShopping();
 
-
-    $scope.listsShoppingPlanning = restListShoppingService.getListsShoppingPlanning();
-
-    $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[$scope.listsShoppingPlanning.length-1];
-
-    //$scope.listName = $scope.currentListShoppingPlanning.name;
-
-    /*
-    $scope.changeList = function(listSelected){
-        $log.debug("changeLIst : id "+listSelected.id)
-        for(var i=0; i<$scope.listsShoppingPlanning.length; i++){
-            if(listSelected.id == $scope.listsShoppingPlanning[i].id){
-                $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[i];
-                //$scope.listName = $scope.currentListShoppingPlanning.name;
-            }
-        }
-    }
-    */
+    $scope.currentPlanningShopping = $scope.planningsShopping[$scope.planningsShopping.length-1];
 
     $scope.cloneIntoMyPlannings = function(){
-        restPlanningService.cloneIntoMyPlannings($scope.currentListShoppingPlanning.planning);
+        restPlanningService.cloneIntoMyPlannings($scope.currentPlanningShopping);
     }
 
 
 
     $scope.deleteListShop = function(){
-        var idListShoppingPlanningToDelete = $scope.currentListShoppingPlanning.id;
+        var idPlanningShoppingToDelete = $scope.currentPlanningShopping.id;
         //delete from VIEW
-        var index = $scope.listsShoppingPlanning.indexOf($scope.currentListShoppingPlanning);
-        $scope.listsShoppingPlanning.splice(index, 1);
-        $scope.currentListShoppingPlanning = $scope.listsShoppingPlanning[0];
+        var index = $scope.planningsShopping.indexOf($scope.currentPlanningShopping);
+        $scope.planningsShopping.splice(index, 1);
+        $scope.currentPlanningShopping = $scope.planningsShopping[0];
         //delete from BDD
-        restListShoppingService.deleteListShoppingPlanningById(idListShoppingPlanningToDelete);
+        //restListShoppingService.deleteListShoppingPlanningById(idListShoppingPlanningToDelete);
+        restPlanningService.deletePlanningShopping(idPlanningShoppingToDelete);
+
     }
-
-
-
-    //$scope.myLists = ErrandService.getLists();
-    //$scope.categories = ErrandService.getIngrCategories();
-    //$scope.fourWeekMeals = ErrandService.getPlanning();
-
-
-
-    /* copy of planning-controller.js -> for th row */
 
 
     /* mealType = breakfast, lunch, snack, dinner*/
@@ -100,26 +76,15 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, ErrandServic
 
 
     $scope.ingredientDone = function(category, ingr){
-
         var index = category.ingredients.indexOf(ingr); //fonctionne aussi tres bien
         category.ingredients[index].done = true;;
-
     }
     $scope.reinitList = function(){
-        var categories = $scope.currentListShoppingPlanning.listShopping.listShoppingCategories;
+        var categories = $scope.currentPlanningShopping.shoppingCategories;
         for(var i=0; i<categories.length; i++){
             for(var j=0; j<categories[i].ingredients.length; j++){
                 categories[i].ingredients[j].done = false;
             }
-
-        }
-    }
-    $scope.reinitListOLD = function(){
-        for(var i=0; i<$scope.categories.length; i++){
-            for(var j=0; j<$scope.categories[i].ingredients.length; j++){
-                $scope.categories[i].ingredients[j].done = false;
-            }
-
         }
     }
 
@@ -131,11 +96,6 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, ErrandServic
             }
         }
         return isDone;
-    }
-    $scope.myViewListId = 0;
-    $scope.changeViewList = function(listId){
-        $scope.categories = ErrandService.changeViewList(listId);
-        $scope.myViewListId = listId;
     }
     $scope.isSelected = function(listId){ //NE MARCHE PAS....
         //alert("bonjou selected");

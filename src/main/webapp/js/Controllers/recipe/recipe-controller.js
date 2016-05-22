@@ -5,7 +5,7 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $window,  $log, RecipeService, AppendixFunctionsService, restRecipeService, restFactory, $http, $q) {
+myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $window,  $log,  $http, $q, AppendixFunctionsService, restRecipeService) {
 
     $scope.$emit('intoRecipe'); //will tell to parents (global-controller.js) to modify pix
 
