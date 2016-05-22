@@ -3,7 +3,9 @@
  */
 var myModule = angular.module('controllers');
 
-myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $location, $routeParams, AppendixFunctionsService, restRecipeService, restFoodService, units) {
+myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $location, $routeParams,
+                                                   AppendixFunctionsService, restRecipeService,
+                                                   restFoodService, units, Upload, $timeout) {
 
     /*RECIPE = {
         name:"Burritos",
@@ -54,7 +56,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
-        origin:$scope.origins[0],
+        origin:"",
         categories:[],
         timeCooking:30,
         timePreparation:20,
@@ -235,6 +237,43 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
         }
 
     */
+
+    //UPLOAD IMAGE
+    $scope.uploadPic = function(file) {
+        file.upload = Upload.upload({
+            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+            data: {file: file}
+        });
+
+        file.upload.then(function (response) {
+            alert(response.data);
+            $timeout(function () {
+                file.result = response.data;
+            });
+        }, function (response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+    }
+
+
+    // upload on file select or drop
+    $scope.upload = function (file) {
+        Upload.upload({
+            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+            data: {file: file}
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.path + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+    };
 });
 
 

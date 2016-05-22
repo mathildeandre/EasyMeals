@@ -674,6 +674,71 @@ select::selection,option::selection { /* ne fonctionne pas  */
     vertical-align: top;
 }
 
+.redBorder{
+     border: 2px solid red;
+ }
+
+.greenBorder{
+    border: 2px solid green;
+}
+
+.fieldCreationNameRecipe{
+    width: 40%;
+}
+
+.fieldRecipeCreationPrepTime{
+    width: 40%;
+}
+
+.fieldRecipeCreationCookTime{
+    width: 40%;
+}
+
+.css-form input.ng-valid.ng-touched{
+    border:1px solid green;
+}
+
+.css-form input.ng-invalid.ng-touched{
+    border:1px solid red;
+}
+
+.createRecipe{
+    display: inline-block;
+}
+
+.fieldRecipeCreationNbPers{
+    width: 35%;
+}
+
+.fieldRecipeCreationTimeCooking{
+    padding-left: 62px;
+}
+
+.fieldRecipeCreationSpecilaity{
+    width: 20%;
+}
+
+.fieldRecipeCreationCategory{
+    width: 75%;
+    margin-left: 10px;
+    margin-top: -5px;
+}
+
+.fieldRecipeCreationCategoryChoice{
+    margin-left: 10px;
+}
+
+.myAddon{
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #eee;
+    padding: 5px;
+    vertical-align: top;
+}
+
+
+
 
 /**********************************************************************  DRAG & DROP   ********************************************************************************************/
 
@@ -1482,6 +1547,11 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .formIngredients{
     margin:20px 0 30px 0;
 }
+
+.formIngredients2{
+    margin:10px 0 30px 0;
+}
+
 .myBlockFoodProposition{
     border: 1px solid lightgrey;
     border-radius: 3px;
@@ -1504,9 +1574,13 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color: white;
 }
 
+.formDescription{
+    margin:20px 0 30px 0;
+}
+
 .descriptArea{
     text-align: left;
-    width:22vw;
+    width:35vw;
     min-width:200px;
 }
 
@@ -1517,6 +1591,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-bottom: 10px;
 }
 
+
+.butonCreateRecipe{
+    margin-top: 5px;
+}
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
 /******************************************************************* --END--  RECIPE CREATION   ************************************************************************************************/

@@ -3,7 +3,7 @@
  */
 
 
-angular.module('myApp', ['controllers','services', 'ngRoute'] )
+angular.module('myApp', ['controllers','services', 'ngRoute', 'ngFileUpload'] )
     .config(['$routeProvider',
         function($routeProvider) {
             $routeProvider

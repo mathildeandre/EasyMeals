@@ -1,46 +1,236 @@
-<article class="myArticle artRecipeCreation"  ng-controller="RecipeCreationCtrl">
+<article class="myArticle artRecipeCreation" ng-controller="RecipeCreationCtrl">
 
-    <div class="myArticleHeading artHeadingRecipeCreation" >
+    <div class="myArticleHeading artHeadingRecipeCreation">
         <div class="myArticleTitle titleInlineBlock">Creation {{displayRecipeTypeName}}</div>
         <div class="rightInlineBlock">
-            <a href="#/recipe/{{recipeTypeName}}"  class="btn btn-warning">
+            <a href="#/recipe/{{recipeTypeName}}" class="btn btn-warning">
                 Revenir aux recettes
                 &nbsp
-                <span class="glyphicon glyphicon-share-alt " ></span>
+                <span class="glyphicon glyphicon-share-alt "></span>
             </a> <!--creer nouveau plat-->
 
         </div>
     </div>
 
 
-
     <div class="myArticleBody">
-        <form role="form" class="css-form">
-            <div class="form-group">
-                Nom recette :
-                <input class="fieldRecipeCreation nameRecipe"  type="text" ng-model ='recipe.name' placeholder="Nom recette" required />
+        <form name="form" novalidate class="css-form">
+            <div class="lineRecipeInit">
+                <div class="form-group fieldCreationNameRecipe inlineBlock">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span>
+                        <input class="form-control "
+                               placeholder="Recipe name (max 20 char)"
+                               type="text"
+                               ng-model="recipe.name"
+                               name="rName"
+                               ng-maxlength="20"
+                               required/>
+
+                    </div>
+                            <span ng-show="form.rName.$error.required && form.rName.$dirty">
+                                Required
+                            </span>
+
+                    <!--
+                    Nom recette :
+                    <input class="fieldRecipeCreation nameRecipe"  type="text" ng-model ='recipe.name' placeholder="Nom recette" required />
+                    -->
+                </div>
+                <div class="form-group fieldRecipeCreationNbPers inlineBlock">
+                    <div class="input-group ">
+                        <span class="input-group-addon"> Pour : </span>
+                        <!-- class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span> -->
+                        <input class="form-control"
+                               placeholder="4"
+                               type="number"
+                               ng-model="recipe.nbPerson"
+                               name="nbPers"
+                               ng-maxlength="20"
+                               required/>
+                        <span class="input-group-addon"> personnes </span>
+                    </div>
+                            <span ng-show="form.nbPers.$error.required && form.nbPers.$dirty">
+                                Required
+                            </span>
+                    <!--
+                    Nombre de personnes :
+                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" required/>
+                    -->
+                </div>
             </div>
-            <div class="form-group">
-                Nombre de personnes :
-                <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" required/>
-            </div>
-            <div class="form-group">
-                Temps de Préparation (min) :
-                <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timePreparation' min="0" step="5" required />
-            </div>
-            <div class="form-group">
-                Temps de Cuisson (min) :
-                <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timeCooking' min="0"  step="5" required />
+            <div class="lineTime">
+                <div class="form-group fieldRecipeCreationPrepTime inlineBlock">
+                    <div class="input-group ">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                        <span class="input-group-addon">Preparation</span>
+                        <input class="form-control"
+                               placeholder="20"
+                               type="number"
+                               ng-model="recipe.timePreparation"
+                               name="timePrep"
+                               ng-maxlength="20"
+                               required/>
+                        <span class="input-group-addon"> min </span>
+
+                        <!-- <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number"
+                                ng-model='recipe.timePreparation' min="0" step="5" required/> -->
+
+                    </div>
+                    <span ng-show="form.timePrep.$error.required && form.timePrep.$dirty">
+                                Required
+                    </span>
+                </div>
+                <div class="form-group fieldRecipeCreationCookTime inlineBlock">
+                    <div class="input-group ">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                        <span class="input-group-addon">Cuisson</span>
+                        <input class="form-control"
+                               placeholder="20"
+                               type="number"
+                               ng-model="recipe.timeCooking"
+                               name="timeCook"
+                               required/>
+                        <span class="input-group-addon"> min </span>
+                        <!--
+                        <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number"
+                               ng-model='recipe.timeCooking' min="0" step="5" required/>
+                        min
+                        --
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                Spécialité :
-                <select class="fieldRecipeCreation" ng-model='recipe.origin' ng-options='origin.name for origin in origins' ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
+            <div class="lineSpeciality">
+                <div class="form-group fieldRecipeCreationSpecilaity inlineBlock">
+                    <div class="input-group ">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
+                        <select class="fieldRecipeCreation" ng-model='recipe.origin'
+                                ng-options='origin.name for origin in origins'>
+                            <option value="" disabled="disabled">Specialite</option>
+                        </select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
+                    </div>
+                    <span ng-show="form.number.$error.required && form.number.$dirty">
+                                Required
+                    </span>
+                </div>
             </div>
 
-            <div class="form-group">
-                Recette :
-                <span class="radio radio-warning radio-inline">
+            <div>
+                <div class="form-group inlineBlock">
+                    <div class="input-group ">
+                        <select class="fieldRecipeCreation" ng-model='recipe.origin'
+                                ng-options='origin.name for origin in origins'>
+                            <option value="" disabled> Specialite</option>
+                        </select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
+                    </div>
+                </div>
+
+                <!---- ------------------------- CATEGORIE ----------------------------->
+                <div class="form-group fieldRecipeCreationCategory inlineBlock">
+                    <div class="input-group ">
+                        <span class="myAddon ">Categories </span>
+
+                        <span ng-repeat="category in categories"
+                              class="fieldRecipeCreationCategoryChoice checkbox checkbox-warning
+                              checkbox-inline">
+                        <input type="checkbox" ng-model="category.checked" id="{{category.id}}">
+                        <label for="{{category.id}}">{{category.name}}</label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!---- ------------------------- INGREDIENTS - ---------------------------->
+            <div class="form-group formIngredients2">
+
+                <div class="inlineBlockAlignTop">
+                    Ingrédients : &nbsp
+                </div>
+
+                <div class="input-group ">
+                    <div class="inlineBlock">
+
+                        <div class="rowIngredientInput myAddon lineIngredient"
+                             ng-repeat="ingredient in recipe.ingredients ">
+                            <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number"
+                                   ng-model='ingredient.qty' min="0" step="{{unitStep(ingredient.unit)}}"
+                                   placeholder="Ex: 50" required/>
+                            <select class="fieldRecipeCreationUnit fieldRecipeCreation" ng-model='ingredient.unit'
+                                    ng-options='unit for unit in units'></select>
+
+                            <input class="fieldRecipeCreation nameFood" type="text" ng-model='ingredient.food.name'
+                                   class="inputIngredientFoodName"
+                                   ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}"
+                                   ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()"
+                                   ng-keyup="keyUpdateFilter(ingredient.food.name)" placeholder="aliment" required/>
+
+                            <button type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter"
+                                    ng-click="removeRowIngredient($index,ingredient)">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        </div>
+
+                        <button type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="addRowIngredient()">
+                            <span class="glyphicon glyphicon-plus littlePlus"></span>
+                            <span class="txtFilter">INGREDIENT</span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="myBlockFoodProposition" ng-show="showFoods">
+                    <div class="myBlockFoodPropositionTitle">Proposition(s) aliment(s)</div>
+                        <span class="foodProposition"
+                              ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
+                            <button type="button" class="myBtnEmpty myBtnEmptyRecipe"
+                                    ng-mousedown="fillUpIngrWithFood($index, $event, food) ">
+                                <span class="txtFilter">{{food.name}}</span>
+                            </button>
+                        </span>
+                </div>
+            </div>
+
+
+            <!---- ------------------------- DESCRIPTIONS - ---------------------------->
+
+            <div class="form-group formDescription">
+                <div class="inlineBlockAlignTop">
+                    Préparation : &nbsp
+                </div>
+
+                <div class="input-group ">
+                    <div class="inlineBlockAlignTop">
+                        <div class="rowDescriptionInput myAddon"
+                             ng-repeat="description in recipe.descriptions ">
+                            <div class="inlineBlockAlignTop">
+                                Etape {{description.numDescrip}}
+                            </div>
+
+                            <div class="inlineBlockAlignTop">
+                            <textarea class="fieldRecipeCreation descriptArea" ng-model='description.name'
+                                      placeholder="Etape n°{{description.numDescrip}}" rows="1"
+                                      ng-keyup="pressEnterAreaDescrip($event)"></textarea>
+                            </div>
+                            <div class="inlineBlockAlignTop">
+                                <button type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter"
+                                        ng-click="removeDescription($index,ingredient)">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="addDescription()">
+                            <span class="glyphicon glyphicon-plus littlePlus"></span>
+                            <span class="txtFilter">ETAPE DESCRIPTION</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+             <span class="radio radio-warning radio-inline ">
                     <input type="radio" ng-model="recipe.isPublic" ng-value="true"
                            checked="checked" id="public1">
                     <label for="public1">
@@ -55,119 +245,64 @@
                     </label>
                 </span>
 
-                <!--
-                $scope.publicOrNots = [{id:"public1", name:"publique", value:true},{id:"private1", name:"privée", value:false} ]
-                <span  ng-repeat="publicornot in publicOrNots" class="radio radio-warning radio-inline">
-                    <input type="radio" ng-model="recipe.isPublic" ng-value="publicornot.value"
-                           checked="checked" id="{{publicornot.id}}">
-                    <label for="{{publicornot.id}}">
-                        {{publicornot.name}}
-                    </label>
-                </span>-->
-            </div>
-
-
-
-
-            <!---- ------------------------- CATEGORIE ----------------------------->
-            <div class="form-group">
-                Categorie()s :
-                <span ng-repeat="category in categories" class="checkbox checkbox-warning checkbox-inline">
-                    <input type="checkbox"  ng-model="category.checked" id="{{category.id}}">
-                    <label for="{{category.id}}" >{{category.name}}</label>
-                </span>
-            </div>
-
-
-            <!---- ------------------------- INGREDIENTS - ---------------------------->
-            <div class="form-group formIngredients" >
-
-                <div class="inlineBlockAlignTop" >
-                    Ingrédient(s): &nbsp &nbsp &nbsp
-                </div>
-
-                <div class="inlineBlock">
-
-                    <div class="rowIngredientInput" ng-repeat="ingredient in recipe.ingredients " >
-                        <input class="fieldRecipeCreation fieldRecipeCreationWidth"  type="number" ng-model ='ingredient.qty' min="0"   step="{{unitStep(ingredient.unit)}}" placeholder="Ex: 50"  required />
-                        <select class="fieldRecipeCreation" ng-model='ingredient.unit'  ng-options='unit for unit in units' ></select>
-
-                        <input class="fieldRecipeCreation nameFood" type="text" ng-model ='ingredient.food.name' class="inputIngredientFoodName"  ng-class="{backgroundRed:ingredient.food.id==0 , backgroundGreen:ingredient.food.id>0}"
-                               ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()" ng-keyup="keyUpdateFilter(ingredient.food.name)"  placeholder="aliment" required />
-
-                        <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeRowIngredient($index,ingredient)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                    </div>
-
-                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="addRowIngredient()">
-                        <span class="glyphicon glyphicon-plus littlePlus"></span>
-                        <span class="txtFilter">INGREDIENT</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="myBlockFoodProposition" ng-show="showFoods">
-                <div class="myBlockFoodPropositionTitle" >Proposition(s) aliment(s)</div>
-                <span class="foodProposition"   ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
-                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe"  ng-mousedown="fillUpIngrWithFood($index, $event, food) ">
-                        <span class="txtFilter">{{food.name}}</span>
-                    </button>
-                </span>
-            </div>
-
-
-            <!---- ------------------------- DESCRIPTIONS - ---------------------------->
-
-            <div class="form-group">
-                <div class="inlineBlockAlignTop">
-                    Description(s): &nbsp &nbsp &nbsp
-                </div>
-
-                <div class="inlineBlockAlignTop">
-                    <div class="rowDescriptionInput" ng-repeat="description in recipe.descriptions " >
-                        <div class="inlineBlockAlignTop">
-                            {{description.numDescrip}} -
-                        </div>
-
-                        <div class="inlineBlockAlignTop">
-                            <textarea class="fieldRecipeCreation descriptArea" ng-model ='description.name'
-                                      placeholder="Etape n°{{description.numDescrip}}" rows="1" ng-keyup="pressEnterAreaDescrip($event)" ></textarea>
-                        </div>
-                        <div class="inlineBlockAlignTop">
-                            <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeDescription($index,ingredient)">
-                                <span class="glyphicon glyphicon-minus"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="addDescription()">
-                        <span class="glyphicon glyphicon-plus littlePlus"></span>
-                        <span class="txtFilter">ETAPE DESCRIPTION</span>
-                    </button>
-
-                </div>
-
-            </div>
+            <!--
+            $scope.publicOrNots = [{id:"public1", name:"publique", value:true},{id:"private1", name:"privée", value:false} ]
+            <span  ng-repeat="publicornot in publicOrNots" class="radio radio-warning radio-inline">
+                <input type="radio" ng-model="recipe.isPublic" ng-value="publicornot.value"
+                       checked="checked" id="{{publicornot.id}}">
+                <label for="{{publicornot.id}}">
+                    {{publicornot.name}}
+                </label>
+            </span>-->
 
             <br>
 
             <!--<input type="submit" class="btn btn-warning" value="Créer {{recipe.name}}" ng-click="createRecipe()" />-->
-            <button type="button" class="btn btn-warning"  ng-click="createRecipe()">
-                Créer {{recipe.name}}
+            <!--
+            <a class="btn  btn-success btn-block" type="submit" ng-click="createRecipe()"
+               ng-disabled="form.$invalid"> Créer votre
+                recette {{recipe.name}}
+            </a>
+            -->
+
+
+            <button type="submit" class="butonCreateRecipe btn btn-warning btn-block" ng-click="createRecipe()"
+                    ng-disabled="form.$invalid || form.$pending">
+                Créer votre recette {{recipe.name}}
             </button>
         </form>
+
+        <form name="myForm">
+            <fieldset>
+                <br>Photo:
+                <input type="file" ngf-select ng-model="picFile" name="file"
+                       accept="image/*" ngf-max-size="2MB" required
+                       ngf-model-invalid="errorFile">
+                <i ng-show="myForm.file.$error.maxSize">File too large
+                    {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+                <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+                <br>
+                <button ng-click="uploadPic(picFile)">Submit</button>
+                <span class="progress" ng-show="picFile.progress >= 0">
+                     <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
+                </span>
+                <span ng-show="picFile.result">Upload Successful</span>
+                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+            </fieldset>
+            <br>
+        </form>
+
+        <div class="button" ngf-select="upload($file)">Upload on file select</div>
+
     </div>
-
-
-
-
 
 
     <!-- DEBUG -->
     <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-        <div >
-            SPECIALITE ::: <div> {{recipe.origin}}</div>
+        <div>
+            SPECIALITE :::
+            <div> {{recipe.origin}}</div>
             CATEGORIES :::
             <div ng-repeat="category in recipe.categories ">
                 {{category}}
