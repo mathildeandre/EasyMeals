@@ -25,7 +25,7 @@ public class RecipeService {
     /*********************/
     /******** GET ********/
     /*********************/
-
+    /*
     @Path("recipes/{recipeType}/{idUser}") //recipes/course/2
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
@@ -33,6 +33,14 @@ public class RecipeService {
 
         System.out.println("[WEB SERVICE] - fct getRecipes - @Path : 'recipes/"+recipeType+"/"+idUser+"'");
         List<Recipe> list = ManagerGet.getInstance().getRecipes(recipeType, idUser);
+        return Response.ok(list).build();
+    }
+    */
+    @Path("recipes/{idUser}")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getRecipesForUser(@PathParam("idUser") Long idUser){
+        List<Recipe> list = ManagerGet.getInstance().getRecipesForUser(idUser);
         return Response.ok(list).build();
     }
 
@@ -63,11 +71,11 @@ public class RecipeService {
     }
 
 
-    @Path("/recipePublicNotValidated/{recipeType}")
+    @Path("/recipePublicNotValidated")
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipes(@PathParam("recipeType") String recipeType){
-        List<Recipe> list = ManagerGet.getInstance().getRecipesPublicNotValidated(recipeType);
+    public Response getRecipes(){
+        List<Recipe> list = ManagerGet.getInstance().getRecipesPublicNotValidated();
         return Response.ok(list).build();
     }
 

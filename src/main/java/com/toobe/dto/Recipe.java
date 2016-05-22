@@ -15,7 +15,7 @@ import java.util.List;
          isPublic : true;
          idUser : {id:2, pseudo: 'mathou', email:'math@gmail.fr'};
         "pixName":"burritos.jpg",
-        "recipeType":"course",
+        "recipeType":{idType:1, nameType:"course"},
         "nbPerson":9,
         "ingredients":[{"qty":200,"unit":"g","food":{"id":1,"name":"cabillaud","idCategory":5, validated:true}},{..},...],
         "descriptions":[{"name":"faire cuire steack","noDescip":1},{"name":"mettre dans crepe avec legumes","noDescip":2},{"name":"Votre burritos est pret !","noDescip":3}],

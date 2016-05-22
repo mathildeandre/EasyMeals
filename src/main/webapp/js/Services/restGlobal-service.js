@@ -103,41 +103,36 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                             recipeTypes = data;
                             $log.warn("recipeTypes loaded!")
 
-                            /* STARTERS */
-                            return getObjFromServer('/rest/recipes/starter/2').then(function(data){ //2 = idUser
-                                starters = data;
-                                initComplement(starters);
-                                $log.warn("starters loaded!")
+                            /* RECIPES */
+                            return getObjFromServer('/rest/recipes/2').then(function(data){ //2 = idUser
+                                var allRecipes = data;
+                                initComplement(allRecipes);
+                                $log.warn("allRecipes loaded!")
+                                for(var i=0; i<allRecipes.length; i++){
+                                    //$log.error("TRI ALL RECIPES : namerecipe : "+allRecipes[i].name +" -- recipeNameType : "+allRecipes[i].recipeType.nameType)
+                                    switch(allRecipes[i].recipeType.nameType){
+                                        case 'starter' : starters.push(allRecipes[i]); break;
+                                        case 'course' :  courses.push(allRecipes[i]); break;
+                                        case 'dessert' : desserts.push(allRecipes[i]); break;
+                                        case 'breakfast' :  break;
+                                        case 'cocktail' : break;
+                                    }
+                                }
 
-                                /* COURSES */
-                                return getObjFromServer('/rest/recipes/course/2').then(function(data){ //2 = idUser
-                                    courses = data;
-                                    initComplement(courses);
-                                    $log.warn("courses loaded!")
+                                /* FOOD CATEGORIES */
+                                return getObjFromServer('/rest/foodCategories').then(function(data){
+                                    foodCategories = data;
+                                    $log.warn("foodCategories loaded!")
 
-                                    /* DESSERTS */
-                                    return getObjFromServer('/rest/recipes/dessert/2').then(function(data){ //2 = idUser
-                                        desserts = data;
-                                        initComplement(desserts);
-                                        $log.warn("desserts loaded!")
-
-
-                                        /* FOOD CATEGORIES */
-                                        return getObjFromServer('/rest/foodCategories').then(function(data){
-                                            foodCategories = data;
-                                            $log.warn("foodCategories loaded!")
-
-                                            /* FOODS */
-                                            return getObjFromServer('/rest/foods').then(function(data){ //2 = idUser
-                                                foods = data;
-                                                $log.warn("foods loaded!")
+                                    /* FOODS */
+                                    return getObjFromServer('/rest/foods').then(function(data){ //2 = idUser
+                                        foods = data;
+                                        $log.warn("foods loaded!")
 
 
 
-                                                isInitGlobalDone = true;
+                                        isInitGlobalDone = true;
 
-                                            })
-                                        })
                                     })
                                 })
                             })

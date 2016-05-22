@@ -49,13 +49,19 @@ public class ManagerGet {
     /*********************************************/
     /************* RECIPE ***********************/
     /*******************************************/
+    /*
     public List<Recipe> getRecipes(String recipeType, int idUser){
         startConnection();
         return recipeDao.getRecipes(conn, recipeType, idUser);
     }
-     public List<Recipe> getRecipesPublicNotValidated(String recipeType){
+    */
+    public List<Recipe> getRecipesForUser(Long idUser){
         startConnection();
-        return recipeDao.getRecipesPublicNotValidated(conn, recipeType);
+        return recipeDao.getRecipesForUser(conn, idUser);
+    }
+     public List<Recipe> getRecipesPublicNotValidated(){
+        startConnection();
+        return recipeDao.getRecipesPublicNotValidated(conn);
     }
 
 
