@@ -35,38 +35,7 @@ myModule.controller('ListShoppingCtrl', function($scope, $location, $anchorScrol
      * ***********************************************************************************/
     var idList = 12;
     $scope.goShopping = function(){
-
-        /* TODO epurer tout ca */
         restPlanningService.createPlanningShopping($scope.currentPlanning, $scope.categories);
-        /*restPlanningService.createPlanningShoppingBDD($scope.currentPlanning.id, $scope.categories).then(function(data){
-            // VIEW
-            var idPlanningToDelete = $scope.currentPlanning.id;
-            var index = $scope.plannings.indexOf($scope.currentPlanning);
-            $scope.plannings.splice(index, 1);
-
-            if($scope.plannings.length == 0){//si on a delete last planning, on en cree un new
-                $scope.createNewPlanning();
-            }else{
-                $scope.currentPlanning = $scope.plannings[0];
-                $scope.currentPlanning.lastOpen = true;
-            }
-
-
-            //restPlanningService.putLastOpenPlanning(idPlanningToDelete, $scope.currentPlanning.id);
-
-
-
-
-            //AJOUT DANS VUE
-            var newListShoppingPlanning = data;
-            restPlanningService.addPlanningShopping(newListShoppingPlanning);
-
-
-
-
-            $location.path("/errand");
-        })
-        */
     }
 
 
