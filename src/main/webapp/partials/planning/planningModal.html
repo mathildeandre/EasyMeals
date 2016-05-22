@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h3 class="modal-title">I'm a modal!</h3>
+</div>
+<div class="modal-body">
+
+    blabla
+    <div class="divRecipesBlock displayRecipeModal" ng-repeat="recipe in items"
+         ng-class="{divRecipesBlockIcon:!recipe.descriptionOpen, divRecipesBlockDescription:recipe.descriptionOpen}">
+        <recipeitem-displayinblock></recipeitem-displayinblock>
+    </div>
+
+    <!--
+    <div ng-repeat="recipe in recipesToDisplay ">
+        {{recipe.name}}
+    </div>
+    -->
+    <!--
+    <ul>
+        <li ng-repeat="item in items">
+            <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item.name }}</a>
+        </li>
+    </ul>
+    Selected: <b>{{ selected.item }}</b>
+    -->
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
