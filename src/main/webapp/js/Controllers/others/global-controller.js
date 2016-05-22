@@ -14,9 +14,9 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
      *
      */
 
-    restRecipeService.initLoadData();
-    restPlanningService.initLoadData();
-    restFoodService.initLoadData();
+    //restRecipeService.initLoadData();
+    //restPlanningService.initLoadData();
+    //restFoodService.initLoadData();
 
     $scope.classBody = "bodyEasyMeals";
 

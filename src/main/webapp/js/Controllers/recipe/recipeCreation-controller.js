@@ -3,7 +3,7 @@
  */
 var myModule = angular.module('controllers');
 
-myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $location, $routeParams, RecipeService, AppendixFunctionsService, restRecipeService, restFoodService, units) {
+myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $location, $routeParams, AppendixFunctionsService, restRecipeService, restFoodService, units) {
 
     /*RECIPE = {
         name:"Burritos",

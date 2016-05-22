@@ -4,7 +4,7 @@
 
 var myService = angular.module('services');
 
-myService.service("restPlanningService", function ($http, $q, $log, $location) {
+myService.service("restPlanningService", function ($http, $q, $log, $location, restGlobalService) {
 
 
     var plannings = [];
@@ -12,23 +12,27 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
 
 
     function getPlannings(){
-        $log.warn("ici on appel getPLannings...")
+        if(plannings.length == 0){
+            plannings = restGlobalService.getPlannings();
+            $log.warn("[restPLanning-service] getPlannings() --> on appel restGLobalService");
+        }
         return plannings;
     }
     function getPlanningsShopping(){
+        if(planningsShopping.length == 0){
+            planningsShopping = restGlobalService.getPlanningsShopping();
+            $log.warn("[restPLanning-service] getPlanningsShopping() --> on appel restGLobalService");
+        }
         return planningsShopping;
     }
-    /*function addPlanningShopping(planningShopping){
-        planningsShopping.push(planningShopping);
-    }*/
+
+
 
 
 
     /***********************************************************************************************************************************/
     /********************************          planningsShopping         **************************************************************/
     /**********************************************************************************************************************************/
-
-
     function createPlanningShopping(planning, shoppingCategories){
         postObjToServer('POST', '/rest/createPlanningShopping/'+planning.id, shoppingCategories).then(function(data){
             /* VIEW*/
@@ -44,8 +48,6 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
             $location.path("/errand");
         })
     }
-
-
     function createNewPlanning(){
         return getObjFromServer('/rest/createPlanning/user/2').then(function(data){ //2 = idUser
 
@@ -55,55 +57,14 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
             return index;
         })
     }
-
-
-
-/*
-    function createPlanningShoppingBDD(idPlanning, shoppingCategories){
-        return $http({
-            method: 'POST',
-            url:  '/rest/createPlanningShopping/'+idPlanning,
-            data: shoppingCategories
-        })
-            .then(function (response) {
-                if (response.status == 200) {
-                    return response.data;
-                }
-                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
-            })
-    }
-    */
     function deletePlanningShopping(idPlanning){
         deletePlanningById(idPlanning);
     }
-
     /***********************************************************************************************************************************/
+    /**************************************** end planningsShopping    ****************************************************************/
     /***********************************************************************************************************************************/
 
-    function makePlanningCurrent(idPlanningNewCurrent){
-        /************* VIEW ************/
-        //1. SET planning new current && other lastOpen to false
-        var idPlanningOldCurrent = -1;
-        for(var i=0; i<plannings.length; i++){
-            if(plannings[i].id == idPlanningNewCurrent){
-                plannings[i].lastOpen = true;
-            }else if(plannings[i].lastOpen == true){
-                plannings[i].lastOpen = false;
-                idPlanningOldCurrent = plannings[i].id;
-            }
-        }
-        /********* BBD ****************/
-        //2.PUT lastOpen true (& oldCurrent to false)
-        if(idPlanningOldCurrent != -1){
-            $log.info("[makePlanningCurrent] : putLastOpenPlannings OLD & NEW")
-            putLastOpenPlannings(idPlanningOldCurrent, idPlanningNewCurrent); //OLD & NEW
-        }
-        else{
-            $log.info("[makePlanningCurrent] : putLastOpenPlannings just NEW")
-            putLastOpenNewPlanning(idPlanningNewCurrent); //just NEW
-        }
 
-    }
 
     /*************************************************** CLONE PLANNING ********************************************************/
     function cloneIntoMyPlannings(planningToClone){
@@ -130,6 +91,34 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
     }
     /*********************************************** end CLONE PLANNING ********************************************************/
 
+
+
+
+
+    function makePlanningCurrent(idPlanningNewCurrent){
+        /************* VIEW ************/
+        //1. SET planning new current && other lastOpen to false
+        var idPlanningOldCurrent = -1;
+        for(var i=0; i<plannings.length; i++){
+            if(plannings[i].id == idPlanningNewCurrent){
+                plannings[i].lastOpen = true;
+            }else if(plannings[i].lastOpen == true){
+                plannings[i].lastOpen = false;
+                idPlanningOldCurrent = plannings[i].id;
+            }
+        }
+        /********* BBD ****************/
+        //2.PUT lastOpen true (& oldCurrent to false)
+        if(idPlanningOldCurrent != -1){
+            $log.info("[makePlanningCurrent] : putLastOpenPlannings OLD & NEW")
+            putLastOpenPlannings(idPlanningOldCurrent, idPlanningNewCurrent); //OLD & NEW
+        }
+        else{
+            $log.info("[makePlanningCurrent] : putLastOpenPlannings just NEW")
+            putLastOpenNewPlanning(idPlanningNewCurrent); //just NEW
+        }
+
+    }
 
     function postNewRecipeCaseMeal(idRecipe, idCaseMeal){
         postObjToServer('POST', '/rest/postNewRecipeCaseMeal', [idRecipe, idCaseMeal])
@@ -160,27 +149,9 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
     }
 
 
-    function initLoadData(){
-        $log.warn("[PLANNING SERVICE] INIT - LOADING DATA")
-        /* PLANNINGS */
-        if(plannings == undefined || plannings.length == 0){
-            getObjFromServer('/rest/plannings/user/2').then(function(data){ //2 = idUser
-                var allPlannings = data;
-                for(var i=0; i<allPlannings.length; i++){
-                    //$log.warn("INIT load data -- planning name: "+allPlannings[i].name)
-                    if(allPlannings[i].isForListShop){
-                        //$log.warn("INIT load data -- xxx into planningsShopping xxxx planning name: "+allPlannings[i].name)
-                        planningsShopping.push(allPlannings[i]);
-                    }else{
-                        //$log.warn("INIT load data -- xxx into plannings xxxx planning name: "+allPlannings[i].name)
-                        plannings.push(allPlannings[i]);
-                    }
-                }
-                //plannings = data;
-                $log.warn("plannings loaded!")
-            })
-        }
-    }
+
+
+
     function getObjFromServer(url) {
         return $http({
             method: 'GET',
@@ -210,7 +181,6 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
 
     return {
         getPlannings: getPlannings,
-        initLoadData: initLoadData,
         postNewRecipeCaseMeal: postNewRecipeCaseMeal,
         deleteOldRecipeCaseMeal: deleteOldRecipeCaseMeal,
         postNewNamePlanning: postNewNamePlanning,
@@ -221,7 +191,6 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
         putNbPersGlobalPlanning: putNbPersGlobalPlanning,
         cloneIntoMyPlannings: cloneIntoMyPlannings,
         makePlanningCurrent: makePlanningCurrent,
-
 
         getPlanningsShopping: getPlanningsShopping,
         createPlanningShopping: createPlanningShopping,

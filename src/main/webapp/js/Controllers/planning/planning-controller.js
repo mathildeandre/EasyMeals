@@ -76,10 +76,12 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
     })[0];
 
 
+    /*
     $scope.changementCurrentPlanning = function(){
         //on vide listShop générée
         $scope.$broadcast('emptyListShop');
     }
+    */
 
 
 

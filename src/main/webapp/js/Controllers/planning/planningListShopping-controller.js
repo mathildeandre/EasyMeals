@@ -22,6 +22,7 @@ myModule.controller('ListShoppingCtrl', function($scope, $location, $anchorScrol
     $scope.initCategories = resetIngredientsOfCategories(); //initCategories useless
 
 
+
     $scope.$on('emptyListShop', function() {
         resetIngredientsOfCategories();
     });
@@ -228,5 +229,12 @@ myModule.controller('ListShoppingCtrl', function($scope, $location, $anchorScrol
     }
 
 
-    /**********************fin FCT ANNEXES pr calculListShopping()******************************************************************/
+    /********************** APPELEE juste a l'initialisation ******************************************************************/
+    $scope.initCalculListShopping = function(){
+        //$log.info("[planningListShopping-ctrl] - initCalculListShop() - xxx call calculLIstShop();  name current planning : "+$scope.currentPlanning.name);
+        $scope.calculListShopping();
+    }
+    $scope.initCalculListShopping();
+    /**********************************************/
+
 });

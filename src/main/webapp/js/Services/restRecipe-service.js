@@ -4,9 +4,7 @@
 
 var myService = angular.module('services');
 
-myService.service("restRecipeService", function ($http, $q, $log) {
-    var isDataReady = false;
-    var isCoursesReady = false;
+myService.service("restRecipeService", function ($http, $q, $log, restGlobalService) {
 
     var categories = [];
     var origins = [];
@@ -18,36 +16,59 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     //var breakfasts = [];
     //var cocktails = [];
 
-    function getIsDataReady(){
-        return isDataReady;
-    }
-    function getIsCoursesReady(){
-        return isCoursesReady;
-    }
-
-
     function getCategories(){
+        if(categories.length == 0){
+            categories = restGlobalService.getCategories();
+            $log.warn("[restRecipe-service] getCategories() --> on appel restGLobalService");
+        }
         return categories;
     }
     function getOrigins(){
+        if(origins.length == 0){
+            origins = restGlobalService.getOrigins();
+            $log.warn("[restRecipe-service] getOrigins() --> on appel restGLobalService");
+        }
         return origins;
     }
     function getRecipeTypes(){
+        if(recipeTypes.length == 0){
+            recipeTypes = restGlobalService.getRecipeTypes();
+            $log.warn("[restRecipe-service] getRecipeTypes() --> on appel restGLobalService");
+        }
         return recipeTypes;
     }
-    function initComplement(array){
-        for(var i=0; i<array.length; i++){
-            array[i].ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]};
-            array[i].timeTotal = array[i].timeCooking + array[i].timePreparation;
+    function getStarters(){
+        if(starters.length == 0){
+            starters = restGlobalService.getStarters();
+            $log.warn("[restRecipe-service] getStarters() --> on appel restGLobalService");
         }
+        return starters;
     }
+    function getCourses(){
+        if(courses.length == 0){
+            courses = restGlobalService.getCourses();
+            $log.warn("[restRecipe-service] getCourses() --> on appel restGLobalService");
+        }
+        return courses;
+    }
+    function getDesserts(){
+        if(desserts.length == 0){
+            desserts = restGlobalService.getDesserts();
+            $log.warn("[restRecipe-service] getDesserts() --> on appel restGLobalService");
+        }
+        return desserts;
+    }
+
+
+
+
 
 
     function getRecipes(recipeType) {
         switch (recipeType) {
-            case 'starter' :return starters;
-            case 'course' :return courses;
-            case 'dessert' :return desserts;
+            case 'starter' :return getStarters();
+            case 'course' :return getCourses();
+            case 'dessert' :return getDesserts();
             case 'breakfast' :return [];
             case 'cocktail' :return [];
         }
@@ -86,96 +107,11 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         }
         return null;
     }
-    /*
-    function getStarters(){
-        return starters;
+
+
+    function getBDDSingleRecipe(idRecipe){
+        return getObjFromServer('rest/recipe/'+idRecipe);
     }
-    function getCourses(){
-        $log.info("[getCourses] courses name : "+courses[0].name)
-        return courses;
-    }
-    function getDesserts(){
-        return desserts;
-    }
-    */
-
-    function initLoadData(){
-        $log.warn("[RECIPE SERVICE] INIT - LOADING DATA")
-
-        /* CATEGORIES */
-        if(categories == undefined || categories.length == 0){
-            getObjFromServer('/rest/recipeCategories').then(function(data){ //2 = idUser
-                categories = data;
-                $log.warn("categories loaded!")
-
-            })
-        }
-        /* ORIGINS */
-        if(origins == undefined || origins.length == 0){
-            getObjFromServer('/rest/recipeOrigins').then(function(data){ //2 = idUser
-                origins = data;
-                $log.warn("origins loaded!")
-
-            })
-        }
-        /* RECIPE TYPES */
-        if(recipeTypes == undefined || recipeTypes.length == 0){
-            getObjFromServer('/rest/recipeTypes').then(function(data){ //2 = idUser
-                recipeTypes = data;
-                $log.warn("recipeTypes loaded!")
-
-            })
-        }
-
-
-
-        /* STARTERS */
-        if(starters == undefined || starters.length == 0){
-            getObjFromServer('/rest/recipes/starter/2').then(function(data){ //2 = idUser
-                starters = data;
-                initComplement(starters);
-                $log.warn("starters loaded!")
-
-            })
-        }
-        /* COURSES */
-        if(courses == undefined || courses.length == 0){
-            getObjFromServer('/rest/recipes/course/2').then(function(data){ //2 = idUser
-                courses = data;
-                initComplement(courses);
-                isCoursesReady = true;
-                $log.warn("courses loaded!")
-                $log.info("isCoursesReady : "+isCoursesReady);
-
-            })
-        }
-        /* DESSERTS */
-        if(desserts == undefined || desserts.length == 0){
-            getObjFromServer('/rest/recipes/dessert/2').then(function(data){ //2 = idUser
-                desserts = data;
-                initComplement(desserts);
-                $log.warn("desserts loaded!")
-
-            })
-        }
-        $log.info("isDataReady : "+isDataReady);
-        isDataReady = true;
-        $log.info("isDataReady : "+isDataReady);
-    }
-
-
-    function getObjFromServer(url) {
-        return $http({
-            method: 'GET',
-            url: url
-        })
-            .then(function (response) {
-                if (response.status == 200) {
-                    return response.data;
-                }
-                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
-            })
-    };
 
 
 
@@ -211,15 +147,27 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
 
 
+
+    function getObjFromServer(url) {
+        return $http({
+            method: 'GET',
+            url: url
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    };
+
     return {
         getCategories: getCategories,
         getOrigins: getOrigins,
         getRecipeTypes: getRecipeTypes,
         getRecipes:getRecipes,
         getSingleRecipe: getSingleRecipe,
-        initLoadData: initLoadData,
-        getIsDataReady: getIsDataReady,
-        getIsCoursesReady: getIsCoursesReady,
+        getBDDSingleRecipe: getBDDSingleRecipe,
         createRecipe: createRecipe
     };
 });
