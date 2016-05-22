@@ -165,7 +165,7 @@ public class PlanningDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return getPlanningById(conn, idPlanning);
+        return getPlanningById(conn, idPlanningCopy);
     }
 
     private final static String CREATE_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser) VALUES (?, ?, ?);\n";

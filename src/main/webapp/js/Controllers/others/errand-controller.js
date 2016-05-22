@@ -10,7 +10,9 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunc
 
     $scope.planningsShopping = restPlanningService.getPlanningsShopping();
 
-    $scope.currentPlanningShopping = $scope.planningsShopping[$scope.planningsShopping.length-1];
+    $scope.currentPlanningShopping = $scope.planningsShopping.filter(function(obj){
+        return obj.lastOpen == true;
+    })[0];
 
     $scope.cloneIntoMyPlannings = function(){
         restPlanningService.cloneIntoMyPlannings($scope.currentPlanningShopping);
@@ -26,6 +28,7 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunc
         $scope.currentPlanningShopping = $scope.planningsShopping[0];
         //delete from BDD
         //restListShoppingService.deleteListShoppingPlanningById(idListShoppingPlanningToDelete);
+        restPlanningService.makePlanningCurrent($scope.currentPlanningShopping.id, true)//lastOpen
         restPlanningService.deletePlanningShopping(idPlanningShoppingToDelete);
 
     }
@@ -39,6 +42,8 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunc
     $scope.recipesToDisplay = [];
     $scope.resetRecipesToDisplay = function(){
         $scope.recipesToDisplay = [];
+        restPlanningService.makePlanningCurrent($scope.currentPlanningShopping.id, true)//lastOpen
+
     }
     $scope.nbPersOfMeal = 1;
     $scope.displayMealsOfCaseMeal = function(myCaseMeal){

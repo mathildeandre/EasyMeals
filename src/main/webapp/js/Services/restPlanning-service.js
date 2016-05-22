@@ -33,19 +33,31 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
     /***********************************************************************************************************************************/
     /********************************          planningsShopping         **************************************************************/
     /**********************************************************************************************************************************/
-    function createPlanningShopping(planning, shoppingCategories){
+    function createPlanningShopping(planning, shoppingCategories){ //called when goShopping -- no creation from errand ..
         postObjToServer('POST', '/rest/createPlanningShopping/'+planning.id, shoppingCategories).then(function(data){
             /* VIEW*/
             var index = plannings.indexOf(planning);
             plannings.splice(index, 1);
             if(plannings.length == 0){//si on a delete last planning, on en cree un new
-                createNewPlanning();
+                createNewPlanning().then(function(index){
+
+                    //AJOUT DANS VUE
+                    var newPlanningShopping = data;
+                    planningsShopping.push(newPlanningShopping);
+                    makePlanningCurrent(newPlanningShopping.id, true); //lastOpen...
+                    makePlanningCurrent(plannings[0].id, false);//lastOpen..
+                    $location.path("/errand");
+                })
+            }else{
+
+                //AJOUT DANS VUE
+                var newPlanningShopping = data;
+                planningsShopping.push(newPlanningShopping);
+                makePlanningCurrent(newPlanningShopping.id, true); //lastOpen...
+                makePlanningCurrent(plannings[0].id, false);//lastOpen..
+                $location.path("/errand");
             }
 
-            //AJOUT DANS VUE
-            var newPlanningShopping = data;
-            planningsShopping.push(newPlanningShopping);
-            $location.path("/errand");
         })
     }
     function createNewPlanning(){
@@ -71,7 +83,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
         clonePlanning(planningToClone.id).then(function(data){
             var newClonedPlanning = data;
             plannings.push(newClonedPlanning);
-            makePlanningCurrent(newClonedPlanning.id);//lastOpen..
+            makePlanningCurrent(newClonedPlanning.id, false);//lastOpen..
             //ATTENTION il faut etre sûr ici que "makePlanningCurrent" s'effectue avt $location.path("/planning") qui chargement les plannigs...
             //=> loop 1000 pour patienter? -> etre que lastOpen soit bien a jour dans plannings avt daller dans plannings! :p
             $location.path("/planning");
@@ -95,16 +107,27 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
 
 
 
-    function makePlanningCurrent(idPlanningNewCurrent){
+    function makePlanningCurrent(idPlanningNewCurrent, isForListShop){
         /************* VIEW ************/
         //1. SET planning new current && other lastOpen to false
         var idPlanningOldCurrent = -1;
-        for(var i=0; i<plannings.length; i++){
-            if(plannings[i].id == idPlanningNewCurrent){
-                plannings[i].lastOpen = true;
-            }else if(plannings[i].lastOpen == true){
-                plannings[i].lastOpen = false;
-                idPlanningOldCurrent = plannings[i].id;
+        var arrayPlanning = [];
+        if(isForListShop){
+            arrayPlanning = planningsShopping;
+        }else{
+            arrayPlanning = plannings;
+        }
+
+
+
+        for(var i=0; i<arrayPlanning.length; i++){
+            if(arrayPlanning[i].id == idPlanningNewCurrent){
+                arrayPlanning[i].lastOpen = true;
+                $log.debug("[NEW CURRENT] name : "+arrayPlanning[i].name+" .. (id:"+idPlanningNewCurrent+") - sera updater ds la base a TRUE")
+            }else if(arrayPlanning[i].lastOpen == true){
+                arrayPlanning[i].lastOpen = false;
+                $log.debug("[OLD CURRENT] name : "+arrayPlanning[i].name+" .. (id:"+arrayPlanning[i].id+") - sera updater ds la base a FALSE")
+                idPlanningOldCurrent = arrayPlanning[i].id;
             }
         }
         /********* BBD ****************/

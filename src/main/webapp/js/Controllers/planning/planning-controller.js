@@ -111,7 +111,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
         if(newValue.id != oldValue.id){
             $scope.$broadcast('calculListShopping');
             //ATTENTION oldValue est une copy du dernier planning courant et ne reference plus notre planning....
-            restPlanningService.makePlanningCurrent(newValue.id); //lastOpen...
+            restPlanningService.makePlanningCurrent(newValue.id, false); //lastOpen...
 
         }else if(newValue.name != oldValue.name){
             //PUT : updateNamePlanning
@@ -186,7 +186,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
         $scope.plannings.splice(index, 1);
         $scope.currentPlanning = $scope.plannings[0];
 
-        restPlanningService.makePlanningCurrent($scope.currentPlanning.id); //lastOpen...
+        restPlanningService.makePlanningCurrent($scope.currentPlanning.id, false); //lastOpen...
         restPlanningService.deletePlanningById(idPlanningToDelete);
     }
 
