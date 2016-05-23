@@ -147,7 +147,7 @@
             <div>
                 <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
                         <span ng-repeat="weekMeal in currentPlanningShopping.weekMeals" class="checkbox checkbox-danger checkbox-inline">
-                            <input type="checkbox"  ng-model="weekMeal.show" id="{{weekMeal.id}}">
+                            <input type="checkbox"  ng-model="weekMeal.show" id="{{weekMeal.id}}" ng-click="putWeekMeal(weekMeal)">
                             <label for="{{weekMeal.id}}" ><b>{{displayMealType(weekMeal.weekMealName)}}</b> &nbsp&nbsp</label>
                         </span>
             </div>

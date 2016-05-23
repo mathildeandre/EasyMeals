@@ -107,6 +107,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
 
     // called on $watch '$scope.currentPlanning'
     var updatePlanningBDD = function(newValue, oldValue, scope){
+        $log.debug("-------------------------------------------------- updatePlanningBDD() - updatePlanningBDD() ")
         var newCaseMeal, oldCaseMeal;
         if(newValue.id != oldValue.id){
             $scope.$broadcast('calculListShopping');

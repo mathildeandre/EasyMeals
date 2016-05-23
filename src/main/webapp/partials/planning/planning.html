@@ -1,5 +1,12 @@
 <div ng-controller="PlanningCtrl">
-    <div ng-controller="FilterCtrl">
+    <!--<div ng-controller="FilterCtrl">-->  <!--ATTENTION en ajoutant ce sous-ctrl, cela va engendrer des pb
+                                                            en effet les variables du planning-ctrl seront dupliques dans filter-ctrl et ainsi des variables
+                                                            manipulees dans planning-controller.js qui sont changées dans le html ne correspondront pas!
+                                                            ds html ajouter $parent dvt pour indiquer qu'elles sont bien manipulée ds planning-controller.js
+                                                            ex : <select class="fieldPlanning noWidth" ng-model='$parent.currentPlanning'
+                                                                    ng-options='planning.name for planning in plannings'></select>
+                                                                    (planningToFill.html)
+                                                          + remove 'ng-controller="FilterCtrl"' from planningRecipes.html  -->
 
         <div class="contourTxt"><h2>Creation du Planning</h2></div>
 
@@ -19,5 +26,5 @@
         <planning-listshopping></planning-listshopping> <!--ng-controller="ListShoppingCtrl"-->
         <!-- listShopping.html -->
 
-    </div>
+    <!--</div>-->
 </div>

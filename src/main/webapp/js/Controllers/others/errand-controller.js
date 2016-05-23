@@ -135,4 +135,10 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunc
     $scope.displayErrandPlanning = function(){
         $scope.isDisplayErrandList = false;
     }
+
+
+    // SHOW WEEK MEAL BDD
+    $scope.putWeekMeal = function(weekMeal){
+        restPlanningService.putShowWeekMeal(weekMeal.id, weekMeal.show);
+    }
 });

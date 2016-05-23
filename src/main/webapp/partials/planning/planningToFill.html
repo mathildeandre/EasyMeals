@@ -24,7 +24,7 @@
                 PLANNING : &nbsp
                 <span ng-show="!modifyingPlanningName">
                     <select class="fieldPlanning noWidth" ng-model='currentPlanning'
-                            ng-options='planning.name for planning in plannings'></select>
+                            ng-options='planning.name for planning in plannings'></select> <!-- ng-model='$parent.currentPlanning' -->
                     <!-- ng-change="changementCurrentPlanning()"-->
                     &nbsp
                     <span ng-click="modifyPlanningName()"
@@ -89,9 +89,10 @@
 
                                 <br>
                             </div>
-                            papa : {{bonjourrrr}}
-                            mama: {{recipesToDisplay[0].name}}
                             <!-- modal -->
+                            <button ng-click="incr()">
+                                click
+                            </button>
                             <button type="button" class="btn btn-default" ng-click="open(recipesToDisplay)">Open me!</button>
 
                         </td>
