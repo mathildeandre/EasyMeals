@@ -4,9 +4,6 @@ package com.toobe.serviceRest;
  * Created by mathilde on 13/03/2016.
  */
 
-import com.toobe.dto.ListShopping;
-import com.toobe.dto.ListShoppingCategory;
-import com.toobe.dto.ListShoppingPlanning;
 import com.toobe.dto.TestObj;
 import com.toobe.model.ManagerGet;
 
@@ -14,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-
+/*
 @Path("/")
 public class ListShoppingService {
 
@@ -53,3 +50,4 @@ public class ListShoppingService {
     }
 
 }
+*/

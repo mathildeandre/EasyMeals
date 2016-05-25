@@ -38,8 +38,8 @@ public class RecipeDao {
      * @return
      */
     private final static String CREATE_RECIPE = "INSERT INTO Recipe( name, idType, isPublic, " +
-            "idUser, rating, nbVoter, nbPerson, pixName, idOrigin, isValidated, timeCooking, timePreparation) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
+            "idUser, nbPerson, pixName, idOrigin, isValidated, timeCooking, timePreparation) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
 
     public boolean createRecipe(Connection conn, Recipe recipe) {
         PreparedStatement stm;
@@ -53,14 +53,14 @@ public class RecipeDao {
             stm.setLong(2, recipe.getRecipeType().getIdType());
             stm.setBoolean(3, recipe.getIsPublic()); //recipe.getIsPublic()
             stm.setLong(4, recipe.getUser().getId());//recipe.getIdUser()
-            stm.setInt(5, 0);//recipe.getRating()
-            stm.setInt(6, 0);//recipe.getNbVoter()
-            stm.setInt(7, recipe.getNbPerson());
-            stm.setString(8, recipe.getPixName());
-            stm.setInt(9, recipe.getOrigin().getId());
-            stm.setBoolean(10, false);
-            stm.setInt(11, recipe.getTimeCooking());
-            stm.setInt(12, recipe.getTimePreparation());
+            //stm.setFloat(5, 0);//recipe.getRating() rating can be null
+            //stm.setInt(6, 0);//recipe.getNbVoter() nbVoter default 0
+            stm.setInt(5, recipe.getNbPerson());
+            stm.setString(6, recipe.getPixName());
+            stm.setInt(7, recipe.getOrigin().getId());
+            stm.setBoolean(8, false);
+            stm.setInt(9, recipe.getTimeCooking());
+            stm.setInt(10, recipe.getTimePreparation());
             isOk = stm.executeUpdate();
             if (isOk == 0) {
                 throw new SQLException("Creating Recipe failed, no rows affected, recipe="+recipe.toString());
@@ -168,7 +168,7 @@ public class RecipeDao {
                 boolean isPublic = resRecipe.getBoolean("isPublic");
                 String pixName = resRecipe.getString("pixName");
                 int nbPerson = resRecipe.getInt("nbPerson");
-                int rating = resRecipe.getInt("rating");
+                float rating = resRecipe.getFloat("rating");
                 int nbVoter = resRecipe.getInt("nbVoter");
                 boolean isValidated = resRecipe.getBoolean("isValidated");
                 int timeCooking = resRecipe.getInt("timeCooking");
@@ -270,7 +270,8 @@ public class RecipeDao {
         Recipe recipe;
         try{
 
-            int idRecipe, nbPerson, rating, nbVoter, timeCooking, timePreparation, idRecipeType;
+            int idRecipe, nbPerson, nbVoter, timeCooking, timePreparation, idRecipeType;
+            float rating;
             String name, pixName, nameRecipeType;
             boolean isPublic, isValidated;
             User user;
@@ -297,7 +298,7 @@ public class RecipeDao {
                 isPublic = resRecipe.getBoolean("isPublic");
                 pixName = resRecipe.getString("pixName");
                 nbPerson = resRecipe.getInt("nbPerson");
-                rating = resRecipe.getInt("rating");
+                rating = resRecipe.getFloat("rating");
                 nbVoter = resRecipe.getInt("nbVoter");
                 isValidated = resRecipe.getBoolean("isValidated");
                 timeCooking = resRecipe.getInt("timeCooking");
@@ -355,7 +356,7 @@ public class RecipeDao {
 
         List<Ingredient> ingredientList = new ArrayList<Ingredient>();
         Ingredient ingr;
-        int qty;
+        float qty;
         String unit;
         int idFood;
         String nameFood;
@@ -369,7 +370,7 @@ public class RecipeDao {
             stm.setInt(1, idRecipe);
             ResultSet resIngredient = stm.executeQuery();
             while (resIngredient.next()) {
-                qty = resIngredient.getInt("quantity");
+                qty = resIngredient.getFloat("quantity");
                 unit = resIngredient.getString("unit");
                 idFood = resIngredient.getInt("idFood");
                 nameFood = resIngredient.getString("name");
@@ -460,7 +461,7 @@ public class RecipeDao {
                 stmIngr = conn.prepareStatement(INSERT_INGREDIENT);
                 stmIngr.setLong(1, idRecipe);
                 stmIngr.setLong(2, idFood);
-                stmIngr.setInt(3, ingr.getQty());
+                stmIngr.setFloat(3, ingr.getQty());
                 stmIngr.setString(4, ingr.getUnit());
                 insertIngrOk = stmIngr.executeUpdate();
             }else{
@@ -505,6 +506,140 @@ public class RecipeDao {
 
 
 
+    /***************************************************************************************************************************************************************/
+    /************************************************************** PUT - UPDATE data *****************************************************************************/
+    /*************************************************************************************************************************************************************/
+
+    private final static String CREATE_Rel_USER_RECIPE = "INSERT INTO Rel_User_Recipe(idRecipe, idUser) VALUES (?, ?);\n";
+    public void create_RelUserRecipe(Connection conn, Long idRecipe, Long idUser){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+
+            stm = conn.prepareStatement(CREATE_Rel_USER_RECIPE);
+            stm.setLong(1, idRecipe);
+            stm.setLong(2, idUser);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("Creating Rel_User_Recipe failed, no rows affected");
+            }else{
+                System.out.println("Creation >> Rel_User_Recipe << (idRecipe: "+idRecipe+", idUser: "+idUser+") ------------  OK ");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String SELECT_Rel_USER_RECIPE = "SELECT * FROM Rel_User_Recipe WHERE idRecipe = ? AND idUser = ? ;\n";
+    public boolean isExist_RelUserRecipe(Connection conn, Long idRecipe, Long idUser){
+        PreparedStatement stm;
+        boolean exist = false;
+        try {
+            stm = conn.prepareStatement(SELECT_Rel_USER_RECIPE);
+            stm.setLong(1, idRecipe);
+            stm.setLong(2, idUser);
+            ResultSet res = stm.executeQuery();
+            if (res.next()) {
+                exist = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exist;
+    }
+
+
+    private final static String UPDATE_isFavorite_REL_USER_RECIPE = "UPDATE Rel_User_Recipe SET isFavorite = ? WHERE idRecipe = ? AND idUser = ? ;\n";
+    public void putIsFavorite(Connection conn, Long idRecipe, Long idUser, boolean isFavorite){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            //1. verif que Rel_User_Recipe correspondante existe - sinon on la créée
+            if(!isExist_RelUserRecipe(conn, idRecipe, idUser)){
+                create_RelUserRecipe(conn,idRecipe, idUser);
+            }
+            //2.update Rel_User_Recipe
+            stm = conn.prepareStatement(UPDATE_isFavorite_REL_USER_RECIPE);
+            stm.setBoolean(1, isFavorite);
+            stm.setLong(2, idRecipe);
+            stm.setLong(3, idUser);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putIsFavorite failed, no rows affected");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDATE_isForPlanning_REL_USER_RECIPE = "UPDATE Rel_User_Recipe SET isForPlanning = ? WHERE idRecipe = ? AND idUser = ? ;\n";
+    public void putIsForPlanning(Connection conn, Long idRecipe, Long idUser, boolean isForPlanning){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            //1. verif que Rel_User_Recipe correspondante existe - sinon on la créée
+            if(!isExist_RelUserRecipe(conn, idRecipe, idUser)){
+                create_RelUserRecipe(conn,idRecipe, idUser);
+            }
+            //2.update Rel_User_Recipe
+            stm = conn.prepareStatement(UPDATE_isForPlanning_REL_USER_RECIPE);
+            stm.setBoolean(1, isForPlanning);
+            stm.setLong(2, idRecipe);
+            stm.setLong(3, idUser);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putIsForPlanning failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDATE_ratingUser_REL_USER_RECIPE = "UPDATE Rel_User_Recipe SET ratingUser = ? WHERE idRecipe = ? AND idUser = ? ;\n";
+    private final static String SELECT_rating_RECIPE = "SELECT rating, nbVoter FROM recipe where id = ? ;\n";
+    private final static String UPDATE_rating_RECIPE = "UPDATE Recipe SET rating = ?, nbVoter = ?  WHERE id = ? ;\n";
+
+    public void putRatingUser(Connection conn, Long idRecipe, Long idUser, int ratingUser){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            //1. verif que Rel_User_Recipe correspondante existe - sinon on la créée
+            if(!isExist_RelUserRecipe(conn, idRecipe, idUser)){
+                create_RelUserRecipe(conn,idRecipe, idUser);
+            }
+            //2. update Rel_User_Recipe
+            stm = conn.prepareStatement(UPDATE_ratingUser_REL_USER_RECIPE);
+            stm.setInt(1, ratingUser);
+            stm.setLong(2, idRecipe);
+            stm.setLong(3, idUser);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putRatingUser failed, no rows affected");
+            }
+
+            //3. get rating info of RECIPE
+            stm = conn.prepareStatement(SELECT_rating_RECIPE);
+            stm.setLong(1, idRecipe);
+            ResultSet res = stm.executeQuery();
+            if (res.next()) {
+                float rating = res.getFloat("rating");
+                int nbVoter = res.getInt("nbVoter");
+                float newRating = (float)(rating * nbVoter + ratingUser) / (nbVoter+1);
+                System.out.println("division result (avec cast (float) ) : "+(float)(rating * nbVoter + ratingUser) / (nbVoter+1));
+                System.out.println("division result : "+(rating * nbVoter + ratingUser) / (nbVoter+1));
+
+                //4. update RECIPE rating
+                stm = conn.prepareStatement(UPDATE_rating_RECIPE);
+                stm.setFloat(1, newRating);
+                stm.setInt(2, nbVoter+1);
+                stm.setLong(3, idRecipe);
+                isOk = stm.executeUpdate();
+                if (isOk == 0) {
+                    throw new SQLException("update rating RECIPE failed, no rows affected");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

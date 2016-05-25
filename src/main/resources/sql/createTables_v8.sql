@@ -1,3 +1,5 @@
+/*V8 add UNIQUE CONSTRAINT  */
+
 CREATE TABLE Food (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idCategory int(10) NOT NULL, isValidated tinyint DEFAULT 0 NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Food_Category (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, numRank int(10), PRIMARY KEY (id));
 CREATE TABLE Food_Recipe (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idType int(10) NOT NULL, idFood int(10) NOT NULL, quantity float(10,3) NOT NULL, unit varchar(10), nbPerson int(10) DEFAULT 1 NOT NULL, pixName varchar(255), idOrigin int(10) NOT NULL, PRIMARY KEY (id), INDEX (idType));
@@ -19,6 +21,8 @@ CREATE TABLE Rel_Recipe_Category (idCategory int(10) NOT NULL, idRecipe int(10) 
 CREATE TABLE Rel_User_Recipe (idRecipe int(10) NOT NULL, idUser int(10) NOT NULL, isFavorite tinyint(1), isForPlanning tinyint(1), ratingUser int(10), isHide tinyint(1), PRIMARY KEY (idRecipe, idUser));
 CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), isAdmin tinyint DEFAULT false NOT NULL, PRIMARY KEY (id));
 
+
+/* UNIQUE CONSTRAINT :: CONSTRAINT uc_PersonID UNIQUE (P_Id,LastName) -- http://www.w3schools.com/sql/sql_unique.asp*/
 
 /* ON DELETE CASCADE for USER deleted*/
 ALTER TABLE Planning ADD INDEX FKPlanning761199 (idUser), ADD CONSTRAINT FKPlanning761199 FOREIGN KEY (idUser) REFERENCES `User` (id) ON DELETE CASCADE; /*'on delete cascade' veut dire que si on delete un user, tous les planning avec cet idUser correspondant sera deleted*/

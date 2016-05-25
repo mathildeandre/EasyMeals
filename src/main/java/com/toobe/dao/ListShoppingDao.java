@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by mathilde on 27/03/2016.
  */
+/*
 public class ListShoppingDao {
 
 
@@ -135,7 +136,7 @@ public class ListShoppingDao {
         List<ListShoppingPlanning> list_listShoppingPlanning = new ArrayList<ListShoppingPlanning>();
         try {
 
-            /* on recup toutes les listShoppingPLanning for a user   */
+            // on recup toutes les listShoppingPLanning for a user
             stm = conn.prepareStatement("SELECT * from ListShopPlanning_User WHERE idUser = "+idUser);
             ResultSet res = stm.executeQuery();
 
@@ -155,19 +156,18 @@ public class ListShoppingDao {
         return list_listShoppingPlanning;
     }
 
-  /*
-    listShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
-    listShoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
- */
-    /**
-     * On trouve ici toutes les planning pour un idUser
-     */
+  //
+   // listShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
+   // listShoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
+
+
+     // On trouve ici toutes les planning pour un idUser
     public ListShopping getListShoppingById(Connection conn, int idListShopping){
         ListShopping listShopping = new ListShopping();
         PreparedStatement stm;
         try {
 
-            /* on recup toutes les listShoppingCategory   */
+            // on recup toutes les listShoppingCategory
             stm = conn.prepareStatement(
                     "SELECT lsc.id as id, idFoodCategory, name as nameFoodCategory, numRank  " +
                     "FROM ListShopping_Category as lsc JOIN Food_Category as fc ON lsc.idFoodCategory = fc.id " +
@@ -180,7 +180,7 @@ public class ListShoppingDao {
                 String nameFoodCategory = res.getString("nameFoodCategory");
                 int numRank = res.getInt("numRank");
 
-                /* INGREDIENTS */
+                // INGREDIENTS
                 List<Ingredient> ingredientList = new ArrayList<Ingredient>();;
                 Ingredient ingr;
                 int qty, idCategoryIngr;
@@ -252,3 +252,4 @@ public class ListShoppingDao {
         }
     }
 }
+*/

@@ -61,7 +61,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
         })
     }
     function createNewPlanning(){
-        return getObjFromServer('/rest/createPlanning/user/2').then(function(data){ //2 = idUser
+        return getObjFromServer('/rest/createPlanning/user/2').then(function(data){ //2 = idUser //2117
 
             var newPlanning = data;
             plannings.push(newPlanning);

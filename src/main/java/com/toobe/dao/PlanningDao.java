@@ -583,7 +583,7 @@ public class PlanningDao {
                         stm = conn.prepareStatement(INSERT_INGREDIENT_LISTSHOP);
                         stm.setString(1, ingr.getFood().getName()); //nameFood
                         stm.setLong(2, idShoppingCategory); //idListShopCategory
-                        stm.setInt(3, ingr.getQty()); //quantity
+                        stm.setFloat(3, ingr.getQty()); //quantity
                         stm.setString(4, ingr.getUnit()); //unit
                         isOk = stm.executeUpdate();
                         if (isOk == 0) {
@@ -620,14 +620,15 @@ public class PlanningDao {
                 /* INGREDIENTS */
                 List<Ingredient> ingredientList = new ArrayList<Ingredient>();
                 Ingredient ingr;
-                int qty, idCategoryIngr;
+                float qty;
+                int idCategoryIngr;
                 int idFood;
                 String unit, nameFood;
                 boolean isValidated;
                 stm = conn.prepareStatement("SELECT * FROM Ingredient_ListShop WHERE idListShopCategory = "+idListShoppingCategory);
                 ResultSet resIngredient = stm.executeQuery();
                 while(resIngredient.next()){
-                    qty = resIngredient.getInt("quantity");
+                    qty = resIngredient.getFloat("quantity");
                     unit = resIngredient.getString("unit");
                     //idFood = resIngredient.getInt("idFood");
                     nameFood = resIngredient.getString("nameFood");

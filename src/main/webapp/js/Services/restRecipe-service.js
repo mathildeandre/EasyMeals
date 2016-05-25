@@ -146,6 +146,15 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
     }
 
 
+    function putIsFavorite(idRecipe, idUser, isFavorite){
+        postObjToServer('POST', '/rest/putIsFavorite/'+idRecipe+'/'+idUser, isFavorite)
+    }
+    function putIsForPlanning(idRecipe, idUser, isForPlanning){
+        postObjToServer('POST', '/rest/putIsForPlanning/'+idRecipe+'/'+idUser, isForPlanning)
+    }
+    function putRatingUser(idRecipe, idUser, ratingUser){
+        postObjToServer('POST', '/rest/putRatingUser/'+idRecipe+'/'+idUser, ratingUser)
+    }
 
 
     function getObjFromServer(url) {
@@ -161,6 +170,19 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
             })
     };
 
+    function postObjToServer(method, url, data) {
+        return $http({
+            method: method,
+            url: url,
+            data: data
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    };
     return {
         getCategories: getCategories,
         getOrigins: getOrigins,
@@ -168,6 +190,9 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         getRecipes:getRecipes,
         getSingleRecipe: getSingleRecipe,
         getBDDSingleRecipe: getBDDSingleRecipe,
-        createRecipe: createRecipe
+        createRecipe: createRecipe,
+        putIsFavorite: putIsFavorite,
+        putIsForPlanning: putIsForPlanning,
+        putRatingUser: putRatingUser
     };
 });

@@ -124,4 +124,31 @@ public class RecipeService {
 
 
 
+    @Path("putIsFavorite/{idRecipe}/{idUser}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putIsFavorite(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isFavorite){
+        ManagerGet.getInstance().putIsFavorite(idRecipe, idUser, isFavorite);
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+    @Path("putIsForPlanning/{idRecipe}/{idUser}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putIsForPlanning(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isForPlanning){
+        ManagerGet.getInstance().putIsForPlanning(idRecipe, idUser, isForPlanning);
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+    @Path("putRatingUser/{idRecipe}/{idUser}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putRatingUser(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, int ratingUser){
+        ManagerGet.getInstance().putRatingUser(idRecipe, idUser, ratingUser);
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+
+
+
 }

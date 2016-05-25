@@ -19,7 +19,7 @@ public class ManagerGet {
     private static ManagerGet self;
 
     private RecipeDao recipeDao;
-    private ListShoppingDao listShoppingDao;
+    //private ListShoppingDao listShoppingDao;
     private PlanningDao planningDao;
     private RecipeCategoryDao recipeCategoryDao;
     private RecipeOriginDao recipeOriginDao;
@@ -35,7 +35,7 @@ public class ManagerGet {
 
     public ManagerGet(){
         recipeDao = new RecipeDao();
-        listShoppingDao = new ListShoppingDao();
+        //listShoppingDao = new ListShoppingDao();
         planningDao = new PlanningDao();
         recipeCategoryDao = new RecipeCategoryDao();
         recipeOriginDao = new RecipeOriginDao();
@@ -89,6 +89,18 @@ public class ManagerGet {
         return recipeDao.createRecipe(conn,recipe);
     }
 
+    public void putIsFavorite(Long idRecipe, Long idUser, boolean isFavorite){
+        startConnection();
+        recipeDao.putIsFavorite(conn,idRecipe, idUser, isFavorite);
+    }
+    public void putIsForPlanning(Long idRecipe, Long idUser, boolean isForPlanning){
+        startConnection();
+        recipeDao.putIsForPlanning(conn,idRecipe, idUser, isForPlanning);
+    }
+    public void putRatingUser(Long idRecipe, Long idUser, int ratingUser){
+        startConnection();
+        recipeDao.putRatingUser(conn,idRecipe, idUser, ratingUser);
+    }
 
     /***********************************************/
     /************* PLANNING ***********************/
@@ -154,32 +166,6 @@ public class ManagerGet {
     }
 
 
-    /****************************************************/
-    /************* LIST SHOPPING ***********************/
-    /**************************************************/
-    public ListShopping getListShoppingById(int idListShopping){
-        startConnection();
-        return listShoppingDao.getListShoppingById(conn, idListShopping);
-    }
-
-    public List<ListShoppingPlanning> getListsShoppingPlanning(int idUser){
-        startConnection();
-        return listShoppingDao.getListsShoppingPlanning(conn, idUser);
-    }
-
-    public ListShoppingPlanning createListShoppingPlanning(Long idPlanning, int idUser, List<ListShoppingCategory> listShoppingCategories){
-        startConnection();
-        return listShoppingDao.createListShoppingPlanning(conn, idPlanning, idUser, listShoppingCategories);
-    }
-    public void deleteListShoppingPlanningById(Long idListShoppingPlanning){
-        startConnection();
-        listShoppingDao.deleteListShoppingPlanningById(conn, idListShoppingPlanning);
-    }
-
-
-
-
-
     /*********************************************/
     /************** FOOD ************************/
     /*******************************************/
@@ -215,4 +201,34 @@ public class ManagerGet {
             e.printStackTrace();
         }
     }
+
+
+
+    /****************************************************/
+    /************* LIST SHOPPING ***********************/
+    /**************************************************/
+    /*
+    public ListShopping getListShoppingById(int idListShopping){
+        startConnection();
+        return listShoppingDao.getListShoppingById(conn, idListShopping);
+    }
+
+    public List<ListShoppingPlanning> getListsShoppingPlanning(int idUser){
+        startConnection();
+        return listShoppingDao.getListsShoppingPlanning(conn, idUser);
+    }
+
+    public ListShoppingPlanning createListShoppingPlanning(Long idPlanning, int idUser, List<ListShoppingCategory> listShoppingCategories){
+        startConnection();
+        return listShoppingDao.createListShoppingPlanning(conn, idPlanning, idUser, listShoppingCategories);
+    }
+    public void deleteListShoppingPlanningById(Long idListShoppingPlanning){
+        startConnection();
+        listShoppingDao.deleteListShoppingPlanningById(conn, idListShoppingPlanning);
+    }
+*/
+
+
+
+
 }

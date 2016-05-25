@@ -10,7 +10,7 @@ import java.util.List;
 ListShoppingPlanning = {name:"", date:"16/07/16", listShopping:{name:.., listShoppingCategories}, planning:{name:.., lastOpen:..  ...}}
 
  */
-
+/*
 public class ListShoppingPlanning {
     private Long id;
     private String name;
@@ -79,3 +79,4 @@ public class ListShoppingPlanning {
         this.lastOpen = lastOpen;
     }
 }
+*/

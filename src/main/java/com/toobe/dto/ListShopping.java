@@ -10,7 +10,7 @@ import java.util.List;
     listShopping = {name:.., listShoppingCategories:[listShoppingCategory1, listShoppingCategory2, ..., listShoppingCategoryN]};
     listShoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
  */
-
+/*
 public class ListShopping {
     private String name;
     private List<ListShoppingCategory> listShoppingCategories;
@@ -40,3 +40,4 @@ public class ListShopping {
         this.listShoppingCategories = listShoppingCategories;
     }
 }
+*/

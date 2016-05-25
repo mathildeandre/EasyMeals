@@ -17,20 +17,21 @@
         </div>
 
 
-                        <span  ng-click="toggleIsFavorite(recipe, $event);" title=""   class="glyphicon glyphicon-heart heart glyphiconBtn"
-                               ng-class="{heartTaken: recipe.isFavorite}"></span>
+        <span  ng-click="toggleIsFavorite(recipe, $event);" title=""   class="glyphicon glyphicon-heart heart glyphiconBtn"
+               ng-class="{heartTaken: recipe.isFavorite}"></span>
         &nbsp&nbsp
-                        <span ng-click="toggleIsForPlanning(recipe, $event);" title="" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
-                              ng-class="{thListTaken: recipe.isForPlanning}"></span>
+        <span ng-click="toggleIsForPlanning(recipe, $event);" title="" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
+              ng-class="{thListTaken: recipe.isForPlanning}"></span>
         &nbsp
         <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
     </div>
 
     <div class="divTimeNoDescription">
-        <div class="timeTotalNoDescrip">Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>
+        <!--<div class="timeTotalNoDescrip">Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>-->
         <div class="divPreparationCooking">
             <div>Preparation : {{displayTime(recipe.timePreparation)}}</div>
             <div>Cuisson : {{displayTime(recipe.timeCooking)}}</div>
+            <div>Spécialité : {{recipe.origin.name}}</div>
         </div>
     </div>
 
@@ -42,7 +43,7 @@
                                                        'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),
                                                        'starEmpty' : !isStarFull(numStar, recipe.rating)}">
                     </span>
-            ({{recipe.nbVoter}} votes)
+            <br>({{recipe.nbVoter}} votes)
         </div>
         <div class="divOwner">
             <div ng-show="recipe.isPublic" class="divOwnerRecipePublic ">

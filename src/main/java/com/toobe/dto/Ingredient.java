@@ -8,24 +8,24 @@ package com.toobe.dto;
  * {qty:4, unit:'', food:{"id":1,"name":"cabillaud","idCategory":5, validated:true}}
  */
 public class Ingredient {
-    private int qty;
+    private float qty;
     private String unit;
     private Food food;
 
     public Ingredient(){
 
     }
-    public Ingredient(int qty, String unit, Food food) {
+    public Ingredient(float qty, String unit, Food food) {
         this.qty = qty;
         this.unit = unit;
         this.food = food;
     }
 
-    public int getQty() {
+    public float getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(float qty) {
         this.qty = qty;
     }
 

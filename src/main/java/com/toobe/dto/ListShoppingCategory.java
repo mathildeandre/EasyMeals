@@ -11,6 +11,7 @@ import java.util.List;
   /*
     listShoppingCategory = {id:0, name:'Autre', numRank:5 , ingredients:[{qty:50, unit:"g", food:"ski", rayonId:0}]}
  */
+/*
 public class ListShoppingCategory {
       private int id;
       private String name;
@@ -57,3 +58,4 @@ public class ListShoppingCategory {
           this.ingredients = ingredients;
       }
   }
+*/

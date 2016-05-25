@@ -85,7 +85,7 @@ public class PlanningService {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response putShowWeekMeal(Long idWeekMeal,  @PathParam("showWeekMeal") Boolean showWeekMeal){
+    public Response putShowWeekMeal(Long idWeekMeal,  @PathParam("showWeekMeal") boolean showWeekMeal){
         System.out.println("PUT show weekMeal  ::: idWeekMeal: "+idWeekMeal+" ----  showWeekMeal: "+showWeekMeal);
         ManagerGet.getInstance().putShowWeekMeal(idWeekMeal, showWeekMeal);
         return Response.ok(new TestObj("MOUAHAHAH")).build();

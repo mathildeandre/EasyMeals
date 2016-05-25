@@ -57,6 +57,7 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         recipe.rating =  Number(result.toFixed(1));
         recipe.nbVoter = recipe.nbVoter+1;
         recipe.ratingSystem.isUserEditing = false;
+        restRecipeService.putRatingUser(recipe.id, 2, recipe.ratingUser);//2117
     }
     $scope.displayRatingOfRecipeByTitle = function(recipe){
         var ratingUser = recipe.ratingUser;
@@ -134,12 +135,15 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         event.stopPropagation();
         recipe.isFavorite = !recipe.isFavorite;
         $scope.$broadcast('updateFilter');
+        restRecipeService.putIsFavorite(recipe.id, 2, recipe.isFavorite);//2117
     }
     $scope.toggleIsForPlanning = function(recipe, event){
         event.stopPropagation();
         recipe.isForPlanning = !recipe.isForPlanning;
         $scope.$broadcast('updateFilter');
+        restRecipeService.putIsForPlanning(recipe.id, 2, recipe.isForPlanning);//2117
     }
+
     $scope.openRecipeNewWindow = function(id) {
         event.stopPropagation();
         $window.open('http://localhost:8080/#/singleRecipe/'+$scope.recipeType+'/'+id);

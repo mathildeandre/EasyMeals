@@ -7,6 +7,10 @@ var myModule = angular.module('controllers');
 
 myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsService, restRecipeService, restPlanningService) {
 
+
+    //$route.reload();
+
+
     $scope.$emit('intoPlanning'); //will tell to parents (global-controller.js) to modify pix
 
     /**
@@ -192,7 +196,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
     }
 
     $scope.createNewPlanning = function(){
-        restPlanningService.createNewPlanning().then(function(index){ //2 = idUser
+        restPlanningService.createNewPlanning().then(function(index){ //2 = idUser //2117
 
             $scope.currentPlanning = $scope.plannings[index];
             $log.warn("new planning PUSHED - index : "+index)

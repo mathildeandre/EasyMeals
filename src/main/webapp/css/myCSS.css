@@ -1174,6 +1174,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-left:3%;
     vertical-align:top;
     font-size: 22px;
+
+    width: 27%;
+    white-space: normal;
+    //border: 1px solid green;
 }
 .titleAndSoNoDescription > .title{
     margin-top:25px;
@@ -1186,7 +1190,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     vertical-align:top;
     margin-top: 30px;
     display: inline-block;/*block sera a droite de la pix*/
-    margin-left:3%;
+    margin-left: 1%;
 
 }
 .timeTotalNoDescrip{
@@ -1209,7 +1213,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-top: 10px;
 }
 .starsNoDescrip{
-    font-size: 35px;
+    font-size: 25px;
     color: #ffbf00;
 }
 .divOwner{

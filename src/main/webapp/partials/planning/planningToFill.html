@@ -21,7 +21,7 @@
     <article class="myArticle myArticlePlanning">
         <div class="myArticleHeading">
             <div class="myArticleTitle">
-                PLANNING : &nbsp
+                PLANNING : &nbsp bj
                 <span ng-show="!modifyingPlanningName">
                     <select class="fieldPlanning noWidth" ng-model='currentPlanning'
                             ng-options='planning.name for planning in plannings'></select> <!-- ng-model='$parent.currentPlanning' -->
@@ -50,11 +50,13 @@
         </div>
 
 
+        planning current : {{currentPlanning}}
+
             <div class="myArticleBody">
                 <div ng-controller="PlanningModalCtrl">
                 <table class="table  table-hover table-bordered">
                     <th class="info myTh"></th>
-                    <th class="info myTh">Lundi</th>
+                    <th class="info myTh">Lundii</th>
                     <th class="info myTh">Mardi</th>
                     <th class="info myTh">Mercredi</th>
                     <th class="info myTh">Jeudi</th>
@@ -89,12 +91,12 @@
 
                                 <br>
                             </div>
-                            <!-- modal -->
+                            <!-- modal
                             <button ng-click="incr()">
                                 click
                             </button>
                             <button type="button" class="btn btn-default" ng-click="open(recipesToDisplay)">Open me!</button>
-
+                            -->
                         </td>
                     </tr>
                 </table>

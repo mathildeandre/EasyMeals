@@ -49,7 +49,7 @@ public class Recipe implements Serializable{
     private RecipeOrigin origin;
     private List<RecipeCategory> categories;
     private int nbPerson;
-    private int rating;
+    private float rating;
     private int nbVoter;
     private int timeCooking;
     private int timePreparation;
@@ -67,7 +67,7 @@ public class Recipe implements Serializable{
 
     public Recipe(int id, String name, boolean isPublic, User user, String pixName, RecipeType recipeType,
                   List<Ingredient> ingredients, List<RecipeDescription> descriptions, RecipeOrigin origin,
-                  List<RecipeCategory> categories, int nbPerson, int rating, int nbVoter, int timeCooking,
+                  List<RecipeCategory> categories, int nbPerson, float rating, int nbVoter, int timeCooking,
                   int timePreparation, boolean isValidated, RelUserRecipe relUserRecipe) {
         this.id = id;
         this.name = name;
@@ -164,11 +164,11 @@ public class Recipe implements Serializable{
         this.nbPerson = nbPerson;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
