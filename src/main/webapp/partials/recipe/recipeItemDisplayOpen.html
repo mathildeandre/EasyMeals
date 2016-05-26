@@ -20,7 +20,7 @@
             <div class="divTopRecipeRight">
 
 
-                <div class="divRatingStar" ng-show="!recipe.ratingSystem.isUserEditing" title="{{displayRatingOfRecipeByTitle(recipe)}}">
+                <div class="divRatingStar" ng-show="!recipe.ratingSystem.isUserEditing" title="{{displayRatingOfRecipeByTitle(recipe)}}" ng-click="stopPropag($event)">
                     <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
                           class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
                                                        'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),

@@ -84,17 +84,22 @@
                     </span>
 
                 <span class="blockFilterPlanningRecipe">
-                    Categories :
+                    <!--Categories :-->
                     <select class="fieldPlanning"  ng-model='myCategory' ng-change="moveCategoryToSelection(myCategory)"
-                            ng-options='category.name for category in filterSearch.categories' ></select>
+                            ng-options='category.name for category in filterSearch.categories' >
+                        <option value="" disabled> Categories</option>
+                    </select>
                 </span>
 
 
                 <span class="blockFilterPlanningRecipe">
-                    Spécialités :
+                    <!--Spécialités :-->
                     <select class="fieldPlanning"  ng-model='myOrigin' ng-change="moveOriginToSelection(myOrigin)"
-                            ng-options='origin.name for origin in filterSearch.origins' ></select>
+                            ng-options='origin.name for origin in filterSearch.origins' >
+                        <option value="" disabled> Spécialités</option>
+                    </select>
                 </span>
+
             </div>
         </article>
 
@@ -177,12 +182,6 @@
 
 
     </div>
-
-
-
-
-
-
 
 
 

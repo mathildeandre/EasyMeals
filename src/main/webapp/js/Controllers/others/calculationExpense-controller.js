@@ -12,7 +12,7 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
     $scope.nbPers = 4;
 
     //$scope.persons = ['person1', 'person2', 'person3', 'person4'];
-    $scope.persons = [{id:0, name:'fab'}, {id:1, name:'math'}, {id:2, name:'eddy'}, {id:3, name:'carine'}];
+    $scope.persons = [{id:0, name:'fab'}, {id:1, name:'math'}, {id:2, name:'jean-paul'}];
 
     $scope.updatePersons = function(){
         $log.debug('BONJOUUUUUUR 1 - persons.length :'+$scope.persons.length);

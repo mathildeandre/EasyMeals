@@ -35,8 +35,8 @@
                           class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>
                 <span ng-show="modifyingPlanningName">
-                    <input class="inputPlanning" type="text" ng-model='currentPlanning.name'
-                           placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <input class="inputPlanning" type="text" ng-model='currentPlanning.name' placeholder="Choissisez un nom"
+                           ng-blur="modificationPlanningNameDONE()"  ng-keyup="pressEnterListName($event)"/> &nbsp
                     <span ng-click="modificationPlanningNameDONE()"
                           class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>

@@ -146,18 +146,25 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         }
     }
     $scope.moveCategoryToSelection = function(category){
-        $scope.filterMySelection.categories.push(category);
-        var index =  $scope.filterSearch.categories.indexOf(category); //fonctionne aussi tres bien
-        $scope.filterSearch.categories.splice(index, 1);
-        //init select avec elem fictif  "choisir"
-        //$scope.myCategory = $scope.filterSearch.categories[0];
+        if(category != undefined){//car il semblerait qu'il appel cette fct 2fois, ainsi la seconde la category nest plus ds la liste...
+
+            $log.info("BOOM je le fais une fois la puis ? (categorie : "+category.name);
+            $scope.filterMySelection.categories.push(category);
+            var index =  $scope.filterSearch.categories.indexOf(category); //fonctionne aussi tres bien
+            $scope.filterSearch.categories.splice(index, 1);
+            //init select avec elem fictif  "choisir"
+            //$scope.myCategory = $scope.filterSearch.categories[0];
+        }
     }
     $scope.moveOriginToSelection = function(origin){
-        $scope.filterMySelection.origins.push(origin);
-        var index =  $scope.filterSearch.origins.indexOf(origin); //fonctionne aussi tres bien
-        $scope.filterSearch.origins.splice(index, 1);
-        //init select avec elem fictif  "choisir"
-        //$scope.myOrigin = $scope.filterSearch.origins[0];
+        if(origin != undefined){//car il semblerait qu'il appel cette fct 2fois, ainsi la seconde origin nest plus ds la liste...
+            $log.info("BOOM je le fais une fois la puis ? (origin : "+origin.name);
+            $scope.filterMySelection.origins.push(origin);
+            var index =  $scope.filterSearch.origins.indexOf(origin); //fonctionne aussi tres bien
+            $scope.filterSearch.origins.splice(index, 1);
+            //init select avec elem fictif  "choisir"
+            //$scope.myOrigin = $scope.filterSearch.origins[0];
+        }
     }
 
 

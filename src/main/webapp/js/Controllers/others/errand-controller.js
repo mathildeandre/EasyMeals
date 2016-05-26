@@ -118,18 +118,29 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunc
     }
 
 
+    /*********************************** MODIF NAME list ***********************/
+    $scope.modifyingListName = false;
+    $scope.modifyListName = function(){
+        $scope.modifyingListName = true;
+    }
+    $scope.modificationListNameDONE = function(){
+        var planningShopping = $scope.currentPlanningShopping;
+        $scope.modifyingListName = false;
+        $log.debug("NEW NAME LIST SHOPPING ::::::: "+ planningShopping.name+ "(id planning :"+planningShopping.id+")");
+        restPlanningService.postNewNamePlanning(planningShopping.id, planningShopping.name);
+    }
     $scope.pressEnterListName = function(event){
         event.stopPropagation();
         event.preventDefault();
         if(event.keyCode == 13){
-            $scope.toggleModifyListName();
+            $scope.modificationListNameDONE();
         }
     }
-    $scope.modifyingListName = false;
-    $scope.toggleModifyListName = function(listName){
-        $scope.modifyingListName = !$scope.modifyingListName;
+    /******************************* end MODIF NAME list ***********************/
 
-    }
+
+
+
 
     $scope.isDisplayErrandList = true;
     $scope.displayErrandList = function(){

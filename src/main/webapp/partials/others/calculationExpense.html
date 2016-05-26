@@ -59,9 +59,10 @@
 
                     <!-- PERSON WHO PAID -->
                     <td>
-                        <select class="fieldExpense"  ng-model='row.buyerId'  >
+                        <!--<select class="fieldExpense"  ng-model='row.buyerId'  >
                             <option ng-repeat="person in persons" value="{{person.id}}">{{person.name}}</option>
-                        </select>
+                        </select>-->
+                        <select class="fieldExpense"  ng-model='row.buyerId' ng-options='person.name for person.id in persons'></select>
                     </td>
                     <!-- FIELD PRICE -->
                     <td><input class="fieldExpense" type="number" min="0"  ng-model="row.price" ></td>

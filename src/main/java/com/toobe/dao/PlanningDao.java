@@ -66,7 +66,7 @@ public class PlanningDao {
                 int idUser = res.getInt("idUser");
                 //2. create copy
                 stm = conn.prepareStatement(CREATE_COPY_PLANNING, Statement.RETURN_GENERATED_KEYS);
-                stm.setString(1, name);
+                stm.setString(1, "copie_"+name);
                 stm.setBoolean(2, true); //lastOpen
                 stm.setLong(3, idUser);
                 stm.setInt(4, nbPersGlobal);

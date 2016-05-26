@@ -88,7 +88,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
     */
 
 
-
+    /*********************************** MODIF NAME planning ***********************/
     $scope.modifyingPlanningName = false;
     $scope.modifyPlanningName = function(){
         $scope.modifyingPlanningName = true;
@@ -107,6 +107,7 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
             $scope.modificationPlanningNameDONE();
         }
     }
+    /****************************** end MODIF NAME planning ***********************/
 
 
     // called on $watch '$scope.currentPlanning'

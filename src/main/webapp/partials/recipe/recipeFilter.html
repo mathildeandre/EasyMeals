@@ -108,16 +108,15 @@
                     </button-filter>
                 </div>
             </div>
+
+
+            <!-- Filter with ingredient! -CSS perfect- we need to add this module and make it work within the filter function (of ctrl) -->
+            <!--
             <div class="divSubFilter">
                 <div class="txtTitleSubFilter" ng-class="{divSubFilterTop: filterSearch.myLists.length  == 0}">Filtrer avec ingrédients</div>
                 <div>
-                    <!-- NEW (into button-filter)
-                    <button  type="button" class="btn btn-defaultRecipe" >
-                        <span class="glyphicon glyphicon-plus littlePlus" ></span>
-                        <span class="txtFilter">{{myList.name}}</span>
-                    </button>-->
                     <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnPlusFilter"
-                             ng-click="moveIngredientToSelection(ingredientName)"> <!-- $index indique l'index du ng-repeat -->
+                             ng-click="moveIngredientToSelection(ingredientName)">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                     <span class="txtFilter">
@@ -125,6 +124,8 @@
                     </span>
                 </div>
             </div>
+            -->
+
             <div class="divSubFilter">
                 <div class="txtTitleSubFilter" >Categories recettes</div>
                 <div class="elemCategorieVrac" ng-repeat="category in filterSearch.categories | orderBy:'toString()'"

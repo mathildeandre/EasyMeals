@@ -36,14 +36,14 @@
     <article class="myArticle artErrandList" ng-show="isDisplayErrandList" >
         <div class="myArticleHeading">
             <div class="myArticleTitle">
-                Courses &nbsp
+                Courses : &nbsp
                 <span ng-show="!modifyingListName">
-                    ({{currentPlanningShopping.name}}) &nbsp
-                    <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
+                    {{currentPlanningShopping.name}} &nbsp
+                    <span ng-click="modifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>
                 <span ng-show="modifyingListName">
-                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
-                    <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
+                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom"  ng-blur="modificationListNameDONE()" ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <span ng-click="modificationListNameDONE()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
 
 
@@ -83,14 +83,14 @@
 
         <div class="myArticleHeading" >
             <div class="myArticleTitle">
-                Planning &nbsp
+                Planning : &nbsp
                 <span ng-show="!modifyingListName">
-                    ({{currentPlanningShopping.name}}) &nbsp
-                    <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
+                    {{currentPlanningShopping.name}} &nbsp
+                    <span ng-click="modifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
                 </span>
                 <span ng-show="modifyingListName">
-                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom" ng-keyup="pressEnterListName($event)"/> &nbsp
-                    <span ng-click="toggleModifyListName()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
+                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom" ng-blur="modificationListNameDONE()"  ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <span ng-click="modificationListNameDONE()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
 
                 <span class="rightInlineBlock">

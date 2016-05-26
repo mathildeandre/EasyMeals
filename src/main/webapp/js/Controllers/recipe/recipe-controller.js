@@ -69,6 +69,10 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         event.stopPropagation();
         recipe.ratingSystem.isUserEditing = !recipe.ratingSystem.isUserEditing ;
     }
+    $scope.stopPropag = function(event){
+        event.stopPropagation();
+        $log.info("STOP PROPAG !!")
+    }
 
 
 
