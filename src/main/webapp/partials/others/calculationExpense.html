@@ -2,7 +2,8 @@
 
     <div><h2>Calcul des dépenses</h2></div>
 
-    <article class="myArticle artParameter " ng-class="{artParameterHelp : showHelp}"> <!-- IMPROVEMENT class={{largeExpense}} (var into global-controller for mode accompagnement)-->
+    <!--
+    <article class="myArticle artParameter " ng-class="{artParameterHelp : showHelp}"> <!- IMPROVEMENT class={{largeExpense}} (var into global-controller for mode accompagnement)->
         <div class="myArticleHeading">
             <div class="myArticleTitle">Parametres</div>
         </div>
@@ -18,12 +19,17 @@
             </div>
         </div>
     </article>
-
+    -->
 
     <article class="myArticle artWhoPaidWhat" >
 
         <div class="myArticleHeading">
-            <div class="myArticleTitle">QUI à payé QUOI à QUI ?</div>
+            <span class="myArticleTitle">QUI à payé QUOI à QUI ?</span>
+            &nbsp &nbsp - &nbsp
+            <span>
+                <label>Nombre de personnes : </label>
+                &nbsp&nbsp<input class="fieldExpense fieldExpenseNbPers" type="number" ng-model ='nbPers' ng-change="updatePersons()" min="1"/>
+            </span>
         </div>
 
         <div class="myArticleBody" >

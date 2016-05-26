@@ -119,9 +119,10 @@
             <div>
                 <div class="form-group inlineBlock">
                     <div class="input-group ">
-                        <select class="fieldRecipeCreation" ng-model='recipe.origin'
+                        Spécialités : &nbsp
+                        <select class="fieldRecipeCreation" ng-model='recipe.origin' ng-init="recipe.origin = origins[0]"
                                 ng-options='origin.name for origin in origins'>
-                            <option value="" disabled> Specialite</option>
+                            <!--<option value="" disabled> Specialite</option>-->
                         </select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
                     </div>
                 </div>
