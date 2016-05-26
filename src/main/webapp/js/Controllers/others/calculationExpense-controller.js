@@ -9,6 +9,32 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
 
     $scope.$emit('intoExpense'); //will tell to parents (global-controller.js) to modify pix
 
+
+    $scope.expense = {
+        name : "",
+        nbPers : 4,
+        persons : [{id:0, name:'pierre'}, {id:1, name:'paul'}, {id:2, name:'jack'}, {id:3, name:'brigit'}],
+        rows : [
+            {
+                id:0,
+                buyerId:0,
+                price:30,
+                listChecked:[{id:0, bool:true}, {id:1, bool:true}, {id:2, bool:false}, {id:3, bool:true}],
+                checkedAll:false,
+                description:'pour les courses'
+            },
+            {
+                id:1,
+                buyerId:3,
+                price:15,
+                listChecked:[{id:4, bool:false}, {id:5, bool:true}, {id:6, bool:true}, {id:7, bool:true}],
+                checkedAll:false,
+                description:'bonbons'
+            }
+        ]
+    }
+
+
     $scope.nbPers = 4;
 
     //$scope.persons = ['person1', 'person2', 'person3', 'person4'];
@@ -94,25 +120,17 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
             id:0,
             buyerId:0,
             price:30,
-            listChecked:[{id:0, bool:true}, {id:1, bool:false}, {id:2, bool:false}, {id:3, bool:true}],
+            listChecked:[{id:0, bool:true}, {id:1, bool:true}, {id:2, bool:false}, {id:3, bool:true}],
             checkedAll:false,
             description:'pour les courses'
         },
         {
             id:1,
-            buyerId:0,
+            buyerId:3,
             price:15,
-            listChecked:[{id:0, bool:false}, {id:1, bool:true}, {id:2, bool:true}, {id:3, bool:true}],
+            listChecked:[{id:4, bool:false}, {id:5, bool:true}, {id:6, bool:true}, {id:7, bool:true}],
             checkedAll:false,
             description:'bonbons'
-        },
-        {
-            id:2,
-            buyerId:0,
-            price:40,
-            listChecked:[{id:0, bool:true}, {id:1, bool:true}, {id:2, bool:true}, {id:3, bool:true}],
-            checkedAll:true,
-            description:'bonbons2'
         }
     ];
 
