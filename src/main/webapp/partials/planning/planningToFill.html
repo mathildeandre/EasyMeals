@@ -18,10 +18,14 @@
     </div>
 
 
-    <article class="myArticle myArticlePlanning">
+    <button type="button" class="btn btn-info bigBtnNewPlanning" ng-click="createNewPlanning()"  ng-show="plannings.length == 0">
+        <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
+    </button>
+
+    <article class="myArticle myArticlePlanning" ng-show="plannings.length > 0">
         <div class="myArticleHeading">
             <div class="myArticleTitle">
-                PLANNING : &nbsp bj
+                PLANNING : &nbsp
                 <span ng-show="!modifyingPlanningName">
                     <select class="fieldPlanning noWidth" ng-model='currentPlanning'
                             ng-options='planning.name for planning in plannings'></select> <!-- ng-model='$parent.currentPlanning' -->
@@ -42,21 +46,19 @@
                     <button type="button" class="btn btn-info btnNewPlanning" ng-click="createNewPlanning()">
                         <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
                     </button>
-                    <span ng-show="plannings.length > 1"
-                          class="glyphicon glyphicon-trash glyphDeletePlanning glyphiconBtn"
-                          ng-click="deletePlanning()"></span>
+                    <span class="glyphicon glyphicon-trash glyphDeletePlanning glyphiconBtn" ng-click="deletePlanning()"></span>
                 </span>
             </div>
         </div>
 
 
-        planning current : {{currentPlanning}}
+        <!--planning current : {{currentPlanning}}-->
 
             <div class="myArticleBody">
                 <div ng-controller="PlanningModalCtrl">
                 <table class="table  table-hover table-bordered">
                     <th class="info myTh"></th>
-                    <th class="info myTh">Lundii</th>
+                    <th class="info myTh">Lundi</th>
                     <th class="info myTh">Mardi</th>
                     <th class="info myTh">Mercredi</th>
                     <th class="info myTh">Jeudi</th>
@@ -73,11 +75,13 @@
                         <td ng-repeat="caseMeal in weekMeal.caseMeals" style="width:13%;" data-drop="true"
                             ng-model='caseMeal.recipes' jqyoui-droppable="{multiple:true}">
                             <!--, onOver:'onOverTab(\'hehehe\')' -->
-                        <span ng-show="showNbPers" class="nbPers" data-drop="true" ng-model='caseMeal.nbPers'
+
+                        <span ng-show="caseMeal.recipes.length > 0 && showNbPers" class="nbPers" data-drop="true" ng-model='caseMeal.nbPers'
                               jqyoui-droppable="{multiple:true}">
                             <input class="inputNbPers" type="number" min="1" ng-model="caseMeal.nbPers"> pers.
                         </span>
-                            <br ng-show="showNbPers">
+
+
                             <span ng-show="showDebug" style="font-size: 18px; color:darkorange">id caseMeal : {{caseMeal.id}}</span>
                             <!--ng-repeat="recipe in caseMeal.recipes  | orderByRecipeType" -->
                             <!--track by $index permet d'avoir 2x le mm element dans un drop sans bug -->
@@ -122,10 +126,17 @@
                         </span>
                         </div>
                         <div>
-                            Nombre global de personnes : &nbsp&nbsp
+                            Nombre de personnes : &nbsp&nbsp
+                            Global &nbsp
                             <input class="inputGlobalNbPers" type="number" ng-model="currentPlanning.nbPersGlobal"
                                    ng-change="spreadGlobalNbPers(currentPlanning.nbPersGlobal)" min="1"
                                    style="width:40px">
+                            &nbsp - &nbsp
+
+                            <span class="checkbox checkbox-info checkbox-inline">
+                                <input type="checkbox" ng-model="showNbPers" id="idShowPers">
+                                <label for="idShowPers">Voir pour chaque repas</label>
+                            </span>
                         </div>
                         <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
                             <div>Apres avoir choisi le nombre de personne global, il est possible de le modifier pour un
@@ -135,10 +146,7 @@
                         </div>
                         <div>
                             <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
-                        <span class="checkbox checkbox-info checkbox-inline">
-                            <input type="checkbox" ng-model="showNbPers" id="idShowPers">
-                            <label for="idShowPers">Afficher nb pers. &nbsp</label>
-                        </span>
+
                             <!-- Partie avec case nbPers to drag into planning --
                             <span ng-show="showNbPers">
                                 <span ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">- Modifier nb pers puis faire <b>glisser</b> sur un item 'pers' d'une case du planning :</span>

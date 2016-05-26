@@ -1720,6 +1720,13 @@ select::selection,option::selection { /* ne fonctionne pas  */
     vertical-align: top;
     margin-right : 15px;
 }
+.bigBtnNewPlanning{
+    font-size: 28px;
+    padding : 20px;
+    margin-left : 30%;
+
+}
+
 .btnClonePlanning[title]:hover:after{
     position: absolute;
     top: 100%;

@@ -64,6 +64,10 @@ myModule.controller('ListShoppingCtrl', function($scope, $location, $anchorScrol
                 $scope.categories[i].ingredients.push(newIngr);
             }
         }
+        //Empty new ingredient
+        ingr.qty = '';
+        ingr.unit = '';
+        ingr.food = {};
     }
     $scope.trashIngredientFromCategorie = function(category, ingr){
         var index = category.ingredients.indexOf(ingr); //fonctionne aussi tres bien
@@ -83,46 +87,50 @@ myModule.controller('ListShoppingCtrl', function($scope, $location, $anchorScrol
 
     $scope.calculListShopping = function(){
 
-        $log.info("[planningListShopping-ctrl] - calculListShopping() - name current planning : "+$scope.currentPlanning.name);
-        resetIngredientsOfCategories();
+        if($scope.plannings.length > 0){//if planning is not empty
 
-        var meals = [];
-        var recipes = [];
-        var nbPersTmp = 0;
-        var recipe = {};
-        var multIngr = 0;
-        var ingredient = {};
-        var ingrTmp = {};
-        var newQtity = 0;
-        var newUnit = '';
-        var newIngrFood = '';
+            $log.info("[planningListShopping-ctrl] - calculListShopping() - name current planning : "+$scope.currentPlanning.name);
+            resetIngredientsOfCategories();
 
-        var fourMeals = $scope.currentPlanning.weekMeals;// [$scope.breakfasts, $scope.lunchs, $scope.snacks, $scope.dinners];
-        for(var a=0; a<fourMeals.length; a++){
-            meals = fourMeals[a].caseMeals;
-            for(var i=0; i<meals.length; i++){
-                recipes = meals[i].recipes; //list recipe
-                nbPersTmp = meals[i].nbPers;
-                for(var j=0; j<recipes.length; j++){
-                    recipe = recipes[j];
-                    multIngr = nbPersTmp/recipe.nbPerson;
-                    for(var k=0; k<recipe.ingredients.length; k++){
-                        ingredient = recipe.ingredients[k];
-                        newQtity = multIngr*ingredient.qty;
-                        newUnit = ingredient.unit;
-                        newIngrFood = ingredient.food;
-                        ingrTmp = {qty:newQtity, unit:newUnit, food:newIngrFood};
-                        for(var b=0; b<$scope.categories.length; b++){
-                            if($scope.categories[b].id == ingredient.food.idCategory){
-                                //on va ajouter l'ingredient ds la categorie correspondante
-                                addIngrIntoCategorieAndFusionIfDuplicate(ingrTmp, $scope.categories[b].ingredients);
+            var meals = [];
+            var recipes = [];
+            var nbPersTmp = 0;
+            var recipe = {};
+            var multIngr = 0;
+            var ingredient = {};
+            var ingrTmp = {};
+            var newQtity = 0;
+            var newUnit = '';
+            var newIngrFood = '';
+
+            var fourMeals = $scope.currentPlanning.weekMeals;// [$scope.breakfasts, $scope.lunchs, $scope.snacks, $scope.dinners];
+            for(var a=0; a<fourMeals.length; a++){
+                meals = fourMeals[a].caseMeals;
+                for(var i=0; i<meals.length; i++){
+                    recipes = meals[i].recipes; //list recipe
+                    nbPersTmp = meals[i].nbPers;
+                    for(var j=0; j<recipes.length; j++){
+                        recipe = recipes[j];
+                        multIngr = nbPersTmp/recipe.nbPerson;
+                        for(var k=0; k<recipe.ingredients.length; k++){
+                            ingredient = recipe.ingredients[k];
+                            newQtity = multIngr*ingredient.qty;
+                            newUnit = ingredient.unit;
+                            newIngrFood = ingredient.food;
+                            ingrTmp = {qty:newQtity, unit:newUnit, food:newIngrFood};
+                            for(var b=0; b<$scope.categories.length; b++){
+                                if($scope.categories[b].id == ingredient.food.idCategory){
+                                    //on va ajouter l'ingredient ds la categorie correspondante
+                                    addIngrIntoCategorieAndFusionIfDuplicate(ingrTmp, $scope.categories[b].ingredients);
+                                }
                             }
                         }
                     }
                 }
             }
+            setAllIngrWithGoodUnitAndQty();
+
         }
-        setAllIngrWithGoodUnitAndQty();
     }
 
     /*********************** FCT ANNEXES pr calculListShopping() ***********************************************************************/

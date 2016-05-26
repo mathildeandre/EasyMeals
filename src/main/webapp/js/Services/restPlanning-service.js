@@ -39,24 +39,19 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
             var index = plannings.indexOf(planning);
             plannings.splice(index, 1);
             if(plannings.length == 0){//si on a delete last planning, on en cree un new
-                createNewPlanning().then(function(index){
-
-                    //AJOUT DANS VUE
-                    var newPlanningShopping = data;
-                    planningsShopping.push(newPlanningShopping);
-                    makePlanningCurrent(newPlanningShopping.id, true); //lastOpen...
+                /*createNewPlanning().then(function(index){
                     makePlanningCurrent(plannings[0].id, false);//lastOpen..
                     $location.path("/errand");
-                })
+                })*/
             }else{
-
-                //AJOUT DANS VUE
-                var newPlanningShopping = data;
-                planningsShopping.push(newPlanningShopping);
-                makePlanningCurrent(newPlanningShopping.id, true); //lastOpen...
                 makePlanningCurrent(plannings[0].id, false);//lastOpen..
-                $location.path("/errand");
             }
+
+            //AJOUT DANS VUE
+            var newPlanningShopping = data;
+            planningsShopping.push(newPlanningShopping);
+            makePlanningCurrent(newPlanningShopping.id, true); //lastOpen...
+            $location.path("/errand");
 
         })
     }
