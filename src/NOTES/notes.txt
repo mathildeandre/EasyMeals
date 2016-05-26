@@ -242,6 +242,16 @@ fab 40€ to fab, math, eddy, carine, person4, person5
     <!-- ng options : list.name sera l'affichage et list sera passé dans ng-model et AFFECTé à currentListShop
     possible d'initialiser le 1er elem ds le scope : $scope.currentListShop = ... ou dans html : ng-init="currentListShop = listsShoppingPlanning[2] "-->
 
+    Plus poussé :
+    <select class="fieldExpense"  ng-model='row.buyerId' ng-options='person.id as person.name for person in persons'></select>
+    --> ici c person.id qui est passé ds model et person.name affiché!
+
+    AVEC un name (ex "categories") disabled
+    select class="fieldPlanning"  ng-model='myCategory' ng-change="moveCategoryToSelection(myCategory)"
+            ng-options='category.name for category in filterSearch.categories' >
+        <option value="" disabled> Categories</option>
+    </select>
+
 
 
 

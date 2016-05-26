@@ -3,10 +3,10 @@
 
 CREATE TABLE Food (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idCategory int(10) NOT NULL, isValidated tinyint DEFAULT 0 NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Food_Category (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, numRank int(10), PRIMARY KEY (id));
-CREATE TABLE Food_Recipe (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idType int(10) NOT NULL, idFood int(10) NOT NULL, quantity float(10,3) NOT NULL, unit varchar(10), nbPerson int(10) DEFAULT 1 NOT NULL, pixName varchar(255), idOrigin int(10) NOT NULL, PRIMARY KEY (id), INDEX (idType));
+CREATE TABLE Food_Recipe (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idType int(10) NOT NULL, idFood int(10) NOT NULL, quantity float(10,3) NOT NULL, unit varchar(255), nbPerson int(10) DEFAULT 1 NOT NULL, pixName varchar(255), idOrigin int(10) NOT NULL, PRIMARY KEY (id), INDEX (idType));
 CREATE TABLE Ingredient (idRecipe int(10) NOT NULL, idFood int(10) NOT NULL, quantity float(10,3) NOT NULL, unit varchar(255), PRIMARY KEY (idRecipe, idFood));
 CREATE TABLE Ingredient_Custom (idRecipe int(10) NOT NULL, idFood int(10) NOT NULL, idUser int(10) NOT NULL, quantity float(10,3) NOT NULL, unit varchar(255), isHide tinyint(1) NOT NULL, PRIMARY KEY (idRecipe, idFood, idUser));
-CREATE TABLE Ingredient_ListShop (nameFood varchar(255) NOT NULL, idListShopCategory int(10) NOT NULL, quantity float(10,3) NOT NULL, unit varchar(10));
+CREATE TABLE Ingredient_ListShop (nameFood varchar(255) NOT NULL, idListShopCategory int(10) NOT NULL, quantity float(10,3) NOT NULL, unit varchar(255));
 CREATE TABLE ListShopping_Category (id int(10) NOT NULL AUTO_INCREMENT, idPlanning int(10) NOT NULL, idFoodCategory int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Planning (id int(10) NOT NULL AUTO_INCREMENT, lastOpen tinyint DEFAULT false NOT NULL, name varchar(255) NOT NULL, idUser int(10) NOT NULL, nbPersGlobal int(10) DEFAULT 4 NOT NULL, isForListShop tinyint DEFAULT false NOT NULL, PRIMARY KEY (id), INDEX (idUser));
 CREATE TABLE Planning_CaseMeal (id int(10) NOT NULL AUTO_INCREMENT, numDay int(10) NOT NULL, nbPers int(10) NOT NULL, idPlanningWeekMeal int(10) NOT NULL, PRIMARY KEY (id));
