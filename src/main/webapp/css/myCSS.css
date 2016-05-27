@@ -1661,7 +1661,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-right: 2vw;
 }
 .divPlanningRecipeRight{
-    width:72vw;
+    width:70vw;
 }
 
 .divRecipesType{

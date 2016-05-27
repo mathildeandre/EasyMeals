@@ -1,9 +1,12 @@
 
 var myModule = angular.module('controllers');
-myModule.controller('ModalRecipeFillPlanningCtrl', ['$scope', '$uibModal', '$log', function ($scope, $uibModal, $log) {
+myModule.controller('ModalRecipeFillPlanningCtrl', ['$scope', '$uibModal', '$log', 'restPlanningService', function ($scope, $uibModal, $log, restPlanningService) {
 
 
-    $scope.openModal = function (recipeToDisplay, caseMeal) {
+    $scope.openModalRecipeFillPlanning = function (recipe, event) {
+        event.stopPropagation();
+
+
 
         var modalInstance = $uibModal.open({
             animation: true,
@@ -11,11 +14,8 @@ myModule.controller('ModalRecipeFillPlanningCtrl', ['$scope', '$uibModal', '$log
             controller: 'ModalInstanceRecipeFillPlanningCtrl',
             size: 'lg',
             resolve: {
-                items: function () {
-                    return recipeToDisplay;
-                },
-                caseMeal: function () {
-                    return caseMeal;
+                recipe: function () {
+                    return recipe;
                 }
             }
         });
@@ -33,10 +33,22 @@ myModule.controller('ModalRecipeFillPlanningCtrl', ['$scope', '$uibModal', '$log
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-myModule.controller('ModalInstanceRecipeFillPlanningCtrl', function ($scope, $log, $uibModalInstance, items) {
+myModule.controller('ModalInstanceRecipeFillPlanningCtrl', function ($scope, $log, $uibModalInstance, recipe, restPlanningService, AppendixFunctionsService) {
 
 
-    $scope.items = items;
+    $scope.recipe = recipe;
+    $scope.plannings = restPlanningService.getPlannings();
+
+    $scope.currentPlanning = $scope.plannings.filter(function(obj){
+        return obj.lastOpen == true;
+    })[0];
+
+
+    $scope.displayMealType = function(mealType){
+        return AppendixFunctionsService.displayMealType(mealType);
+    }
+
+
 
 
     $scope.chooseRecipe = function(recipe){

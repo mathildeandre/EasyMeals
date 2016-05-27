@@ -50,7 +50,7 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         }
     }
 
-    $scope.validateRatingUser = function(index, recipe, eventisStarFull){
+    $scope.validateRatingUser = function(index, recipe, event){
         event.stopPropagation();
         recipe.ratingUser = index+1;
         var result = (recipe.rating * recipe.nbVoter + recipe.ratingUser)/(recipe.nbVoter+1);

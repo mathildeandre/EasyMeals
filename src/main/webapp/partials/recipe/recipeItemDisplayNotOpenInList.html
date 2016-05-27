@@ -25,7 +25,7 @@
         &nbsp
         <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
         &nbsp
-        <span ng-show="recipe.onOver" ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
+        <span  ng-show="recipe.onOver" ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
     </div>
 
     <div class="divTimeNoDescription">

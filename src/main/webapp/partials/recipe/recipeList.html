@@ -41,20 +41,24 @@
                 <div style="font-weight: 800;border-bottom:1px solid grey">Recipe planning :</div><div ng-repeat="recipe in recipesPlanning">{{recipe.name}}</div>
             </div>
             -->
-            <div ng-show="!showInBlock" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy"
-                 ng-class="{recipeWithDescription: recipe.descriptionOpen, recipeWithNoDescr:!recipe.descriptionOpen}">
-                <!-- or :
-                <div ng-include="'../../partials/recipe/recipeItemDisplayNotOpenInList.html'"></div>
-                -->
-                <recipeitem-displayinlist></recipeitem-displayinlist>
-                <recipeitem-displayopen></recipeitem-displayopen>
-            </div>
+            <div  ng-controller="ModalRecipeFillPlanningCtrl">
 
-            <div ng-show="showInBlock" class="divRecipesBlock" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy "
-                 ng-class="{divRecipesBlockIcon:!recipe.descriptionOpen, divRecipesBlockDescription:recipe.descriptionOpen}">
+                <div ng-show="!showInBlock" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy"
+                     ng-class="{recipeWithDescription: recipe.descriptionOpen, recipeWithNoDescr:!recipe.descriptionOpen}">
+                    <!-- or :
+                    <div ng-include="'../../partials/recipe/recipeItemDisplayNotOpenInList.html'"></div>
+                    -->
+                    <recipeitem-displayinlist></recipeitem-displayinlist>
+                    <recipeitem-displayopen></recipeitem-displayopen>
+                </div>
 
-                <recipeitem-displayinblock></recipeitem-displayinblock>
-                <recipeitem-displayopen></recipeitem-displayopen>
+                <div ng-show="showInBlock" class="divRecipesBlock" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy "
+                     ng-class="{divRecipesBlockIcon:!recipe.descriptionOpen, divRecipesBlockDescription:recipe.descriptionOpen}">
+
+                    <recipeitem-displayinblock></recipeitem-displayinblock>
+                    <recipeitem-displayopen></recipeitem-displayopen>
+                </div>
+
             </div>
         </div>
 </article>
