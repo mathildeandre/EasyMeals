@@ -112,18 +112,8 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
         $log.info("STOP PROPAG !!")
     }
     /****************************** end MODIF NAME planning ***********************/
-    $scope.addRecipeIntoCaseMeal = function(recipe, caseMeal){
-        $log.warn("INTO ADD RECIPE INTO CASE MEAL !!!!! ------------------------------- ")
-        for(var i=0; i<$scope.currentPlanning.weekMeals.length; i++){
-            var weekMeal = $scope.currentPlanning.weekMeals[i];
-            for(var j=0; j<weekMeal.caseMeals.length; j++){
-                if(caseMeal.id == weekMeal.caseMeals[j].id){
-                    $log.warn("BOOOM caseMeal found !!! ")
-                    weekMeal.caseMeals[j].recipes.push(recipe);
-                }
-            }
-        }
-    }
+
+
 
     // called on $watch '$scope.currentPlanning'
     var updatePlanningBDD = function(newValue, oldValue, scope){

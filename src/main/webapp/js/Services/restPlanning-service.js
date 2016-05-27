@@ -29,6 +29,22 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
 
 
 
+    /* fct ajoute pour modals (modalRecipeFillPlanning-ctrl & modalPlanningCaseMeal-ctrl) -> push recipe ds caseMeal qui declenchera updatePlanningBDD et gerera le reste! */
+    function addRecipeIntoCaseMeal(recipe, caseMeal){
+        $log.warn("[restPlanning]INTO ADD RECIPE INTO CASE MEAL !!!!! ------------------------------- ")
+        for(var k=0; k<plannings.length; k++){
+
+            for(var i=0; i<plannings[k].weekMeals.length; i++){
+                var weekMeal = plannings[k].weekMeals[i];
+                for(var j=0; j<weekMeal.caseMeals.length; j++){
+                    if(weekMeal.caseMeals[j].id == caseMeal.id){
+                        $log.warn("BOOOM caseMeal found !!! ")
+                        weekMeal.caseMeals[j].recipes.push(recipe);
+                    }
+                }
+            }
+        }
+    }
 
     /***********************************************************************************************************************************/
     /********************************          planningsShopping         **************************************************************/
@@ -209,6 +225,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
         putNbPersGlobalPlanning: putNbPersGlobalPlanning,
         cloneIntoMyPlannings: cloneIntoMyPlannings,
         makePlanningCurrent: makePlanningCurrent,
+        addRecipeIntoCaseMeal: addRecipeIntoCaseMeal,
 
         getPlanningsShopping: getPlanningsShopping,
         createPlanningShopping: createPlanningShopping,

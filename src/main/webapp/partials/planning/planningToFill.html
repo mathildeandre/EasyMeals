@@ -125,16 +125,17 @@
                         </div>
                         <div>
                             Nombre de personnes : &nbsp&nbsp
-                            Global &nbsp
-                            <input class="inputGlobalNbPers" type="number" ng-model="currentPlanning.nbPersGlobal"
-                                   ng-change="spreadGlobalNbPers(currentPlanning.nbPersGlobal)" min="1"
-                                   style="width:40px">
-                            &nbsp - &nbsp
 
                             <span class="checkbox checkbox-info checkbox-inline">
                                 <input type="checkbox" ng-model="showNbPers" id="idShowPers">
                                 <label for="idShowPers">Voir pour chaque repas</label>
                             </span>
+                            &nbsp - &nbsp
+                            Global &nbsp
+                            <input class="inputGlobalNbPers" type="number" ng-model="currentPlanning.nbPersGlobal"
+                                   ng-change="spreadGlobalNbPers(currentPlanning.nbPersGlobal)" min="1"
+                                   style="width:40px">
+
                         </div>
                         <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
                             <div>Apres avoir choisi le nombre de personne global, il est possible de le modifier pour un

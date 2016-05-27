@@ -1,7 +1,7 @@
 <div>
 
     <div class="modal-header">
-        <h3 class="modal-title" >Choisir une case du planning pour insérer la recette</h3>
+        <h4 class="modal-title" >Choisir une case du planning pour insérer la recette : <span class="colorRed">{{recipeModal.name}}</span></h4>
     </div>
 
     <div class="modal-body" ><!--style="color:black; height: 700px;" -> height fonctionne à voir qd bcp recettes-->
@@ -37,33 +37,17 @@
                                 {{displayMealType(weekMeal.weekMealName)}}
                             </th>
 
-                            <td ng-repeat="caseMeal in weekMeal.caseMeals" class="tdCaseMeal" ng-click="openModal(recipesToDisplay, caseMeal)"
-                                data-drop="true" ng-model='caseMeal.recipes' jqyoui-droppable="{multiple:true}">
-                                <!--, onOver:'onOverTab(\'hehehe\')' -->
+                            <td ng-repeat="caseMeal in weekMeal.caseMeals" class="tdCaseMeal" ng-click="chooseCaseMeal(caseMeal)">
 
-                            <span ng-show="caseMeal.recipes.length > 0 && showNbPers" class="nbPers" ng-click="stopPropag($event)" data-drop="true" ng-model='caseMeal.nbPers' jqyoui-droppable="{multiple:true}">
-                                {{caseMeal.nbPers}} pers.
-                            </span>
+                                <div ng-show="caseMeal.recipes.length > 0 && showNbPers" class="nbPers">
+                                    {{caseMeal.nbPers}} pers.
+                                </div>
 
                                 <span ng-show="showDebug" style="font-size: 18px; color:darkorange">id caseMeal : {{caseMeal.id}}</span>
-                                <!--ng-repeat="recipe in caseMeal.recipes  | orderByRecipeType" -->
-                                <!--track by $index permet d'avoir 2x le mm element dans un drop sans bug -->
-                                <div ng-repeat="recipe in caseMeal.recipes  track by $index "
-                                     class="itemToDragPlanning itemDrag" style="display: inline-block;"
-                                     data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}"
-                                     ng-model="caseMeal.recipes" ng-show="recipe.name"
-                                     jqyoui-draggable="{index: {{$index}},placeholder:false , deepCopy:'true'}">
 
+                                <div ng-repeat="recipe in caseMeal.recipes  track by $index " class="divRecipeNameModalFillPlanning" ng-class="{colorRed : recipeModal.id == recipe.id}" >
                                     {{recipe.name}}
-
-                                    <br>
                                 </div>
-                                <!-- modal
-                                <button ng-click="incr()">
-                                    click
-                                </button>
-                                <button type="button" class="btn btn-default" ng-click="open(recipesToDisplay)">Open me!</button>
-                                -->
                             </td>
                         </tr>
                     </table>
@@ -71,7 +55,7 @@
 
                 <!-- DEBUG -->
                 <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-                    <div ng-repeat="recipe in currentPlanning.weekMeals[1].caseMeals[0].recipes">
+                    <div ng-repeat="recipe in currentPlanning.weekMeals[1].caseMeals[0].recipes" >
                         {{recipe.name}}
                     </div>
                 </div>
@@ -99,28 +83,6 @@
                                 repas en particulier : cocher "afficher nb pers." puis modifier directement le nb dans
                                 le repas ou y faire glisser le nb ci-dessous
                             </div>
-                        </div>
-                        <div>
-                            <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
-
-                            <!-- Partie avec case nbPers to drag into planning --
-                            <span ng-show="showNbPers">
-                                <span ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">- Modifier nb pers puis faire <b>glisser</b> sur un item 'pers' d'une case du planning :</span>
-                                <span ng-show="!showHelp">- <b>Glisser</b> dans une case Nb pers. :</span>
-                                <span class="itemToDragPlanning nbPers" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="nbPers"
-                                      jqyoui-draggable="{placeholder:'keep', deepCopy:'true'}">
-                                    <input class="inputNbPers" type="number" min="1" ng-model="nbPers"><span class="glyphicon glyphicon-tag"></span>
-                                </span>
-                            </span>
-                            -->
-                        </div>
-                    </div>
-
-                    <div class="rightInlineBlock rightTrashPlanning">
-                        <div id="trashPlanning" class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
-                             data-drop="{{dataDropTrash}}" ng-model='trash'
-                             jqyoui-droppable="{multiple:true, onOver:'onOverTrash()', onOut:'onOutTrash()', onDrop:'onOutTrash()'}">
-                            <!-- , onOver:'onOverTrash()', onOut:'onOutTrash()' }" -->
                         </div>
                     </div>
 

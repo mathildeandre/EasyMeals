@@ -20,9 +20,11 @@ myModule.controller('ModalRecipeFillPlanningCtrl', ['$scope', '$uibModal', '$log
             }
         });
 
-        modalInstance.result.then(function (selectedRecipe) {
-            $log.debug("selecteditem : "+selectedRecipe.name+" into caseMeal id : "+caseMeal.id);
-            $scope.addRecipeIntoCaseMeal(selectedRecipe, caseMeal);
+        modalInstance.result.then(function (caseMeal) {
+            $log.debug("selecteditem : "+recipe.name+" into caseMeal id : "+caseMeal.id);
+            restPlanningService.addRecipeIntoCaseMeal(recipe, caseMeal);
+            /* on insert directement en base egalement puisque le $watch on current planning de "planning-controller.js" (fct updatePlanningBDD) ne fonctionne pas depuis recipe*/
+            restPlanningService.postNewRecipeCaseMeal(recipe.id, caseMeal.id);
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -36,7 +38,7 @@ myModule.controller('ModalRecipeFillPlanningCtrl', ['$scope', '$uibModal', '$log
 myModule.controller('ModalInstanceRecipeFillPlanningCtrl', function ($scope, $log, $uibModalInstance, recipe, restPlanningService, AppendixFunctionsService) {
 
 
-    $scope.recipe = recipe;
+    $scope.recipeModal = recipe;
     $scope.plannings = restPlanningService.getPlannings();
 
     $scope.currentPlanning = $scope.plannings.filter(function(obj){
@@ -48,36 +50,12 @@ myModule.controller('ModalInstanceRecipeFillPlanningCtrl', function ($scope, $lo
         return AppendixFunctionsService.displayMealType(mealType);
     }
 
-
-
-
-    $scope.chooseRecipe = function(recipe){
-        $uibModalInstance.close(recipe);
+    $scope.chooseCaseMeal = function(caseMeal){
+        $uibModalInstance.close(caseMeal);
     }
-    /*
-    $scope.ok = function () {
-        $uibModalInstance.close($scope.selected);
-    };
-    */
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-
-
-    //copy of recipe-controller.js
-    $scope.displayRatingOfRecipeByTitle = function(recipe){
-        $log.info("hehe displayRatingOfRecipeByTitle")
-        var ratingUser = recipe.ratingUser;
-        if(ratingUser == 0){ratingUser = "-"}
-        return ("Note : "+recipe.rating+"\nMa note : "+ratingUser);
-    }
-
-    //copy of recipe-controller.js
-    $scope.isStarFull = function(numStar, rating){
-        $log.info("hehe isStarFull")
-        //$log.info("---------------numstar : "+numStar+" rating : "+Math.round(rating)+"------------- RESULT ::: ");
-        return numStar <= Math.round(rating);
-    }
 
 });

@@ -1,6 +1,6 @@
 
 var myModule = angular.module('controllers');
-myModule.controller('PlanningModalCaseMealCtrl', ['$scope', '$uibModal', '$log', function ($scope, $uibModal, $log) {
+myModule.controller('PlanningModalCaseMealCtrl', ['$scope', '$uibModal', '$log', 'restPlanningService',  function ($scope, $uibModal, $log, restPlanningService) {
 
 
     $scope.openModal = function (recipeToDisplay, caseMeal) {
@@ -22,7 +22,7 @@ myModule.controller('PlanningModalCaseMealCtrl', ['$scope', '$uibModal', '$log',
 
         modalInstance.result.then(function (selectedRecipe) {
             $log.debug("selecteditem : "+selectedRecipe.name+" into caseMeal id : "+caseMeal.id);
-            $scope.addRecipeIntoCaseMeal(selectedRecipe, caseMeal);
+            restPlanningService.addRecipeIntoCaseMeal(selectedRecipe, caseMeal);
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -55,7 +55,7 @@ myModule.controller('ModalInstanceCtrl', function ($scope, $log, $uibModalInstan
 
     //copy of recipe-controller.js
     $scope.displayRatingOfRecipeByTitle = function(recipe){
-        $log.info("hehe displayRatingOfRecipeByTitle")
+        //$log.info("hehe displayRatingOfRecipeByTitle")
         var ratingUser = recipe.ratingUser;
         if(ratingUser == 0){ratingUser = "-"}
         return ("Note : "+recipe.rating+"\nMa note : "+ratingUser);
@@ -63,7 +63,7 @@ myModule.controller('ModalInstanceCtrl', function ($scope, $log, $uibModalInstan
 
     //copy of recipe-controller.js
     $scope.isStarFull = function(numStar, rating){
-        $log.info("hehe isStarFull")
+        //$log.info("hehe isStarFull")
         //$log.info("---------------numstar : "+numStar+" rating : "+Math.round(rating)+"------------- RESULT ::: ");
         return numStar <= Math.round(rating);
     }
