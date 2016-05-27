@@ -679,14 +679,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
     vertical-align: top;
 }
 
-.redBorder{
-     border: 2px solid red;
- }
-
-.greenBorder{
-    border: 2px solid green;
-}
-
 .fieldCreationNameRecipe{
     width: 40%;
 }
@@ -783,6 +775,14 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 
+
+.redBorder{
+    border: 2px solid red;
+}
+
+.greenBorder{
+    border: 2px solid green;
+}
 
 
 
@@ -2100,8 +2100,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     text-decoration: line-through;
 }
 
-
-.tdMeal:hover{
+.tdCaseMeal{
+    width:13%
+}
+.tdCaseMeal:hover{
     cursor: pointer;
     background-color: lightgrey;
 }

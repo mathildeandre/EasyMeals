@@ -34,38 +34,67 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
         ]
     }
 
-
+/*
     $scope.nbPers = 4;
 
     //$scope.persons = ['person1', 'person2', 'person3', 'person4'];
     $scope.persons = [{id:0, name:'pierre'}, {id:1, name:'paul'}, {id:2, name:'jack'}, {id:3, name:'brigit'}];
+*/
+    $scope.idRow = 17; //permet d'avoir un id unique pour chaque row qui s'incremente dans $scope.addRowExpense()
+    // (autrement possible pb lors de suppression de row puis ajout...
+    /*
+     $scope.rows = [
+     {
+     id:0,
+     buyerId:0,
+     price:30,
+     listChecked:[{id:0, bool:true}, {id:1, bool:true}, {id:2, bool:false}, {id:3, bool:true}],
+     checkedAll:false,
+     description:'pour les courses'
+     },
+     {
+     id:1,
+     buyerId:3,
+     price:15,
+     listChecked:[{id:4, bool:false}, {id:5, bool:true}, {id:6, bool:true}, {id:7, bool:true}],
+     checkedAll:false,
+     description:'bonbons'
+     }
+     ];
+     */
+
+
+
 
     $scope.updatePersons = function(){
-        $log.debug('BONJOUUUUUUR 1 - persons.length :'+$scope.persons.length);
-        $log.debug( ' nb persons :'+$scope.nbPers);
-        //$scope.persons = [];
-        if($scope.nbPers > $scope.persons.length){//on ajoute des elemts
-            for(var i=$scope.persons.length; i<$scope.nbPers; i++){
+        var nbPers = $scope.expense.nbPers;
+
+        $log.debug('BONJOUUUUUUR 1 - persons.length :'+$scope.expense.persons.length);
+        $log.debug( ' nb persons :'+nbPers);
+        //$scope.expense.persons = [];
+        if(nbPers > $scope.expense.persons.length){//on ajoute des elemts
+            for(var i=$scope.expense.persons.length; i<nbPers; i++){
                 var obj = {id:i, name:'person'+i};
-                $scope.persons.push(obj);
-                for(var k=0; k<$scope.rows.length; k++){
-                    var isChecked = $scope.rows[k].checkedAll;
+                $scope.expense.persons.push(obj);
+                for(var k=0; k<$scope.expense.rows.length; k++){
+                    var isChecked = $scope.expense.rows[k].checkedAll;
                     var objCheck = {id:i, bool:isChecked};
-                    $scope.rows[k].listChecked.push(objCheck);
+                    $scope.expense.rows[k].listChecked.push(objCheck);
                 }
             }
-        }else if($scope.nbPers < $scope.persons.length){//on doit supprimer
-            for(var k=0; k<$scope.rows.length; k++){
-                $scope.rows[k].listChecked.splice($scope.nbPers, ($scope.persons.length-$scope.nbPers));
+        }else if(nbPers < $scope.expense.persons.length){//on doit supprimer
+            for(var k=0; k<$scope.expense.rows.length; k++){
+                $scope.expense.rows[k].listChecked.splice(nbPers, ($scope.expense.persons.length-nbPers));
             }
-            $scope.persons.splice($scope.nbPers, ($scope.persons.length-$scope.nbPers)); //le 1 indique combien d'element on remove a partir de index
+            $scope.expense.persons.splice(nbPers, ($scope.expense.persons.length-nbPers)); //le 1 indique combien d'element on remove a partir de index
         }else{
             $log.info('AIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIEE AIE AIE');
         }
 
-        $log.info('BONJOUUUUUUR 2 - persons.length :'+$scope.persons.length);
-        $log.info( ' nb persons :'+$scope.nbPers);
+        $log.info('BONJOUUUUUUR 2 - persons.length :'+$scope.expense.persons.length);
+        $log.info( ' nb persons :'+nbPers);
     };
+
 
     $scope.aPersonColumnChecked = function(row){//a person has been (un)checked
         var checkAll = true;
@@ -97,43 +126,22 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
         creationTabCouple();
 
     };
-    $scope.$watch('rows', updateRows, true);
+    $scope.$watch('expense', updateRows, true);
     // $scope.$watch('filterQtyChosen', updateAlcoholsWithQty);
 
     $scope.addRowExpense = function(){
         var numId = $scope.idRow++;
         var listCheck = [];
-        for(var i=0; i<$scope.persons.length; i++){
+        for(var i=0; i<$scope.expense.persons.length; i++){
             listCheck.push({id:i, bool:false});
         }
         var row = {id:numId, buyerId:0, price:0,listChecked:listCheck, checkedAll:false, description:''}
-        $scope.rows.push(row);
+        $scope.expense.rows.push(row);
     };
     $scope.deleteRowExpense = function(row){
-        var index = $scope.rows.indexOf(row); //fonctionne aussi tres bien
-        $scope.rows.splice(index, 1);
+        var index = $scope.expense.rows.indexOf(row); //fonctionne aussi tres bien
+        $scope.expense.rows.splice(index, 1);
     };
-    $scope.idRow = 3; //permet d'avoir un id unique pour chaque row qui s'incremente dans $scope.addRowExpense()
-                      // (autrement possible pb lors de suppression de row puis ajout...
-    $scope.rows = [
-        {
-            id:0,
-            buyerId:0,
-            price:30,
-            listChecked:[{id:0, bool:true}, {id:1, bool:true}, {id:2, bool:false}, {id:3, bool:true}],
-            checkedAll:false,
-            description:'pour les courses'
-        },
-        {
-            id:1,
-            buyerId:3,
-            price:15,
-            listChecked:[{id:4, bool:false}, {id:5, bool:true}, {id:6, bool:true}, {id:7, bool:true}],
-            checkedAll:false,
-            description:'bonbons'
-        }
-    ];
-
 
     /*******************************************************************************************************************************
      /*******************************************************************************************************************************
@@ -158,12 +166,12 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
     var creationTabExpense = function(){
         $scope.tabExpense = [];
         var tabExpense = $scope.tabExpense;
-        for(var i=0; i<$scope.persons.length; i++){
+        for(var i=0; i<$scope.expense.persons.length; i++){
             tabExpense.push(0);
         }
 
-        for(var i=0; i<$scope.rows.length; i++){
-            var row = $scope.rows[i];
+        for(var i=0; i<$scope.expense.rows.length; i++){
+            var row = $scope.expense.rows[i];
 
 
             //value du select = 'id-name' mais name disparait avec parseInt
@@ -266,7 +274,7 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
                 tabExpense[indexMin] = 0;
                 //Math.abs(tabExpense[indexMax]) < 0.5; //useless ? 2/04/2016
             }
-            tabCouple.push({debtGuy:$scope.persons[indexMin], amount:Math.abs(amount.toFixed(0)), benefitGuy:$scope.persons[indexMax]});
+            tabCouple.push({debtGuy:$scope.expense.persons[indexMin], amount:Math.abs(amount.toFixed(0)), benefitGuy:$scope.expense.persons[indexMax]});
             indexMax = findIndexMax(tabExpense);
             indexMin = findIndexMin(tabExpense);
 

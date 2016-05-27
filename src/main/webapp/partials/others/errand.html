@@ -105,7 +105,7 @@
         </div>
 
         <div class="myArticleBody">
-            <table class="table  table-bordered table">
+            <table class="table  table-bordered ">
                 <th class="thErrand myTh thErrand" ></th>
                 <th class="thErrand myTh">Lundi</th>
                 <th class="thErrand myTh">Mardi</th>
@@ -124,7 +124,7 @@
 
                     <th class="myTh thErrand" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(weekMeal.weekMealName)}}</th>
 
-                    <td ng-repeat="caseMeal in weekMeal.caseMeals"  style="width:13%" data-drop="true" ng-click="displayMealsOfCaseMeal(caseMeal)" class="tdMeal" >
+                    <td ng-repeat="caseMeal in weekMeal.caseMeals" class="tdCaseMeal" ng-click="displayMealsOfCaseMeal(caseMeal)"  >
                         <span ng-show="showNbPers" class="nbPers">{{caseMeal.nbPers}} pers.</span>
                         <br ng-show="showNbPers">
                         <div ng-repeat="recipe in caseMeal.recipes track by $index " class="itemToDragPlanning itemColorErrand" style="display: inline-block;" ng-show="recipe.name">

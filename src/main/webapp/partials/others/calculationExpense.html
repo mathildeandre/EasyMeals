@@ -15,7 +15,7 @@
             </div>
             <div>
                 <label>Nombre de personnes : </label>
-                &nbsp&nbsp<input class="fieldExpense fieldExpenseNbPers" type="number" ng-model ='nbPers' ng-change="updatePersons()" min="1"/>
+                &nbsp&nbsp<input class="fieldExpense fieldExpenseNbPers" type="number" ng-model ='expense.nbPers' ng-change="updatePersons()" min="1"/>
             </div>
         </div>
     </article>
@@ -28,14 +28,14 @@
             &nbsp &nbsp - &nbsp
             <span>
                 <label>Nombre de personnes : </label>
-                &nbsp&nbsp<input class="fieldExpense fieldExpenseNbPers" type="number" ng-model ='nbPers' ng-change="updatePersons()" min="1"/>
+                &nbsp&nbsp<input class="fieldExpense fieldExpenseNbPers" type="number" ng-model ='expense.nbPers' ng-change="updatePersons()" min="1"/>
             </span>
         </div>
 
         <div class="myArticleBody" >
             <!-- DEBUG -->
             <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-                <div ng-repeat="row in rows" >
+                <div ng-repeat="row in expense.rows" >
                     {{row}}<br>
                 </div>
             </div>
@@ -47,14 +47,14 @@
                 <th class="success myThExpense thExpenseAPaye">A payé</th> <!-- style="background-color: lightgreen" -->
                 <th class="success myThExpense thExpensePrix">Prix (€)</th> <!-- this success :#dff0d8 -->
                 <th class="success myThExpense thExpenseDesc">Description</th>
-                <th class="success myThExpense thExpenseFieldName" ng-repeat="person in persons">
+                <th class="success myThExpense thExpenseFieldName" ng-repeat="person in expense.persons">
                     <input  class="fieldExpense fieldExpenseTH"  type="text"  ng-model="person.name" >
                 </th>
                 <th class="success myThExpense ">All</th><!--#5cb85c(success) lightgreen -->
                 <th class="success myThExpense" >Supp.</th>
 
 
-                <tr ng-repeat="row in rows" >
+                <tr ng-repeat="row in expense.rows" >
                     <!--{
                     buyer:'fab',
                     price:30,
@@ -66,9 +66,9 @@
                     <!-- PERSON WHO PAID -->
                     <td>
                         <!--<select class="fieldExpense"  ng-model='row.buyerId'  >
-                            <option ng-repeat="person in persons" value="{{person.id}}">{{person.name}}</option>
+                            <option ng-repeat="person in expense.persons" value="{{person.id}}">{{person.name}}</option>
                         </select>-->
-                        <select class="fieldExpense"  ng-model='row.buyerId' ng-options='person.id as person.name for person in persons'></select>
+                        <select class="fieldExpense"  ng-model='row.buyerId' ng-options='person.id as person.name for person in expense.persons'></select>
                     </td>
                     <!-- FIELD PRICE -->
                     <td><input class="fieldExpense" type="number" min="0"  ng-model="row.price" ></td>
