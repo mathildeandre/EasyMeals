@@ -1,0 +1,103 @@
+<div>
+
+    <div class="modal-header">
+        <h3 class="modal-title" >Votre Liste de Courses</h3>
+    </div>
+
+    <div class="modal-body" ><!--style="color:black; height: 700px;" -> height fonctionne à voir qd bcp recettes-->
+
+
+        <!--current planning : {{curPlanning}}-->
+
+        <!--categories = {{categories}}-->
+
+        <!-- DEBUG -->
+        <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+            <div >{{categories}}</div>
+        </div>
+
+        <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
+            <div><b>Cliquer sur "Generer la liste de course" une fois que le planning convient</b></div>
+            <div>La liste va s'afficher (sauf si le planning est vide)</div>
+            <br>
+        </div>
+
+        <!--<div ng-show="!showListShopping()"> <button class="btn btn-info" ng-click="calculListShopping()">Générer liste de course</button> </div>
+        <div ng-show="showListShopping()"> <button class="btn btn-info" ng-click="calculListShopping()">Re-générer liste de course</button> </div>
+
+        <!--<div> <button class="btn btn-info" ng-click="testAnchor()">See anchor</button> </div>->
+
+        -->
+
+
+        <div ng-show="!showListShopping()">
+            Ajoutez des recettes dans le planning pour voir le contenu de votre liste de courses !
+        </div>
+
+
+        <div ng-show="showListShopping()" class="divPlanningListShop">
+
+            <div class="divPlanListShopLeft" id="listCategoryShop">
+                <!--<h5>Votre Liste avec Categories</h5>-->
+
+                <div ng-repeat="category in categories | orderBy:'name'  ">
+                    <div style="border:1px solid lightgrey; border-radius:5px; margin:5px; padding:7px; " ng-show="category.ingredients.length>0">
+
+                        <b style="border-bottom:1px solid grey; " >{{category.name}}</b>
+                        <div style="margin: 5px 0; font-size:16px;" ng-repeat="ingr in category.ingredients | orderBy:'food'">
+                            <div>
+                                -
+                                <span ng-show="!modifQty">{{ingr.qty}}</span>
+                                <span ng-show="modifQty"><input style="width:60px" type="number" step="{{unitStep(ingr.unit)}}" ng-model ='ingr.qty' min="0" /></span>
+                                {{displayIngrUnitAndFood(ingr)}}
+                                <!--<button type="button" class="btn btn-default" ng-click="moveCategoryToList(category, ingr)">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>-->
+                                <span ng-click="trashIngredientFromCategorie(category, ingr)" class="glyphicon glyphicon-trash trashIngrFromList glyphiconBtn" ></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+
+            <div class="divPlanListShopRight">
+                <div class="divPlanListShopRightAddIngrLeft">
+                    <div class="divPlanListShopRightROWaddIngr">
+                        Ajouter Ingredient :
+                        <input class="inputPlanningBlueTxt width50" type="number" ng-model ='newIngredient.qty' min="0"  placeholder="50" />
+                        <input class="inputPlanningBlueTxt width60" type="text" ng-model ='newIngredient.unit' placeholder="g" />
+                        <input class="inputPlanningBlueTxt width100" type="text" ng-model ='newIngredient.food.name' placeholder="chocolat" />
+                    </div>
+                    <div>
+                        dans Categorie :
+                        <select class="fieldPlanning noWidth"  ng-model='categoryChosenCreateIngr' ng-init="categoryChosenCreateIngr=categories[0] "
+                                ng-options='category.name for category in categories' ></select>
+                    </div>
+                </div>
+                <div class="divPlanListShopRightAddIngrRight">
+                    <button type="button" class="myBtnEmpty myBtnEmptyPlanning btnAddQty" ng-click="addNewIngr(newIngredient, categoryChosenCreateIngr)">
+                        <span class="glyphicon glyphicon-plus"></span> <!-- + Ingredient-->
+                    </button>
+                </div>
+
+                <br>
+                <br>
+                <br>
+                <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="toggleModifQty()" ng-show="!modifQty">Modifier Quantités</button>
+                <button class="myBtnEmpty myBtnEmptyPlanning" ng-click="toggleModifQty()" ng-show="modifQty">Modification Quantités...OK</button>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <!--<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>-->
+        <button ng-show="showListShopping()"  class="btn btn-info" type="button" ng-click="goShopping()">Aller faire ses courses !</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+    </div>
+
+</div>

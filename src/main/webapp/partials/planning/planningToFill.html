@@ -18,9 +18,6 @@
     </div>
 
 
-    <button type="button" class="btn btn-info bigBtnNewPlanning" ng-click="createNewPlanning()"  ng-show="plannings.length == 0">
-        <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
-    </button>
 
     <article class="myArticle myArticlePlanning" ng-show="plannings.length > 0">
         <div class="myArticleHeading">
@@ -43,6 +40,9 @@
 
 
                 <span class="rightInlineBlock">
+                    <span ng-controller="PlanningModalListShoppingCtrl">
+                            <button  type="button" class="btn btn-danger btnSeeListShop" ng-click="openModalListShopping(currentPlanning)"> Voir liste de courses</button>
+                    </span>
                     <button type="button" class="btn btn-info btnNewPlanning" ng-click="createNewPlanning()">
                         <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
                     </button>
@@ -55,7 +55,7 @@
         <!--planning current : {{currentPlanning}}-->
 
             <div class="myArticleBody">
-                <div ng-controller="PlanningModalCtrl">
+                <div ng-controller="PlanningModalCaseMealCtrl">
                 <table class="table  table-hover table-bordered">
                     <th class="info myTh"></th>
                     <th class="info myTh">Lundi</th>
@@ -72,15 +72,13 @@
                             {{displayMealType(weekMeal.weekMealName)}}
                         </th>
 
-                        <td ng-repeat="caseMeal in weekMeal.caseMeals" class="tdCaseMeal" data-drop="true"
-                            ng-model='caseMeal.recipes' jqyoui-droppable="{multiple:true}">
+                        <td ng-repeat="caseMeal in weekMeal.caseMeals" class="tdCaseMeal" ng-click="openModal(recipesToDisplay, caseMeal)"
+                            data-drop="true" ng-model='caseMeal.recipes' jqyoui-droppable="{multiple:true}">
                             <!--, onOver:'onOverTab(\'hehehe\')' -->
 
-                        <span ng-show="caseMeal.recipes.length > 0 && showNbPers" class="nbPers" data-drop="true" ng-model='caseMeal.nbPers'
-                              jqyoui-droppable="{multiple:true}">
-                            <input class="inputNbPers" type="number" min="1" ng-model="caseMeal.nbPers"> pers.
-                        </span>
-
+                            <span ng-show="caseMeal.recipes.length > 0 && showNbPers" class="nbPers" ng-click="stopPropag($event)" data-drop="true" ng-model='caseMeal.nbPers' jqyoui-droppable="{multiple:true}">
+                                <input class="inputNbPers" type="number" min="1" ng-model="caseMeal.nbPers"> pers.
+                            </span>
 
                             <span ng-show="showDebug" style="font-size: 18px; color:darkorange">id caseMeal : {{caseMeal.id}}</span>
                             <!--ng-repeat="recipe in caseMeal.recipes  | orderByRecipeType" -->
@@ -179,5 +177,7 @@
             </div>
     </article>
 
-
+    <button type="button" class="btn btn-info bigBtnNewPlanning" ng-click="createNewPlanning()"  ng-show="plannings.length == 0">
+        <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
+    </button>
 </div>

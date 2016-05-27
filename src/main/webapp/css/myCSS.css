@@ -215,13 +215,6 @@ h6 {
     //width:80%;
 }
 
-/***** MODAL *****/
-.displayRecipeModal{
-    color: black;
-}
-
-
-
 /*******************************************************************************************************************************************************************************/
 /**********************************************************************  BUTTONS   ********************************************************************************************/
 /*****************************************************************************************************************************************************************************/
@@ -1394,8 +1387,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
     border-radius:3px;
 }
 
-.titleAndSoBlock{
-}
 /* ici on laisse faire mais 1 ligne max pr le titre donc glyphicons en retour a la ligne au pire mais propre*/
 .titleBlock{
     display:inline-block;
@@ -1466,6 +1457,36 @@ select::selection,option::selection { /* ne fonctionne pas  */
     content: 'Ajouter à mes recettes préferées';
 }
 */
+
+
+/************************************************************************************************************/
+/*************************  INTO MODAL planning  *********************************************/
+/**********************************************************************************************************/
+.divRecipeModalPlanning{
+    width:10vw; /*x4*/
+    //min-width:160px;
+    vertical-align: top;
+
+    display:inline-block;
+    margin: 1vw 2vw 1vw 0;
+    cursor: pointer;
+}
+
+.pixRecipeModalPlanning{
+    width:10vw; /*x3*/
+    height:6vw;
+    //min-width:160px;
+    //min-height:100px;
+    background-repeat:no-repeat;
+    background-size:cover;
+    border-radius:1px;
+}
+
+.starsModalPlanning{
+    font-size: 15px;
+    color: #ffbf00;
+}
+
 
 
 /************************************************************************************************************/
@@ -1719,6 +1740,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .btnNewPlanning{
     vertical-align: top;
     margin-right : 15px;
+}
+.btnSeeListShop{
+    vertical-align: top;
+    margin-right : 8vw;
 }
 .bigBtnNewPlanning{
     font-size: 28px;

@@ -1,0 +1,31 @@
+<div>
+
+    <div class="modal-header">
+        <h3 class="modal-title" >Selectionner une recette</h3>
+    </div>
+
+    <div class="modal-body" ><!--style="color:black; height: 700px;" -> height fonctionne à voir qd bcp recettes-->
+
+        <div class="divRecipeModalPlanning" ng-repeat="recipe in items" ng-click="chooseRecipe(recipe)">
+            <div class="pixRecipeModalPlanning" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;"> </div>
+            <div class="titleAndSoBlock" >
+                <span class="titleBlock" title="{{recipe.name}}"> {{recipe.name}} </span>
+                <div class="divRatingStarModalPlanning" title="{{displayRatingOfRecipeByTitle(recipe)}}">
+                        <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
+                              class="starsModalPlanning glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
+                                                           'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),
+                                                           'starEmpty' : !isStarFull(numStar, recipe.rating)}">
+                        </span>
+                        <!--({{recipe.nbVoter}} votes)-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <!--<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>-->
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+    </div>
+
+</div>

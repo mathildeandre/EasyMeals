@@ -5945,15 +5945,18 @@ button.close {
 .modal-title {
   margin: 0;
   line-height: 1.42857143;
+  color: darkslategrey;/*modif : myModif fab*/
 }
 .modal-body {
   position: relative;
   padding: 15px;
+  color: darkslategrey; /*myModif*/
 }
 .modal-footer {
   padding: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
+  color: darkslategrey/*myModif*/
 }
 .modal-footer .btn + .btn {
   margin-bottom: 0;
