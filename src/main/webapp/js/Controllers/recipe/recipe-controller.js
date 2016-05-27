@@ -65,6 +65,7 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         return ("Note : "+recipe.rating+"\nMa note : "+ratingUser);
     }
 
+    /* no use anymore...(was into recipeItemDisplayOpen.html)*/
     $scope.toggleEditingRate = function(recipe, event){
         event.stopPropagation();
         recipe.ratingSystem.isUserEditing = !recipe.ratingSystem.isUserEditing ;

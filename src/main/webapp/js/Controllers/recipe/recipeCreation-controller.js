@@ -60,7 +60,9 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
         categories:[],
         timeCooking:30,
         timePreparation:20,
-        isPublic: true
+        isPublic: true,
+        nbVoter:0,
+        ratingUser:0
 
     };
 

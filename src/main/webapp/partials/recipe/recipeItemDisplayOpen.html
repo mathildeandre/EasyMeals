@@ -17,56 +17,25 @@
                 </div>
             </div>
 
-            <div class="divTopRecipeRight">
-
-
-                <div class="divRatingStar" ng-show="!recipe.ratingSystem.isUserEditing" title="{{displayRatingOfRecipeByTitle(recipe)}}" ng-click="stopPropag($event)">
-                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
-                          class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
-                                                       'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),
-                                                       'starEmpty' : !isStarFull(numStar, recipe.rating)}">
+            <!---------- DIV RATING ----------->
+            <div class="divTopRecipeRight" ng-mouseover="recipe.onOverRating = true;" ng-mouseleave="recipe.onOverRating = false;">
+                <!-- div display rating -->
+                <div class="divRatingStar" ng-show="recipe.ratingUser>0 || !recipe.onOverRating" title="{{displayRatingOfRecipeByTitle(recipe)}}" ng-click="stopPropag($event)"><!--ng-show="!recipe.ratingSystem.isUserEditing"-->
+                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index" class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
+                                                      'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating), 'starEmpty' : !isStarFull(numStar, recipe.rating)}">
                     </span>
-                    <span ng-show="recipe.ratingUser==0" ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingEdit" title=""></span>
+                    <!--<span ng-show="recipe.ratingUser==0" ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingEdit" title=""></span>-->
                     ({{recipe.nbVoter}} votes)
                 </div>
-
-
-                <div class="divRatingStar" ng-show="recipe.ratingSystem.isUserEditing">
+                <!-- div editing rating -->
+                <div class="divRatingStar" ng-show="recipe.ratingUser==0 && recipe.onOverRating">
                     <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
                           ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
                           class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit, starEmpty:!starEdit}">
                     </span>
-                    <span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>
-
+                    <!--<span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>-->
+                    ({{recipe.nbVoter}} votes)
                 </div>
-
-                <!--<input style="color:black" type="int" ng-model="recipe.rating">
-                ratingUser : {{recipe.ratingUser}} <br>
-                rating : {{recipe.rating}}<br>
-                nbVoter : {{recipe.nbVoter}}<br>
-
-
-                <br>
-                isUserEditRating : {{isUserEditRating}}
-                <br>
-                ratingUserEdit : {{ratingUserEdit}}
-                <br>
-                <div ng-show="recipe.ratingUser == 0" >
-                    VOTE AVAILABLE
-                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index" ng-mouseover="hoverStar(numStar)">
-                        <span class="glyphicon " ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating), 'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}"> </span>
-                    </span>
-                </div>
-                <div ng-show="recipe.ratingUser == 0">
-                    VOTE AVAILABLE
-                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index" ng-mouseover="hoverStar(numStar)">
-                        <span class="glyphicon " ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating), 'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating)}"> </span>
-                    </span>
-                </div>
-                <div ng-show="recipe.ratingUser > 0">
-                    NO VOTE
-                </div>
-                -->
             </div>
         </div>
         <div class="divMiddleRecipe">

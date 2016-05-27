@@ -75,16 +75,21 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
     }
 
     function createRecipe(recipe, recipeType){
-        switch(recipeType){
-            case 'starter' : starters.push(recipe); break;
-            case 'course' :  courses.push(recipe); break;
-            case 'dessert' : desserts.push(recipe); break;
-            case 'breakfast' :  break;
-            case 'cocktail' : break;
-        }
-
         // Web service
-        insertRecipe(recipe);
+        insertRecipe(recipe).then(function (response) {
+            $log.debug("ok mnt que c fait ds la base on insert la recipe ds la VIEW")
+            $log.info("ppou info les amis : recipe rating : "+recipe.ratingUser)
+            /* initComplement*/
+            recipe.ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]}
+            switch(recipeType){
+                case 'starter' : starters.push(recipe); break;
+                case 'course' :  courses.push(recipe); break;
+                case 'dessert' : desserts.push(recipe); break;
+                case 'breakfast' :  break;
+                case 'cocktail' : break;
+            }
+        })
+
     }
 
 

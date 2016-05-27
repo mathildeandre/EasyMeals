@@ -11,10 +11,16 @@ myModule.controller('SingleRecipeCtrl', function($scope, $routeParams, $location
     $scope.recipeType = recipeType;
     $scope.recipeId = recipeId;
 
+
+    $scope.showRecipe = false;
+
     restRecipeService.getBDDSingleRecipe(recipeId).then(function(data){
         $scope.recipe = data;
+        if($scope.recipe.name != undefined){
+            $scope.showRecipe = true;
+        }else{
+            $log.debug("[singelRecipe] -- name UNDEFINED ")
+        }
     })
-
-    $scope.showRecipe = $scope.recipe != null;
 
 });

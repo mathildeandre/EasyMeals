@@ -2265,6 +2265,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:#1b61e4;
     transform: scale(1.5);
 }
+.modalFillPlanning{
+    color: cornflowerblue;
+}
 .newWindow{
     //color: #f5c88a;
     color: #bfbfbf;

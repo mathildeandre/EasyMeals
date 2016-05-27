@@ -1,4 +1,4 @@
-<div ng-show="!recipe.descriptionOpen" ng-click="toggleDescOpen(recipe)">
+<div ng-show="!recipe.descriptionOpen" ng-click="toggleDescOpen(recipe)" ng-mouseover="recipe.onOver = true;" ng-mouseleave="recipe.onOver = false;">
 
     <div class="pixRecipeNoDescription" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../images/no-image.png') ;"> </div>
     <div class="titleAndSoNoDescription">
@@ -24,6 +24,8 @@
               ng-class="{thListTaken: recipe.isForPlanning}"></span>
         &nbsp
         <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
+        &nbsp
+        <span ng-show="recipe.onOver" ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
     </div>
 
     <div class="divTimeNoDescription">
@@ -37,7 +39,7 @@
 
     <div class="divRatingAndOwner">
 
-        <div class="divRatingStarNoDescrip" title="{{displayRatingOfRecipeByTitle(recipe)}}">
+        <div class="divRatingStarNoDescrip" title="{{displayRatingOfRecipeByTitle(recipe)}}" ><!--ng-click="stopPropag($event)"-->
                     <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
                           class="starsNoDescrip glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
                                                        'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),
