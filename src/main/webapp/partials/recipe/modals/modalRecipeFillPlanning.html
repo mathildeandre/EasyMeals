@@ -6,43 +6,18 @@
 
     <div class="modal-body" ><!--style="color:black; height: 700px;" -> height fonctionne à voir qd bcp recettes-->
 
-         recipe : {{recipeModal.name}}
-        plannings : {{planningsModal[0].name}}
+
+
 
         <article class="myArticle myArticlePlanning" ng-show="plannings.length > 0">
             <div class="myArticleHeading">
                 <div class="myArticleTitle">
                     PLANNING : &nbsp
-                <span ng-show="!modifyingPlanningName">
-                    <select class="fieldPlanning noWidth" ng-model='currentPlanning'
-                            ng-options='planning.name for planning in plannings'></select> <!-- ng-model='$parent.currentPlanning' -->
-                    <!-- ng-change="changementCurrentPlanning()"-->
-                    &nbsp
-                    <span ng-click="modifyPlanningName()"
-                          class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
-                </span>
-                <span ng-show="modifyingPlanningName">
-                    <input class="inputPlanning" type="text" ng-model='currentPlanning.name' placeholder="Choissisez un nom"
-                           ng-blur="modificationPlanningNameDONE()"  ng-keyup="pressEnterListName($event)"/> &nbsp
-                    <span ng-click="modificationPlanningNameDONE()"
-                          class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
-                </span>
-
-
-                <span class="rightInlineBlock">
-                    <span ng-controller="PlanningModalListShoppingCtrl">
-                            <button  type="button" class="btn btn-danger btnSeeListShop" ng-click="openModalListShopping(currentPlanning)"> Voir liste de courses</button>
-                    </span>
-                    <button type="button" class="btn btn-info btnNewPlanning" ng-click="createNewPlanning()">
-                        <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
-                    </button>
-                    <span class="glyphicon glyphicon-trash glyphDeletePlanning glyphiconBtn" ng-click="deletePlanning()"></span>
-                </span>
+                    <select class="fieldPlanning noWidth" ng-model='currentPlanning' ng-options='planning.name for planning in plannings'></select>
                 </div>
             </div>
 
 
-            <!--planning current : {{currentPlanning}}-->
 
             <div class="myArticleBody">
                 <div ng-controller="PlanningModalCaseMealCtrl">
@@ -67,7 +42,7 @@
                                 <!--, onOver:'onOverTab(\'hehehe\')' -->
 
                             <span ng-show="caseMeal.recipes.length > 0 && showNbPers" class="nbPers" ng-click="stopPropag($event)" data-drop="true" ng-model='caseMeal.nbPers' jqyoui-droppable="{multiple:true}">
-                                <input class="inputNbPers" type="number" min="1" ng-model="caseMeal.nbPers"> pers.
+                                {{caseMeal.nbPers}} pers.
                             </span>
 
                                 <span ng-show="showDebug" style="font-size: 18px; color:darkorange">id caseMeal : {{caseMeal.id}}</span>
@@ -114,13 +89,6 @@
                         </span>
                         </div>
                         <div>
-                            Nombre de personnes : &nbsp&nbsp
-                            Global &nbsp
-                            <input class="inputGlobalNbPers" type="number" ng-model="currentPlanning.nbPersGlobal"
-                                   ng-change="spreadGlobalNbPers(currentPlanning.nbPersGlobal)" min="1"
-                                   style="width:40px">
-                            &nbsp - &nbsp
-
                             <span class="checkbox checkbox-info checkbox-inline">
                                 <input type="checkbox" ng-model="showNbPers" id="idShowPers">
                                 <label for="idShowPers">Voir pour chaque repas</label>
@@ -167,6 +135,7 @@
             </div>
         </article>
 
+        <div ng-show="plannings.length == 0">Veuillez créer un planning dans l'onglet "Plannings"</div>
 
     </div>
 
