@@ -161,4 +161,9 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     }*/
 
 
+
+    $scope.initTmpRecipes = function(){
+        restRecipeService.initTmpRecipes();
+    }
+
 });

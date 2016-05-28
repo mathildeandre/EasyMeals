@@ -137,7 +137,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
             }
         }
 
-        restRecipeService.createRecipe($scope.recipe, recipeTypeName);
+        restRecipeService.createRecipe($scope.recipe);
         /*switch(recipeTypeName){
             case 'starter' : RecipeService.addStarter(recipe); break;
             case 'course' :  RecipeService.addCourse(recipe); break;

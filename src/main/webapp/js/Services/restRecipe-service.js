@@ -6,6 +6,57 @@ var myService = angular.module('services');
 
 myService.service("restRecipeService", function ($http, $q, $log, restGlobalService) {
 
+
+
+    var recipesTmp = [
+        {
+            "id": 3,
+            "name": "Cabillaud au Four",
+            "isPublic": true,
+            "user": {"id": 2117, "pseudo": "mathou", "email": null},
+            "pixName": 'cabillaudFour.jpg',
+            "recipeType": {"idType": 2, "nameType": "course"},
+            "ingredients": [{
+                "qty": 200,
+                "unit": "g",
+                "food": {"id": 7, "name": "cabillaud", "idCategory": 3, "isValidated": false}
+            }],
+            "descriptions": [{"name": "", "numDescrip": 1}],
+            "origin": {"id": 1, "name": "français", "numRank": 1},
+            "categories": [{"id": 2, "name": "four", "numRank": 5}, {"id": 3, "name": "legume", "numRank": 3}, {
+                "id": 4,
+                "name": "poisson",
+                "numRank": 2
+            }],
+            "nbPerson": 2, "rating": 0, "nbVoter": 0,
+            "timeCooking": 220,
+            "timePreparation": 10,
+            "isValidated": false,
+            "isFavorite": false,
+            "isForPlanning": false,
+            "ratingUser": 0,
+            "isHide": false
+            /* "ratingSystem":{"isUserEditing":false,"starsEdit":[false,false,false,false,false]},
+             "timeTotal":230,"onOver":false} */
+        },
+        {"name":"Aubergines au Four","recipeType":{"idType":2,"nameType":"course"},"user":{"id":2117,"pseudo":"","email":""},"nbPerson":2,"ingredients":[{"qty":200,"unit":"g","food":{"id":0,"name":"aubergine","idCategory":1,"isValidated":false}},{"qty":1,"unit":"l","food":{"id":19,"name":"lait","idCategory":6,"isValidated":false}},{"qty":2,"unit":"","food":{"id":20,"name":"oeuf","idCategory":6,"isValidated":false}}],"descriptions":[{"name":"","numDescrip":1}],"origin":{"id":1,"name":"français","numRank":1},"categories":[{"id":2,"name":"four","numRank":5,"checked":true},{"id":3,"name":"legume","numRank":3,"checked":true},{"id":5,"name":"vegetarien","numRank":4,"checked":true}],"timeCooking":15,"timePreparation":10,"isPublic":true,"nbVoter":0,"ratingUser":0}
+    ]
+
+    function initTmpRecipes(){
+        for(var i=0; i<recipesTmp.length; i++){
+            createRecipe(recipesTmp[i]);
+        }
+    }
+
+
+    var recipesInitialized = false;
+    /*************************** USELESS ABOVE **************************************/
+    /*************************** USELESS ABOVE **************************************/
+    /*************************** USELESS ABOVE **************************************/
+    /*************************** USELESS ABOVE **************************************/
+
+
+
     var categories = [];
     var origins = [];
     var recipeTypes = [];
@@ -45,10 +96,18 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         return starters;
     }
     function getCourses(){
+        /* temporaire...*/
+        if(!recipesInitialized){
+            courses = restGlobalService.getCourses();
+            $log.warn("[restRecipe-service] getCourses() --> on appel restGLobalService");
+            recipesInitialized = true;
+        }
+
+        /*
         if(courses.length == 0){
             courses = restGlobalService.getCourses();
             $log.warn("[restRecipe-service] getCourses() --> on appel restGLobalService");
-        }
+        }*/
         return courses;
     }
     function getDesserts(){
@@ -74,14 +133,15 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         }
     }
 
-    function createRecipe(recipe, recipeType){
-        // Web service
+    function createRecipe(recipe){
+        // Web service - BDD
         insertRecipe(recipe).then(function (response) {
             $log.debug("ok mnt que c fait ds la base on insert la recipe ds la VIEW")
             $log.info("ppou info les amis : recipe rating : "+recipe.ratingUser)
             /* initComplement*/
             recipe.ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]}
-            switch(recipeType){
+            /*push VIEW */
+            switch(recipe.recipeType.nameType){
                 case 'starter' : starters.push(recipe); break;
                 case 'course' :  courses.push(recipe); break;
                 case 'dessert' : desserts.push(recipe); break;
@@ -198,6 +258,9 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         createRecipe: createRecipe,
         putIsFavorite: putIsFavorite,
         putIsForPlanning: putIsForPlanning,
-        putRatingUser: putRatingUser
+        putRatingUser: putRatingUser,
+
+
+        initTmpRecipes: initTmpRecipes
     };
 });

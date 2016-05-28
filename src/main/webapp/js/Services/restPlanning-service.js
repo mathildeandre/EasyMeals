@@ -18,6 +18,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
         }
         return plannings;
     }
+
     function getPlanningsShopping(){
         if(planningsShopping.length == 0){
             planningsShopping = restGlobalService.getPlanningsShopping();
@@ -25,7 +26,6 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
         }
         return planningsShopping;
     }
-
 
 
 
