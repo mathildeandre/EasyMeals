@@ -39,7 +39,9 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
         return str;
     }
 
-    $scope.displayRecipeType = AppendixFunctionsService.displayRecipeType($scope.recipeType);
+    $scope.displayRecipeType = function(){
+        return AppendixFunctionsService.displayRecipeType($scope.recipeType);
+    }
     /**
      * PLANNING Construction
      */

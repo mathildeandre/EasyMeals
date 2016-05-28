@@ -30,6 +30,15 @@ myDirective.directive('recipeList', function(){
     } ;
 });
 
+myDirective.directive('recipeAccueil', function(){
+    return{
+        restrict:'E',
+        templateUrl:'../../partials/recipe/recipeAccueil.html',
+        replace:true
+
+    } ;
+});
+
 
 /*  Display of recipeItems in block/list, open or not
  * In HTML it can be REPLACE by
