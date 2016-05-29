@@ -90,6 +90,11 @@ public class RecipeDao {
     }
 
 
+    public boolean sendImage(){
+        return true;
+    }
+
+
 
 
 

@@ -152,6 +152,26 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
 
     }
 
+    function sendImage(file){
+        $log.warn("REQUETE with IMAGE ----  ENVOYE !!! "+file);
+        var fd = new FormData();
+        fd.append('file', file);
+        return $http({
+            method: 'POST',
+            url: '/rest/recipe/image',
+            data: file,
+            //transformRequest: angular.identity
+            //,
+            //headers: {'Content-Type': 'multipart/form-data'}
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    }
+
 
     function getSingleRecipe(recipeType, recipeId){
         var arr;
@@ -256,6 +276,7 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         getSingleRecipe: getSingleRecipe,
         getBDDSingleRecipe: getBDDSingleRecipe,
         createRecipe: createRecipe,
+        sendImage: sendImage,
         putIsFavorite: putIsFavorite,
         putIsForPlanning: putIsForPlanning,
         putRatingUser: putRatingUser,

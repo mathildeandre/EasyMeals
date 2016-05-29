@@ -15,11 +15,12 @@
 
     <div class="myArticleBody">
         <form name="form" novalidate class="css-form">
+            <div class="inlineBlock" style="vertical-align: top;">
             <div class="lineRecipeInit">
-                <div class="form-group fieldCreationNameRecipe inlineBlock">
-                    <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span>
-                        <input class="form-control "
+                <div class="">
+                    <div class="">
+                        <span class=""><span class="glyphicon glyphicon-tag"></span></span>
+                        <input class="fieldRecipeCreation width400"
                                placeholder="Recipe name (max 20 char)"
                                type="text"
                                ng-model="recipe.name"
@@ -37,18 +38,19 @@
                     <input class="fieldRecipeCreation nameRecipe"  type="text" ng-model ='recipe.name' placeholder="Nom recette" required />
                     -->
                 </div>
-                <div class="form-group fieldRecipeCreationNbPers inlineBlock">
-                    <div class="input-group ">
-                        <span class="input-group-addon"> Pour : </span>
+                <div class="fieldRecipeCreationB">
+                    <div class=" ">
+                        <span class=""><span class="glyphicon glyphicon-cutlery"></span></span>
+                        <span class=""> Pour </span>
                         <!-- class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span> -->
-                        <input class="form-control"
+                        <input class="fieldRecipeCreation width50"
                                placeholder="4"
                                type="number"
                                ng-model="recipe.nbPerson"
                                name="nbPers"
                                ng-maxlength="20"
                                required/>
-                        <span class="input-group-addon"> personnes </span>
+                        <span class=""> personnes </span>
                     </div>
                             <span ng-show="form.nbPers.$error.required && form.nbPers.$dirty">
                                 Required
@@ -58,20 +60,22 @@
                     <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" required/>
                     -->
                 </div>
+
+
+
             </div>
             <div class="lineTime">
-                <div class="form-group fieldRecipeCreationPrepTime inlineBlock">
-                    <div class="input-group ">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
-                        <span class="input-group-addon">Preparation</span>
-                        <input class="form-control"
+                <div class="fieldRecipeCreationB">
+                    <div class="">
+                        <span class=""><span class="glyphicon glyphicon-time"></span></span>
+                        <span class="">Preparation (min)</span>
+                        <input class="fieldRecipeCreation width50"
                                placeholder="20"
                                type="number"
                                ng-model="recipe.timePreparation"
                                name="timePrep"
                                ng-maxlength="20"
                                required/>
-                        <span class="input-group-addon"> min </span>
 
                         <!-- <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number"
                                 ng-model='recipe.timePreparation' min="0" step="5" required/> -->
@@ -81,17 +85,16 @@
                                 Required
                     </span>
                 </div>
-                <div class="form-group fieldRecipeCreationCookTime inlineBlock">
-                    <div class="input-group ">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
-                        <span class="input-group-addon">Cuisson</span>
-                        <input class="form-control"
+                <div class="fieldRecipeCreationB">
+                    <div class="">
+                        <span class=""><span class="glyphicon glyphicon-fire"></span></span>
+                        <span class="">Cuisson (min)</span>
+                        <input class="fieldRecipeCreation width50"
                                placeholder="20"
                                type="number"
                                ng-model="recipe.timeCooking"
                                name="timeCook"
                                required/>
-                        <span class="input-group-addon"> min </span>
                         <!--
                         <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number"
                                ng-model='recipe.timeCooking' min="0" step="5" required/>
@@ -116,21 +119,48 @@
                 </div>
             </div>
 
-            <div>
-                <div class="form-group inlineBlock">
-                    <div class="input-group ">
+
+
+                <div class="">
+                    <div class="fieldRecipeCreationB">
+                        <span class=""><span class="glyphicon glyphicon-globe"></span></span>
                         Spécialités : &nbsp
-                        <select class="fieldRecipeCreation" ng-model='recipe.origin' ng-init="recipe.origin = origins[0]"
+                        <select class="fieldRecipeCreation width200" ng-model='recipe.origin' ng-init="recipe.origin = origins[0]"
                                 ng-options='origin.name for origin in origins'>
                             <!--<option value="" disabled> Specialite</option>-->
                         </select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
                     </div>
                 </div>
 
+            </div>
+
+            <div class="inlineBlock recipeCreationPics"style="vertical-align: top;">
+                <form name="myForm">
+                    <fieldset>
+                        <span class=""><span class="glyphicon glyphicon-picture"></span></span>
+                        Photo:
+                        <input type="file" ngf-select ng-model="picFile" name="file"
+                               accept="image/*" required>
+                        <!--<img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">-->
+                        <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="recipeImg">
+                        <!--<button ng-click="picFile = null" ng-show="picFile">Remove</button> -->
+                        <br>
+                        <!--<button ng-click="uploadPic(picFile)">Submit</button>-->
+                <span class="progress" ng-show="picFile.progress >= 0">
+                     <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
+                </span>
+                        <span ng-show="picFile.result">Upload Successful</span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                    </fieldset>
+                    <br>
+                </form>
+            </div>
+
                 <!---- ------------------------- CATEGORIE ----------------------------->
-                <div class="form-group fieldRecipeCreationCategory inlineBlock">
-                    <div class="input-group ">
-                        <span class="myAddon ">Categories </span>
+                <div class="fieldRecipeCreationB">
+                    <div class="">
+                        <span class=""><span class="glyphicon glyphicon-grain grainSize"></span></span>
+                        <span class="">Categories </span>
 
                         <span ng-repeat="category in categories"
                               class="fieldRecipeCreationCategoryChoice checkbox checkbox-warning
@@ -140,17 +170,16 @@
                         </span>
                     </div>
                 </div>
-            </div>
 
 
             <!---- ------------------------- INGREDIENTS - ---------------------------->
-            <div class="form-group formIngredients2">
+            <div class="fieldRecipeCreationB">
 
-                <div class="inlineBlockAlignTop">
-                    Ingrédients : &nbsp
-                </div>
+                    <span class=""><span class="glyphicon glyphicon-grain grainSize"></span></span>
+                    <span class="">Ingrédients </span>
 
-                <div class="input-group ">
+
+                <div class="">
                     <div class="inlineBlock">
 
                         <div class="rowIngredientInput myAddon lineIngredient"
@@ -196,12 +225,13 @@
 
             <!---- ------------------------- DESCRIPTIONS - ---------------------------->
 
-            <div class="form-group formDescription">
+            <div class="fieldRecipeCreationB">
                 <div class="inlineBlockAlignTop">
+                    <span class=""><span class="glyphicon glyphicon-menu-hamburger"></span></span>
                     Préparation : &nbsp
                 </div>
 
-                <div class="input-group ">
+                <div class="">
                     <div class="inlineBlockAlignTop">
                         <div class="rowDescriptionInput myAddon"
                              ng-repeat="description in recipe.descriptions ">
@@ -231,6 +261,7 @@
                 </div>
             </div>
 
+            <div class="fieldRecipeCreationB">
              <span class="radio radio-warning radio-inline ">
                     <input type="radio" ng-model="recipe.isPublic" ng-value="true"
                            checked="checked" id="public1">
@@ -245,6 +276,7 @@
                         privée
                     </label>
                 </span>
+            </div>
 
             <!--
             $scope.publicOrNots = [{id:"public1", name:"publique", value:true},{id:"private1", name:"privée", value:false} ]
@@ -273,28 +305,7 @@
             </button>
         </form>
 
-        <form name="myForm">
-            <fieldset>
-                <br>Photo:
-                <input type="file" ngf-select ng-model="picFile" name="file"
-                       accept="image/*" ngf-max-size="2MB" required
-                       ngf-model-invalid="errorFile">
-                <i ng-show="myForm.file.$error.maxSize">File too large
-                    {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-                <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
-                <button ng-click="picFile = null" ng-show="picFile">Remove</button>
-                <br>
-                <button ng-click="uploadPic(picFile)">Submit</button>
-                <span class="progress" ng-show="picFile.progress >= 0">
-                     <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
-                </span>
-                <span ng-show="picFile.result">Upload Successful</span>
-                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-            </fieldset>
-            <br>
-        </form>
 
-        <div class="button" ngf-select="upload($file)">Upload on file select</div>
 
     </div>
 

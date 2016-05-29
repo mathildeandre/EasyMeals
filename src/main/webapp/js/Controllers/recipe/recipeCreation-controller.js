@@ -138,6 +138,13 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
         }
 
         restRecipeService.createRecipe($scope.recipe);
+
+
+        /* IMAGE */
+        var file = $scope.picFile;
+        if($scope.picFile != null){
+            restRecipeService.sendImage($scope.picFile);
+        }
         /*switch(recipeTypeName){
             case 'starter' : RecipeService.addStarter(recipe); break;
             case 'course' :  RecipeService.addCourse(recipe); break;
@@ -243,9 +250,12 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
     //UPLOAD IMAGE
     $scope.uploadPic = function(file) {
         file.upload = Upload.upload({
-            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+            url: 'upload/url',
             data: {file: file}
+
+
         });
+        console.dir(file)
 
         file.upload.then(function (response) {
             alert(response.data);

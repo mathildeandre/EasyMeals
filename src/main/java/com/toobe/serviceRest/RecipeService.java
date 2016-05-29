@@ -12,10 +12,12 @@ import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.dto.info.RecipeType;
 import com.toobe.model.ManagerGet;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.*;
 import java.util.List;
 
 @Path("/")
@@ -38,16 +40,16 @@ public class RecipeService {
     */
     @Path("recipes/{idUser}")
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipesForUser(@PathParam("idUser") Long idUser){
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getRecipesForUser(@PathParam("idUser") Long idUser) {
         List<Recipe> list = ManagerGet.getInstance().getRecipesForUser(idUser);
         return Response.ok(list).build();
     }
 
     @Path("/recipe/{idRecipe}")
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipeById(@PathParam("idRecipe") int idRecipe){
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getRecipeById(@PathParam("idRecipe") int idRecipe) {
         //localhost:8080/rest/recipe/2
         Recipe recipe = ManagerGet.getInstance().getRecipeById(idRecipe);
         return Response.ok(recipe).build();
@@ -55,8 +57,8 @@ public class RecipeService {
 
     @Path("/recipeCategories")
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipeCategories(){
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getRecipeCategories() {
         List<RecipeCategory> list = ManagerGet.getInstance().getRecipeCategories();
         return Response.ok(list).build();
     }
@@ -64,8 +66,8 @@ public class RecipeService {
 
     @Path("/recipeOrigins")
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipeOrigins(){
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getRecipeOrigins() {
         List<RecipeOrigin> list = ManagerGet.getInstance().getRecipeOrigins();
         return Response.ok(list).build();
     }
@@ -73,8 +75,8 @@ public class RecipeService {
 
     @Path("/recipePublicNotValidated")
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipes(){
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getRecipes() {
         List<Recipe> list = ManagerGet.getInstance().getRecipesPublicNotValidated();
         return Response.ok(list).build();
     }
@@ -82,17 +84,17 @@ public class RecipeService {
 
     @Path("/recipeTypes")
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response getRecipeTypes(){
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getRecipeTypes() {
         List<RecipeType> list = ManagerGet.getInstance().getRecipeTypes();
         return Response.ok(list).build();
     }
 
     @Path("recipe/create")
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response createRecipe(Recipe recipe){
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response createRecipe(Recipe recipe) {
         ManagerGet.getInstance().createRecipe(recipe);
         /*System.out.println(" recipe.name "+recipe.getName());
         System.out.println(" recipe.pixName "+recipe.getPixName());
@@ -122,33 +124,68 @@ public class RecipeService {
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
 
+    @Path("recipe/image")
+    @POST
+    //@Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response sendImage(InputStream img) {
+        //InputStream img = null;
+        try {
+            //img = fileB.getInputStream();
+
+            System.out.println(img);
+
+            File file = new File("newfile.jpg");
+
+
+            OutputStream os = null;
+            os = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+
+            while ((len = img.read(buf)) > 0) {
+                os.write(buf, 0, len);
+            }
+
+            os.close();
+            img.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Boolean rep = new ManagerPost().insertFood();
+        return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
 
 
     @Path("putIsFavorite/{idRecipe}/{idUser}")
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response putIsFavorite(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isFavorite){
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response putIsFavorite(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isFavorite) {
         ManagerGet.getInstance().putIsFavorite(idRecipe, idUser, isFavorite);
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
+
     @Path("putIsForPlanning/{idRecipe}/{idUser}")
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response putIsForPlanning(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isForPlanning){
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response putIsForPlanning(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isForPlanning) {
         ManagerGet.getInstance().putIsForPlanning(idRecipe, idUser, isForPlanning);
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
+
     @Path("putRatingUser/{idRecipe}/{idUser}")
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response putRatingUser(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, int ratingUser){
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response putRatingUser(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, int ratingUser) {
         ManagerGet.getInstance().putRatingUser(idRecipe, idUser, ratingUser);
         return Response.ok(new TestObj("MOUAHAHAH")).build();
     }
-
 
 
 }
