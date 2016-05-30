@@ -12,7 +12,7 @@ import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.dto.info.RecipeType;
 import com.toobe.model.ManagerGet;
-import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

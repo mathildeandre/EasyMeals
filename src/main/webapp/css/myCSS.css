@@ -1254,6 +1254,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     font-size: 25px;
     color: #ffbf00;
 }
+.starsNoDescripBlock{
+    font-size: 15px;
+    color: #ffbf00;
+}
 .divOwner{
     margin-top: 20px;
     font-size: 18px;

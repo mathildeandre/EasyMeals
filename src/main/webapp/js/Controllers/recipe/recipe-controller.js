@@ -129,11 +129,21 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     $scope.showInBlock = false;
     $scope.showInListFct = function(){
         $scope.showInBlock = false;
+        closeAllOpenDescr();
     }
     $scope.showInBlockFct = function(){
         $scope.showInBlock = true;
+        closeAllOpenDescr();
     }
 
+    var closeAllOpenDescr = function(){
+        for(var i=0; i<$scope.recipes.length; i++){
+            $scope.recipes[i].descriptionOpen = false;
+        }
+        /* boadcast for filterRecipePlanning-controller.js */
+        //$scope.$broadcast('closeAllOpenDescr');
+
+    }
 
     /* ICI !!!! doit communiquer avec filter controller (broadcast) */
     $scope.toggleIsFavorite = function(recipe, event){
@@ -160,11 +170,6 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         $location.search( 'viande', null );
     }*/
 
-
-
-    $scope.initTmpRecipes = function(){
-        restRecipeService.initTmpRecipes();
-    }
 
 
 

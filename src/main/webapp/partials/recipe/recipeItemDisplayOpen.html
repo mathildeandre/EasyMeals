@@ -1,11 +1,13 @@
-<div ng-show="recipe.descriptionOpen" class="recipeWithDescrip" ng-click="toggleDescOpen(recipe)"  >
+<div ng-show="recipe.descriptionOpen" class="recipeWithDescrip" ng-click="toggleDescOpen(recipe)"  ng-mouseover="recipe.onOver = true;" ng-mouseleave="recipe.onOver = false;">
     <div class="headingRecipeWithDescrip" >{{recipe.name}}
         &nbsp&nbsp <span  ng-click="toggleIsFavorite(recipe, $event);" title=""   class="glyphicon glyphicon-heart heart glyphiconBtn"
                           ng-class="{heartTaken: recipe.isFavorite}"></span>
         &nbsp&nbsp <span ng-click="toggleIsForPlanning(recipe, $event);" title="" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
                          ng-class="{thListTaken: recipe.isForPlanning}"></span>
         &nbsp
-        <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
+        <span  ng-show="recipe.onOver"  ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
+        &nbsp
+        <span  ng-show="recipe.onOver" ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
     </div>
     <div class="bodyRecipeWithDescrip">
         <div class="divTopRecipe">

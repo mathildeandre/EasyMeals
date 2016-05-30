@@ -38,18 +38,15 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
             "isHide": false
             /* "ratingSystem":{"isUserEditing":false,"starsEdit":[false,false,false,false,false]},
              "timeTotal":230,"onOver":false} */
-        },
-        {"name":"Aubergines au Four","recipeType":{"idType":2,"nameType":"course"},"user":{"id":2117,"pseudo":"","email":""},"nbPerson":2,"ingredients":[{"qty":200,"unit":"g","food":{"id":0,"name":"aubergine","idCategory":1,"isValidated":false}},{"qty":1,"unit":"l","food":{"id":19,"name":"lait","idCategory":6,"isValidated":false}},{"qty":2,"unit":"","food":{"id":20,"name":"oeuf","idCategory":6,"isValidated":false}}],"descriptions":[{"name":"","numDescrip":1}],"origin":{"id":1,"name":"français","numRank":1},"categories":[{"id":2,"name":"four","numRank":5,"checked":true},{"id":3,"name":"legume","numRank":3,"checked":true},{"id":5,"name":"vegetarien","numRank":4,"checked":true}],"timeCooking":15,"timePreparation":10,"isPublic":true,"nbVoter":0,"ratingUser":0}
-    ]
+        }]
 
+    /*
     function initTmpRecipes(){
         for(var i=0; i<recipesTmp.length; i++){
             createRecipe(recipesTmp[i]);
         }
     }
-
-
-    var recipesInitialized = false;
+    */
     /*************************** USELESS ABOVE **************************************/
     /*************************** USELESS ABOVE **************************************/
     /*************************** USELESS ABOVE **************************************/
@@ -96,18 +93,10 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         return starters;
     }
     function getCourses(){
-        /* temporaire...*/
-        if(!recipesInitialized){
-            courses = restGlobalService.getCourses();
-            $log.warn("[restRecipe-service] getCourses() --> on appel restGLobalService");
-            recipesInitialized = true;
-        }
-
-        /*
         if(courses.length == 0){
             courses = restGlobalService.getCourses();
             $log.warn("[restRecipe-service] getCourses() --> on appel restGLobalService");
-        }*/
+        }
         return courses;
     }
     function getDesserts(){
@@ -279,9 +268,6 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         sendImage: sendImage,
         putIsFavorite: putIsFavorite,
         putIsForPlanning: putIsForPlanning,
-        putRatingUser: putRatingUser,
-
-
-        initTmpRecipes: initTmpRecipes
+        putRatingUser: putRatingUser
     };
 });
