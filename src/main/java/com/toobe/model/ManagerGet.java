@@ -125,6 +125,10 @@ public class ManagerGet {
         startConnection();
         return planningDao.createPlanningShopping(conn, idPlanning, shoppingCategories);
     }
+    public Planning cutShoppingToPlanning(Long idPlanning) {
+        startConnection();
+        return planningDao.cutShoppingToPlanning(conn, idPlanning);
+    }
 
 
 

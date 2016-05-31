@@ -2259,6 +2259,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:indianred;
     font-size: 22px;
 }
+.glyphCutErrandToPlanning{
+    color:cornflowerblue;
+    font-size: 26px;
+}
 .glyphDeleteListShop{
     color:indianred;
     font-size: 26px;

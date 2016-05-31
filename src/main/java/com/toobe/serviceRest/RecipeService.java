@@ -14,10 +14,18 @@ import com.toobe.dto.info.RecipeType;
 import com.toobe.model.ManagerGet;
 //import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.imageio.stream.ImageOutputStream;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Iterator;
 import java.util.List;
 
 @Path("/")
@@ -126,7 +134,7 @@ public class RecipeService {
 
     @Path("recipe/image")
     @POST
-    //@Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON})
     public Response sendImage(InputStream img) {
         //InputStream img = null;
@@ -134,21 +142,31 @@ public class RecipeService {
             //img = fileB.getInputStream();
 
             System.out.println(img);
-
-            File file = new File("newfile.jpg");
-
-
-            OutputStream os = null;
-            os = new FileOutputStream(file);
+/*
+            File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\newFile2.jpg");
+            OutputStream os2 = null;
+            os2 = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int len;
 
             while ((len = img.read(buf)) > 0) {
-                os.write(buf, 0, len);
+                os2.write(buf, 0, len);
             }
 
-            os.close();
+
+*/
+
+
+
+
+            //os2.close();
             img.close();
+            //writer.dispose();
+
+
+
+
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

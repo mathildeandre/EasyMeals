@@ -6,6 +6,7 @@ package com.toobe.dto;
 
 import com.toobe.dto.info.*;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -60,6 +61,8 @@ public class Recipe implements Serializable{
     private boolean isForPlanning;
     private int ratingUser;
     private boolean isHide;
+
+    private String image;
 
 
     public Recipe(){
@@ -252,5 +255,14 @@ public class Recipe implements Serializable{
 
     public void setIsValidated(boolean validated) {
         isValidated = validated;
+    }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

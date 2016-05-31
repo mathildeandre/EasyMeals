@@ -148,8 +148,14 @@ public class PlanningService {
     }
 
 
-
-
+    @Path("/cutShoppingToPlanning/{idPlanning}")
+    @POST
+    @Produces({ MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response cutShoppingToPlanning(@PathParam("idPlanning") Long idPlanning){
+        Planning planning = new ManagerGet().cutShoppingToPlanning(idPlanning);
+        return Response.ok(planning).build();
+    }
 
     /* NO USE
     @Path("/planning/currentUser/{idUser}")

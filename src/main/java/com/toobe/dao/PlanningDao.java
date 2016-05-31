@@ -35,7 +35,11 @@ public class PlanningDao {
 
         return getPlanningById(conn, idPlanning);
     }
+    public Planning cutShoppingToPlanning(Connection conn, Long idPlanning){
 
+        putIsForListShop(conn, idPlanning, false);
+        return getPlanningById(conn, idPlanning);
+    }
 
 
 

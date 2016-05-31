@@ -49,6 +49,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
     /***********************************************************************************************************************************/
     /********************************          planningsShopping         **************************************************************/
     /**********************************************************************************************************************************/
+
     function createPlanningShopping(planning, shoppingCategories){ //called when goShopping -- no creation from errand ..
         postObjToServer('POST', '/rest/createPlanningShopping/'+planning.id, shoppingCategories).then(function(data){
             /* VIEW*/
@@ -78,6 +79,17 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
             plannings.push(newPlanning);
             var index = plannings.indexOf(newPlanning);
             return index;
+        })
+    }
+    function cutShoppingToPlanning(idPlanningShopping){
+        postObjToServer('POST', '/rest/cutShoppingToPlanning/'+idPlanningShopping).then(function(data){
+
+            var newClonedPlanning = data;
+            plannings.push(newClonedPlanning);
+            makePlanningCurrent(newClonedPlanning.id, false);//lastOpen..
+            //ATTENTION il faut etre sûr ici que "makePlanningCurrent" s'effectue avt $location.path("/planning") qui chargement les plannigs...
+            //=> loop 1000 pour patienter? -> etre que lastOpen soit bien a jour dans plannings avt daller dans plannings! :p
+            $location.path("/planning");
         })
     }
     function deletePlanningShopping(idPlanning){
@@ -229,7 +241,8 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
 
         getPlanningsShopping: getPlanningsShopping,
         createPlanningShopping: createPlanningShopping,
-        deletePlanningShopping: deletePlanningShopping
+        deletePlanningShopping: deletePlanningShopping,
+        cutShoppingToPlanning: cutShoppingToPlanning
 
 
     };

@@ -18,6 +18,18 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunc
         restPlanningService.cloneIntoMyPlannings($scope.currentPlanningShopping);
     }
 
+    $scope.cutShoppingToPlanning = function(){
+        var idPlanningShoppingToCut = $scope.currentPlanningShopping.id;
+        //delete from VIEW
+        var index = $scope.planningsShopping.indexOf($scope.currentPlanningShopping);
+        $scope.planningsShopping.splice(index, 1);
+        if($scope.planningsShopping != undefined && $scope.planningsShopping.length > 0) { //if we didnt deleted the last planning..
+            $scope.currentPlanningShopping = $scope.planningsShopping[0];
+            restPlanningService.makePlanningCurrent($scope.currentPlanningShopping.id, true)//lastOpen
+        }
+        //cut from BDD
+        restPlanningService.cutShoppingToPlanning(idPlanningShoppingToCut);
+    }
 
 
     $scope.deleteListShop = function(){

@@ -11,7 +11,9 @@ import com.toobe.dto.info.RecipeDescription;
 import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.dto.info.RecipeType;
 import com.toobe.dto.info.RelUserRecipe;
+import org.apache.commons.codec.binary.Base64;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,6 @@ public class RecipeDao {
     public RecipeDao() {
         foodDao = new FoodDao();
     }
-
 
 
     /**
@@ -63,10 +64,10 @@ public class RecipeDao {
             stm.setInt(10, recipe.getTimePreparation());
             isOk = stm.executeUpdate();
             if (isOk == 0) {
-                throw new SQLException("Creating Recipe failed, no rows affected, recipe="+recipe.toString());
+                throw new SQLException("Creating Recipe failed, no rows affected, recipe=" + recipe.toString());
             }
             resultRecipe = stm.getGeneratedKeys();
-            if(resultRecipe.next()){
+            if (resultRecipe.next()) {
                 idRecipe = resultRecipe.getLong(1);
             }
 
@@ -90,15 +91,9 @@ public class RecipeDao {
     }
 
 
-    public boolean sendImage(){
+    public boolean sendImage() {
         return true;
     }
-
-
-
-
-
-
 
 
     /****************************/
@@ -111,7 +106,8 @@ public class RecipeDao {
             stm = conn.prepareStatement("SELECT * FROM recipe_type");
             ResultSet res = stm.executeQuery();
 
-            int idType; String name;
+            int idType;
+            String name;
             while (res.next()) {
                 idType = res.getInt("id");
                 name = res.getString("name");
@@ -124,12 +120,6 @@ public class RecipeDao {
     }
 
 
-
-
-
-
-
-
     /****************************/
     /******* RECIPE BY ID *******/
     /****************************/
@@ -137,9 +127,8 @@ public class RecipeDao {
             "SELECT recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, " +
                     "rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser," +
                     "rt.id as idRecipeType, rt.name as nameRecipeType " +
-            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type rt " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND rt.id = recipe.idType AND recipe.id = ? ";
-
+                    "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type rt " +
+                    "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND rt.id = recipe.idType AND recipe.id = ? ";
 
 
     public Recipe getRecipeById(Connection conn, int idRecipe) {
@@ -151,7 +140,7 @@ public class RecipeDao {
             stm.setInt(1, idRecipe);
             ResultSet resRecipe = stm.executeQuery();
 
-            if(resRecipe.next()){
+            if (resRecipe.next()) {
                 Long idUser = resRecipe.getLong("idUser");
                 int idRecipeType = resRecipe.getInt("idRecipeType");
                 String nameRecipeType = resRecipe.getString("nameRecipeType");
@@ -196,15 +185,15 @@ public class RecipeDao {
     }
 
 
-
     /****************************/
     /******* RECIPE PUBLIC NOT VALIDATED *******/
     /****************************/
      /* On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)*/
     private static final String SELECT_RECIPES_PUBLIC_NOT_VALIDATED =
             "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND Recipe_Type.id = recipe.idType AND isPublic = 1 AND isValidated = 0 ";
+                    "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
+                    "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND Recipe_Type.id = recipe.idType AND isPublic = 1 AND isValidated = 0 ";
+
     public List<Recipe> getRecipesPublicNotValidated(Connection conn) {
         List<Recipe> listRecipe = new ArrayList<Recipe>();
         Recipe recipe;
@@ -224,9 +213,6 @@ public class RecipeDao {
     }
 
 
-
-
-
     /****************************/
     /******* RECIPES *******/
     /****************************/
@@ -234,13 +220,14 @@ public class RecipeDao {
 
     private static final String SELECT_All_RECIPES_FOR_USER_NoRecipeType =
             "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND Recipe_Type.id = recipe.idType " +
-            " UNION " +
-            "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id  AND idUser = ? AND Recipe_Type.id = recipe.idType  ";
-    public List<Recipe> getRecipesForUser(Connection conn, Long idUser){
+                    "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
+                    "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND Recipe_Type.id = recipe.idType " +
+                    " UNION " +
+                    "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+                    "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
+                    "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id  AND idUser = ? AND Recipe_Type.id = recipe.idType  ";
+
+    public List<Recipe> getRecipesForUser(Connection conn, Long idUser) {
         List<Recipe> listRecipe = new ArrayList<Recipe>();
         Recipe recipe;
         PreparedStatement stm;
@@ -268,12 +255,10 @@ public class RecipeDao {
     /************************************************************************************************************************************************************/
 
 
-
-
-    private List<Recipe> buildListRecipe(Connection conn, ResultSet resRecipe, Long idUser){
+    private List<Recipe> buildListRecipe(Connection conn, ResultSet resRecipe, Long idUser) {
         List<Recipe> listRecipe = new ArrayList<Recipe>();
         Recipe recipe;
-        try{
+        try {
 
             int idRecipe, nbPerson, nbVoter, timeCooking, timePreparation, idRecipeType;
             float rating;
@@ -318,19 +303,41 @@ public class RecipeDao {
                 recipe = new Recipe(idRecipe, name, isPublic, user, pixName, recipeType, ingredientList, descriptionList,
                         recipeOrigin, categoryList, nbPerson, rating, nbVoter, timeCooking, timePreparation, isValidated, relUserRecipe);
 
+                //recupere image
+                InputStream is;
+                try {
+                    File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\tarte1.jpg");
+
+
+                    FileInputStream imageInFile = new FileInputStream(file);
+                    byte imageData[] = new byte[(int) file.length()];
+                    imageInFile.read(imageData);
+
+
+                    // Converting Image byte array into Base64 String
+                    String imageDataString = new String(Base64.encodeBase64(imageData));
+
+                    recipe.setImage(imageDataString);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
                 listRecipe.add(recipe);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return listRecipe;
     }
 
 
-
     private static final String SELECT_RelUserRecipe = "SELECT * FROM Rel_User_Recipe " +
             " WHERE idUser = ? AND idRecipe = ?";
-    private RelUserRecipe getRelUserRecipe(Connection conn, int idRecipe, Long idUser){
+
+    private RelUserRecipe getRelUserRecipe(Connection conn, int idRecipe, Long idUser) {
         RelUserRecipe relUserRecipe = new RelUserRecipe();
         PreparedStatement stm;
         try {
@@ -357,6 +364,7 @@ public class RecipeDao {
      */
     private static final String SELECT_INGREDIENT = "SELECT idRecipe, quantity, unit, idFood, name, idCategory, isValidated " +
             "FROM INGREDIENT, FOOD WHERE INGREDIENT.idFood=FOOD.id AND ingredient.idRecipe = ?";
+
     private List<Ingredient> getIngredientList(Connection conn, int idRecipe) {
 
         List<Ingredient> ingredientList = new ArrayList<Ingredient>();
@@ -381,7 +389,7 @@ public class RecipeDao {
                 nameFood = resIngredient.getString("name");
                 isValidated = resIngredient.getBoolean("isValidated");
                 idCategoryFood = resIngredient.getInt("idCategory");
-                ingr = new Ingredient(qty, unit, new Food(new Long(idFood), nameFood, idCategoryFood,  isValidated));
+                ingr = new Ingredient(qty, unit, new Food(new Long(idFood), nameFood, idCategoryFood, isValidated));
                 ingredientList.add(ingr);
             }
         } catch (SQLException e) {
@@ -446,6 +454,7 @@ public class RecipeDao {
 
     /* INSERT INGREDIENTS (function called by CREATION RECIPE) */
     private static final String INSERT_INGREDIENT = "INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (?, ?, ?, ?)";
+
     private boolean insertsIngredient(Connection conn, List<Ingredient> listIngr, Long idRecipe) throws SQLException {
         PreparedStatement stmIngr;
         int insertIngrOk = 0;
@@ -458,10 +467,10 @@ public class RecipeDao {
             if (idFood == 0) {
                 idFood = foodDao.createFood(conn, ingr.getFood().getName());
             }
-            if(idFood == null){
+            if (idFood == null) {
                 throw new SQLException("PB : idFood is NULL -> either idFood is null from json format or,  No Row have been inserted in FOOD table for food = " + ingr.getFood().toString());
             }
-            if(idFood > 0){
+            if (idFood > 0) {
                 // insert ingredient
                 stmIngr = conn.prepareStatement(INSERT_INGREDIENT);
                 stmIngr.setLong(1, idRecipe);
@@ -469,7 +478,7 @@ public class RecipeDao {
                 stmIngr.setFloat(3, ingr.getQty());
                 stmIngr.setString(4, ingr.getUnit());
                 insertIngrOk = stmIngr.executeUpdate();
-            }else{
+            } else {
                 //Empty foodName -> no treatment
                 //throw new SQLException("No Row have been inserted in FOOD table for food = " + ingr.getFood().toString());
             }
@@ -480,6 +489,7 @@ public class RecipeDao {
 
     /* INSERT rel CATEGORIES (function called by CREATION RECIPE) */
     private static final String INSERT_REL_RECIPE_CATEGORY = "INSERT INTO Rel_Recipe_Category(idCategory, idRecipe) VALUES (?, ?)";
+
     private boolean insertsRelRecipeCategory(Connection conn, List<RecipeCategory> listCategory, Long idRecipe) throws SQLException {
         PreparedStatement stmIngr;
         int insertOk = 0;
@@ -495,6 +505,7 @@ public class RecipeDao {
 
     /* INSERT rel DESCRIPTION (function called by CREATION RECIPE) */
     private static final String INSERT_RECIPE_DESCRIPTION = "INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (?, ?, ?)";
+
     private boolean insertsRecipeDescription(Connection conn, List<RecipeDescription> listDescription, Long idRecipe) throws SQLException {
         PreparedStatement stmIngr;
         int insertOk = 0;
@@ -509,14 +520,13 @@ public class RecipeDao {
     }
 
 
-
-
     /***************************************************************************************************************************************************************/
     /************************************************************** PUT - UPDATE data *****************************************************************************/
     /*************************************************************************************************************************************************************/
 
     private final static String CREATE_Rel_USER_RECIPE = "INSERT INTO Rel_User_Recipe(idRecipe, idUser) VALUES (?, ?);\n";
-    public void create_RelUserRecipe(Connection conn, Long idRecipe, Long idUser){
+
+    public void create_RelUserRecipe(Connection conn, Long idRecipe, Long idUser) {
         PreparedStatement stm;
         int isOk = 0;
         try {
@@ -527,15 +537,17 @@ public class RecipeDao {
             isOk = stm.executeUpdate();
             if (isOk == 0) {
                 throw new SQLException("Creating Rel_User_Recipe failed, no rows affected");
-            }else{
-                System.out.println("Creation >> Rel_User_Recipe << (idRecipe: "+idRecipe+", idUser: "+idUser+") ------------  OK ");
+            } else {
+                System.out.println("Creation >> Rel_User_Recipe << (idRecipe: " + idRecipe + ", idUser: " + idUser + ") ------------  OK ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     private final static String SELECT_Rel_USER_RECIPE = "SELECT * FROM Rel_User_Recipe WHERE idRecipe = ? AND idUser = ? ;\n";
-    public boolean isExist_RelUserRecipe(Connection conn, Long idRecipe, Long idUser){
+
+    public boolean isExist_RelUserRecipe(Connection conn, Long idRecipe, Long idUser) {
         PreparedStatement stm;
         boolean exist = false;
         try {
@@ -554,13 +566,14 @@ public class RecipeDao {
 
 
     private final static String UPDATE_isFavorite_REL_USER_RECIPE = "UPDATE Rel_User_Recipe SET isFavorite = ? WHERE idRecipe = ? AND idUser = ? ;\n";
-    public void putIsFavorite(Connection conn, Long idRecipe, Long idUser, boolean isFavorite){
+
+    public void putIsFavorite(Connection conn, Long idRecipe, Long idUser, boolean isFavorite) {
         PreparedStatement stm;
         int isOk = 0;
         try {
             //1. verif que Rel_User_Recipe correspondante existe - sinon on la créée
-            if(!isExist_RelUserRecipe(conn, idRecipe, idUser)){
-                create_RelUserRecipe(conn,idRecipe, idUser);
+            if (!isExist_RelUserRecipe(conn, idRecipe, idUser)) {
+                create_RelUserRecipe(conn, idRecipe, idUser);
             }
             //2.update Rel_User_Recipe
             stm = conn.prepareStatement(UPDATE_isFavorite_REL_USER_RECIPE);
@@ -576,14 +589,16 @@ public class RecipeDao {
             e.printStackTrace();
         }
     }
+
     private final static String UPDATE_isForPlanning_REL_USER_RECIPE = "UPDATE Rel_User_Recipe SET isForPlanning = ? WHERE idRecipe = ? AND idUser = ? ;\n";
-    public void putIsForPlanning(Connection conn, Long idRecipe, Long idUser, boolean isForPlanning){
+
+    public void putIsForPlanning(Connection conn, Long idRecipe, Long idUser, boolean isForPlanning) {
         PreparedStatement stm;
         int isOk = 0;
         try {
             //1. verif que Rel_User_Recipe correspondante existe - sinon on la créée
-            if(!isExist_RelUserRecipe(conn, idRecipe, idUser)){
-                create_RelUserRecipe(conn,idRecipe, idUser);
+            if (!isExist_RelUserRecipe(conn, idRecipe, idUser)) {
+                create_RelUserRecipe(conn, idRecipe, idUser);
             }
             //2.update Rel_User_Recipe
             stm = conn.prepareStatement(UPDATE_isForPlanning_REL_USER_RECIPE);
@@ -598,17 +613,18 @@ public class RecipeDao {
             e.printStackTrace();
         }
     }
+
     private final static String UPDATE_ratingUser_REL_USER_RECIPE = "UPDATE Rel_User_Recipe SET ratingUser = ? WHERE idRecipe = ? AND idUser = ? ;\n";
     private final static String SELECT_rating_RECIPE = "SELECT rating, nbVoter FROM recipe where id = ? ;\n";
     private final static String UPDATE_rating_RECIPE = "UPDATE Recipe SET rating = ?, nbVoter = ?  WHERE id = ? ;\n";
 
-    public void putRatingUser(Connection conn, Long idRecipe, Long idUser, int ratingUser){
+    public void putRatingUser(Connection conn, Long idRecipe, Long idUser, int ratingUser) {
         PreparedStatement stm;
         int isOk = 0;
         try {
             //1. verif que Rel_User_Recipe correspondante existe - sinon on la créée
-            if(!isExist_RelUserRecipe(conn, idRecipe, idUser)){
-                create_RelUserRecipe(conn,idRecipe, idUser);
+            if (!isExist_RelUserRecipe(conn, idRecipe, idUser)) {
+                create_RelUserRecipe(conn, idRecipe, idUser);
             }
             //2. update Rel_User_Recipe
             stm = conn.prepareStatement(UPDATE_ratingUser_REL_USER_RECIPE);
@@ -627,14 +643,14 @@ public class RecipeDao {
             if (res.next()) {
                 float rating = res.getFloat("rating");
                 int nbVoter = res.getInt("nbVoter");
-                float newRating = (float)(rating * nbVoter + ratingUser) / (nbVoter+1);
-                System.out.println("division result (avec cast (float) ) : "+(float)(rating * nbVoter + ratingUser) / (nbVoter+1));
-                System.out.println("division result : "+(rating * nbVoter + ratingUser) / (nbVoter+1));
+                float newRating = (float) (rating * nbVoter + ratingUser) / (nbVoter + 1);
+                System.out.println("division result (avec cast (float) ) : " + (float) (rating * nbVoter + ratingUser) / (nbVoter + 1));
+                System.out.println("division result : " + (rating * nbVoter + ratingUser) / (nbVoter + 1));
 
                 //4. update RECIPE rating
                 stm = conn.prepareStatement(UPDATE_rating_RECIPE);
                 stm.setFloat(1, newRating);
-                stm.setInt(2, nbVoter+1);
+                stm.setInt(2, nbVoter + 1);
                 stm.setLong(3, idRecipe);
                 isOk = stm.executeUpdate();
                 if (isOk == 0) {
@@ -645,12 +661,6 @@ public class RecipeDao {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
 
 
     /****************************************************************************************************************************************************************/
@@ -665,40 +675,40 @@ public class RecipeDao {
      * ::::::::::::::::::::::: ATTTTTENTION :::::::::::::::::::       FCT QUI NE FONCTIONNE PAS -> buildListRecipe n'est plus adapté pour cette fct
      * On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)
      *
-    private static final String SELECT_All_RECIPES_FOR_USER = "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND idType = ? " +
-            " UNION " +
-            "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-            "FROM RECIPE, Recipe_Origin ro, User " +
-            "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id  AND idUser = ? AND idType = ? ";
-    public List<Recipe> getRecipes(Connection conn, String nameRecipeType, int idUser) {
-        List<Recipe> listRecipe = new ArrayList<Recipe>();
-        Recipe recipe;
-        PreparedStatement stm;
-        try {
-            // on recup l'id de Recipe_Type correspondant a notre recipeType (ex : course)
-            stm = conn.prepareStatement("SELECT * FROM RECIPE_TYPE WHERE name = '" + nameRecipeType + "'");
-            ResultSet res = stm.executeQuery();
-            int idRecipeType = 1;
-            if (res.next()) {
-                idRecipeType = res.getInt("id");
-            }
-            // on fait la requete pr avoir les liste des plats en fonction de notre recipeType (: idType)*
-            stm = conn.prepareStatement(SELECT_All_RECIPES_FOR_USER);
-            stm.setInt(1, idRecipeType);
-            stm.setInt(2, idUser);
-            stm.setInt(3, idRecipeType);
-            ResultSet resRecipe = stm.executeQuery();
+     private static final String SELECT_All_RECIPES_FOR_USER = "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+     "FROM RECIPE, Recipe_Origin ro, User " +
+     "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND isPublic = 1 AND idType = ? " +
+     " UNION " +
+     "SELECT  recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
+     "FROM RECIPE, Recipe_Origin ro, User " +
+     "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id  AND idUser = ? AND idType = ? ";
+     public List<Recipe> getRecipes(Connection conn, String nameRecipeType, int idUser) {
+     List<Recipe> listRecipe = new ArrayList<Recipe>();
+     Recipe recipe;
+     PreparedStatement stm;
+     try {
+     // on recup l'id de Recipe_Type correspondant a notre recipeType (ex : course)
+     stm = conn.prepareStatement("SELECT * FROM RECIPE_TYPE WHERE name = '" + nameRecipeType + "'");
+     ResultSet res = stm.executeQuery();
+     int idRecipeType = 1;
+     if (res.next()) {
+     idRecipeType = res.getInt("id");
+     }
+     // on fait la requete pr avoir les liste des plats en fonction de notre recipeType (: idType)*
+     stm = conn.prepareStatement(SELECT_All_RECIPES_FOR_USER);
+     stm.setInt(1, idRecipeType);
+     stm.setInt(2, idUser);
+     stm.setInt(3, idRecipeType);
+     ResultSet resRecipe = stm.executeQuery();
 
-            /******************************* ATTENTION FCT CI DESSOUS NE FONCTIONNE PAS.... *
-            //listRecipe = buildListRecipe(conn, resRecipe, idRecipeType, nameRecipeType, idUser);
+     /******************************* ATTENTION FCT CI DESSOUS NE FONCTIONNE PAS.... *
+     //listRecipe = buildListRecipe(conn, resRecipe, idRecipeType, nameRecipeType, idUser);
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listRecipe;
-    }
+     } catch (SQLException e) {
+     e.printStackTrace();
+     }
+     return listRecipe;
+     }
      */
 }
