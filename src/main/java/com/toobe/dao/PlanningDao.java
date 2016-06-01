@@ -35,12 +35,30 @@ public class PlanningDao {
 
         return getPlanningById(conn, idPlanning);
     }
-    public Planning cutShoppingToPlanning(Connection conn, Long idPlanning){
 
+    public Planning cutShoppingToPlanning(Connection conn, Long idPlanning){
         putIsForListShop(conn, idPlanning, false);
+        //delete all listSHopping_category which belong to it
+        deleteListShopping_Category_ofPlanningById(conn, idPlanning);
+
         return getPlanningById(conn, idPlanning);
     }
 
+    private final static String DELETE_ListShoppingCategory = "DELETE FROM ListShopping_Category WHERE idPlanning = ?;\n";
+    public void deleteListShopping_Category_ofPlanningById(Connection conn, Long idPlanning){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(DELETE_ListShoppingCategory);
+            stm.setLong(1, idPlanning);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("deleteListShopping_Category_ofPlanningById failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private final static String CREATE_COPY_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser, nbPersGlobal, isForListShop) VALUES (?, ?, ?, ?, ?);\n";

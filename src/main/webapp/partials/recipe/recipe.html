@@ -1,13 +1,14 @@
 <section ng-controller="RecipeCtrl">
 
-    <div class="titleRecipe contourTxt"><h2>Recettes : {{displayRecipeType()}}</h2></div> <!-- titleRecipe initilisee -->
+    <div class="titleRecipe contourTxt"><h2 class="myH2">Recettes : {{displayRecipeType()}}</h2></div> <!-- titleRecipe initilisee -->
 
 
+    <!-- AVANT entre plat dessert... tout en haut -- tt FONCTIONNE niquel avec le css etc
     <div class="divRecipesType">
 
         <button  ng-click="changeRecipeType('accueil')" type="button" class="myBtnEmpty myBtnEmptyRecipe myBtnRecipeType"
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('accueil')}">
-            Accueil <!--href="#/recipeAccueil"-->
+            Accueil
         </button>
         <button  ng-click="changeRecipeType('starter')" type="button" class="myBtnEmpty myBtnEmptyRecipe myBtnRecipeType"
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('starter')}">
@@ -29,15 +30,8 @@
                  ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('cocktail')}">
             Cocktails
         </button>
-
-        <!--
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('starter')" >Entrees</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('course')" >Plats</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('dessert')" >Desserts</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('breakfast')"  >Dej- Goûters</button>
-        <button class="btn btn-info btnRecipeType" ng-click="changeRecipeType('cocktail')">Cocktails</button>
-        -->
     </div>
+    -->
 
 
     <div ng-show="recipeType != 'accueil'" ng-controller="FilterCtrl">

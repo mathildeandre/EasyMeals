@@ -40,8 +40,10 @@
 
 
                 <span class="rightInlineBlock">
-                    <span ng-controller="PlanningModalListShoppingCtrl">
-                            <button  type="button" class="btn btn-danger btnSeeListShop" ng-click="openModalListShopping(currentPlanning)"> Voir liste de courses</button>
+		            <span ng-controller="PlanningModalListShoppingCtrl">
+                            <button  type="button" class="btn btn-danger btnSeeListShop" ng-click="openModalListShopping(currentPlanning)">
+                                <span class="glyphicon glyphicon-shopping-cart"></span> Liste de Courses
+                            </button>
                     </span>
                     <button type="button" class="btn btn-info btnNewPlanning" ng-click="createNewPlanning()">
                         <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
@@ -54,8 +56,8 @@
 
         <!--planning current : {{currentPlanning}}-->
 
-            <div class="myArticleBody">
-                <div ng-controller="PlanningModalCaseMealCtrl">
+        <div class="myArticleBody">
+            <div ng-controller="PlanningModalCaseMealCtrl">
                 <table class="table  table-hover table-bordered">
                     <th class="info myTh"></th>
                     <th class="info myTh">Lundi</th>
@@ -102,80 +104,88 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+
+            <!-- DEBUG -->
+            <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+                <div ng-repeat="recipe in currentPlanning.weekMeals[1].caseMeals[0].recipes">
+                    {{recipe.name}}
                 </div>
-
-                <!-- DEBUG -->
-                <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
-                    <div ng-repeat="recipe in currentPlanning.weekMeals[1].caseMeals[0].recipes">
-                        {{recipe.name}}
-                    </div>
-                </div>
+            </div>
 
 
-                <div>
-                    <div style="display:inline-block">
-                        <div>
-                            <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
+            <div>
+                <div style="display:inline-block">
+                    <div>
+                        <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
                         <span ng-repeat="weekMeal in currentPlanning.weekMeals"
                               class="checkbox checkbox-info checkbox-inline">
                             <input type="checkbox" ng-model="weekMeal.show" id="{{weekMeal.id}}">
                             <label for="{{weekMeal.id}}"><b>{{displayMealType(weekMeal.weekMealName)}}</b>
                                 &nbsp&nbsp</label>
                         </span>
-                        </div>
-                        <div>
+                    </div>
+                    <div>
+                        <div class="inlineBlock" style="vertical-align: top">
                             Nombre de personnes : &nbsp&nbsp
+                        </div>
 
-                            <span class="checkbox checkbox-info checkbox-inline">
+                        <div class="inlineBlock">
+
+                            <div>
+                                Global &nbsp
+                                <input class="inputGlobalNbPers" type="number" ng-model="currentPlanning.nbPersGlobal"
+                                       ng-change="spreadGlobalNbPers(currentPlanning.nbPersGlobal)" min="1"
+                                       style="width:40px">
+                            </div>
+                            <div class="checkbox checkbox-info checkbox-inline">
                                 <input type="checkbox" ng-model="showNbPers" id="idShowPers">
                                 <label for="idShowPers">Voir pour chaque repas</label>
-                            </span>
-                            &nbsp - &nbsp
-                            Global &nbsp
-                            <input class="inputGlobalNbPers" type="number" ng-model="currentPlanning.nbPersGlobal"
-                                   ng-change="spreadGlobalNbPers(currentPlanning.nbPersGlobal)" min="1"
-                                   style="width:40px">
-
-                        </div>
-                        <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
-                            <div>Apres avoir choisi le nombre de personne global, il est possible de le modifier pour un
-                                repas en particulier : cocher "afficher nb pers." puis modifier directement le nb dans
-                                le repas ou y faire glisser le nb ci-dessous
                             </div>
                         </div>
-                        <div>
-                            <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
 
-                            <!-- Partie avec case nbPers to drag into planning --
-                            <span ng-show="showNbPers">
-                                <span ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">- Modifier nb pers puis faire <b>glisser</b> sur un item 'pers' d'une case du planning :</span>
-                                <span ng-show="!showHelp">- <b>Glisser</b> dans une case Nb pers. :</span>
-                                <span class="itemToDragPlanning nbPers" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="nbPers"
-                                      jqyoui-draggable="{placeholder:'keep', deepCopy:'true'}">
-                                    <input class="inputNbPers" type="number" min="1" ng-model="nbPers"><span class="glyphicon glyphicon-tag"></span>
-                                </span>
+
+                    </div>
+                    <div ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">
+                        <div>Apres avoir choisi le nombre de personne global, il est possible de le modifier pour un
+                            repas en particulier : cocher "afficher nb pers." puis modifier directement le nb dans
+                            le repas ou y faire glisser le nb ci-dessous
+                        </div>
+                    </div>
+                    <div>
+                        <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
+
+                        <!-- Partie avec case nbPers to drag into planning --
+                        <span ng-show="showNbPers">
+                            <span ng-show="showHelp" style="font-size: 18px; color:cornflowerblue">- Modifier nb pers puis faire <b>glisser</b> sur un item 'pers' d'une case du planning :</span>
+                            <span ng-show="!showHelp">- <b>Glisser</b> dans une case Nb pers. :</span>
+                            <span class="itemToDragPlanning nbPers" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="nbPers"
+                                  jqyoui-draggable="{placeholder:'keep', deepCopy:'true'}">
+                                <input class="inputNbPers" type="number" min="1" ng-model="nbPers"><span class="glyphicon glyphicon-tag"></span>
                             </span>
-                            -->
-                        </div>
+                        </span>
+                        -->
                     </div>
+                </div>
 
-                    <div class="rightInlineBlock rightTrashPlanning">
-                        <div id="trashPlanning" class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
-                             data-drop="{{dataDropTrash}}" ng-model='trash'
-                             jqyoui-droppable="{multiple:true, onOver:'onOverTrash()', onOut:'onOutTrash()', onDrop:'onOutTrash()'}">
-                            <!-- , onOver:'onOverTrash()', onOut:'onOutTrash()' }" -->
-                        </div>
+                <div class="rightInlineBlock rightTrashPlanning">
+                    <div id="trashPlanning" class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
+                         data-drop="{{dataDropTrash}}" ng-model='trash'
+                         jqyoui-droppable="{multiple:true, onOver:'onOverTrash()', onOut:'onOutTrash()', onDrop:'onOutTrash()'}"
+                         uib-popover="Glisser recette à supprimer" popover-trigger="mouseenter" popover-placement="left" >
+                        <!-- , onOver:'onOverTrash()', onOut:'onOutTrash()' }" -->
                     </div>
+                </div>
 
-                    <!-- DEBUG -->
-                    <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+                <!-- DEBUG -->
+                <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
                             <span class="checkbox checkbox-success checkbox-inline">
                                      <input type="checkbox" ng-model="dataDropTrash" id="dataDropTrashId">
                                      <label for="dataDropTrashId">Trash Droppable ?</label>
                             </span> droppable ? : {{dataDropTrash}}
-                    </div>
                 </div>
             </div>
+        </div>
     </article>
 
     <button type="button" class="btn btn-info bigBtnNewPlanning" ng-click="createNewPlanning()"  ng-show="plannings.length == 0">

@@ -1,6 +1,6 @@
 <div  ng-controller="ErrandCtrl" >
 
-    <div><h2>Mes Listes </h2></div>
+    <div><h2 class="myH2">Mes Listes </h2></div>
 
 
 <div ng-show="planningsShopping.length == 0">
@@ -19,17 +19,30 @@
             <span class="txtWhiteBtn">Liste de Courses</span>
         </button>&nbsp &nbsp
         <button  ng-click="displayErrandPlanning()"  type="button" class="myBtnEmpty myBtnEmptyErrand" ng-class="{myBtnErrandFull : !isDisplayErrandList, classicCursor: !isDisplayErrandList}">
-            <span class="txtWhiteBtn">Planning</span>
+            <span class="txtWhiteBtn">Cuisiner avec le Planning</span>
         </button>&nbsp &nbsp
 
-        Liste :
+        <span style="color: white">Liste :</span>
         <select class="fieldErrand"  ng-model='currentPlanningShopping' ng-change="resetRecipesToDisplay()" ng-options='list.name for list in planningsShopping' ></select>
 
         &nbsp &nbsp
-        <span class="glyphicon glyphicon-grain
-         glyphCutErrandToPlanning glyphiconBtn" ng-click="cutShopToPlanning()"></span>
+
+        <!--
+        <button  type="button" class="btn btn-info" ng-click="cloneIntoMyPlannings()">
+            <span class="glyphicon glyphicon-duplicate"></span> Copier dans Planning
+        </button>
+        <button  type="button" class="btn btn-info" ng-click="cutShoppingToPlanning()">
+            <span class="glyphicon glyphicon-scissors"></span> Modifier dans Planning
+        </button>
+        -->
+        <span class="glyphicon glyphicon-duplicate glyphCopyErrandToPlanning glyphiconBtn" ng-click="cloneIntoMyPlannings()"
+              uib-popover="Copier dans PLANNINGS" popover-trigger="mouseenter"></span>
         &nbsp
-        <span class="glyphicon glyphicon-trash glyphDeleteListShop glyphiconBtn" ng-click="deleteListShop()"></span>
+        <span class="glyphicon glyphicon-scissors glyphCutErrandToPlanning glyphiconBtn" ng-click="cutShoppingToPlanning()"
+              uib-popover="OOPS j'ai oublié un ingredient! Copier dans PLANNINGS (Supprimera de COURSES)" popover-trigger="mouseenter"></span>
+        &nbsp
+        <span class="glyphicon glyphicon-trash glyphDeleteListShop glyphiconBtn" ng-click="deleteListShop()"
+              uib-popover="Supprimer de COURSES" popover-trigger="mouseenter"></span>
 
     </div>
 
@@ -64,11 +77,20 @@
                 <!--<b style="border-bottom:1px solid grey; " >{{category.name}}</b>-->
                 <div class="divBodyCategory">
                     <div ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}">
-                        - {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
+
+
+                        <span ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-check ingrDone glyphiconBtn" ></span>
+
+                        <!-- check sign... :
+                        <span ng-show="ingr.done && !ingr.onOver" class="glyphicon glyphicon-ok ingrDoneOk" ></span>
+                        ajouter ainsi en dessous '&& ingr.onOver'  (et ds le div parent : 'ng-mouseenter="ingr.onOver=true" ng-mouseleave="ingr.onOver=false" '-->
+                        <span ng-show="ingr.done" ng-click="ingredientCancelDone(category, ingr)" class="glyphicon glyphicon-refresh listReset glyphiconBtn" ></span>
+
 
                         &nbsp
-                        <span ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-remove ingrDone glyphiconBtn" ></span>
-                        <span ng-show="ingr.done" class="glyphicon glyphicon-ok ingrDoneOk" ></span>
+
+                         {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
+
                     </div>
                 </div>
             </div>
@@ -96,12 +118,13 @@
                     <span ng-click="modificationListNameDONE()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
                 </span>
 
+                <!-- clone "editer planning" btn
                 <span class="rightInlineBlock">
                     <button  type="button" class="btn btn-danger btnClonePlanning btnHeading" ng-click="cloneIntoMyPlannings()" title="">
                         <span class="glyphicon glyphicon-edit"></span> &nbsp Editer Planning
                     </button>
                 </span>
-
+                -->
 
 
             </div>

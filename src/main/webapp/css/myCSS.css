@@ -26,7 +26,9 @@ h6 {
     font-weight: 700;
     letter-spacing: 1px;
 }
-
+.myH2{
+    color: white;
+}
 
 .main-panel {
     color:black;
@@ -55,7 +57,7 @@ h6 {
     width: 100%;
     height: 100%;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #fff;
+    //color: #fff;
     background: url(../img/intro-bg.jpg) no-repeat bottom center scroll;
     background-color: #000;
     -webkit-background-size: cover;
@@ -64,12 +66,28 @@ h6 {
     -o-background-size: cover;
     padding: 0 4vw;
 }
+.bodyIdea{
+
+    width: 100%;
+    height: 100%;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    //color: #fff;
+    background: url(../img/ideaApple.jpg) repeat ; /* planning-recipe_meals OR recipe_fruits.jpeg  //bottom center scroll */
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+
+    background-attachment:fixed;
+    padding: 0 4vw;
+}
 .bodyRecipe{
 
     width: 100%;
     height: 100%;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #fff;
+    //color: #fff;
     background: url(../img/recipe_vegetables.jpg) repeat ; /* planning-recipe_meals OR recipe_fruits.jpeg  //bottom center scroll */
     background-color: #000;
     -webkit-background-size: cover;
@@ -77,6 +95,7 @@ h6 {
     background-size: cover;
     -o-background-size: cover;
 
+    background-attachment:fixed;
     padding: 0 4vw;
 }
 
@@ -85,13 +104,14 @@ h6 {
     height: 100%;
     /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #fff;
+    //color: #fff;
     background: url(../img/planning_background.jpg) ; /* expense-planning_Red-Raspberry   OR  intro-bg.jpg OR planning-recipe_meals.jpg*/
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    background-attachment:fixed;
     padding: 0 2vw;
 }
 .bodyErrand{
@@ -99,7 +119,7 @@ h6 {
     height: 100%;
     /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #fff;
+    //color: #fff;
     background: url(../img/errand_shoppingTrolley.jpg) repeat ; /*expense_note OR  expense-planning_Red-Raspberry */
     background-color: #000;
     -webkit-background-size: cover;
@@ -113,6 +133,7 @@ h6 {
     background-size: 100%;
     -o-background-size: 100%;
 
+    background-attachment:fixed;
     padding: 0 10vw;
 
 }
@@ -123,13 +144,14 @@ h6 {
     height: 100%;
     /*font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #fff;
+    //color: #fff;
     background: url(../img/expense_noteSober.jpg) no-repeat ; /*expense_note OR  expense-planning_Red-Raspberry */
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    background-attachment:fixed;
     padding: 0 2vw;
 }
 
@@ -140,13 +162,14 @@ h6 {
     width: 100%;
     /*height: 100%;*/
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #fff;
+    //color: #fff;
     background: url(../img/alcohol_glass-wineGood.jpg) no-repeat ; /* alcohol_glassWineOnWood //center scroll */
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    background-attachment:fixed;
     padding: 0 4vw;
 }
 
@@ -339,7 +362,7 @@ h6 {
     font-size: 18px;
     //text-transform: lowercase;
 }
-.myBtnRecipeType{
+.myBtnRecipeType{/*for 6 item */
     padding: 8px 0;
     text-align: center;
     text-transform: uppercase;
@@ -354,7 +377,22 @@ h6 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.myBtnRecipeTypePlanning{
+.myBtnRecipeTypeV2{ /*for 5 item */
+    padding: 8px 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-right:2%;
+    //width: 200px;
+    width: 17.5%;
+    color:white;
+    //background-color: rgba(230, 239, 230, 0.6);
+    background-color: rgba(0,0,0,0.4);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.myBtnRecipeTypePlanning{/*for 5 item */
     padding: 8px 0;
     text-align: center;
     text-transform: uppercase;
@@ -392,6 +430,7 @@ h6 {
     //color: #ff80bf;
     padding: 6px 10px 7px 10px;
     border: 1px solid #d9534f;
+    color:white;
 }
 .myBtnEmptyErrand:hover,
 .myBtnEmptyErrand:focus{
@@ -405,6 +444,7 @@ h6 {
 .myBtnErrandFull{
     //background-color: #ffb3d9;
     background-color: #e89996;
+    color: white;
 }
 
 
@@ -427,7 +467,7 @@ h6 {
     color:darkslategrey;
 }
 .txtWhiteBtn{
-    color: antiquewhite;
+    //color: antiquewhite;
 }
 
 /*******************************************************************************************************************************************************************************/
@@ -955,7 +995,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .dropdown-menu { /* car bootstrap a un padding et c moche! */
     padding:0;
 }
-.activeInNavBar > a {
+.activeInNavBarIdea > a {
+    color:#b366ff;
+}
+.activeInNavBarRecipe > a {
     color:#f0ad4e;
 }
 .activeInNavBarPlanning > a {
@@ -1134,12 +1177,15 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 /**********************************************************************  LIST RECIPE #RIGHT   ************************************************************************************************/
-
+.divRecipeRight{
+    margin-left:28vw;
+    width:64vw; /* stay at 64vw in any case*/
+    overflow: hidden;
+}
 #listRecipe{
     margin-left:28vw;
     width:64vw; /* stay at 64vw in any case*/
     overflow: hidden;
-
 }
 
 .rightHeadingSearch{
@@ -1546,7 +1592,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .colorRed{
     color:indianred;
 }
-
 /************************************************************************************************************/
 /*************************  SINGLE RECIPE (new window) custom  *********************************************/
 /**********************************************************************************************************/
@@ -1833,7 +1878,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .btnSeeListShop{
     vertical-align: top;
-    margin-right : 8vw;
+    margin-right : 7vw;
 }
 .bigBtnNewPlanning{
     font-size: 28px;
@@ -1950,6 +1995,30 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/
 
+
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/*******************************************************************         IDEAS            **************************************************************************************************/
+/*******************************************************************                          **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+
+
+.divIdeaType{
+    margin-bottom: 2vw;
+}
+
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/*******************************************************************    --end--  IDEAS       **************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************************/
 
 
 
@@ -2259,8 +2328,12 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:indianred;
     font-size: 22px;
 }
-.glyphCutErrandToPlanning{
+.glyphCopyErrandToPlanning{
     color:cornflowerblue;
+    font-size: 26px;
+}
+.glyphCutErrandToPlanning{
+    color:lightgrey;
     font-size: 26px;
 }
 .glyphDeleteListShop{
@@ -2334,16 +2407,17 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .ingrDoneOk{
     color: lightgrey;
 }
-.ingrDone, .heartNoBtn{
+.ingrDone{
+    color : #86c66c;//lightgreen;
+}
+.ingrDone:hover{
+    color : #67b847;
+    transform: scale(1.5);
+}
+.heartNoBtn{
     color: #ff4d4d ;
     color : indianred;
 }
-.ingrDone:hover{
-    color:red;
-    color : indianred;
-    transform: scale(1.5);
-}
-
 
 .heart{
     color: #bfbfbf ;/*lightgrey++*/

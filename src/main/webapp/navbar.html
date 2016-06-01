@@ -18,17 +18,20 @@
                     <a href="#welcomeMeal"> </a>
                 </li>
 
-                <li class="page-scroll" ng-class="{ activeInNavBar: isActiveInNavBar('recipe')}">
-                    <a href="/#/recipe/accueil">Recettes</a>
+                <li class="page-scroll" ng-class="{ activeInNavBarIdea: classBody == 'bodyIdea'}">
+                    <a href="/#/idea">Les Bonnes Idées</a>
                 </li>
-                <li class="page-scroll" ng-class="{ activeInNavBarPlanning: isActiveInNavBar('planning')}">
-                    <a href="#/planning">Plannings</a>
+                <li class="page-scroll" ng-class="{ activeInNavBarRecipe: classBody == 'bodyRecipe'}"> <!--ng-class="{ activeInNavBarRecipe: isActiveInNavBar('recipe')}"-->
+                    <a href="/#/recipe/course">Recettes</a>
+                </li>
+                <li class="page-scroll" ng-class="{ activeInNavBarPlanning: classBody == 'bodyPlanning'}">
+                    <a href="#/planning">Creation Plannings</a>
                 </li>
                 </li>
-                <li class="page-scroll" ng-class="{ activeInNavBarErrand: isActiveInNavBar('errand')}">
-                    <a href="#/errand">Courses</a>
+                <li class="page-scroll" ng-class="{ activeInNavBarErrand: classBody == 'bodyErrand'}">
+                    <a href="#/errand">Courses & Cuisine</a>
                 </li>
-                <li class="page-scroll" ng-class="{ activeInNavBarExpense: isActiveInNavBar('calculationExpense')}">
+                <li class="page-scroll" ng-class="{ activeInNavBarExpense: classBody == 'bodyExpense'}">
                     <a href="/#/calculationExpense">Dépenses</a>
                 </li>
 

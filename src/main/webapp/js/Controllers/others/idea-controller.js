@@ -4,9 +4,19 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunctionsService, restPlanningService) {
+myModule.controller('IdeaCtrl', function($scope, $log, $routeParams, $location, AppendixFunctionsService, restPlanningService) {
 
-    $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
+    $scope.$emit('intoIdea'); //will tell to parents (global-controller.js) to modify pix
+
+    $scope.ideaType = "recipe"; //$routeParams.ideaType;
+
+
+    $scope.changeIdeaType = function(name){
+        $scope.ideaType = name;
+    }
+
+
+
 
     $scope.planningsShopping = restPlanningService.getPlanningsShopping();
 

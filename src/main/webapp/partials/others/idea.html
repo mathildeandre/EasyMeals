@@ -1,0 +1,26 @@
+<div >
+
+    <div class="titleRecipe contourTxt"><h2 class="myH2">Idées et propositions</h2></div>
+
+    <div class="divIdeaType">
+        <button  ng-click="changeIdeaType('recipe')" type="button" class="myBtnEmpty"
+                 ng-class="{myBtnFull : isRecipeTypeSelected('recipe')}">
+            Recettes <!--href="#/recipeAccueil"-->
+        </button>
+        <button  ng-click="changeIdeaType('planning')" type="button" class="myBtnEmpty"
+                 ng-class="{myBtnFull : isRecipeTypeSelected('planning')}">
+            Plannings
+        </button>
+    </div>
+
+
+
+    <div ng-show="ideaType == 'recipe'">
+        <recipe-accueil></recipe-accueil>
+    </div>
+    <div ng-show="ideaType == 'planning'">
+       En construction..
+    </div>
+
+
+</div>

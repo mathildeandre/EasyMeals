@@ -1,4 +1,29 @@
-<article id="listRecipe" class="myArticle">
+
+<div class="divRecipeRight">
+
+    <div class="divRecipesType">
+        <button  ng-click="changeRecipeType('starter')" type="button" class="myBtnEmpty myBtnEmptyRecipe myBtnRecipeTypeV2"
+                 ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('starter')}">
+            Entrees
+        </button>
+        <button  ng-click="changeRecipeType('course')" type="button" class="myBtnEmpty myBtnEmptyRecipe myBtnRecipeTypeV2"
+                 ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('course')}">
+            Plats
+        </button>
+        <button  ng-click="changeRecipeType('dessert')" type="button" class="myBtnEmpty myBtnEmptyRecipe myBtnRecipeTypeV2"
+                 ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('dessert')}">
+            Desserts
+        </button>
+        <button  ng-click="changeRecipeType('breakfast')" type="button" class="myBtnEmpty myBtnEmptyRecipe myBtnRecipeTypeV2"
+                 ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('breakfast')}">
+            Dej- Goûters
+        </button>
+        <button  ng-click="changeRecipeType('cocktail')" type="button" class="myBtnEmpty myBtnEmptyRecipe myBtnRecipeTypeV2 noMarginRight"
+                 ng-class="{myBtnRecipeTypeFull : isRecipeTypeSelected('cocktail')}">
+            Cocktails
+        </button>
+    </div>
+    <article  class="myArticle"> <!--id="listRecipe"-->
 
         <div class="myArticleHeading" >
             <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType()}}</div>
@@ -13,7 +38,7 @@
         <div class="myArticleBody artBodyListRecipe">
 
             <div class="divTopListRecipe">
-               <!-- <div>{{recipes[0].name}} - {{recipesToDisplay[0].name}}  </div>-->
+                <!-- <div>{{recipes[0].name}} - {{recipesToDisplay[0].name}}  </div>-->
 
 
                 <div class="buttonCreate" >
@@ -62,4 +87,8 @@
             </div>
         </div>
 
-</article>
+    </article>
+
+
+
+</div>

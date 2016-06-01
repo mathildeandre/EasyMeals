@@ -16,6 +16,14 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                     }}
                 })
 
+                .when('/idea', {
+                    templateUrl: '../partials/others/idea.html',
+                    controller:'IdeaCtrl',
+                    resolve:{ ideaResolve: function ($log, restGlobalService){
+                        $log.warn("::::: RESOLVE idea route ::::: calling -restGlobalService.initGlobalLoadData()")
+                        return restGlobalService.initGlobalLoadData();
+                    }}
+                })
                 .when('/recipe/:recipeType/:selection?', {
                     templateUrl: '../partials/recipe/recipe.html',
                     controller:'RecipeCtrl',

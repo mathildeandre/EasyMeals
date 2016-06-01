@@ -21,21 +21,35 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
     $scope.classBody = "bodyEasyMeals";
 
 
-    $scope.$on('intoPlanning', function() {
-        $scope.classBody = "bodyPlanning";
+    /** utilisé danns 'index.html' : <body class="{{classBody}}" ng-controller="GlobalCtrl">*/
+    $scope.$on('intoIdea', function() {
+        $scope.classBody = "bodyIdea";
     });
     $scope.$on('intoRecipe', function() {
         $scope.classBody = "bodyRecipe";
     });
-    $scope.$on('intoAlcohol', function() {
-        $scope.classBody = "bodyAlcohol";
-    });
-    $scope.$on('intoExpense', function() {
-        $scope.classBody = "bodyExpense";
+    $scope.$on('intoPlanning', function() {
+        $scope.classBody = "bodyPlanning";
     });
     $scope.$on('intoErrand', function() {
         $scope.classBody = "bodyErrand";
     });
+    $scope.$on('intoExpense', function() {
+        $scope.classBody = "bodyExpense";
+    });
+    $scope.$on('intoAlcohol', function() {
+        $scope.classBody = "bodyAlcohol";
+    });
+
+    /* ici on regarde si le path contient le mot  de la var 'viewLocationRoot'
+    * FONCTIONNE AUSSI mais vu qu'il a y le mot recipe a plusieurs endroit ca peut etre en confusion..*/
+    $scope.isActiveInNavBar = function (viewLocationRoot) {
+        return (($location.path().indexOf(viewLocationRoot)) > -1);
+    };
+    /*$scope.isActiveInNavBar = function (viewLocation) {
+     return '#/planning' === $location.path();
+     };*/
+
 
 
 
@@ -65,13 +79,6 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
         $scope.myId = GlobalService.getId();
     }
 
-
-    $scope.isActiveInNavBar = function (viewLocationRoot) {
-        return (($location.path().indexOf(viewLocationRoot)) > -1);
-    };
-    /*$scope.isActiveInNavBar = function (viewLocation) {
-     return '#/planning' === $location.path();
-     };*/
 
 
 
