@@ -128,93 +128,94 @@
     <!--------------------------------- FOOD ------------------------------------------->
     <!--------------------------------- FOOD ------------------------------------------->
     <div ng-show="type == 'food'">
-        <div ng-show="foods.length == 0" style="color: white">
+        <div ng-show="foodsNotValidated.length == 0" style="color: white">
             PAS DE NEW FOOD
         </div>
-
-        <!-------------- QUICK SEARCH EXISTING FOODS ------------>
-        <article  class="myArticle" >
-            <div class="myArticleHeading">
-                <div class="myArticleTitle">Quick search existing food :
-                    <input class="fieldRecipeCreation" type="text" ng-model ='foodSearch'
-                           ng-focus="onFocusInputIngredient()"  ng-keyup="keyUpdateFilter()"  placeholder="aliment" /><!--ng-blur="onBlurInputIngredient()"-->
-                </div>
-            </div>
-
-            <div>
-                <div class="myBlockFoodProposition" ng-show="showFoods">
-                    <div class="myBlockFoodPropositionTitle" >Proposition(s) aliment(s)</div>
-                    <span class="foodProposition"   ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
-                        <button  type="button" class="myBtnEmpty myBtnEmptyRecipe">
-                            <span class="txtFilter">{{food.name}}-(id:{{food.id}})</span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </article>
-        <br>
-        <br>
-        <!-------------- end QUICK SEARCH EXISTING FOODS ------------->
-
-
-        <div ng-repeat="foodNotVal in foodsNotValidated">
-
+        <div ng-show="foodsNotValidated.length > 0">
+            <!-------------- QUICK SEARCH EXISTING FOODS ------------>
             <article  class="myArticle" >
                 <div class="myArticleHeading">
-                    <div class="myArticleTitle">Name new food : {{foodNotVal.name}}</div>
+                    <div class="myArticleTitle">Quick search existing food :
+                        <input class="fieldRecipeCreation" type="text" ng-model ='foodSearch'
+                               ng-focus="onFocusInputIngredient()"  ng-keyup="keyUpdateFilter()"  placeholder="aliment" /><!--ng-blur="onBlurInputIngredient()"-->
+                    </div>
                 </div>
 
-                <div class="myArticleBody">
-
-                    <!-- ACCEPTER ET CHOISIR CATEGORIE -->
-                    <div>
-                        Accepter food en choisissant categorie :
-                        <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
-                            <option value="" disabled>Choisir Categories </option>
-                        </select>
-                        <button  type="button" class="btn btn-success" ng-click="putAdminValidateFood(foodNotVal.id ,idCategory, $index)">
-                            <span class="glyphicon glyphicon-ok"></span> Valider
-                        </button>
-                    </div>
-                    <br>
-
-                    <!-- ACCEPTER mais RENOMMER -->
-                    <div>
-                        Accepter food mais renommer :
-                        <input type="text" ng-model ='newNameFood' class="fieldRecipeCreation" placeholder="new name" />
-                         &nbsp - puis choisir categorie :
-                        <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
-                            <option value="" disabled>Choisir Categories </option>
-                        </select>
-                        <button  type="button" class="btn btn-success" ng-click="putAdminValidateFoodWithNewName(newNameFood, foodNotVal.id ,idCategory, $index)">
-                            <span class="glyphicon glyphicon-ok"></span> Valider
-                        </button>
-                    </div>
-                    <br>
-
-                    <!-- REMPLACER PAR EXISTANT -->
-                    <div>
-                        Remplacer food par existant - ID :
-                        <input type="number" ng-model ='idExistingFood' class="fieldRecipeCreation" placeholder="new id" ng-keyup="keyUpdateIdExistingFood(idExistingFood)" />
-                        {{newFoodNameById}}
-                        <button  type="button" class="btn btn-success" ng-click="putAdminReplaceFood(idExistingFood, foodNotVal.id, $index)">
-                            <span class="glyphicon glyphicon-ok"></span> Valider
-                        </button>
-                    </div>
-                    <br>
-
-                    <!-- REFUSER FOOD - supprimer -->
-                    <div>
-                        <button type="button" class="btn btn-danger btnNewPlanning" ng-click="deleteFood(foodNotVal.id, $index)">
-                            <span class="glyphicon glyphicon-remove"></span> Refuser food
-                        </button>
+                <div>
+                    <div class="myBlockFoodProposition" ng-show="showFoods">
+                        <div class="myBlockFoodPropositionTitle" >Proposition(s) aliment(s)</div>
+                        <span class="foodProposition"   ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
+                            <button  type="button" class="myBtnEmpty myBtnEmptyRecipe">
+                                <span class="txtFilter">{{food.name}}-(id:{{food.id}})</span>
+                            </button>
+                        </span>
                     </div>
                 </div>
             </article>
+            <br>
+            <br>
+            <!-------------- end QUICK SEARCH EXISTING FOODS ------------->
 
-            <br>
-            <br>
-            <br>
+
+            <div ng-repeat="foodNotVal in foodsNotValidated">
+
+                <article  class="myArticle" >
+                    <div class="myArticleHeading">
+                        <div class="myArticleTitle">Name new food : {{foodNotVal.name}}</div>
+                    </div>
+
+                    <div class="myArticleBody">
+
+                        <!-- ACCEPTER ET CHOISIR CATEGORIE -->
+                        <div>
+                            Accepter food en choisissant categorie :
+                            <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
+                                <option value="" disabled>Choisir Categories </option>
+                            </select>
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateFood(foodNotVal.id ,idCategory, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- ACCEPTER mais RENOMMER -->
+                        <div>
+                            Accepter food mais renommer :
+                            <input type="text" ng-model ='newNameFood' class="fieldRecipeCreation" placeholder="new name" />
+                             &nbsp - puis choisir categorie :
+                            <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
+                                <option value="" disabled>Choisir Categories </option>
+                            </select>
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateFoodWithNewName(newNameFood, foodNotVal.id ,idCategory, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- REMPLACER PAR EXISTANT -->
+                        <div>
+                            Remplacer food par existant - ID :
+                            <input type="number" ng-model ='idExistingFood' class="fieldRecipeCreation" placeholder="new id" ng-keyup="keyUpdateIdExistingFood(idExistingFood)" />
+                            {{newFoodNameById}}
+                            <button  type="button" class="btn btn-success" ng-click="putAdminReplaceFood(idExistingFood, foodNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- REFUSER FOOD - supprimer -->
+                        <div>
+                            <button type="button" class="btn btn-danger btnNewPlanning" ng-click="deleteFood(foodNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-remove"></span> Refuser food
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <br>
+                <br>
+                <br>
+            </div>
         </div>
     </div>
     <!---------------------------------end FOOD ------------------------------------------->
