@@ -57,6 +57,14 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                         return restGlobalService.initGlobalLoadData();
                     }}
                 })
+                .when('/privateAdmin', {
+                    templateUrl: '../partials/others/privateAdmin.html',
+                    controller:'PrivateAdminCtrl',
+                    resolve:{ privateAdminResolve: function ($log, restGlobalService){
+                        $log.warn("::::: RESOLVE privateAdmin route ::::: calling -restGlobalService.initGlobalLoadData()")
+                        return restGlobalService.initGlobalLoadData();
+                    }}
+                })
 
 
 

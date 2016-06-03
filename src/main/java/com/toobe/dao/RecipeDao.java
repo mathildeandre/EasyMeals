@@ -185,32 +185,6 @@ public class RecipeDao {
     }
 
 
-    /****************************/
-    /******* RECIPE PUBLIC NOT VALIDATED *******/
-    /****************************/
-     /* On trouve ici toutes les recettes PUBLIC de type COURSE (on verra plus tard pour ajouter celles PRIVATE des users specifiés...)*/
-    private static final String SELECT_RECIPES_PUBLIC_NOT_VALIDATED =
-            "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
-                    "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
-                    "WHERE recipe.idOrigin = ro.id  AND recipe.idUser = user.id AND Recipe_Type.id = recipe.idType AND isPublic = 1 AND isValidated = 0 ";
-
-    public List<Recipe> getRecipesPublicNotValidated(Connection conn) {
-        List<Recipe> listRecipe = new ArrayList<Recipe>();
-        Recipe recipe;
-        PreparedStatement stm;
-        try {
-            /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (mnt idType)*/
-            stm = conn.prepareStatement(SELECT_RECIPES_PUBLIC_NOT_VALIDATED);
-            ResultSet resRecipe = stm.executeQuery();
-
-
-            listRecipe = buildListRecipe(conn, resRecipe, new Long(-1));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listRecipe;
-    }
 
 
     /****************************/
@@ -255,7 +229,7 @@ public class RecipeDao {
     /************************************************************************************************************************************************************/
 
 
-    private List<Recipe> buildListRecipe(Connection conn, ResultSet resRecipe, Long idUser) {
+    public List<Recipe> buildListRecipe(Connection conn, ResultSet resRecipe, Long idUser) {
         List<Recipe> listRecipe = new ArrayList<Recipe>();
         Recipe recipe;
         try {
@@ -306,7 +280,7 @@ public class RecipeDao {
                 //recupere image
                 InputStream is;
                 try {
-                    File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\tarte1.jpg");
+                    File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\newFile7.jpg");
 
 
                     FileInputStream imageInFile = new FileInputStream(file);

@@ -1,0 +1,254 @@
+<div >
+
+    <div class="titleRecipe contourTxt"><h2 class="myH2">Gestion admin</h2></div>
+
+    <div class="divIdeaType">
+        <button  ng-click="changeType('recipe')" type="button" class="myBtnEmpty"
+                 ng-class="{myBtnEmptySelected : isTypeSelected('recipe')}">
+            Recettes <!--href="#/recipeAccueil"-->
+        </button>
+        <button  ng-click="changeType('food')" type="button" class="myBtnEmpty"
+                 ng-class="{myBtnEmptySelected : isTypeSelected('food')}">
+            Ingredients
+        </button>
+        <button  ng-click="changeType('category')" type="button" class="myBtnEmpty"
+                 ng-class="{myBtnEmptySelected : isTypeSelected('category')}">
+            Categories
+        </button>
+        <button  ng-click="changeType('speciality')" type="button" class="myBtnEmpty"
+                 ng-class="{myBtnEmptySelected : isTypeSelected('speciality')}">
+            Spécialités
+        </button>
+    </div>
+
+
+
+    <!--------------------------------- RECIPE ------------------------------------------->
+    <!--------------------------------- RECIPE ------------------------------------------->
+    <!--------------------------------- RECIPE ------------------------------------------->
+    <!--------------------------------- RECIPE ------------------------------------------->
+    <!--------------------------------- RECIPE ------------------------------------------->
+    <div ng-show="type == 'recipe'">
+
+        <div ng-show="recipes.length == 0" style="color: white">
+            PAS DE NOUVELLE RECETTE
+        </div>
+
+        <div class="divRecipes recipeWithDescription" ng-repeat="recipe in recipes">
+
+            <!-- RECIPE OPEN descr -->
+            <div class="recipeWithDescrip">
+                <div class="headingRecipeWithDescrip" >{{recipe.name}} - (id : {{recipe.id}})
+
+
+                        <span class="rightInlineBlock">
+                            <button  type="button" class="btn btn-sucess btnSeeListShop" ng-click="putAdminValidateRecipe(recipe.id, true, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Accepter recette public
+                            </button>
+
+                            <button type="button" class="btn btn-danger btnNewPlanning" ng-click="putAdminValidateRecipe(recipe.id, false, $index)">
+                                <span class="glyphicon glyphicon-remove"></span> Refuser public
+                            </button>
+                        </span>
+
+
+
+                </div>
+                <div class="bodyRecipeWithDescrip">
+                    <div class="divTopRecipe">
+                        <div class="divTopRecipeLeft" >
+                            <div class="subTitleRecipeOpen">Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>
+                            <div class="divPreparationCooking">
+                                <div class="inlineBlockAlignTop">Preparation : {{displayTime(recipe.timePreparation)}}</div> &nbsp &nbsp
+                                <div class="inlineBlockAlignTop">Cuisson : {{displayTime(recipe.timeCooking)}}</div>
+                            </div>
+                        </div>
+
+
+                        <div class="divTopRecipeRight" >
+
+                            <div> Specialité : {{recipe.origin.name}}</div>
+                            <br>
+                            Categories :
+                            <span ng-repeat="category in recipe.categories"> -- {{category.name}}</span>
+
+                            <!---------- DIV RATING ---------
+                            <div class="divRatingStar"  title="{{displayRatingOfRecipeByTitle(recipe)}}">
+                                    <span ng-repeat="numStar in [1,2,3,4,5] track by $index" class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
+                                                      'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating), 'starEmpty' : !isStarFull(numStar, recipe.rating)}">
+                                    </span>
+                                ({{recipe.nbVoter}} votes)
+                            </div>
+                            -->
+                        </div>
+
+                    </div>
+                    <div class="divMiddleRecipe">
+                        <div class="pixRecipeWithDescrip" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../images/no-image.png') ;">
+                        </div>
+
+                        <div class="ingredientRecipe">
+                            <div class="subTitleRecipeOpen"> Ingrédients ({{recipe.nbPerson}} pers.) </div>
+                            <ul ng-repeat="ingr in recipe.ingredients">
+                                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food.name}}</span> </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="preparationRecipe">
+                        <div class="subTitleRecipeOpen"> Préparation</div>
+                        <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
+                            {{descript.numDescrip}} - {{descript.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="footerRecipeWithDescrip" >
+                    <div ng-show="recipe.isPublic" class="footerRecipePublic ">
+                        <span class="glyphicon glyphicon glyphicon-cloud"></span>
+                        by {{recipe.user.pseudo}}
+                    </div>
+
+                    <div ng-show="!recipe.isPublic" class="footerRecipePrivate ">
+                        <span class="glyphicon glyphicon glyphicon-lock"></span>
+                        recette privée
+                    </div>
+                </div>
+            </div>
+            <!-- fin RECIPE OPEN descr -->
+        </div>
+    </div>
+    <!--------------------------------- end RECIPE ------------------------------------------->
+    <!--------------------------------- end RECIPE ------------------------------------------->
+    <!--------------------------------- end RECIPE ------------------------------------------->
+
+
+    <!--------------------------------- FOOD ------------------------------------------->
+    <!--------------------------------- FOOD ------------------------------------------->
+    <!--------------------------------- FOOD ------------------------------------------->
+    <!--------------------------------- FOOD ------------------------------------------->
+    <!--------------------------------- FOOD ------------------------------------------->
+    <div ng-show="type == 'food'">
+        <div ng-show="foods.length == 0" style="color: white">
+            PAS DE NEW FOOD
+        </div>
+
+        <!-------------- QUICK SEARCH EXISTING FOODS ------------>
+        <article  class="myArticle" >
+            <div class="myArticleHeading">
+                <div class="myArticleTitle">Quick search existing food :
+                    <input class="fieldRecipeCreation" type="text" ng-model ='foodSearch'
+                           ng-focus="onFocusInputIngredient()"  ng-keyup="keyUpdateFilter()"  placeholder="aliment" /><!--ng-blur="onBlurInputIngredient()"-->
+                </div>
+            </div>
+
+            <div>
+                <div class="myBlockFoodProposition" ng-show="showFoods">
+                    <div class="myBlockFoodPropositionTitle" >Proposition(s) aliment(s)</div>
+                    <span class="foodProposition"   ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
+                        <button  type="button" class="myBtnEmpty myBtnEmptyRecipe">
+                            <span class="txtFilter">{{food.name}}-(id:{{food.id}})</span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </article>
+        <br>
+        <br>
+        <!-------------- end QUICK SEARCH EXISTING FOODS ------------->
+
+
+        <div ng-repeat="foodNotVal in foodsNotValidated">
+
+            <article  class="myArticle" >
+                <div class="myArticleHeading">
+                    <div class="myArticleTitle">Name new food : {{foodNotVal.name}}</div>
+                </div>
+
+                <div class="myArticleBody">
+
+                    <!-- ACCEPTER ET CHOISIR CATEGORIE -->
+                    <div>
+                        Accepter food en choisissant categorie :
+                        <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
+                            <option value="" disabled>Choisir Categories </option>
+                        </select>
+                        <button  type="button" class="btn btn-success" ng-click="putAdminValidateFood(foodNotVal.id ,idCategory, $index)">
+                            <span class="glyphicon glyphicon-ok"></span> Valider
+                        </button>
+                    </div>
+                    <br>
+
+                    <!-- ACCEPTER mais RENOMMER -->
+                    <div>
+                        Accepter food mais renommer :
+                        <input type="text" ng-model ='newNameFood' class="fieldRecipeCreation" placeholder="new name" />
+                         &nbsp - puis choisir categorie :
+                        <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
+                            <option value="" disabled>Choisir Categories </option>
+                        </select>
+                        <button  type="button" class="btn btn-success" ng-click="putAdminValidateFoodWithNewName(newNameFood, foodNotVal.id ,idCategory, $index)">
+                            <span class="glyphicon glyphicon-ok"></span> Valider
+                        </button>
+                    </div>
+                    <br>
+
+                    <!-- REMPLACER PAR EXISTANT -->
+                    <div>
+                        Remplacer food par existant - ID :
+                        <input type="number" ng-model ='idExistingFood' class="fieldRecipeCreation" placeholder="new id" ng-keyup="keyUpdateIdExistingFood(idExistingFood)" />
+                        {{newFoodNameById}}
+                        <button  type="button" class="btn btn-success" ng-click="putAdminReplaceFood(idExistingFood, foodNotVal.id, $index)">
+                            <span class="glyphicon glyphicon-ok"></span> Valider
+                        </button>
+                    </div>
+                    <br>
+
+                    <!-- REFUSER FOOD - supprimer -->
+                    <div>
+                        <button type="button" class="btn btn-danger btnNewPlanning" ng-click="deleteFood(foodNotVal.id, $index)">
+                            <span class="glyphicon glyphicon-remove"></span> Refuser food
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    <!---------------------------------end FOOD ------------------------------------------->
+    <!---------------------------------end FOOD ------------------------------------------->
+    <!---------------------------------end FOOD ------------------------------------------->
+
+
+
+    <!--------------------------------- CATEGORY ------------------------------------------->
+    <div ng-show="type == 'category'">
+        <div ng-show="categories.length == 0" style="color: white">
+            PAS DE NEW CATEGORY
+        </div>
+
+        <div ng-repeat="category in categories">
+
+
+        </div>
+    </div>
+    <!---------------------------------end CATEGORY ------------------------------------------->
+
+
+    <!--------------------------------- SPECIALITY ------------------------------------------->
+    <div ng-show="type == 'speciality'">
+        <div ng-show="specialities.length == 0" style="color: white">
+            PAS DE NEW SPECIALITY
+        </div>
+
+        <div ng-repeat="speciality in specialities">
+
+
+        </div>
+    </div>
+    <!---------------------------------end SPECIALITY ------------------------------------------->
+
+
+</div>

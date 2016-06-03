@@ -31,7 +31,10 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
      * ->into controller parent 'recipe-controller.js'
      * && [planning-controller.js] : $scope.changeRecipeType() */
     $scope.$on('updateFilter', function() {
+
+        $log.info("----------------------------------------------------------------------------aurevpoir ")
         updateFilter();
+        $log.info("----------------------------------------------------------------------------aurevoir apresupdate filter")
     });
 
     /************************* FILTRE *********************************/
@@ -305,6 +308,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
 
         $scope.recipesToDisplay = recipesNew;
 
+        $log.info("----------------------------------------------------------------------------a end supdate filter")
     }
     $scope.$watch('filterMySelection', updateFilter, true);
 

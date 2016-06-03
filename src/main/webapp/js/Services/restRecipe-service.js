@@ -189,7 +189,6 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
 
 
 
-
     function insertRecipe(recipe){
         $log.warn("REQUETE with RECIPE ----  ENVOYE !!! "+recipe.name);
         /*var dataObj = {

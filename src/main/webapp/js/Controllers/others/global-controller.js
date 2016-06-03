@@ -37,6 +37,9 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
     $scope.$on('intoExpense', function() {
         $scope.classBody = "bodyExpense";
     });
+    $scope.$on('intoPrivateAdmin', function() {
+        $scope.classBody = "bodyPrivateAdmin";
+    });
     $scope.$on('intoAlcohol', function() {
         $scope.classBody = "bodyAlcohol";
     });

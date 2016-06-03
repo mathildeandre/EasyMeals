@@ -21,48 +21,48 @@ INSERT INTO Food_Category( name, numRank) VALUES ('Boisson',16);
 
 
 /* FOOD */
-INSERT INTO Food(name, idCategory) VALUES ('steack', 2);
-INSERT INTO Food(name, idCategory) VALUES ('steack haché', 2);
-INSERT INTO Food(name, idCategory) VALUES ('dinde', 2);
-INSERT INTO Food(name, idCategory) VALUES ('filet boeuf', 2);
-INSERT INTO Food(name, idCategory) VALUES ('jambon', 2);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('steack', 2, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('steack haché', 2, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('dinde', 2, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('filet boeuf', 2, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('jambon', 2, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('saumon', 3);
-INSERT INTO Food(name, idCategory) VALUES ('cabillaud', 3);
-INSERT INTO Food(name, idCategory) VALUES ('crevette', 3);
-INSERT INTO Food(name, idCategory) VALUES ('poisson pané', 3);
-INSERT INTO Food(name, idCategory) VALUES ('thon', 3);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('saumon', 3, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('cabillaud', 3, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('crevette', 3, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('poisson pané', 3, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('thon', 3, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('tomate', 4);
-INSERT INTO Food(name, idCategory) VALUES ('salade', 4);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('tomate', 4, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('salade', 4, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('pain', 5);
-INSERT INTO Food(name, idCategory) VALUES ('pain à burger', 5);
-INSERT INTO Food(name, idCategory) VALUES ('pain aux céréales', 5);
-INSERT INTO Food(name, idCategory) VALUES ('croissant', 5);
-INSERT INTO Food(name, idCategory) VALUES ('pain au chocolat', 5);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('pain', 5, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('pain à burger', 5, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('pain aux céréales', 5, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('croissant', 5, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('pain au chocolat', 5, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('farine', 6);
-INSERT INTO Food(name, idCategory) VALUES ('lait', 6);
-INSERT INTO Food(name, idCategory) VALUES ('oeuf', 6);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('farine', 6, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('lait', 6, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('oeuf', 6, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('quenelle', 7);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('quenelle', 7, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('fromage rapé', 8);
-INSERT INTO Food(name, idCategory) VALUES ('comté', 8);
-INSERT INTO Food(name, idCategory) VALUES ('gruyère', 8);
-INSERT INTO Food(name, idCategory) VALUES ('yaourt nature', 8);
-INSERT INTO Food(name, idCategory) VALUES ('reblochon', 8);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('fromage rapé', 8, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('comté', 8, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('gruyère', 8, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('yaourt nature', 8, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('reblochon', 8, 1);
 
 
-INSERT INTO Food(name, idCategory) VALUES ('pomme noisette', 9);
-INSERT INTO Food(name, idCategory) VALUES ('pizza', 9);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('pomme noisette', 9, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('pizza', 9, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('pate macaroni', 11);
-INSERT INTO Food(name, idCategory) VALUES ('riz basmati', 11);
-INSERT INTO Food(name, idCategory) VALUES ('crêpe à burritos', 13);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('pate macaroni', 11, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('riz basmati', 11, 1);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('crêpe à burritos', 13, 1);
 
-INSERT INTO Food(name, idCategory) VALUES ('sauce burger', 14);
+INSERT INTO Food(name, idCategory, isValidated) VALUES ('sauce burger', 14, 1);
 
 
 /* SPECIALITES */

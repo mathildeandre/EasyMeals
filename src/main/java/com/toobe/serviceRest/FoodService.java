@@ -41,17 +41,5 @@ public class FoodService {
         List<String> list = new ManagerGet().getFoodsString();
         return Response.ok(list).build();
     }
-
-    /**
-     * TODO NOT USED YET : for admin
-     * @return
-     */
-    @Path("/foodsNotValidated")
-    @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response getFoodsNotValidated(){
-        List<Food> list = new ManagerGet().getFoodsNotValidated();
-        return Response.ok(list).build();
-    }
 }
 

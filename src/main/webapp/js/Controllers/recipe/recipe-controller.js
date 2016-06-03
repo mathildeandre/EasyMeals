@@ -18,7 +18,9 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
     $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
         $scope.recipeType = recipeType;
         $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
+        $log.info("----------------------------------------------------------------------------BJR")
         $scope.$broadcast('updateFilter');
+        $log.info("----------------------------------------------------------------------------BJR 2")
     }
     $scope.isRecipeTypeSelected = function(recipeType){
         return $scope.recipeType == recipeType;

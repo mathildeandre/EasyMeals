@@ -21,6 +21,8 @@ public class ManagerGet {
     private RecipeDao recipeDao;
     //private ListShoppingDao listShoppingDao;
     private PlanningDao planningDao;
+    private PrivateAdminDao privateAdminDao;
+
     private RecipeCategoryDao recipeCategoryDao;
     private RecipeOriginDao recipeOriginDao;
     private FoodDao foodDao;
@@ -37,6 +39,7 @@ public class ManagerGet {
         recipeDao = new RecipeDao();
         //listShoppingDao = new ListShoppingDao();
         planningDao = new PlanningDao();
+        privateAdminDao = new PrivateAdminDao();
         recipeCategoryDao = new RecipeCategoryDao();
         recipeOriginDao = new RecipeOriginDao();
         foodDao = new FoodDao();
@@ -59,17 +62,11 @@ public class ManagerGet {
         startConnection();
         return recipeDao.getRecipesForUser(conn, idUser);
     }
-     public List<Recipe> getRecipesPublicNotValidated(){
-        startConnection();
-        return recipeDao.getRecipesPublicNotValidated(conn);
-    }
-
 
     public Recipe getRecipeById(int idRecipe){
         startConnection();
         return recipeDao.getRecipeById(conn, idRecipe);
     }
-
 
     public List<RecipeType> getRecipeTypes(){
         startConnection();
@@ -170,6 +167,42 @@ public class ManagerGet {
     }
 
 
+
+    /*********************************************/
+    /************* PRIVATE ADMIN ****************/
+    /*******************************************/
+    public List<Recipe> getRecipesPublicNotValidated(){
+        startConnection();
+        return privateAdminDao.getRecipesPublicNotValidated(conn);
+    }
+    public void putAdminValidateRecipe(Long idRecipe, boolean isPublic){
+        startConnection();
+        privateAdminDao.putAdminValidateRecipe(conn, idRecipe, isPublic);
+    }
+
+    public List<Food> getFoodsNotValidated(){
+        startConnection();
+        return privateAdminDao.getFoodsNotValidated(conn);
+    }
+    public void putAdminValidateFood(Long idFood, Long idCategory){
+        startConnection();
+        privateAdminDao.putAdminValidateFood(conn, idFood, idCategory);
+    }
+    public void putAdminValidateFoodWithNewName(String newNameFood, Long idFood, Long idCategory){
+        startConnection();
+        privateAdminDao.putAdminValidateFoodWithNewName(conn, newNameFood, idFood, idCategory);
+    }
+    public void putAdminReplaceFood(Long idExistingFood, Long idUselessFood){
+        startConnection();
+        privateAdminDao.putAdminReplaceFood(conn, idExistingFood, idUselessFood);
+    }
+    public void deleteFood(Long idFood){
+        startConnection();
+        privateAdminDao.deleteFood(conn, idFood);
+    }
+
+
+
     /*********************************************/
     /************** FOOD ************************/
     /*******************************************/
@@ -177,11 +210,6 @@ public class ManagerGet {
         startConnection();
         return foodDao.getFoods(conn);
     }
-    public List<Food> getFoodsNotValidated(){
-        startConnection();
-        return foodDao.getFoodsNotValidated(conn);
-    }
-
 
     public List<String> getFoodsString(){
         startConnection();

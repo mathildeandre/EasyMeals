@@ -44,31 +44,7 @@ public class FoodDao {
         }
         return foodList;
     }
-    public List<Food> getFoodsNotValidated(Connection conn){
-        List<Food> foodList = new ArrayList<Food>();
-        PreparedStatement stm;
-        try {
-            stm = conn.prepareStatement("SELECT * FROM FOOD WHERE isValidated = 0");
-            ResultSet res = stm.executeQuery();
 
-            String name;
-            int id, idCategory;
-            boolean isValidated;
-            Food food;
-            while(res.next()){
-                id = res.getInt("id");
-                name = res.getString("name");
-                idCategory = res.getInt("idCategory");
-                isValidated = res.getInt("isValidated") == 1;
-                food = new Food(new Long(id), name, idCategory, isValidated);
-                foodList.add(food);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return foodList;
-    }
 
     public List<String> getFoodsString(Connection conn){
         List<String> foodList = new ArrayList<String>();

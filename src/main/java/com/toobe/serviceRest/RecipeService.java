@@ -23,8 +23,10 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
@@ -81,15 +83,6 @@ public class RecipeService {
     }
 
 
-    @Path("/recipePublicNotValidated")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response getRecipes() {
-        List<Recipe> list = ManagerGet.getInstance().getRecipesPublicNotValidated();
-        return Response.ok(list).build();
-    }
-
-
     @Path("/recipeTypes")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -142,7 +135,7 @@ public class RecipeService {
             //img = fileB.getInputStream();
 
             System.out.println(img);
-/*
+
             File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\newFile2.jpg");
             OutputStream os2 = null;
             os2 = new FileOutputStream(file);
@@ -154,7 +147,16 @@ public class RecipeService {
             }
 
 
-*/
+
+
+            //URL urlImage = new URL(adresse);
+            BufferedImage image = ImageIO.read(file);
+            System.out.println("h="+image.getHeight());
+            System.out.println("w="+image.getWidth());
+            image = resizeIMAGE(image,200,140);
+            File file2 = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\newFile7.jpg");
+            ImageIO.write(image, "png", file2);
+
 
 
 
@@ -175,6 +177,20 @@ public class RecipeService {
 
         //Boolean rep = new ManagerPost().insertFood();
         return Response.ok(new TestObj("MOUAHAHAH")).build();
+    }
+
+
+    public static BufferedImage resizeIMAGE(BufferedImage image, int largeur, int hauteur) {
+
+        BufferedImage buf = new BufferedImage(largeur, hauteur,
+                BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g = buf.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(image, 0, 0, largeur, hauteur, null);
+        g.dispose();
+        return buf;
     }
 
 

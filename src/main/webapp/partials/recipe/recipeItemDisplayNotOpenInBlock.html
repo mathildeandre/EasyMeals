@@ -1,7 +1,7 @@
 <div ng-show="!recipe.descriptionOpen" ng-click="toggleDescOpen(recipe)" ng-mouseover="recipe.onOver = true;" ng-mouseleave="recipe.onOver = false;">
-    <div class="pixRecipeBlock" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../images/no-image.png') ;"> </div>
-
-    <img ng-src="data:image/png;base64,{{recipe.image}}" style="width:200px; height:130px">
+    <!--<div class="pixRecipeBlock" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../images/no-image.png') ;"> </div>
+-->
+    <img src="data:image/jpg;base64,{{recipe.image}}" style="width:230px; height:150px">
     <div class="titleAndSoBlock" >
         <span class="titleBlock" title="{{recipe.name}}"> {{recipe.name}} </span>
 
