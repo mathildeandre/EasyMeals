@@ -31,20 +31,84 @@
                 <li class="page-scroll" ng-class="{ activeInNavBarErrand: classBody == 'bodyErrand'}">
                     <a href="#/errand">Mes Courses<!-- & Cuisine--></a>
                 </li>
-                <!--<li class="page-scroll" ng-class="{ activeInNavBarExpense: classBody == 'bodyExpense'}">
+
+                <li ng-show="false" class="page-scroll" ng-class="{ activeInNavBar: isActiveInNavBar('recipe')}" uib-dropdown is-open="dropdwonUserIsopen" ng-mouseenter="dropdwonUserIsopen = true" ng-mouseleave="dropdwonUserIsopen =false"><!---->
+                    <a > <!-- <a uib-dropdown-toggle > : uniquement si on veut cliquer -->
+                        <span class="spanNameUserConnected">mathilde</span>
+                        &nbsp <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                    <ul class=" nav myDropDownConnexion" uib-dropdown-menu>
+                        <li class="collapse navbar-collapse " ><a href="#/planning" class="myDropdownItem" style="color:white">Mon Compte</a></li>
+                        <li class="collapse navbar-collapse " ><a href="#/planning" class="myDropdownItem" style="color:white">Se Déconnecter</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li ng-show="true" class="page-scroll" ng-class="{ activeInNavBarErrand: classBody == 'bodyConnexion'}">
+                    <a href="#/connexion">
+                        <span class="spanNameUserConnected">connexion</span>
+                        &nbsp <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </li>
+
+
+                <!------------------------------------------------ NAV BAR DROP DOWN with many button for each row !
+                it works with Dropdown (ui.bootstrap.dropdown) :
+                thanks to 'uib-dropdown' & 'is-open="isopen"' into the parent, then 'uib-dropdown-toggle' into the button and 'uib-dropdown-menu' on the menu which will dropdown
+                ----------------------------------------------------------------------------------------------------------------
+
+                <li class="page-scroll dropdown " ng-class="{ activeInNavBar: isActiveInNavBar('recipe')}"   uib-dropdown is-open="isopen">
+                    <a class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" uib-dropdown-toggle>
+                        boom<span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu nav myDropdownLight" uib-dropdown-menu>
+                        <li class="collapse navbar-collapse " ><a href="#/planning">planning</a></li>
+
+                        <li class="collapse navbar-collapse " >
+                            <ul class="nav navbar-nav myNavBarNav">
+
+                                <li class="page-scroll myDropdownItem typeRecipe" ng-class="{ activeInNavBar: isActiveInNavBar('starter')}" ><a href="#/recipe/starter">Entrees</a></li>
+                                <li class="page-scroll myDropdownItem"  ><a href="#/recipe/starter/myFavorite">
+                                    <span  title=""  class="glyphicon glyphicon-heart " ></span>
+                                </a></li>
+                                <li class="page-scroll myDropdownItem" ng-class="{ }" ><a href="#/recipe/starter/myPlanning">
+                                    <span  title=""   class="glyphicon glyphicon-th-list"></span>
+                                </a></li>
+                            </ul>
+                        </li>
+
+                        <li class="collapse navbar-collapse " >
+                            <ul class="nav navbar-nav myNavBarNav">
+                                <li class="page-scroll myDropdownItem typeRecipe" ng-class="{ activeInNavBar: isActiveInNavBar('course')}"><a href="/#/recipe/course">Plats</a></li>
+                                <li class="page-scroll myDropdownItem" ng-class="{ }" ><a href="#/recipe/course/myFavorite">
+                                    <span  title=""   class="glyphicon glyphicon-heart "></span>
+                                </a></li>
+                                <li class="page-scroll myDropdownItem" ng-class="{ }" ><a href="#/recipe/course/myPlanning">
+                                    <span  title=""   class="glyphicon glyphicon-th-list "></span>
+                                </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                ------------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+
+                <!-- EXPENSES : important --
+                <li class="page-scroll" ng-class="{ activeInNavBarExpense: classBody == 'bodyExpense'}">
                     <a href="/#/calculationExpense">Dépenses</a>
                 </li>-->
+
+                <!-- PRIVATE ADMIN : important --
                 <li class="page-scroll" ng-class="{ activeInNavBarPrivateAdmin: classBody == 'bodyPrivateAdmin'}">
                     <a href="/#/privateAdmin">PA</a>
-                </li>
-
-                <!--
-                <li class="page-scroll" ng-class="{ activeInNavBarAlcohol: isActiveInNavBar('calculationAlcohol')}"> <!--ng-class="{ active: isActiveInNavBar('#/calculationAlcohol')}"->
-                    <a href="/#/calculationAlcohol">Soirée Alcoolisée ?</a>
-                </li>
-                -->
-
-                <!-- DEBUG Important...-->
+                </li>-->
+                <!-- DEBUG Important...
                 <li class="page-scroll" >
                     <span class="checkbox checkbox-warning" >
                         <input type="checkbox"  ng-model="showDebug"  id="idShowDebug" ng-change="toggleDebug()">
@@ -52,9 +116,17 @@
                             DEBUG
                         </label>
                     </span>
+                </li>-->
+
+
+
+                <!------------------------- USELESS BELOW ------------------------------->
+
+                <!-- ALCOHOL
+                <li class="page-scroll" ng-class="{ activeInNavBarAlcohol: isActiveInNavBar('calculationAlcohol')}"> <!--ng-class="{ active: isActiveInNavBar('#/calculationAlcohol')}"->
+                    <a href="/#/calculationAlcohol">Soirée Alcoolisée ?</a>
                 </li>
-
-
+                -->
                 <!--
                 <li class="page-scroll">
                     <a href="#/grilleImpot">Grille Impots</a>
