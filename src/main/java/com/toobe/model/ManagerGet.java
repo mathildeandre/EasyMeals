@@ -165,6 +165,10 @@ public class ManagerGet {
         startConnection();
         planningDao.deletePlanningById(conn, idPlanning);
     }
+    public String getNamePlanning(Long idPlanning){
+        startConnection();
+        return planningDao.getNamePlanning(conn, idPlanning);
+    }
 
 
 

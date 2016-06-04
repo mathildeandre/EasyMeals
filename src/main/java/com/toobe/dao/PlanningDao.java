@@ -362,24 +362,6 @@ public class PlanningDao {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private final static String CREATE_REL_RECIPECASEMEAL = "INSERT INTO Rel_Recipe_CaseMealPlanning(idRecipe, idPlanningCaseMeal) VALUES (?, ?);\n";
     public void postNewRecipeCaseMeal(Connection conn, Long idRecipe, Long idCaseMeal){
         PreparedStatement stm;
@@ -541,6 +523,27 @@ public class PlanningDao {
             e.printStackTrace();
         }
     }
+
+
+    private static final String SELECT_NamePlanning = "SELECT name FROM PLANNING WHERE id = ?";
+    public String getNamePlanning(Connection conn, Long idPlanning){
+        String namePlanning = "error - nom vide interdit";
+        PreparedStatement stm;
+        try {
+            stm = conn.prepareStatement(SELECT_NamePlanning);
+            stm.setLong(1, idPlanning);
+            ResultSet res = stm.executeQuery();
+            if (res.next()) {
+                namePlanning = res.getString("name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return namePlanning;
+    }
+
+
+
 
 
     /***********************************************************************************************************************************************************************************************/

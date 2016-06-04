@@ -6,7 +6,7 @@ package com.toobe.serviceRest;
 
 import com.toobe.dto.Planning;
 import com.toobe.dto.ShoppingCategory;
-import com.toobe.dto.TestObj;
+import com.toobe.dto.info.ObjString;
 import com.toobe.model.ManagerGet;
 
 import javax.ws.rs.*;
@@ -40,7 +40,7 @@ public class PlanningService {
     public Response postNewRecipeCaseMeal(List<Long> listId){
         System.out.println("POST new recipeCaseMeal  :::  idRecipe "+listId.get(0)+" --- idCaseMeal "+listId.get(1));
         ManagerGet.getInstance().postNewRecipeCaseMeal(listId.get(0), listId.get(1));
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
     @Path("deleteOldRecipeCaseMeal")
@@ -50,7 +50,7 @@ public class PlanningService {
     public Response deleteOldRecipeCaseMeal(List<Long> listId){
         System.out.println("DELETE old recipeCaseMeal  :::  idRecipe "+listId.get(0)+" --- idCaseMeal "+listId.get(1));
         ManagerGet.getInstance().deleteOldRecipeCaseMeal(listId.get(0), listId.get(1));
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("postNewNamePlanning/{namePlanning}")
     @POST
@@ -59,7 +59,7 @@ public class PlanningService {
     public Response postNewNamePlanning(Long idPlanning, @PathParam("namePlanning") String namePlanning){
         System.out.println("POST new NAME PLANNING  ::: idPlanning: "+idPlanning+" ----  namePlanning: "+namePlanning);
         ManagerGet.getInstance().postNewNamePlanning(idPlanning, namePlanning);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
     @Path("putLastOpenPlannings") //OLD & NEW
@@ -68,7 +68,7 @@ public class PlanningService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response putLastOpenPlannings(List<Long> listId){
         ManagerGet.getInstance().putLastOpenPlannings(listId.get(0), listId.get(1));
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("putLastOpenNewPlanning") //just NEW
     @POST
@@ -76,7 +76,7 @@ public class PlanningService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response putLastOpenNewPlanning(Long idNewOpenPlanning){
         ManagerGet.getInstance().putLastOpenNewPlanning(idNewOpenPlanning);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
 
@@ -88,7 +88,7 @@ public class PlanningService {
     public Response putShowWeekMeal(Long idWeekMeal,  @PathParam("showWeekMeal") boolean showWeekMeal){
         System.out.println("PUT show weekMeal  ::: idWeekMeal: "+idWeekMeal+" ----  showWeekMeal: "+showWeekMeal);
         ManagerGet.getInstance().putShowWeekMeal(idWeekMeal, showWeekMeal);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("putNbPersCaseMeal/{nbPersCaseMeal}")
     @POST
@@ -96,7 +96,7 @@ public class PlanningService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response putNbPersCaseMeal(Long idCaseMeal, @PathParam("nbPersCaseMeal") int nbPersCaseMeal){
         ManagerGet.getInstance().putNbPersCaseMeal(idCaseMeal, nbPersCaseMeal);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("putNbPersGlobalPlanning/{nbPersGlobal}")
     @POST
@@ -104,7 +104,7 @@ public class PlanningService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response putNbPersGlobalPlanning(Long idPlanning, @PathParam("nbPersGlobal") int nbPersGlobal){
         ManagerGet.getInstance().putNbPersGlobalPlanning(idPlanning, nbPersGlobal);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("deletePlanningById")
     @POST
@@ -112,8 +112,18 @@ public class PlanningService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response deletePlanningById(Long idPlanning){
         ManagerGet.getInstance().deletePlanningById(idPlanning);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
+
+    @Path("/getNamePlanning/{idPlanning}")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getNamePlanning(@PathParam("idPlanning") Long idPlanning){
+        //localhost:8080/rest/recipe/2
+        String namePlanning = ManagerGet.getInstance().getNamePlanning(idPlanning);
+        return Response.ok(new ObjString(namePlanning)).build();
+    }
+
 
     @Path("/clonePlanning/{idPlanning}")
     @GET

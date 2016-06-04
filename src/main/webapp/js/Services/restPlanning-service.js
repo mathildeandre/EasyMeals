@@ -193,6 +193,9 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
     function deletePlanningById(idPlanning){
         postObjToServer('POST', '/rest/deletePlanningById', idPlanning)
     }
+    function getNamePlanning(idPlanning){
+        return getObjFromServer('/rest/getNamePlanning/'+idPlanning)
+    }
 
 
 
@@ -233,6 +236,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
         putShowWeekMeal: putShowWeekMeal,
         putNbPersCaseMeal: putNbPersCaseMeal,
         deletePlanningById: deletePlanningById,
+        getNamePlanning: getNamePlanning,
         createNewPlanning: createNewPlanning,
         putNbPersGlobalPlanning: putNbPersGlobalPlanning,
         cloneIntoMyPlannings: cloneIntoMyPlannings,

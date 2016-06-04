@@ -32,10 +32,12 @@
                     <a href="#/errand">Mes Courses<!-- & Cuisine--></a>
                 </li>
 
-                <li ng-show="false" class="page-scroll" ng-class="{ activeInNavBar: isActiveInNavBar('recipe')}" uib-dropdown is-open="dropdwonUserIsopen" ng-mouseenter="dropdwonUserIsopen = true" ng-mouseleave="dropdwonUserIsopen =false"><!---->
-                    <a > <!-- <a uib-dropdown-toggle > : uniquement si on veut cliquer -->
+                <li ng-show="false" class="page-scroll" ng-class="{ activeInNavBarConnexion: classBody == 'bodyConnexion'}" uib-dropdown is-open="dropdwonUserIsopen"
+                                                                        ng-mouseenter="dropdwonUserIsopen = true" ng-mouseleave="dropdwonUserIsopen =false">
+                    <a uib-dropdown-toggle>
+                        <span class="glyphicon glyphicon-user"></span>
                         <span class="spanNameUserConnected">mathilde</span>
-                        &nbsp <span class="glyphicon glyphicon-user"></span>
+                        <span class="caret"></span>
                     </a>
                     <ul class=" nav myDropDownConnexion" uib-dropdown-menu>
                         <li class="collapse navbar-collapse " ><a href="#/planning" class="myDropdownItem" style="color:white">Mon Compte</a></li>
@@ -45,10 +47,10 @@
 
 
 
-                <li ng-show="true" class="page-scroll" ng-class="{ activeInNavBarErrand: classBody == 'bodyConnexion'}">
+                <li ng-show="true" class="page-scroll" ng-class="{ activeInNavBarConnexion: classBody == 'bodyConnexion'}">
                     <a href="#/connexion">
+                        <span class="glyphicon glyphicon-user"></span>
                         <span class="spanNameUserConnected">connexion</span>
-                        &nbsp <span class="glyphicon glyphicon-user"></span>
                     </a>
                 </li>
 

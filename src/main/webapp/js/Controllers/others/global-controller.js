@@ -21,7 +21,13 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
     $scope.classBody = "bodyEasyMeals";
 
 
-    /** utilisé danns 'index.html' : <body class="{{classBody}}" ng-controller="GlobalCtrl">*/
+    /** classBody utilisé danns 'index.html' : <body class="{{classBody}}" ng-controller="GlobalCtrl">*/
+
+
+
+    $scope.$on('intoConnexion', function() {
+        $scope.classBody = "bodyConnexion";
+    });
     $scope.$on('intoIdea', function() {
         $scope.classBody = "bodyIdea";
     });

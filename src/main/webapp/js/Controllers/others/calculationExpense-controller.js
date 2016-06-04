@@ -13,23 +13,25 @@ myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
     $scope.expense = {
         name : "",
         nbPers : 4,
+        isOwner : false,
+        allowToInvite : false,
         persons : [{id:0, name:'pierre'}, {id:1, name:'paul'}, {id:2, name:'jack'}, {id:3, name:'brigit'}],
         rows : [
             {
                 id:0,
                 buyerId:0,
                 price:30,
+                description:'pour les courses',
                 listChecked:[{id:0, bool:true}, {id:1, bool:true}, {id:2, bool:false}, {id:3, bool:true}],
-                checkedAll:false,
-                description:'pour les courses'
+                checkedAll:false
             },
             {
                 id:1,
                 buyerId:3,
                 price:15,
+                description:'bonbons',
                 listChecked:[{id:4, bool:false}, {id:5, bool:true}, {id:6, bool:true}, {id:7, bool:true}],
-                checkedAll:false,
-                description:'bonbons'
+                checkedAll:false
             }
         ]
     }

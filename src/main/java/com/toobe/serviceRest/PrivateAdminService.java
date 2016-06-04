@@ -6,7 +6,7 @@ package com.toobe.serviceRest;
 
 import com.toobe.dto.Food;
 import com.toobe.dto.Recipe;
-import com.toobe.dto.TestObj;
+import com.toobe.dto.info.ObjString;
 import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.dto.info.RecipeType;
@@ -41,7 +41,7 @@ public class PrivateAdminService {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response putAdminValidateRecipe(@PathParam("idRecipe") Long idRecipe, @PathParam("isPublic") boolean isPublic) {
         ManagerGet.getInstance().putAdminValidateRecipe(idRecipe, isPublic);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
 
@@ -62,7 +62,7 @@ public class PrivateAdminService {
     /* VALIDE FOOD : On valide la new food en lui affectant une category*/
     public Response putAdminValidateFood(@PathParam("idFood") Long idFood, @PathParam("idCategory") Long idCategory) {
         ManagerGet.getInstance().putAdminValidateFood(idFood, idCategory);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("/putAdminValidateFoodWithNewName/{newNameFood}/{idFood}/{idCategory}")
     @POST
@@ -71,7 +71,7 @@ public class PrivateAdminService {
     /* VALIDE FOOD with newName : on valide food en lui affectant une category et avec un nouveau nom  */
     public Response putAdminValidateFoodWithNewName(@PathParam("newNameFood") String newNameFood, @PathParam("idFood") Long idFood, @PathParam("idCategory") Long idCategory) {
         ManagerGet.getInstance().putAdminValidateFoodWithNewName(newNameFood, idFood, idCategory);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("/putAdminReplaceFood/{idExistingFood}/{idUselessFood}")
     @POST
@@ -80,7 +80,7 @@ public class PrivateAdminService {
     /* REMPLACE FOOD : par une deja existante qui etait la mm chose (on remplacera ds la relation ingredient et supprimera celle creee par le user */
     public Response putAdminReplaceFood(@PathParam("idExistingFood") Long idExistingFood, @PathParam("idUselessFood") Long idUselessFood) {
         ManagerGet.getInstance().putAdminReplaceFood(idExistingFood, idUselessFood);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("/deleteFood/{idFood}")
     @POST
@@ -89,7 +89,7 @@ public class PrivateAdminService {
     /* FOOD REFUSEE : on accepte pas la food, ca la supprimera ainsi que la relation ingredient */
     public Response deleteFood(@PathParam("idFood") Long idFood) {
         ManagerGet.getInstance().deleteFood(idFood);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
 

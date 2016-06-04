@@ -97,9 +97,15 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
     }
     $scope.modificationPlanningNameDONE = function(){
         var planning = $scope.currentPlanning;
-        $scope.modifyingPlanningName = false;
-        $log.debug("NEW NAME PLANNING ::::::: "+ planning.name+ "(id planning :"+planning.id+")");
-        restPlanningService.postNewNamePlanning(planning.id, planning.name);
+        if(planning.name == ''){ //not working
+            restPlanningService.getNamePlanning(planning.id).then(function(data){
+                planning.name = data.name;
+            })
+        }else{
+            $scope.modifyingPlanningName = false;
+            $log.debug("NEW NAME PLANNING ::::::: "+ planning.name+ "(id planning :"+planning.id+")");
+            restPlanningService.postNewNamePlanning(planning.id, planning.name);
+        }
     }
 
     $scope.pressEnterListName = function(event){

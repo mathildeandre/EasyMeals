@@ -67,6 +67,15 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                 })
 
 
+                .when('/connexion', {
+                    templateUrl: '../partials/others/connexion.html',
+                    controller: 'ConnexionCtrl'
+                })
+                .when('/registration', {
+                    templateUrl: '../partials/others/registration.html',
+                    controller: 'RegistrationCtrl'
+                })
+
 
                 .when('/singleRecipe/:recipeType/:id', {templateUrl: '../partials/recipe/singleRecipe.html', controller:'SingleRecipeCtrl'})
                 .when('/recipeCreation/:recipeType', {templateUrl: '../partials/recipe/recipeCreation.html', controller:'RecipeCreationCtrl'})

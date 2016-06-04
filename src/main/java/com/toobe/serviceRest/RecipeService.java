@@ -6,7 +6,7 @@ package com.toobe.serviceRest;
 
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
-import com.toobe.dto.TestObj;
+import com.toobe.dto.info.ObjString;
 import com.toobe.dto.info.RecipeDescription;
 import com.toobe.dto.info.RecipeCategory;
 import com.toobe.dto.info.RecipeOrigin;
@@ -122,7 +122,7 @@ public class RecipeService {
 
 
         //Boolean rep = new ManagerPost().insertFood();
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
     @Path("recipe/image")
@@ -176,7 +176,7 @@ public class RecipeService {
         }
 
         //Boolean rep = new ManagerPost().insertFood();
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
 
@@ -200,7 +200,7 @@ public class RecipeService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response putIsFavorite(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isFavorite) {
         ManagerGet.getInstance().putIsFavorite(idRecipe, idUser, isFavorite);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
     @Path("putIsForPlanning/{idRecipe}/{idUser}")
@@ -209,7 +209,7 @@ public class RecipeService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response putIsForPlanning(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isForPlanning) {
         ManagerGet.getInstance().putIsForPlanning(idRecipe, idUser, isForPlanning);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
     @Path("putRatingUser/{idRecipe}/{idUser}")
@@ -218,7 +218,7 @@ public class RecipeService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response putRatingUser(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, int ratingUser) {
         ManagerGet.getInstance().putRatingUser(idRecipe, idUser, ratingUser);
-        return Response.ok(new TestObj("MOUAHAHAH")).build();
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
 
