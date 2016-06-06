@@ -24,10 +24,12 @@ import java.util.List;
 public class RecipeDao {
 
     private FoodDao foodDao;
+    private RecipeCategoryDao recipeCategoryDao;
 
 
     public RecipeDao() {
         foodDao = new FoodDao();
+        recipeCategoryDao = new RecipeCategoryDao();
     }
 
 
@@ -152,7 +154,7 @@ public class RecipeDao {
                 /* DESCRIPTIONS */
                 List<RecipeDescription> descriptionList = getDescriptionList(conn, idRecipe); //new ArrayList<String>();//
                 /* CATEGORIES */
-                List<RecipeCategory> categoryList = getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
+                List<RecipeCategory> categoryList = recipeCategoryDao.getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
 
 
                 /* recipeType en arg de la fct*/
@@ -252,7 +254,7 @@ public class RecipeDao {
                 /* DESCRIPTIONS */
                 List<RecipeDescription> descriptionList = getDescriptionList(conn, idRecipe); //new ArrayList<String>();//
                 /* CATEGORIES */
-                List<RecipeCategory> categoryList = getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
+                List<RecipeCategory> categoryList = recipeCategoryDao.getCategoryRecipeList(conn, idRecipe); //new ArrayList<RecipeCategory>(); //
 
 
                 /* recipeType en arg de la fct*/
@@ -270,7 +272,7 @@ public class RecipeDao {
                 idRecipeType = resRecipe.getInt("idType");
                 nameRecipeType = resRecipe.getString("nameRecipeType");
 
-                user = new User(resRecipe.getLong("idOwner"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
+                user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
                 recipeType = new RecipeType(idRecipeType, nameRecipeType);
                 recipeOrigin = new RecipeOrigin(resRecipe.getInt("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"));
 
@@ -397,33 +399,6 @@ public class RecipeDao {
     }
 
 
-    /**
-     * Utilisee dans les fct qui construisent un recipe
-     */
-    private List<RecipeCategory> getCategoryRecipeList(Connection conn, int idRecipe) {
-
-        List<RecipeCategory> categoryList = new ArrayList<RecipeCategory>();
-        int idCategory;
-        String nameCategory;
-        int numRankCategory;
-        RecipeCategory recipeCategory;
-        PreparedStatement stm;
-        try {
-            stm = conn.prepareStatement("SELECT id, name, numRank FROM Rel_Recipe_Category as rel JOIN Recipe_Category as rc ON rel.idCategory = rc.id WHERE rel.idRecipe = " + idRecipe);
-            ResultSet resCategory = stm.executeQuery();
-            while (resCategory.next()) {
-                idCategory = resCategory.getInt("id");
-                nameCategory = resCategory.getString("name");
-                numRankCategory = resCategory.getInt("numRank");
-                recipeCategory = new RecipeCategory(idCategory, nameCategory, numRankCategory);
-                categoryList.add(recipeCategory);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return categoryList;
-    }
 
 
     /* INSERT INGREDIENTS (function called by CREATION RECIPE) */

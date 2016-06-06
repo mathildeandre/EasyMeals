@@ -89,22 +89,22 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                 /************ recipe */
                 $log.warn("LOADING RECIPES DATA")
                 /* CATEGORIES */
-                return getObjFromServer('/rest/recipeCategories').then(function(data){ //2 = idUser
+                return getObjFromServer('/rest/recipeCategories/2').then(function(data){ //2117 = idUser
                     categories = data;
                     $log.warn("categories loaded!")
 
                     /* ORIGINS */
-                    return getObjFromServer('/rest/recipeOrigins').then(function(data){ //2 = idUser
+                    return getObjFromServer('/rest/recipeOrigins').then(function(data){
                         origins = data;
                         $log.warn("origins loaded!")
 
                         /* RECIPE TYPES */
-                        return getObjFromServer('/rest/recipeTypes').then(function(data){ //2 = idUser
+                        return getObjFromServer('/rest/recipeTypes').then(function(data){
                             recipeTypes = data;
                             $log.warn("recipeTypes loaded!")
 
                             /* RECIPES */
-                            return getObjFromServer('/rest/recipes/2').then(function(data){ //2 = idUser
+                            return getObjFromServer('/rest/recipes/2').then(function(data){ //2117 = idUser
                                 var allRecipes = data;
                                 initComplement(allRecipes);
                                 $log.warn("allRecipes loaded!")

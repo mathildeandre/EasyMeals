@@ -95,7 +95,7 @@ INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES ('fruits', 3, 3)
 
 INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES ('feuillete', 1, 1);
 INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES ('salade', 5,1);
-INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES ('feuillete', 3, 1);
+INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES ('cake', 3, 1);
 
 
 

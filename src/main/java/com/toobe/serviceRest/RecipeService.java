@@ -65,11 +65,11 @@ public class RecipeService {
         return Response.ok(recipe).build();
     }
 
-    @Path("/recipeCategories")
+    @Path("/recipeCategories/{idUser}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getRecipeCategories() {
-        List<RecipeCategory> list = ManagerGet.getInstance().getRecipeCategories();
+    public Response getRecipeCategories(@PathParam("idUser") Long idUser) {
+        List<RecipeCategory> list = ManagerGet.getInstance().getRecipeCategories(idUser);
         return Response.ok(list).build();
     }
 
@@ -218,6 +218,14 @@ public class RecipeService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response putRatingUser(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, int ratingUser) {
         ManagerGet.getInstance().putRatingUser(idRecipe, idUser, ratingUser);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+
+    @Path("putIncrNumRankCategory/{idRecipeCategory}/{idUser}")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response putIncrNumRankCategory(@PathParam("idRecipeCategory") Long idRecipeCategory, @PathParam("idUser") Long idUser) {
+        ManagerGet.getInstance().putIncrNumRankCategory(idRecipeCategory, idUser);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 

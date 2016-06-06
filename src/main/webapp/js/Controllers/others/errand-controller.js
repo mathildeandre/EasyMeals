@@ -8,6 +8,22 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunc
 
     $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
 
+
+    $scope.isTablet = function(){
+        if (navigator.userAgent.match('/Android|iPad')){
+            return true
+        }else{
+            return false
+        }
+        //return navigator.userAgent.match('/Android|iPad');
+    }
+    $scope.nameDevice =function(){
+        if (navigator.userAgent.match('/Android|iPad')){
+            return 'BOOM'
+        }else{
+            return 'oo'
+        }
+    }
     $scope.planningsShopping = restPlanningService.getPlanningsShopping();
 
     $scope.currentPlanningShopping = $scope.planningsShopping.filter(function(obj){

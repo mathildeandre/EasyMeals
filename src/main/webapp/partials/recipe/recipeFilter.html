@@ -126,9 +126,9 @@
 
             <div class="divSubFilter">
                 <div class="txtTitleSubFilter" >Categories recettes</div>
-                <div class="elemCategorieVrac" ng-repeat="category in filterSearch.categories | orderBy:'toString()'"
+                <div class="elemCategorieVrac" ng-repeat="category in filterSearch.categories | orderBy:'-numRank'"
                      ng-click="moveCategoryToSelection(category)">
-                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category.name}}</button-filter>
+                    <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category.name}}({{category.numRank}})</button-filter>
                 </div>
             </div>
             <div class="divSubFilter">

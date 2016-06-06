@@ -30,17 +30,25 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     /** broadcast provenant de fct : $scope.toggleIsFavorite ()
      * ->into controller parent 'recipe-controller.js'
      * && [planning-controller.js] : $scope.changeRecipeType() */
-    $scope.$on('updateFilter', function() {
-
-        $log.info("----------------------------------------------------------------------------aurevpoir ")
+   /* $scope.$on('updateFilter', function() {
         updateFilter();
-        $log.info("----------------------------------------------------------------------------aurevoir apresupdate filter")
+    });*/
+    $scope.$on('recipeTypeHasChanged', function(event, recipeTypeName) {
+        $scope.filterMySelection.categories = [];
+        var newIdRecipeType = restRecipeService.getIdRecipeType (recipeTypeName);
+        $scope.filterSearch.categories = restRecipeService.getCategories().filter(function(obj){
+            return obj.idRecipeType == newIdRecipeType;
+        })
+
+        updateFilter();
     });
 
     /************************* FILTRE *********************************/
     $scope.filterSearch = {
         myLists:[ {id:'myFavorite', name:'Mes recettes préférées'}, {id:'myPlanning', name:'Mes recettes planning'}], /*{id:'myMeal', name:'Mes plats'},*/
-        categories: restRecipeService.getCategories(),//['Viande','Poisson', 'Legume', 'Vegetarien', 'Four', 'Poêle', 'Gratin', 'Sucré Salé', 'Facile', 'Rapide'],
+        categories: restRecipeService.getCategories().filter(function(obj){
+            return obj.idRecipeType == 2;
+        }),//['Viande','Poisson', 'Legume', 'Vegetarien', 'Four', 'Poêle', 'Gratin', 'Sucré Salé', 'Facile', 'Rapide'],
         origins:restRecipeService.getOrigins()//['Francais', 'Italien', 'Americain', 'Mexicain', 'Thai', 'Indien']//, 'Thai', 'Indien', 'Marocain']
     };
     $scope.filterMySelection = {
@@ -157,6 +165,8 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
             $scope.filterSearch.categories.splice(index, 1);
             //init select avec elem fictif  "choisir"
             //$scope.myCategory = $scope.filterSearch.categories[0];
+            restRecipeService.putIncrNumRankCategory(category.id, 2);//2117
+
         }
     }
     $scope.moveOriginToSelection = function(origin){

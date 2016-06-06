@@ -36,22 +36,13 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
     $scope.foods = restFoodService.getFoods();
     $scope.categories = restRecipeService.getCategories();
     $scope.origins = restRecipeService.getOrigins();
-    var recipeTypes = restRecipeService.getRecipeTypes();
 
 
-    var getIdType = function(){
-        for(var i=0; i<recipeTypes.length; i++){
-            if(recipeTypes[i].nameType == recipeTypeName){
-                return recipeTypes[i].idType;
-            }
-        }
-        return 0; //erreur..
-    }
 
 
     $scope.recipe =  {
         name:'',
-        recipeType:{idType:getIdType(),nameType:recipeTypeName},
+        recipeType:{idType:restRecipeService.getIdRecipeType(),nameType:recipeTypeName},
         user:{id:2117, pseudo:'', email:''}, /* <---------- idUser A AFFINER ----------------------- */
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],

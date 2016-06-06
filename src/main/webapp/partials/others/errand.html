@@ -76,22 +76,42 @@
                 </div>
                 <!--<b style="border-bottom:1px solid grey; " >{{category.name}}</b>-->
                 <div class="divBodyCategory">
-                    <div ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}">
+                    <div ng-show="!isTablet()" ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}" ng-init="ingr.onOver=false" >
 
 
-                        <span ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-check ingrDone glyphiconBtn" ></span>
+                        <span ng-mouseenter="ingr.onOver = true" ng-mouseleave="ingr.onOver = false"
+                              ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon ingrDone"
+                              ng-class="{'glyphicon-unchecked': !ingr.onOver, 'glyphicon-check':ingr.onOver}" ></span>
+
+                        <span ng-mouseenter="ingr.onOver = true" ng-mouseleave="ingr.onOver = false"
+                              ng-show="ingr.done" ng-click="ingredientCancelDone(category, ingr)" class="glyphicon"
+                              ng-class="{'glyphicon-unchecked': ingr.onOver, 'glyphicon-check': !ingr.onOver}" ></span>
+
+
+                        display device : {{nameDevice()}}
+                        <!-- TODO : ngclick ingredientDone & ingredientCancelDone to remove...
+                        <span ng-show="!ingr.done && !ingr.onOver" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-unchecked ingrDone glyphiconBtn" ng-class="{ingrDoneOnOver: ingr.onOver}" ></span>
+                        <span ng-show="!ingr.done && ingr.onOver" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-check ingrDone glyphiconBtn" ng-class="{ingrDoneOnOver: ingr.onOver}"></span>
+-->
 
                         <!-- check sign... :
                         <span ng-show="ingr.done && !ingr.onOver" class="glyphicon glyphicon-ok ingrDoneOk" ></span>
                         ajouter ainsi en dessous '&& ingr.onOver'  (et ds le div parent : 'ng-mouseenter="ingr.onOver=true" ng-mouseleave="ingr.onOver=false" '-->
+                        <!-- sign refresh to unchecked
                         <span ng-show="ingr.done" ng-click="ingredientCancelDone(category, ingr)" class="glyphicon glyphicon-refresh listReset glyphiconBtn" ></span>
-
+                        -->
 
                         &nbsp
-
-                         {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
-
+                        {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
                     </div>
+
+                    <div ng-show="isTablet()" ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}" >
+                        <span ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-unchecked ingrDone"></span>
+                        <span ng-show="ingr.done" ng-click="ingredientCancelDone(category, ingr)" class="glyphicon glyphicon-check"></span>
+                        &nbsp
+                        {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
+                    </div>
+
                 </div>
             </div>
         </div>

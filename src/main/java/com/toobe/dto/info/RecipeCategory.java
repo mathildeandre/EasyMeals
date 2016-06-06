@@ -13,24 +13,26 @@ import java.util.List;
 
 public class RecipeCategory {
 
-    private int id;
+    private Long id;
     private String name;
     private int numRank;
+    private int idRecipeType;
 
     public RecipeCategory(){
 
     }
-    public RecipeCategory(int id, String name, int numRank) {
+    public RecipeCategory(Long id, String name, int numRank, int idRecipeType) {
         this.id = id;
         this.name = name;
         this.numRank = numRank;
+        this.idRecipeType = idRecipeType;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,5 +50,13 @@ public class RecipeCategory {
 
     public void setNumRank(int numRank) {
         this.numRank = numRank;
+    }
+
+    public int getIdRecipeType() {
+        return idRecipeType;
+    }
+
+    public void setIdRecipeType(int idRecipeType) {
+        this.idRecipeType = idRecipeType;
     }
 }

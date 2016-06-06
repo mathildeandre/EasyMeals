@@ -57,6 +57,21 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
     var categories = [];
     var origins = [];
     var recipeTypes = [];
+    function getIdRecipeType(nameRecipeType){
+        getRecipeTypes();
+
+
+        $log.debug("inot getIdRecipeType")
+        for(var i=0; i<recipeTypes.length; i++){
+            $log.debug("boucle"+i+" ; recipeTypes name"+recipeTypes[i].nameType+" : id : "+recipeTypes[i].idType)
+            if(recipeTypes[i].nameType == nameRecipeType){
+                return recipeTypes[i].idType;
+            }
+        }
+        return 0; //erreur..
+    }
+
+
 
     var starters = [];
     var courses = [];
@@ -229,6 +244,10 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         postObjToServer('POST', '/rest/putRatingUser/'+idRecipe+'/'+idUser, ratingUser)
     }
 
+    function putIncrNumRankCategory(idRecipeCategory, idUser){
+        postObjToServer('POST', '/rest/putIncrNumRankCategory/'+idRecipeCategory+'/'+idUser)
+    }
+
 
     function getObjFromServer(url) {
         return $http({
@@ -260,6 +279,7 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         getCategories: getCategories,
         getOrigins: getOrigins,
         getRecipeTypes: getRecipeTypes,
+        getIdRecipeType: getIdRecipeType,
         getRecipes:getRecipes,
         getSingleRecipe: getSingleRecipe,
         getBDDSingleRecipe: getBDDSingleRecipe,
@@ -267,6 +287,7 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         sendImage: sendImage,
         putIsFavorite: putIsFavorite,
         putIsForPlanning: putIsForPlanning,
-        putRatingUser: putRatingUser
+        putRatingUser: putRatingUser,
+        putIncrNumRankCategory: putIncrNumRankCategory
     };
 });

@@ -22,7 +22,8 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
     $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
         $scope.recipeType = recipeType;
         $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
-        $scope.$broadcast('updateFilter'); //pour filterRecipePlanning-controller.js
+        //$scope.$broadcast('updateFilter'); //pour filterRecipePlanning-controller.js
+        $scope.$broadcast('recipeTypeHasChanged', recipeType);
     }
     $scope.isRecipeTypeSelected = function(recipeType){
         return $scope.recipeType == recipeType;

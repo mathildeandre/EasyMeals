@@ -1611,6 +1611,33 @@ select::selection,option::selection { /* ne fonctionne pas  */
 */
 
 
+
+/************************************************************************************************************/
+/*************************  MODAL GENERAL  *********************************************/
+/*********modal-backdrop pour le fond derriere le modal***********************************/
+/*********les classe fade & in sont appelées donc pour changer l'opacity, changer sur in (le dernier appelé)***********************************/
+/**********************************************************************************************************/
+
+.modal-backdrop {
+    height:100%; /* ou mm 100vh nest pas suffisant, il faut couvrir toute la hauteur..*/
+    height:4000px;
+    //background-color: pink;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-attachment:fixed;
+}
+/*useless
+.modal-backdrop.fade {
+    filter: alpha(opacity=100);
+    opacity: 1;
+}*/
+.modal-backdrop.in {
+    filter: alpha(opacity=80);
+    opacity: .8;
+}
+
 /************************************************************************************************************/
 /*************************  INTO MODAL planning  *********************************************/
 /**********************************************************************************************************/
@@ -2469,7 +2496,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .ingrDone:hover{
     color : #67b847;
-    transform: scale(1.5);
 }
 .heartNoBtn{
     color: #ff4d4d ;

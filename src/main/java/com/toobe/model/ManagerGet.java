@@ -72,9 +72,9 @@ public class ManagerGet {
         startConnection();
         return recipeDao.getRecipeTypes(conn);
     }
-    public List<RecipeCategory> getRecipeCategories(){
+    public List<RecipeCategory> getRecipeCategories(Long idUser){
         startConnection();
-        return recipeCategoryDao.getRecipeCategories(conn);
+        return recipeCategoryDao.getRecipeCategories(conn, idUser);
     }
     public List<RecipeOrigin> getRecipeOrigins(){
         startConnection();
@@ -98,7 +98,10 @@ public class ManagerGet {
         startConnection();
         recipeDao.putRatingUser(conn,idRecipe, idUser, ratingUser);
     }
-
+    public void putIncrNumRankCategory(Long idRecipeCategory, Long idUser){
+        startConnection();
+        recipeCategoryDao.putIncrNumRankCategory(conn, idRecipeCategory, idUser);
+    }
     /***********************************************/
     /************* PLANNING ***********************/
     /*********************************************/
