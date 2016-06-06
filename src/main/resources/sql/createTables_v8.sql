@@ -1,5 +1,5 @@
 
-/* V8 : EXPENSES */
+/* V8 : ingredient IA... */
 
 CREATE TABLE Food (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idCategory int(10) NOT NULL, isValidated tinyint DEFAULT 0 NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Food_Category (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, numRank int(10), PRIMARY KEY (id));
@@ -21,10 +21,6 @@ CREATE TABLE Rel_Recipe_CaseMealPlanning (idRecipe int(10) NOT NULL, idPlanningC
 CREATE TABLE Rel_Recipe_Category (idCategory int(10) NOT NULL, idRecipe int(10) NOT NULL, PRIMARY KEY (idCategory, idRecipe));
 CREATE TABLE Rel_User_Recipe (idRecipe int(10) NOT NULL, idUser int(10) NOT NULL, isFavorite tinyint(1), isForPlanning tinyint(1), ratingUser int(10), isHide tinyint(1), PRIMARY KEY (idRecipe, idUser));
 CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), isAdmin tinyint DEFAULT false NOT NULL, PRIMARY KEY (id));
-
-/* EXPENSES TABLES*/
-CREATE TABLE Expense (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, idUserPRIMARY KEY (id));
-
 
 
 /* ON DELETE CASCADE for USER deleted*/
