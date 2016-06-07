@@ -26,8 +26,12 @@
                     </div>-->
                 </div>
                 <div class="divTopRecipeLeftRight">
-                    <div class="divCategoryRecipeOpen fieldRecipeCategory cursorPointer" ng-class="{fieldRecipeBorderWhite:colorChoosen.value=='black'}">
+                    <div class="divCategoryRecipeOpen fieldRecipeCategory cursorPointer" ng-class="{fieldRecipeBorderWhite:colorChoosen.value=='black'}" ng-click="stopPropag($event)"
+                         uib-popover-template="'myPopoverTemplateCategories.html'" popover-trigger="outsideClick" popover-placement="bottom">
                         <span class="glyphicon glyphicon-tags"></span> &nbsp Catégories
+                        <!--popover--> <script type="text/ng-template" id="myPopoverTemplateCategories.html">
+                                            <div ng-repeat="category in recipe.categories" style="color:darkslategrey">{{category.name}}</div>
+                                        </script>
                     </div>
                     <div>
                         <span class="glyphicon glyphicon-globe"></span> : {{recipe.origin.name}}
@@ -39,36 +43,33 @@
             <!---------- DIV RATING ----------->
             <div class="divTopRecipeRight" ng-mouseover="recipe.onOverRating = true;" ng-mouseleave="recipe.onOverRating = false;">
                 <!-- div display rating -->
-                <div class="divRatingStar" ng-show="recipe.ratingUser>0 || !recipe.onOverRating" title="{{displayRatingOfRecipeByTitle(recipe)}}" ng-click="stopPropag($event)"><!--ng-show="!recipe.ratingSystem.isUserEditing"-->
+                <div class="divRatingStar" ng-show="recipe.ratingUser>0 || !recipe.onOverRating" title="{{displayRatingOfRecipeByTitle(recipe)}}" ng-click="stopPropag($event)"
+                     uib-popover-template="'myPopoverTemplateRatingInfo.html'" popover-trigger="mouseenter" popover-placement="bottom"><!--ng-show="!recipe.ratingSystem.isUserEditing"-->
                     <span ng-repeat="numStar in [1,2,3,4,5] track by $index" class="stars glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
                                                       'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating), 'starEmpty' : !isStarFull(numStar, recipe.rating)}">
                     </span>
+                    <!--popover-->
+                    <script type="text/ng-template" id="myPopoverTemplateRatingInfo.html">
+                        <div style="color:darkslategrey">Note moyenne : {{recipe.rating}}</div>
+                        <div style="color:darkslategrey">Ma note : {{displayRatingUser(recipe)}}</div>
+                    </script>
                     <!--<span ng-show="recipe.ratingUser==0" ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingEdit" title=""></span>-->
-                    ({{recipe.nbVoter}} votes)
+                    <span class="divRatingStarNbVote">({{recipe.nbVoter}} votes)</span>
                 </div>
                 <!-- div editing rating -->
                 <div class="divRatingStar" ng-show="recipe.ratingUser==0 && recipe.onOverRating">
-                    sdfljhsd
-                    <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
+                    <!-- for DESKTOP -->
+                    <span ng-show="!isTablet()" ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
                           ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
                           class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit, starEmpty:!starEdit}">
                     </span>
-                    dfjklhfd
-                    <!--<span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>-->
-                    <span class="divRatingStarNbVote">({{recipe.nbVoter}} votes)</span>
-                    dsf
-                    <div class="divRatingStarNbVote">putind dadeleeeleleel</z></div>sdf
-                </div><div class="divRatingStar" ng-show="recipe.ratingUser==0 && recipe.onOverRating">
-                    sdfljhsd
-                    <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
+                    <!-- for TABLET -->
+                    <span ng-show="isTablet()" ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
                           ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
-                          class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit, starEmpty:!starEdit}">
+                          class="starsEditing glyphicon glyphicon-star-empty" >
                     </span>
-                    dfjklhfd
                     <!--<span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>-->
                     <span class="divRatingStarNbVote">({{recipe.nbVoter}} votes)</span>
-                    dsf
-                    <div class="divRatingStarNbVote">putind dadeleeeleleel</z></div>sdf
                 </div>
             </div>
         </div>

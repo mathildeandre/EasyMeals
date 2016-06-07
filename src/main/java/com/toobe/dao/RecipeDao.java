@@ -143,7 +143,7 @@ public class RecipeDao {
             ResultSet resRecipe = stm.executeQuery();
 
             if (resRecipe.next()) {
-                Long idUser = resRecipe.getLong("idOwner");
+                Long idUser = resRecipe.getLong("idUser");
                 int idRecipeType = resRecipe.getInt("idRecipeType");
                 String nameRecipeType = resRecipe.getString("nameRecipeType");
 

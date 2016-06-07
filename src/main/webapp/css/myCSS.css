@@ -544,7 +544,7 @@ h6 {
 }
 .fieldRecipeCategory{
     padding: 5px;
-    padding-top: 8px;
+    padding-top: 6px;
     width:auto;
     border-radius:3px;
     text-align: center;
@@ -1568,7 +1568,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .divTopRecipeLeftLeft{
     display: inline-block;
     vertical-align:top;
-    margin-top: 8px;
+    margin-top: 6px;
 }
 .divTopRecipeLeftRight{
     display: inline-block;
@@ -1621,10 +1621,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
     font-size: 16px;
 }
 .divRatingStarNbVote{
-    vertical-align:top;
-    font-size: 26px;
-    border : 1px solid red;
-
+    vertical-align:middle;
+    font-size: 16px;
 }
 .divPreparationCooking{
     font-weight: 500; /*normal;*/

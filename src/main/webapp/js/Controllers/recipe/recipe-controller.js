@@ -40,6 +40,10 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
 
     $scope.listColor = [{name:'blanc', value:'white'},{name:'noir', value:'black'},{name:'orange', value:'orange'} ]
     $scope.colorChoosen = $scope.listColor[1];
+    $scope.stopPropag = function(event){
+        event.stopPropagation();
+        $log.info("STOP PROPAG !!")
+    }
     /**********************************************************************************************************/
     /************************************** RATING MODE ******************************************************/
     /********************************************************************************************************/
@@ -67,6 +71,13 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
         var ratingUser = recipe.ratingUser;
         if(ratingUser == 0){ratingUser = "-"}
         return ("Note : "+recipe.rating+"\nMa note : "+ratingUser);
+    }
+    $scope.displayRatingUser = function(recipe){
+        if( recipe.ratingUser == 0){
+            return "-"
+        }else{
+            return recipe.ratingUser;
+        }
     }
 
     /* no use anymore...(was into recipeItemDisplayOpen.html)*/
