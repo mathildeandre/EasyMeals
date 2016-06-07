@@ -57,13 +57,13 @@
                     <a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayButtonCreationRecipeType()}}</a> <!--creer nouveau plat-->
                 </div>
                 <div class="buttonsDisplayListRecipe">
-                    Affichage : &nbsp
+                    <span ng-show="!isTablet()">Affichage : </span> &nbsp
                     <span ng-click="showInListFct()"  class="glyphicon glyphicon-align-justify gliphList glyphiconBtn"></span> <!--title=""-->
                     &nbsp-&nbsp
                     <span ng-click="showInBlockFct()" class="glyphicon glyphicon-th gliphBlock glyphiconBtn"></span></span><!--title=""-->
                 </div>
                 <div class="buttonsDisplayListColor">
-                    Couleur : &nbsp
+                    <span ng-show="!isTablet()"> Couleur : </span>&nbsp
                     <select class="fieldRecipe fieldOrderBy"  ng-model='colorChoosen' ng-options='color.name for color in listColor' >
                     </select>
                 </div>

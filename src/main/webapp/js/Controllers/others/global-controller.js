@@ -7,6 +7,14 @@ var myModule = angular.module('controllers');
 
 myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location, GlobalService, restRecipeService, restPlanningService, restFoodService) {
 
+    $scope.isTablet = function(){
+        if (navigator.userAgent.match('/Android|iPad')){
+            return true
+        }else{
+            return false
+        }
+        //return navigator.userAgent.match('/Android|iPad');
+    }
     /**
      * Pour avoir une variable "global" utilisable entre les differentes section/view
      * il faut passer par un service (ici global-service) autrement les variables initialisee

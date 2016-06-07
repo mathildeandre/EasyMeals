@@ -13,16 +13,27 @@
     </div>
     <div class="bodyRecipeWithDescrip">
         <div class="divTopRecipe">
-            <div class="divTopRecipeLeft" >
-                <div class="subTitleRecipeOpen">Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>
-                <!--<div class="divPreparationCooking">
-                    <div class="inlineBlockAlignTop">Preparation : {{displayTime(recipe.timePreparation)}}</div> &nbsp &nbsp
-                    <div class="inlineBlockAlignTop">Cuisson : {{displayTime(recipe.timeCooking)}}</div>
-                </div>-->
-                <div class="divTime">
-                    <span class="glyphicon glyphicon-time"></span> : {{displayTime(recipe.timePreparation)}} &nbsp - &nbsp
-                    <span class="glyphicon glyphicon-fire"></span> :  {{displayTime(recipe.timeCooking)}}
+            <div class="divTopRecipeLeft subTitleRecipeOpen" >
+                <div class="divTopRecipeLeftLeft">
+                    <div >Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>
+                    <div class="divTime">
+                        <span class="glyphicon glyphicon-time"></span> : {{displayTime(recipe.timePreparation)}}  -
+                        <span class="glyphicon glyphicon-fire"></span> :  {{displayTime(recipe.timeCooking)}}
+                    </div>
+                    <!--<div class="divPreparationCooking">
+                        <div class="inlineBlockAlignTop">Preparation : {{displayTime(recipe.timePreparation)}}</div> &nbsp &nbsp
+                        <div class="inlineBlockAlignTop">Cuisson : {{displayTime(recipe.timeCooking)}}</div>
+                    </div>-->
                 </div>
+                <div class="divTopRecipeLeftRight">
+                    <div class="divCategoryRecipeOpen fieldRecipeCategory cursorPointer" ng-class="{fieldRecipeBorderWhite:colorChoosen.value=='black'}">
+                        <span class="glyphicon glyphicon-tags"></span> &nbsp Catégories
+                    </div>
+                    <div>
+                        <span class="glyphicon glyphicon-globe"></span> : {{recipe.origin.name}}
+                    </div>
+                </div>
+
             </div>
 
             <!---------- DIV RATING ----------->
@@ -37,12 +48,27 @@
                 </div>
                 <!-- div editing rating -->
                 <div class="divRatingStar" ng-show="recipe.ratingUser==0 && recipe.onOverRating">
+                    sdfljhsd
                     <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
                           ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
                           class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit, starEmpty:!starEdit}">
                     </span>
+                    dfjklhfd
                     <!--<span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>-->
-                    ({{recipe.nbVoter}} votes)
+                    <span class="divRatingStarNbVote">({{recipe.nbVoter}} votes)</span>
+                    dsf
+                    <div class="divRatingStarNbVote">putind dadeleeeleleel</z></div>sdf
+                </div><div class="divRatingStar" ng-show="recipe.ratingUser==0 && recipe.onOverRating">
+                    sdfljhsd
+                    <span ng-repeat="starEdit in recipe.ratingSystem.starsEdit track by $index" ng-click="validateRatingUser($index, recipe, $event)"
+                          ng-mouseover="editRatingUser($index, recipe.ratingSystem.starsEdit)"
+                          class="starsEditing glyphicon" ng-class="{'glyphicon-star' : starEdit, 'glyphicon-star-empty' : !starEdit, starEmpty:!starEdit}">
+                    </span>
+                    dfjklhfd
+                    <!--<span ng-click="toggleEditingRate(recipe, $event)" class="glyphicon glyphicon-pencil pencilRatingCancel" title=""></span>-->
+                    <span class="divRatingStarNbVote">({{recipe.nbVoter}} votes)</span>
+                    dsf
+                    <div class="divRatingStarNbVote">putind dadeleeeleleel</z></div>sdf
                 </div>
             </div>
         </div>

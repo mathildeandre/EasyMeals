@@ -532,7 +532,7 @@ h6 {
 }
 .fieldRecipeLegend{
     padding: 2px;
-    width:85px;
+    width:90px;
     border-radius:3px;
     text-align: center;
     border:1px solid darkslategrey;
@@ -541,6 +541,25 @@ h6 {
 }
 .fieldRecipeLegend:hover{
     background-color:darkslategrey;
+}
+.fieldRecipeCategory{
+    padding: 5px;
+    padding-top: 8px;
+    width:auto;
+    border-radius:3px;
+    text-align: center;
+    border:1px solid darkslategrey;
+}
+.fieldRecipeCategory:hover{
+    background-color:darkslategrey;
+    color : white;
+}
+.fieldRecipeBorderWhite{
+    border:1px solid white;
+}
+.fieldRecipeBorderWhite:hover{
+    background-color: white;
+    color: darkslategrey;
 }
 
 .fieldRecipe:focus {
@@ -1543,8 +1562,18 @@ select::selection,option::selection { /* ne fonctionne pas  */
     display: inline-block;
     margin-left:2%;
     vertical-align:top;
-    width:25vw;/*240px;*/
+    width:55%;/*240px;*/
 
+}
+.divTopRecipeLeftLeft{
+    display: inline-block;
+    vertical-align:top;
+    margin-top: 8px;
+}
+.divTopRecipeLeftRight{
+    display: inline-block;
+    margin-left:8%;
+    vertical-align:top;
 }
 .divTopRecipeRight{
     display: inline-block;
@@ -1555,10 +1584,13 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .pixRecipeWithDescrip{
     display: inline-block;
     margin-left:2%;
-    width:25vw;/*240px;*/
-    height:14vw;
+
+    //width:25vw;/*240px;*/
+    width:55%;/*240px;*/
     min-width : 240px;
-    min-height:160px; /* a modifier dynamiquement (avec javascript en recuperant la largeur et en faisant 2/3)*/
+
+    height:14vw; /* %of largeur n'existe pas sur height..^^*/
+    min-height:220px; /* donc pr desktop height 14vw et pr tablette : min-height^^*/
     background-repeat:no-repeat;
     background-size:100% 100%; /*100% not enought*/
     background-position:top left;
@@ -1582,21 +1614,31 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .subTitleRecipeOpen{
     margin-bottom:10px;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    //font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     //font-weight: 600;
     //letter-spacing: 1px;
     //font-size: 22px;
-    font-size: 18px;
+    font-size: 16px;
+}
+.divRatingStarNbVote{
+    vertical-align:top;
+    font-size: 26px;
+    border : 1px solid red;
+
 }
 .divPreparationCooking{
     font-weight: 500; /*normal;*/
     font-size: 16px;
 }
+.divCategoryRecipeOpen{
+    margin-bottom:5px;
+    margin-left: -5px;
+}
 .divRatingStar {
     margin-top: 10px;
 }
 .stars{
-    font-size: 35px;
+    font-size: 30px;
     color: yellow;
     color: #ffbf00;
 }
