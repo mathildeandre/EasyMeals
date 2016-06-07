@@ -50,6 +50,20 @@
                     &nbsp-&nbsp
                     <span ng-click="showInBlockFct()" class="glyphicon glyphicon-th gliphBlock glyphiconBtn"></span></span><!--title=""-->
                 </div>
+                <div class="buttonsDisplayLegende fieldRecipeLegend cursorPointer"
+                     uib-popover-template="'myPopoverTemplate.html'" popover-trigger="outsideClick" popover-placement="bottom">
+                    Legende
+                        <!--popover--> <script type="text/ng-template" id="myPopoverTemplate.html">
+                                            <div><span class="glyphicon glyphicon-heart heart heartTaken fontSize20"></span> &nbsp Ajouter/retirer une recette dans sa liste de favorites</div>
+                                            <div><span class="glyphicon glyphicon-pushpin thList thListTaken fontSize20"  ></span> &nbsp Ajouter/retirer une recette dans sa liste spéciale planning</div>
+                                            <div> => Ces listes permettent de "mémoriser" des recettes pour les retrouver rapidement grace au filtre
+                                                "Affiner La Recherche" (également dans PLANNINGS)  </div>
+                                            <br>
+                                            <div><span class="glyphicon glyphicon-new-window newWindow fontSize20"></span> &nbsp Ouvrir la recette dans un <b>nouvel onglet</b></div>
+                                            <div><span class="glyphicon glyphicon-th-list modalFillPlanning fontSize20"></span> &nbsp <b>Ajouter directement une recette dans son planning</b></div>
+                                        </script>
+                </div>
+
                 <div class="sortRecipeList" >
                     <span   class="glyphicon glyphicon-sort" ></span>
                     &nbsp

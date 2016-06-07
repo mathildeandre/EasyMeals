@@ -525,11 +525,21 @@ h6 {
 
 .fieldRecipe{
     padding: 5px;
-    width:100px;
     border-radius:3px;
     text-align: center;
     border:1px solid lightgrey;
     color: #f0ad4e;
+}
+.fieldRecipeLegend{
+    padding: 2px;
+    width:72px;
+    border-radius:3px;
+    text-align: center;
+    border:1px solid darkslategrey;
+    color: #f0ad4e;
+}
+.fieldRecipeLegend:hover{
+    background-color:darkslategrey;
 }
 
 .fieldRecipe:focus {
@@ -686,6 +696,9 @@ h6 {
 }
 .width60{
     width: 60px;
+}
+.width70{
+    width: 70px;
 }
 .width100{
      width: 100px;
@@ -1287,14 +1300,23 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .buttonsDisplayListRecipe{
     display:inline-block;
-    margin-left:3vw;
+    margin-left:1vw;
+    vertical-align: middle;
+}
+.buttonsDisplayLegende{
+    display:inline-block;
+    margin-left:2vw;
     vertical-align: middle;
 }
 .sortRecipeList{
-    display:inline-block;
+    /*display:inline-block;
+    margin-left:2vw;
+    */
+    vertical-align: middle;
+    font-size:15px;
+
     position:relative;
     float:right;
-    font-size:15px;
 }
 /** div recipe autant withDescr or noDescr.**/
 .divRecipes{
@@ -1642,6 +1664,16 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 */
 
+
+
+/**************************************************************************************************************/
+/*************************  POPOVER GENERAL  *****************************************************************/
+/************************************************************************************************************/
+/***********************************************************************************************************/
+
+.popover {
+    max-width: 600px;
+}
 
 
 /************************************************************************************************************/
@@ -2425,13 +2457,18 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 
-
+.cursorPointer{
+    cursor:pointer;
+}
 
 
 /****************************************************************************************************************************************************************************************/
 /*************************************************************************   GLYPHICONS  ***********************************************************************************************/
 /**************************************************************************************************************************************************************************************/
 
+.fontSize20{
+    font-size:20px;
+}
 .glyphiconBtn{
     cursor: pointer;
 }
