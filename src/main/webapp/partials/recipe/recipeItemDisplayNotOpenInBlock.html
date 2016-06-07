@@ -3,24 +3,26 @@
 -->
     <img src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeBlock">
     <div>
-        <span class="titleBlock" title="{{recipe.name}}"> {{recipe.name}} </span>
+        <span class="titleBlock" title="{{recipe.name}}"> {{recipe.name}} a la sauce</span>
 
-        <div class="glyphiconsBlock">
 
-            <span  ng-click="toggleIsFavorite(recipe, $event);"  class="glyphicon glyphicon-heart heart glyphiconBtn"
-                   title="" ng-class="{heartTaken: recipe.isFavorite}"></span>
-            &nbsp
-            <span ng-click="toggleIsForPlanning(recipe, $event);" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
-                  title=""   ng-class="{thListTaken: recipe.isForPlanning}"></span>
-            &nbsp
-            <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
-             &nbsp
-            <span ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
-        </div>
 
         <div class="rightInlineBlock">
+            <!--<div class="glyphiconsBlock">-->
+            <div class="glyphiconsBlock">
 
-            <div class="" title="{{displayRatingOfRecipeByTitle(recipe)}}" ><!--ng-click="stopPropag($event)"-->
+                <span  ng-click="toggleIsFavorite(recipe, $event);"  class="glyphicon glyphicon-heart heart glyphiconBtn"
+                        ng-class="{heartTaken: recipe.isFavorite}"></span> <!--title=""-->
+                    &nbsp
+                <span ng-click="toggleIsForPlanning(recipe, $event);" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
+                         ng-class="{thListTaken: recipe.isForPlanning}"></span>
+                &nbsp
+                <span ng-click="openRecipeNewWindow(recipe.id)" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
+                &nbsp
+                <span ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
+            </div>
+
+            <div class="starsBlock" title="{{displayRatingOfRecipeByTitle(recipe)}}" ><!--ng-click="stopPropag($event)"-->
                     <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
                           class="starsNoDescripBlock glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
                                                        'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),

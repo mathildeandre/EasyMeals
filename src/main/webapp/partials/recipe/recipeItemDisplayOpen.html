@@ -1,13 +1,15 @@
-<div ng-show="recipe.descriptionOpen" class="recipeWithDescrip" ng-click="toggleDescOpen(recipe)"  ng-mouseover="recipe.onOver = true;" ng-mouseleave="recipe.onOver = false;">
+<div ng-show="recipe.descriptionOpen" class="" ng-click="toggleDescOpen(recipe)" ng-class="{recipeWithDescripOrange:colorChoosen.value=='orange',
+                                            recipeWithDescripSimple:colorChoosen.value=='white', recipeWithDescripBlackSlate:colorChoosen.value=='black'}">
+
     <div class="headingRecipeWithDescrip" >{{recipe.name}}
-        &nbsp&nbsp <span  ng-click="toggleIsFavorite(recipe, $event);" title=""   class="glyphicon glyphicon-heart heart glyphiconBtn"
-                          ng-class="{heartTaken: recipe.isFavorite}"></span>
-        &nbsp&nbsp <span ng-click="toggleIsForPlanning(recipe, $event);" title="" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
-                         ng-class="{thListTaken: recipe.isForPlanning}"></span>
+        &nbsp&nbsp
+        <span  ng-click="toggleIsFavorite(recipe, $event);" class="glyphicon glyphicon-heart heart glyphiconBtn" ng-class="{heartTaken: recipe.isFavorite}"></span> <!--title=""-->
+        &nbsp&nbsp
+        <span ng-click="toggleIsForPlanning(recipe, $event);" class="glyphicon glyphicon-pushpin thList glyphiconBtn" ng-class="{thListTaken: recipe.isForPlanning}"></span>
         &nbsp
-        <span  ng-show="recipe.onOver"  ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
+        <span ng-click="openRecipeNewWindow(recipe.id)" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
         &nbsp
-        <span  ng-show="recipe.onOver" ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
+        <span ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
     </div>
     <div class="bodyRecipeWithDescrip">
         <div class="divTopRecipe">

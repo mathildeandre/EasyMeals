@@ -326,9 +326,10 @@ fab 40€ to fab, math, eddy, carine, person4, person5
 
 
 ********************************************************************************************************
-
+    OPTION CACHE
     *********************************
-
+    Google -> parametres -> (partie : confidentialité) BTN "Paramètres de contenu..."
+    cocher "Interdire à tous les sites de stocker des données"
 
 
 

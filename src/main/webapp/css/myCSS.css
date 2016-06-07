@@ -532,11 +532,12 @@ h6 {
 }
 .fieldRecipeLegend{
     padding: 2px;
-    width:72px;
+    width:85px;
     border-radius:3px;
     text-align: center;
     border:1px solid darkslategrey;
     color: #f0ad4e;
+    margin-right : 15px;
 }
 .fieldRecipeLegend:hover{
     background-color:darkslategrey;
@@ -1303,10 +1304,15 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-left:1vw;
     vertical-align: middle;
 }
-.buttonsDisplayLegende{
+.buttonsDisplayListColor{
     display:inline-block;
-    margin-left:2vw;
+    margin-left:1vw;
     vertical-align: middle;
+}
+.buttonsDisplayLegende{
+    display:inline-block; /* tres important*/
+    //margin-left:2vw;
+    //vertical-align: top; /* useless ici*/
 }
 .sortRecipeList{
     /*display:inline-block;
@@ -1431,7 +1437,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /********************************  WITH DESCRIPTION custom  ************************************************/
 /**********************************************************************************************************/
 
-.recipeWithDescrip{
+.recipeWithDescripBlackSlate{
     background-image:url('../images/blackSlateSlab.jpg');
     background-repeat:no-repeat;
     background-size:cover;
@@ -1440,6 +1446,22 @@ select::selection,option::selection { /* ne fonctionne pas  */
     //padding:10px;
     //padding-bottom:20px;
 }
+.recipeWithDescripSimple{
+    background-color: white;
+    color:darkslategrey;
+    border-radius:3px;
+    //padding:10px;
+    //padding-bottom:20px;
+    border : 2px solid lightgrey;
+}
+.recipeWithDescripOrange{
+    background-color: #f9deb9;//#fbe9d0;
+    color:darkslategrey;
+    border-radius:3px;
+    //padding:10px;
+    //padding-bottom:20px;
+    border : 2px solid lightgrey;
+}
 
 .recipeWithDescrip .heart[title]:hover:after,
 .recipeWithDescrip .thList[title]:hover:after,
@@ -1447,7 +1469,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color:white;
     left:-60px;
 }
-
 .headingRecipeWithDescrip{
     //margin: 5px 0 20px 2%;
     text-transform: uppercase;
@@ -1459,7 +1480,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
     padding: 10px 1vw;
     border-radius: 5px;
-    background-color: rgba(245, 245, 245, 0.1); //#f5f5f5;
+    background-color: rgba(245, 245, 245, 0.5); //#f5f5f5;
     //background-color: rgba(0,0,0, 0.3); //black;
     border-bottom: 1px solid #ddd;
 }
@@ -1474,14 +1495,38 @@ select::selection,option::selection { /* ne fonctionne pas  */
     background-color: rgba(0,0,0, 0.3); //black;
     //border-bottom: 1px solid #ddd;
 }
+
 .footerRecipePublic{
     color: #f5f5f5;
     text-align: right;
 }.footerRecipePrivate{
-     //color: black;
+ //color: black;
      color: #f5c88a;
      text-align: right;
+ }
+
+.recipeWithDescripSimple .headingRecipeWithDescrip{
+    background-color: #f2f2f2;
+}.recipeWithDescripSimple .footerRecipeWithDescrip{
+    background-color: #f2f2f2;
+     border-top: 1px solid #ddd;
+}.recipeWithDescripSimple .footerRecipeWithDescrip .footerRecipePublic{
+      color: darkslategrey;
+}.recipeWithDescripOrange .headingRecipeWithDescrip{
+    background-color: rgba(245, 245, 245, 0.5); //#f5f5f5;
+}.recipeWithDescripOrange .footerRecipeWithDescrip{
+    background-color: rgba(0,0,0, 0.3); //black;
+}.recipeWithDescripBlackSlate .headingRecipeWithDescrip{
+    background-color: rgba(245, 245, 245, 0.1); //#f5f5f5;
+}.recipeWithDescripBlackSlate .footerRecipeWithDescrip{
+    background-color: rgba(0,0,0, 0.3); //black;
 }
+
+
+
+
+
+
 
 .divTopRecipe{
     /*margin-top:15px;*/
@@ -1552,6 +1597,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .stars{
     font-size: 35px;
     color: yellow;
+    color: #ffbf00;
 }
 .starsEditing{
     font-size: 35px;
@@ -1574,8 +1620,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
     min-width:160px;
     vertical-align: top;
 
-}.divRecipesBlockDescription{
-     width: 57.5vw; /*permet de forcer a prendre tte la place en largeur!;*/
+}
+.divRecipesBlockDescription{
+     width: 100%; /*permet de forcer a prendre tte la place en largeur!;*/
  }
 .pixRecipeBlock{
     width: 100%;
@@ -1590,16 +1637,21 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 /* ici on laisse faire mais 1 ligne max pr le titre donc glyphicons en retour a la ligne au pire mais propre*/
 .titleBlock{
-    display:inline-block;
-    max-width: 100%;
-
+    display:inline-block;/*tres important sinon la suite sera pas sur la mm ligne*/
+    width : 57%;
+    white-space: normal;
+    /* no retour line...
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;*/
 }
 .glyphiconsBlock{
-    margin-left:5px;
-    display:inline-block;
+    margin-top:5px;
+    margin-bottom:5px;
+    //display:inline-block;
+}
+.starsBlock{
+    margin-left:10px;
 }
 /* ici on fix les glyphicon a droit et 1 seul ligne pr titre mais titre tres court...*
 .titleBlock{
@@ -1694,8 +1746,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
     opacity: 1;
 }*/
 .modal-backdrop.in {
-    filter: alpha(opacity=80);
-    opacity: .8;
+    filter: alpha(opacity=90);
+    opacity: 0.9;
 }
 
 /************************************************************************************************************/

@@ -17,13 +17,13 @@
         </div>
 
 
-        <span  ng-click="toggleIsFavorite(recipe, $event);" title=""   class="glyphicon glyphicon-heart heart glyphiconBtn"
-               ng-class="{heartTaken: recipe.isFavorite}"></span>
+        <span  ng-click="toggleIsFavorite(recipe, $event);" class="glyphicon glyphicon-heart heart glyphiconBtn"
+               ng-class="{heartTaken: recipe.isFavorite}"></span><!--title=""-->
         &nbsp
-        <span ng-click="toggleIsForPlanning(recipe, $event);" title="" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
+        <span ng-click="toggleIsForPlanning(recipe, $event);" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
               ng-class="{thListTaken: recipe.isForPlanning}"></span>
         &nbsp
-        <span  ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
+        <span  ng-click="openRecipeNewWindow(recipe.id)" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
         &nbsp
         <span  ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
     </div>
