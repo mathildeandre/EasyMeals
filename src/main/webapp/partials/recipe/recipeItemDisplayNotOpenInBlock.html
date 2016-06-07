@@ -1,8 +1,8 @@
-<div ng-show="!recipe.descriptionOpen" ng-click="toggleDescOpen(recipe)" ng-mouseover="recipe.onOver = true;" ng-mouseleave="recipe.onOver = false;">
+<div ng-show="!recipe.descriptionOpen" ng-click="toggleDescOpen(recipe)">
     <!--<div class="pixRecipeBlock" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../images/no-image.png') ;"> </div>
 -->
-    <img src="data:image/jpg;base64,{{recipe.image}}" style="width:230px; height:150px">
-    <div class="titleAndSoBlock" >
+    <img src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeBlock">
+    <div>
         <span class="titleBlock" title="{{recipe.name}}"> {{recipe.name}} </span>
 
         <div class="glyphiconsBlock">
@@ -13,20 +13,21 @@
             <span ng-click="toggleIsForPlanning(recipe, $event);" class="glyphicon glyphicon-pushpin thList glyphiconBtn"
                   title=""   ng-class="{thListTaken: recipe.isForPlanning}"></span>
             &nbsp
-            <span  ng-show="recipe.onOver"  ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
+            <span ng-click="openRecipeNewWindow(recipe.id)" title="" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
              &nbsp
-            <span  ng-show="recipe.onOver" ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
+            <span ng-click="openModalRecipeFillPlanning(recipe, $event)" class="glyphicon glyphicon glyphicon-th-list modalFillPlanning glyphiconBtn"></span>
         </div>
 
-       <div class="rightInlineBlock">
+        <div class="rightInlineBlock">
 
-           <div class="" title="{{displayRatingOfRecipeByTitle(recipe)}}" ><!--ng-click="stopPropag($event)"-->
+            <div class="" title="{{displayRatingOfRecipeByTitle(recipe)}}" ><!--ng-click="stopPropag($event)"-->
                     <span ng-repeat="numStar in [1,2,3,4,5] track by $index"
                           class="starsNoDescripBlock glyphicon" ng-class="{'glyphicon-star' : isStarFull(numStar, recipe.rating),
                                                        'glyphicon-star-empty' : !isStarFull(numStar, recipe.rating),
                                                        'starEmpty' : !isStarFull(numStar, recipe.rating)}">
                     </span>
                <br>
-           </div>
+            </div>
+        </div>
     </div>
 </div>
