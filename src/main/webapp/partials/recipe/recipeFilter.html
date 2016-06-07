@@ -143,16 +143,38 @@
             <div class="divSubFilter">
                 <div class="txtTitleSubFilter" >Categories recettes</div>
                 <div class="elemCategorieVrac" ng-repeat="category in filterSearch.categories | orderBy:'-numRank'"
-                     ng-click="moveCategoryToSelection(category)">
+                     ng-click="moveCategoryToSelection(category)" ng-show="$index < 6">
                     <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category.name}}</button-filter>
                 </div>
+                <!-- BTN for POPOVER --->
+                <div ng-show="filterSearch.categories.length > 6 " class="fieldRecipeMoreCategories cursorPointer"
+                     uib-popover-template="'myPopoverTemplateMoreCategories.html'" popover-trigger="outsideClick" popover-placement="right">
+                    Voir plus...
+                    <!--popover--> <script type="text/ng-template" id="myPopoverTemplateMoreCategories.html">
+                                        <div ng-repeat="category in filterSearch.categories | orderBy:'-numRank'" ng-show="$index >= 6" ng-click="moveCategoryToSelection(category)">
+                                            <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category.name}}</button-filter>
+                                        </div>
+                                    </script>
+                </div>
+                <!-- end BTN for POPOVER --->
             </div>
             <div class="divSubFilter">
-                <div class="txtTitleSubFilter" >Spécialités</div>
-                <div class="elemColonneX2" ng-repeat="origin in filterSearch.origins | orderBy:'toString()'"
-                     ng-click="moveOriginToSelection(origin)"><!--track by $index ne fonctionne pas : $index en argument de moveOr..() correspond pas-->
+                <div class="txtTitleSubFilter" >Spécialitésee</div>
+                <div class="elemColonneX2" ng-repeat="origin in filterSearch.origins | orderBy:'-numRank'"
+                     ng-click="moveOriginToSelection(origin)" ng-show="$index < 5"><!--track by $index ne fonctionne pas : $index en argument de moveOr..() correspond pas-->
                     <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{origin.name}}</button-filter>
                 </div>
+                <!-- BTN for POPOVER --->
+                <div ng-show="filterSearch.origins.length > 5 " class="elemColonneX2 noWidth fieldRecipeMoreCategories cursorPointer"
+                     uib-popover-template="'myPopoverTemplateMoreSpecialities.html'" popover-trigger="outsideClick" popover-placement="right">
+                    Voir plus...
+                    <!--popover--> <script type="text/ng-template" id="myPopoverTemplateMoreSpecialities.html">
+                                        <div ng-repeat="origin in filterSearch.origins | orderBy:'-numRank'" ng-show="$index >= 5" ng-click="moveOriginToSelection(origin)">
+                                            <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{origin.name}}</button-filter>
+                                        </div>
+                                    </script>
+                </div>
+                <!-- end BTN for POPOVER --->
             </div>
         </div>
     </article>

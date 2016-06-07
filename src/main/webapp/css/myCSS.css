@@ -561,6 +561,19 @@ h6 {
     background-color: white;
     color: darkslategrey;
 }
+.fieldRecipeMoreCategories{
+    display: inline-block;
+    margin-top: 3px;
+    padding: 4px 5px;
+    width:auto;
+    border-radius:3px;
+    text-align: center;
+    border:1px solid darkslategrey;
+    color: #f0ad4e;
+}
+.fieldRecipeMoreCategories:hover{
+    background-color:darkslategrey;
+}
 
 .fieldRecipe:focus {
     outline: 0; /*2px solid #d9534f;*/
@@ -610,9 +623,6 @@ h6 {
 .fieldPlanning:focus {
     outline: 0; /*2px solid #d9534f;*/
     border: 1px solid #95d6e9 ;
-}
-.noWidth{
-    width: auto;
 }
 .fieldErrand{
     padding: 5px;
@@ -2815,4 +2825,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     color: blue;
     text-transform: none;
 
+}
+.noWidth{
+    width: auto;
 }

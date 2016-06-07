@@ -335,6 +335,15 @@ fab 40€ to fab, math, eddy, carine, person4, person5
 
 
 
+********************************************************************************************************
+    POPOVER
+    *********************************
+    pas de texte sans balise dans script template popover
+
+
+
+
+
 
 
 
