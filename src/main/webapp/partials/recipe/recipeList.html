@@ -30,7 +30,7 @@
             <div class="rightInlineBlock rightHeadingSearch">
                 <span   class="glyphicon glyphicon-search " ></span>
                 &nbsp
-                <input class="inputRecipeSearch" type="text" ng-model="searchRecipe" placeholder="recette, ingredient etc..">
+                <input class="inputRecipeSearch" type="text" ng-model="search.name" placeholder="nom d'une recette"> <!-- search.name permet de rechercher uniquement sur le champ name de recipe-->
             </div>
         </div>
 
@@ -68,7 +68,7 @@
             -->
             <div  ng-controller="ModalRecipeFillPlanningCtrl">
 
-                <div ng-show="!showInBlock" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy"
+                <div ng-show="!showInBlock" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy"
                      ng-class="{recipeWithDescription: recipe.descriptionOpen, recipeWithNoDescr:!recipe.descriptionOpen}">
                     <!-- or :
                     <div ng-include="'../../partials/recipe/recipeItemDisplayNotOpenInList.html'"></div>
@@ -77,7 +77,7 @@
                     <recipeitem-displayopen></recipeitem-displayopen>
                 </div>
 
-                <div ng-show="showInBlock" class="divRecipesBlock" ng-repeat="recipe in recipesToDisplay | filter : searchRecipe | orderBy: recipeOrderBy "
+                <div ng-show="showInBlock" class="divRecipesBlock" ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy "
                      ng-class="{divRecipesBlockIcon:!recipe.descriptionOpen, divRecipesBlockDescription:recipe.descriptionOpen}">
 
                     <recipeitem-displayinblock></recipeitem-displayinblock>
