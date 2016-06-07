@@ -84,7 +84,6 @@ h6 {
 }
 .bodyRecipe{
 
-    width: 100%;
     height: 100%;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     //color: #fff;
@@ -96,7 +95,13 @@ h6 {
     -o-background-size: cover;
 
     background-attachment:fixed;
-    padding: 0 4vw;
+
+
+    border : 4px dotted purple;
+    //width:1400px;
+    width: 100%;
+    max-width: 1200px;
+    margin : auto;
 }
 
 .bodyPlanning{
@@ -427,7 +432,7 @@ h6 {
     font-size: 18px;
     margin-right:2%;
     //width: 200px;
-    width: 17%;
+    width: 18%;
     color:white;
     //background-color: rgba(230, 239, 230, 0.6);
     background-color: rgba(0,0,0,0.4);
@@ -450,7 +455,8 @@ h6 {
 
 }
 .noMarginRight{
-    margin-right:0;
+    //margin-right:0;
+    margin-right : -1px;
 }
 .myBtnRecipeType:hover,
 .myBtnRecipeType:focus{
@@ -1121,13 +1127,30 @@ select::selection,option::selection { /* ne fonctionne pas  */
     top:50px;
     overflow: auto;
 }
-#filterRecipe{
+#oldfilterRecipe{ /*old with float...*/
     float: left;
     width:26vw; /* stay at 64vw in any case*/
     overflow: auto;
     /*margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
 }
+#filterRecipe{
+    overflow: auto;
+    display : inline-block;
+    /*margin-left:2vw; /* le % faisant grossir la largueur lors de scroll -> fixed*/
+    width: 25%; /* = max-width 300px puisque parentDiv.max-width = 1200px;*/
+    min-width : 200px; /* donc proportionnelle pr parentDiv entre 1200px et 800px -> si parentDiv plus petit,  ca reste a cette taille fixe*/
+}
+.divRecipeRight{
+    vertical-align: top;
+    overflow: hidden;
+    display: inline-block;
 
+    margin-left:2%;
+    margin-right:0;
+    //width:64vw; /* stay at 64vw in any case*/
+    width: 72%; /*= max-width 864px puisque parentDiv.max-width = 1200px; */
+    min-width: 576px;/* donc proportionnelle pr parentDiv entre 1200px et 800px -> si parentDiv plus petit,  ca reste a cette taille fixe*/
+}
 
 /*****************************  BTN - INPUT custom filter    **************************************************/
 .littlePlus{
@@ -1157,7 +1180,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-bottom:20px;
     /*overflow: auto; //into #filterRecipe; */
 }
-
+.artBodyRecipeMySelection{
+    padding-left:6px;
+}
 
 .separatorSelection{
     border-bottom:1px solid lightgray;
@@ -1234,16 +1259,12 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 
 /**********************************************************************  LIST RECIPE #RIGHT   ************************************************************************************************/
-.divRecipeRight{
+.oldDivRecipeRight{/*old with float...*/
     margin-left:28vw;
     width:64vw; /* stay at 64vw in any case*/
     overflow: hidden;
 }
-#listRecipe{
-    margin-left:28vw;
-    width:64vw; /* stay at 64vw in any case*/
-    overflow: hidden;
-}
+
 
 .rightHeadingSearch{
     font-size:17px;

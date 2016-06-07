@@ -42,8 +42,8 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
 
     $scope.recipe =  {
         name:'',
-        recipeType:{idType:restRecipeService.getIdRecipeType(),nameType:recipeTypeName},
-        user:{id:2117, pseudo:'', email:''}, /* <---------- idUser A AFFINER ----------------------- */
+        recipeType:{idType:restRecipeService.getIdRecipeType(recipeTypeName),nameType:recipeTypeName},
+        user:{id:2, pseudo:'', email:''}, /* <---------- idUser A AFFINER ----------------------- */
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],

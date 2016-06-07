@@ -30,9 +30,9 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     /** broadcast provenant de fct : $scope.toggleIsFavorite ()
      * ->into controller parent 'recipe-controller.js'
      * && [planning-controller.js] : $scope.changeRecipeType() */
-   /* $scope.$on('updateFilter', function() {
+    $scope.$on('updateFilter', function() {
         updateFilter();
-    });*/
+    });
     $scope.$on('recipeTypeHasChanged', function(event, recipeTypeName) {
         $scope.filterMySelection.categories = [];
         var newIdRecipeType = restRecipeService.getIdRecipeType (recipeTypeName);
@@ -54,6 +54,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     $scope.filterMySelection = {
         myLists:[],
         ingredients:[],
+        users:[],
         categories:[],
         origins:[]
     };
@@ -78,6 +79,10 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     }
     $scope.separateMyList = function(){
         return $scope.filterMySelection.myLists.length > 0 &&
+            ($scope.filterMySelection.users.length > 0 || $scope.filterMySelection.ingredients.length > 0 || $scope.filterMySelection.categories.length > 0 || $scope.filterMySelection.origins.length > 0);
+    }
+    $scope.separateUser = function(){
+        return $scope.filterMySelection.users.length > 0 &&
             ($scope.filterMySelection.ingredients.length > 0 || $scope.filterMySelection.categories.length > 0 || $scope.filterMySelection.origins.length > 0);
     }
     $scope.separateIngredient = function(){
@@ -103,6 +108,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
 
         filterMySelection.myLists = [];
         filterMySelection.ingredients = [];
+        filterMySelection.users = [];
         filterMySelection.categories = [];
         filterMySelection.origins = [];
     }
@@ -114,6 +120,14 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
             $scope.moveIngredientToSelection(ingredientName);
         }
     }
+    $scope.pressEnterInputUserFilter = function(event, userName){
+        $log.info("BOOM KEYUP pressed on the user name :"+userName+ " event.keyCode : "+event.keyCode);
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.keyCode == 13){
+            $scope.moveUserToSelection(userName);
+        }
+    }
 
     /***************************************************************************************************
      FONCTION pour display FILTER
@@ -123,6 +137,10 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         $scope.filterSearch.myLists.push(myList);
         var index = $scope.filterMySelection.myLists.indexOf(myList); //fonctionne aussi tres bien
         $scope.filterMySelection.myLists.splice(index, 1);
+    }
+    $scope.removeUserFromSelection = function(userName){
+        var index = $scope.filterMySelection.users.indexOf(userName); //fonctionne aussi tres bien
+        $scope.filterMySelection.users.splice(index, 1);
     }
     $scope.removeIngredientFromSelection = function(ingredientName){
         var index = $scope.filterMySelection.ingredients.indexOf(ingredientName); //fonctionne aussi tres bien
@@ -150,8 +168,14 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         var index = $scope.filterSearch.myLists.indexOf(myList); //fonctionne aussi tres bien
         $scope.filterSearch.myLists.splice(index, 1);
     }
+    $scope.moveUserToSelection = function(userName){
+        if(userName != undefined && userName != ''){
+            $scope.filterMySelection.users.push(userName);
+            $scope.userName = '';
+        }
+    }
     $scope.moveIngredientToSelection = function(ingredientName){
-        if(ingredientName != undefined ){
+        if(ingredientName != undefined && ingredientName != ''){
             $scope.filterMySelection.ingredients.push(ingredientName);
             $scope.ingredientName = '';
         }
@@ -220,6 +244,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         //si aucun filtre na ete selectionné on met la full list recipes!
         if(filterMySelection.myLists.length == 0 &&
             filterMySelection.ingredients.length == 0 &&
+            filterMySelection.users.length == 0 &&
             filterMySelection.categories.length == 0 &&
             filterMySelection.origins.length == 0){
 
@@ -269,10 +294,35 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
                     }
                 }
             }
+
+
+            /****************************** USER ***************************************************************/
+            var isThereAfilterUser = filterMySelection.users.length > 0;
+            $log.debug("coucou")
+            if(isThereAfilterUser){
+                if(isThereAfilterMyList || isThereAfilterOrigin){//si il y un filtre (au moins) myList OU origin OU category dans selection :
+                    // recipesNew a ete rempli donc on fait l'intersection avec ingredients
+                    for(var k=recipesNew.length-1; k>=0; k--) {
+                        //REMOVE //si l elem ne repond pas au critere selection avec ingredients -> out!
+                        if(! userContains(filterMySelection.users, recipesNew[k].user.pseudo)){
+                            recipesNew.splice(k,1);
+                        }
+                    }
+                }else{//si il n'y a pas de filtre myList NI origin NI category dans selection, alr on construit recipesNew avec ingredients
+                    for(var k=0; k<recipes.length; k++){
+                        //hence we check for each item of the recipes if it can be selected ! (and added to the new recipes)
+                        if(userContains(filterMySelection.users, recipes[k].user.pseudo)){
+                            recipesNew.push(recipes[k]);
+                        }
+                    }
+                }
+            }
+
+
             /****************************** CATEGORIE ***************************************************************/
             var isThereAfilterCategory = filterMySelection.categories.length > 0;
             if(isThereAfilterCategory){
-                if(isThereAfilterMyList || isThereAfilterOrigin){//si il y un filtre (au moins) myList OU origin dans selection :
+                if(isThereAfilterMyList || isThereAfilterOrigin  || isThereAfilterUser){//si il y un filtre (au moins) myList OU origin dans selection :
                     // recipesNew a ete rempli donc on fait l'intersection avec category
                     for(var k=recipesNew.length-1; k>=0; k--) {
                         //REMOVE //si l elem ne repond pas au critere selection avec category -> out!
@@ -295,11 +345,11 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
             /****************************** INGREDIENTS ***************************************************************/
             var isThereAfilterIngredient = filterMySelection.ingredients.length > 0;
             if(isThereAfilterIngredient){
-                if(isThereAfilterMyList || isThereAfilterOrigin || isThereAfilterCategory){//si il y un filtre (au moins) myList OU origin OU category dans selection :
+                if(isThereAfilterMyList || isThereAfilterOrigin || isThereAfilterUser|| isThereAfilterCategory){//si il y un filtre (au moins) myList OU origin OU category dans selection :
                     // recipesNew a ete rempli donc on fait l'intersection avec ingredients
                     for(var k=recipesNew.length-1; k>=0; k--) {
                         //REMOVE //si l elem ne repond pas au critere selection avec ingredients -> out!
-                        if(!intersectIngrExistStrict(filterMySelection.ingredients, recipesNew[k].ingredients)){
+                        if(!intersectStricteIngrsMySelectWithIngrsOfRecipe(filterMySelection.ingredients, recipesNew[k].ingredients)){
                             recipesNew.splice(k,1);
                         }
 
@@ -307,7 +357,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
                 }else{//si il n'y a pas de filtre myList NI origin NI category dans selection, alr on construit recipesNew avec ingredients
                     for(var k=0; k<recipes.length; k++){
                         //hence we check for each item of the recipes if it can be selected ! (and added to the new recipes)
-                        if(intersectIngrExistStrict(filterMySelection.ingredients, recipes[k].ingredients)){
+                        if(intersectStricteIngrsMySelectWithIngrsOfRecipe(filterMySelection.ingredients, recipes[k].ingredients)){
                             recipesNew.push(recipes[k]);
                         }
                     }
@@ -325,6 +375,15 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     var originsContains = function(origins, origin){
         for(var i=0; i<origins.length; i++){
             if(origins[i].id == origin.id){
+                return true;
+            }
+        }
+        return false;
+    }
+    //we check if the pseudo of owner of the recipe is contained into the list of users of our selection
+    var userContains = function(users, ownerPseudo){
+        for(var i=0; i<users.length; i++){
+            if(ownerPseudo.indexOf(users[i]) > -1){ //return -1 si ownerPseudo ne contient PAS users[i], entier positif sinn
                 return true;
             }
         }
@@ -357,14 +416,21 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         }
         return intersectFinal;
     }
-    var intersectIngrExistStrict = function(arr1, arr2){//on veut ici que TOUS les elem de arr1 soient contenu ds arr2
+
+    /* arr 1 array de tous les ingr de notre liste de selection
+       arr 2 array de tous les ingr d'une recette
+       return TRUE si TOUS les ingr de my selection sont contenu dans un ingredient de la recette
+     */
+    var intersectStricteIngrsMySelectWithIngrsOfRecipe= function(arr1, arr2){//on veut ici que TOUS les elem de arr1 soient contenu ds arr2
         //arr1 list string - arr2 list of {qty:0.3, unit:'kg', food:'aubergine', rayonId:6}
         var intersectFinal = true;
         var intersect = false;
         for(var i=0; i<arr1.length; i++){
             intersect = false;
             for(var j=0; j<arr2.length; j++){
-                if(arr1[i].toUpperCase() === arr2[j].food.toUpperCase()){
+                var nameIngrMySelection = arr1[i];//arr1[i] : un ingr de ma selection
+                var nameIngrRecipe = arr2[j].food.name;//arr2[j].food.name : un aliment de recipe
+                if(nameIngrRecipe.indexOf(nameIngrMySelection) > -1){//return -1 si nameIngrRecipe ne contient PAS nameIngrMySelection, entier positif sinn
                     intersect = true;
                 }
             }
