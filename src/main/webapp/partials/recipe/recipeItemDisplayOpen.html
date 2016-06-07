@@ -4,7 +4,7 @@
     <div class="headingRecipeWithDescrip" >{{recipe.name}}
         &nbsp&nbsp
         <span  ng-click="toggleIsFavorite(recipe, $event);" class="glyphicon glyphicon-heart heart glyphiconBtn" ng-class="{heartTaken: recipe.isFavorite}"></span> <!--title=""-->
-        &nbsp&nbsp
+        &nbsp
         <span ng-click="toggleIsForPlanning(recipe, $event);" class="glyphicon glyphicon-pushpin thList glyphiconBtn" ng-class="{thListTaken: recipe.isForPlanning}"></span>
         &nbsp
         <span ng-click="openRecipeNewWindow(recipe.id)" class="glyphicon glyphicon-new-window newWindow glyphiconBtn"></span>
@@ -15,9 +15,13 @@
         <div class="divTopRecipe">
             <div class="divTopRecipeLeft" >
                 <div class="subTitleRecipeOpen">Temps total : {{displayTime(recipe.timeCooking+recipe.timePreparation)}}</div>
-                <div class="divPreparationCooking">
+                <!--<div class="divPreparationCooking">
                     <div class="inlineBlockAlignTop">Preparation : {{displayTime(recipe.timePreparation)}}</div> &nbsp &nbsp
                     <div class="inlineBlockAlignTop">Cuisson : {{displayTime(recipe.timeCooking)}}</div>
+                </div>-->
+                <div class="divTime">
+                    <span class="glyphicon glyphicon-time"></span> : {{displayTime(recipe.timePreparation)}} &nbsp - &nbsp
+                    <span class="glyphicon glyphicon-fire"></span> :  {{displayTime(recipe.timeCooking)}}
                 </div>
             </div>
 

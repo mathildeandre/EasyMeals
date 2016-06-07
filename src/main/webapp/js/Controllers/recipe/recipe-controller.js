@@ -38,8 +38,8 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
 
 
 
-    $scope.listColor = [{name:'blanc', value:'white'},{name:'orange', value:'orange'},{name:'noir', value:'black'} ]
-    $scope.colorChoosen = $scope.listColor[2];
+    $scope.listColor = [{name:'blanc', value:'white'},{name:'noir', value:'black'},{name:'orange', value:'orange'} ]
+    $scope.colorChoosen = $scope.listColor[1];
     /**********************************************************************************************************/
     /************************************** RATING MODE ******************************************************/
     /********************************************************************************************************/
