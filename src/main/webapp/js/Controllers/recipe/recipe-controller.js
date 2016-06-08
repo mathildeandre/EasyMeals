@@ -38,8 +38,11 @@ myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $win
 
 
 
-    $scope.listColor = [{name:'blanc', value:'white'},{name:'noir', value:'black'},{name:'orange', value:'orange'} ]
+    $scope.listColor = [{name:'blanc', value:'white'},{name:'gris', value:'grey'},{name:'noir', value:'black'},{name:'orange', value:'orange'} ]
     $scope.colorChoosen = $scope.listColor[1];
+    $scope.updateBddColor = function(colorChoosen){
+        restRecipeService.updateBddColor(colorChoosen.value, 2117);
+    }
     $scope.stopPropag = function(event){
         event.stopPropagation();
         $log.info("STOP PROPAG !!")

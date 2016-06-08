@@ -189,7 +189,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
             $scope.filterSearch.categories.splice(index, 1);
             //init select avec elem fictif  "choisir"
             //$scope.myCategory = $scope.filterSearch.categories[0];
-            restRecipeService.putIncrNumRankCategory(category.id, 2);//2117
+            incrNumRankCategory(category);
 
         }
     }
@@ -201,8 +201,32 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
             $scope.filterSearch.origins.splice(index, 1);
             //init select avec elem fictif  "choisir"
             //$scope.myOrigin = $scope.filterSearch.origins[0];
+            incrNumRankOrigin(origin);
         }
     }
+
+    /******************* IA on numRank specialite / recipeCategory ********************/
+    /*On part du principe que les numRank sont initialisee avec un nb plus petit que 10
+    et que des quon clique sur une category for the 1st time, on veut la voir directement en haut donc on lui affecte directement 10
+    On incrementera seulement par la suite..*/
+    var incrNumRankCategory = function(category){
+        if(category.numRank < 10){
+            category.numRank = 10;
+        }else{
+            category.numRank++;
+        }
+        restRecipeService.putIncrNumRankCategory(category.id, 2);//user 2117
+    }
+    var incrNumRankOrigin = function(origin){
+        if(origin.numRank < 10){
+            origin.numRank = 10;
+        }else{
+            origin.numRank++;
+        }
+        restRecipeService.putIncrNumRankOrigin(origin.id, 2);//user 2117
+    }
+
+    /************* end IA ***************/
 
 
     /** si on a select coeur/pushPin depuis NAVBAR */

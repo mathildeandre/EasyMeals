@@ -11,7 +11,7 @@ package com.toobe.dto.info;
 
 public class RecipeOrigin {
 
-    private int id;
+    private Long id;
     private String name;
     private int numRank;
 
@@ -19,17 +19,17 @@ public class RecipeOrigin {
 
     }
 
-    public RecipeOrigin(int id, String name, int numRank) {
+    public RecipeOrigin(Long id, String name, int numRank) {
         this.id = id;
         this.name = name;
         this.numRank = numRank;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -60,7 +60,7 @@ public class RecipeDao {
             //stm.setInt(6, 0);//recipe.getNbVoter() nbVoter default 0
             stm.setInt(5, recipe.getNbPerson());
             stm.setString(6, recipe.getPixName());
-            stm.setInt(7, recipe.getOrigin().getId());
+            stm.setLong(7, recipe.getOrigin().getId());
             stm.setBoolean(8, false);
             stm.setInt(9, recipe.getTimeCooking());
             stm.setInt(10, recipe.getTimePreparation());
@@ -170,9 +170,9 @@ public class RecipeDao {
                 int timeCooking = resRecipe.getInt("timeCooking");
                 int timePreparation = resRecipe.getInt("timePreparation");
 
-                User user = new User(resRecipe.getLong("idOwner"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
+                User user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
                 RecipeType recipeType = new RecipeType(idRecipeType, nameRecipeType);
-                RecipeOrigin recipeOrigin = new RecipeOrigin(resRecipe.getInt("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"));
+                RecipeOrigin recipeOrigin = new RecipeOrigin(resRecipe.getLong("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"));
 
                 recipe = new Recipe(idRecipe, name, isPublic, user, pixName, recipeType, ingredientList, descriptionList,
                         recipeOrigin, categoryList, nbPerson, rating, nbVoter, timeCooking, timePreparation, isValidated, relUserRecipe);
@@ -274,7 +274,7 @@ public class RecipeDao {
 
                 user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
                 recipeType = new RecipeType(idRecipeType, nameRecipeType);
-                recipeOrigin = new RecipeOrigin(resRecipe.getInt("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"));
+                recipeOrigin = new RecipeOrigin(resRecipe.getLong("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"));
 
                 recipe = new Recipe(idRecipe, name, isPublic, user, pixName, recipeType, ingredientList, descriptionList,
                         recipeOrigin, categoryList, nbPerson, rating, nbVoter, timeCooking, timePreparation, isValidated, relUserRecipe);

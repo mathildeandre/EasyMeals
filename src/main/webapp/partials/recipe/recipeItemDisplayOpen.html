@@ -1,5 +1,6 @@
 <div ng-show="recipe.descriptionOpen" class="" ng-click="toggleDescOpen(recipe)" ng-class="{recipeWithDescripOrange:colorChoosen.value=='orange',
-                                            recipeWithDescripSimple:colorChoosen.value=='white', recipeWithDescripBlackSlate:colorChoosen.value=='black'}">
+                                            recipeWithDescripWhite:colorChoosen.value=='white', recipeWithDescripBlackSlate:colorChoosen.value=='black',
+                                            recipeWithDescripGrey:colorChoosen.value=='grey'}">
 
     <div class="headingRecipeWithDescrip" >{{recipe.name}}
         &nbsp&nbsp
@@ -88,7 +89,10 @@
         <div class="preparationRecipe">
             <div class="subTitleRecipeOpen"> Préparation</div>
             <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
-                {{descript.numDescrip}} - {{descript.name}}
+                <div class="divEtapeNumPreparation">Etape {{descript.numDescrip}} :</div>
+                <div class="divContenuPreparation">{{descript.name}} blab blab baba j et ensuit enous lalon dznser dans les boirs ahahahhaha et oui petite coquine s :p</div>
+                <br>
+                <br>
             </div>
         </div>
     </div>

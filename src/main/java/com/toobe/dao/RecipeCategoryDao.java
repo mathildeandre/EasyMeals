@@ -77,7 +77,7 @@ public class RecipeCategoryDao {
         return categoryList;
     }
 
-    private final static String UPDATE_isFavorite_REL_USER_RECIPE = "UPDATE Rel_User_RecipeCategory SET numRank = ? WHERE idRecipeCategory = ? AND idUser = ? ;\n";
+    private final static String UPDATE_incrNumRank_REL_USER_RecipeCATEGORY = "UPDATE Rel_User_RecipeCategory SET numRankRel = ? WHERE idRecipeCategory = ? AND idUser = ? ;\n";
     public void putIncrNumRankCategory(Connection conn, Long idRecipeCategory, Long idUser){
         PreparedStatement stm;
         int isOk = 0;
@@ -90,20 +90,18 @@ public class RecipeCategoryDao {
             }
             //2.2. otherwise we update-increment numRank of the relation
             else{
-                stm = conn.prepareStatement(UPDATE_isFavorite_REL_USER_RECIPE);
+                stm = conn.prepareStatement(UPDATE_incrNumRank_REL_USER_RecipeCATEGORY);
                 stm.setInt(1, numRank+1);
                 stm.setLong(2, idRecipeCategory);
                 stm.setLong(3, idUser);
                 isOk = stm.executeUpdate();
                 if (isOk == 0) {
-                    throw new SQLException("putIsFavorite failed, no rows affected");
+                    throw new SQLException("putIncrNumRankCategory failed, no rows affected");
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -119,7 +117,7 @@ public class RecipeCategoryDao {
             stm.setLong(2, idUser);
             ResultSet res = stm.executeQuery();
             if (res.next()) {
-                numRank = res.getInt("numRank");
+                numRank = res.getInt("numRankRel");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,7 +125,7 @@ public class RecipeCategoryDao {
         return numRank;
     }
 
-    private static final String INSERT_REL_RecipeCategory_User = "INSERT INTO REL_User_RecipeCategory(idRecipeCategory, idUser, numRank) VALUES (?, ?, ?)";
+    private static final String INSERT_REL_RecipeCategory_User = "INSERT INTO REL_User_RecipeCategory(idRecipeCategory, idUser, numRankRel) VALUES (?, ?, ?)";
     private void insertRelUserRecipeCategory(Connection conn, Long idRecipeCategory, Long idUser, int numRank) {
         PreparedStatement stm;
         try {

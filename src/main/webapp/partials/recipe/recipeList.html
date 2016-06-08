@@ -64,7 +64,7 @@
                 </div>
                 <div class="buttonsDisplayListColor">
                     <span ng-show="!isTablet()"> Couleur : </span>&nbsp
-                    <select class="fieldRecipe fieldOrderBy"  ng-model='colorChoosen' ng-options='color.name for color in listColor' >
+                    <select class="fieldRecipe fieldOrderBy"  ng-model='colorChoosen' ng-options='color.name for color in listColor' ng-change="updateBddColor(colorChoosen)" >
                     </select>
                 </div>
 

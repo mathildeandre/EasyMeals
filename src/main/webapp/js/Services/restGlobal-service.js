@@ -94,7 +94,7 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                     $log.warn("categories loaded!")
 
                     /* ORIGINS */
-                    return getObjFromServer('/rest/recipeOrigins').then(function(data){
+                    return getObjFromServer('/rest/recipeOrigins/2').then(function(data){//2117 = idUser
                         origins = data;
                         $log.warn("origins loaded!")
 

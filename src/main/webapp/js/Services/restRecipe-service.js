@@ -247,6 +247,12 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
     function putIncrNumRankCategory(idRecipeCategory, idUser){
         postObjToServer('POST', '/rest/putIncrNumRankCategory/'+idRecipeCategory+'/'+idUser)
     }
+    function putIncrNumRankOrigin(idRecipeOrigin, idUser){
+        postObjToServer('POST', '/rest/putIncrNumRankOrigin/'+idRecipeOrigin+'/'+idUser)
+    }
+    function updateBddColor(colorValue, idUser){
+        postObjToServer('POST', '/rest/updateBddColor/'+colorValue+'/'+idUser)
+    }
 
 
     function getObjFromServer(url) {
@@ -288,6 +294,8 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         putIsFavorite: putIsFavorite,
         putIsForPlanning: putIsForPlanning,
         putRatingUser: putRatingUser,
-        putIncrNumRankCategory: putIncrNumRankCategory
+        putIncrNumRankCategory: putIncrNumRankCategory,
+        putIncrNumRankOrigin: putIncrNumRankOrigin,
+        updateBddColor: updateBddColor
     };
 });

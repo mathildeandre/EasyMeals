@@ -18,6 +18,7 @@ public class ManagerGet {
 
     private static ManagerGet self;
 
+    private UserDao userDao;
     private RecipeDao recipeDao;
     //private ListShoppingDao listShoppingDao;
     private PlanningDao planningDao;
@@ -36,6 +37,7 @@ public class ManagerGet {
     }
 
     public ManagerGet(){
+        userDao = new UserDao();
         recipeDao = new RecipeDao();
         //listShoppingDao = new ListShoppingDao();
         planningDao = new PlanningDao();
@@ -48,6 +50,22 @@ public class ManagerGet {
     // TODO Close connection?
 
     // TODO add constructor to initailize all dao ?
+
+    /*********************************************/
+    /************* USER ***********************/
+    /*******************************************/
+    public void updateBddColor(String colorValue, Long idUser){
+        startConnection();
+        userDao.updateBddColor(conn, colorValue, idUser);
+    }
+    public List<RecipeCategory> getRecipeCategories(Long idUser){
+        startConnection();
+        return recipeCategoryDao.getRecipeCategories(conn, idUser);
+    }
+    public List<RecipeOrigin> getRecipeOrigins(Long idUser){
+        startConnection();
+        return recipeOriginDao.getRecipeOrigins(conn, idUser);
+    }
 
     /*********************************************/
     /************* RECIPE ***********************/
@@ -72,14 +90,6 @@ public class ManagerGet {
         startConnection();
         return recipeDao.getRecipeTypes(conn);
     }
-    public List<RecipeCategory> getRecipeCategories(Long idUser){
-        startConnection();
-        return recipeCategoryDao.getRecipeCategories(conn, idUser);
-    }
-    public List<RecipeOrigin> getRecipeOrigins(){
-        startConnection();
-        return recipeOriginDao.getRecipeOrigins(conn);
-    }
 
     public boolean createRecipe(Recipe recipe){
         startConnection();
@@ -101,6 +111,10 @@ public class ManagerGet {
     public void putIncrNumRankCategory(Long idRecipeCategory, Long idUser){
         startConnection();
         recipeCategoryDao.putIncrNumRankCategory(conn, idRecipeCategory, idUser);
+    }
+    public void putIncrNumRankOrigin(Long idRecipeOrigin, Long idUser){
+        startConnection();
+        recipeOriginDao.putIncrNumRankOrigin(conn, idRecipeOrigin, idUser);
     }
     /***********************************************/
     /************* PLANNING ***********************/

@@ -562,10 +562,13 @@ h6 {
     color: darkslategrey;
 }
 .fieldRecipeMoreCategories{
+    /*pour mettre en vrac a la suite
     display: inline-block;
+    width:auto;*/
+    width: 50%;
+
     margin-top: 3px;
     padding: 4px 5px;
-    width:auto;
     border-radius:3px;
     text-align: center;
     border:1px solid darkslategrey;
@@ -1269,7 +1272,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .elemColonneX2{/*colonne x2*/
     display:inline-block;
     margin: 2px 0;
-    width:42%;
+    width:50%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: clip;
@@ -1411,7 +1414,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
     vertical-align:top;
     margin-top: 23px;
     display: inline-block;/*block sera a droite de la pix*/
-    margin-left: 5%;
+    //margin-left: 9%;
+    margin-left: 5.5vw; /* pile pas trop grand pr tablett et un peu pour desktop */
 }
 .divTimeNoDescription{
     vertical-align:top;
@@ -1475,13 +1479,21 @@ select::selection,option::selection { /* ne fonctionne pas  */
     //padding:10px;
     //padding-bottom:20px;
 }
-.recipeWithDescripSimple{
+.recipeWithDescripWhite{
     background-color: white;
     color:darkslategrey;
     border-radius:3px;
     //padding:10px;
     //padding-bottom:20px;
     border : 2px solid lightgrey;
+}
+.recipeWithDescripGrey{
+    background-color: #f2f2f2;
+    color:darkslategrey;
+    border-radius:3px;
+    //padding:10px;
+    //padding-bottom:20px;
+    border : 2px solid darkslategrey;
 }
 .recipeWithDescripOrange{
     background-color: #f9deb9;//#fbe9d0;
@@ -1534,18 +1546,34 @@ select::selection,option::selection { /* ne fonctionne pas  */
      text-align: right;
  }
 
-.recipeWithDescripSimple .headingRecipeWithDescrip{
+.recipeWithDescripWhite .headingRecipeWithDescrip{
     background-color: #f2f2f2;
-}.recipeWithDescripSimple .footerRecipeWithDescrip{
+}.recipeWithDescripWhite .footerRecipeWithDescrip{
     background-color: #f2f2f2;
      border-top: 1px solid #ddd;
-}.recipeWithDescripSimple .footerRecipeWithDescrip .footerRecipePublic{
+}.recipeWithDescripWhite .footerRecipeWithDescrip .footerRecipePublic{
       color: darkslategrey;
-}.recipeWithDescripOrange .headingRecipeWithDescrip{
+}
+.recipeWithDescripGrey .headingRecipeWithDescrip {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid darkslategrey;
+    /* style aussi !
+    background-color: darkslategrey;
+    color: white;*/
+}.recipeWithDescripGrey .footerRecipeWithDescrip {
+    border-top: 1px solid darkslategrey;
+     background-color: #f2f2f2;
+     color: darkslategrey;
+     /* style aussi !
+     background-color: darkslategrey;
+     color: white;*/
+}
+.recipeWithDescripOrange .headingRecipeWithDescrip{
     background-color: rgba(245, 245, 245, 0.5); //#f5f5f5;
 }.recipeWithDescripOrange .footerRecipeWithDescrip{
     background-color: rgba(0,0,0, 0.3); //black;
-}.recipeWithDescripBlackSlate .headingRecipeWithDescrip{
+}
+.recipeWithDescripBlackSlate .headingRecipeWithDescrip{
     background-color: rgba(245, 245, 245, 0.1); //#f5f5f5;
 }.recipeWithDescripBlackSlate .footerRecipeWithDescrip{
     background-color: rgba(0,0,0, 0.3); //black;
@@ -1587,10 +1615,23 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .divTopRecipeRight{
     display: inline-block;
-    margin-left:3%;
+    margin-left:7.5%;
     vertical-align:top;
-
 }
+.divEtapeNumPreparation{
+    display: inline-block;
+    vertical-align:top;
+}
+
+.divContenuPreparation {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 2%;
+    width: 85%;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 .pixRecipeWithDescrip{
     display: inline-block;
     margin-left:2%;
@@ -1610,7 +1651,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .ingredientRecipe{
     display: inline-block;
     //width:50%;
-    margin-left:3%;
+    margin-left:7.5%;
     vertical-align:top;
     /*font-style:bold;
     font-size:large;*/
