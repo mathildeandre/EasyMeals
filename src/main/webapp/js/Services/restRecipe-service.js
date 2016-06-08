@@ -60,10 +60,9 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
     function getIdRecipeType(nameRecipeType){
         getRecipeTypes();
 
-
-        $log.debug("inot getIdRecipeType")
+        //$log.debug("inot getIdRecipeType")
         for(var i=0; i<recipeTypes.length; i++){
-            $log.debug("boucle"+i+" ; recipeTypes name"+recipeTypes[i].nameType+" : id : "+recipeTypes[i].idType)
+            //$log.debug("boucle"+i+" ; recipeTypes name"+recipeTypes[i].nameType+" : id : "+recipeTypes[i].idType)
             if(recipeTypes[i].nameType == nameRecipeType){
                 return recipeTypes[i].idType;
             }

@@ -57,7 +57,7 @@ myModule.controller('RecipeCreationCtrl', function($scope, $log, $http, $locatio
 
     };
 
-    $scope.displayRecipeTypeName = AppendixFunctionsService.displayRecipeType($scope.recipeTypeName);
+    $scope.displayRecipeTypeName = AppendixFunctionsService.displayTitleCreationRecipeType($scope.recipeTypeName);
 
 
     /*keyUpdateFilter  pr food*/

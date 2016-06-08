@@ -190,7 +190,7 @@ public class PlanningDao {
         return getPlanningById(conn, idPlanningCopy);
     }
 
-    private final static String CREATE_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser) VALUES (?, ?, ?);\n";
+    private final static String CREATE_PLANNING = "INSERT INTO Planning(name, lastOpen, idUser, nbPersGlobal, isForListShop) VALUES (?, ?, ?, ?, ?);\n";
     private final static String CREATE_WEEKMEAL = "INSERT INTO Planning_WeekMeal(weekMealName, showWeekMeal, idPlanning) VALUES (?, ?, ?);\n";
     private final static String CREATE_CASEMEAL = "INSERT INTO Planning_CaseMeal(numDay, nbPers, idPlanningWeekMeal) VALUES (?, ?, ?);\n";
     public Planning createPlanning(Connection conn, int idUser) { //A FAIRE UNE FOIS LORS DE CREATION DE USER
@@ -205,6 +205,8 @@ public class PlanningDao {
             stm.setString(1, "nouveauPlanning");
             stm.setBoolean(2, true); //lastOpen
             stm.setLong(3, idUser);
+            stm.setInt(4, 4);
+            stm.setBoolean(5, false); //isForListShop
             isOk = stm.executeUpdate();
             if (isOk == 0) {
                 throw new SQLException("Creating Planning failed, no rows affected");

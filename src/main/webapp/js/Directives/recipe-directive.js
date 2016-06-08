@@ -33,7 +33,7 @@ myDirective.directive('recipeList', function(){
 myDirective.directive('recipeAccueil', function(){
     return{
         restrict:'E',
-        templateUrl:'../../partials/recipe/recipeAccueil.html',
+        templateUrl:'../../partials/idea/recipeAccueil.html',
         replace:true
 
     } ;
@@ -47,7 +47,7 @@ myDirective.directive('recipeAccueil', function(){
 myDirective.directive('recipeitemDisplayinlist', function(){
     return{
         restrict:'E',
-        templateUrl:'../../partials/recipe/recipeItemDisplayNotOpenInList.html',
+        templateUrl:'../../partials/recipe/recipeItem/recipeItemDisplayNotOpenInList.html',
         replace:true
 
     } ;
@@ -55,7 +55,7 @@ myDirective.directive('recipeitemDisplayinlist', function(){
 myDirective.directive('recipeitemDisplayinblock', function(){
     return{
         restrict:'E',
-        templateUrl:'../../partials/recipe/recipeItemDisplayNotOpenInBlock.html',
+        templateUrl:'../../partials/recipe/recipeItem/recipeItemDisplayNotOpenInBlock.html',
         replace:true
 
     } ;
@@ -63,7 +63,7 @@ myDirective.directive('recipeitemDisplayinblock', function(){
 myDirective.directive('recipeitemDisplayopen', function(){
     return{
         restrict:'E',
-        templateUrl:'../../partials/recipe/recipeItemDisplayOpen.html',
+        templateUrl:'../../partials/recipe/recipeItem/recipeItemDisplayOpen.html',
         replace:true
 
     } ;

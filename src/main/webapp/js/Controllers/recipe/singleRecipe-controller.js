@@ -16,6 +16,7 @@ myModule.controller('SingleRecipeCtrl', function($scope, $routeParams, $location
 
     restRecipeService.getBDDSingleRecipe(recipeId).then(function(data){
         $scope.recipe = data;
+        //$log.debug("recipe.name : "+$scope.recipe.name);
         if($scope.recipe.name != undefined){
             $scope.showRecipe = true;
         }else{

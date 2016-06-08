@@ -17,7 +17,7 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                 })
 
                 .when('/idea', {
-                    templateUrl: '../partials/others/idea.html',
+                    templateUrl: '../partials/idea/idea.html',
                     controller:'IdeaCtrl',
                     resolve:{ ideaResolve: function ($log, restGlobalService){
                         $log.warn("::::: RESOLVE idea route ::::: calling -restGlobalService.initGlobalLoadData()")
@@ -78,7 +78,7 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
 
 
                 .when('/singleRecipe/:recipeType/:id', {templateUrl: '../partials/recipe/singleRecipe.html', controller:'SingleRecipeCtrl'})
-                .when('/recipeCreation/:recipeType', {templateUrl: '../partials/recipe/recipeCreation.html', controller:'RecipeCreationCtrl'})
+                /*old -- .when('/recipeCreation/:recipeType', {templateUrl: '../partials/recipe/modals/old_recipeCreation.html', controller:'RecipeCreationCtrl'})*/
 
 
                 .when('/calculationAlcohol', {templateUrl: '../partials/others/calculationAlcohol.html', controller:'CalculationAlcoholCtrl'})

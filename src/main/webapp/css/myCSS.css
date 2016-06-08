@@ -2600,7 +2600,17 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .cursorPointer{
     cursor:pointer;
 }
-
+.cursorNotAllowed:hover{
+    cursor:not-allowed;
+}
+.cursorNotAllowed2{
+    color: blue;
+}
+.myDisabledBtn {
+    color: pink;
+    cursor: not-allowed;
+    pointer-events: all !important;
+}
 
 /****************************************************************************************************************************************************************************************/
 /*************************************************************************   GLYPHICONS  ***********************************************************************************************/

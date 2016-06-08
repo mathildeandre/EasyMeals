@@ -43,6 +43,15 @@ myService.service('AppendixFunctionsService', function($http, $q, $log) {
                 case 'cocktail' : return 'Créer un nouveau Cocktail';
             }
         }
+        function displayTitleCreationRecipeType(recipeType){
+            switch(recipeType){
+                case 'starter' : return 'Création d\'une Entrée';
+                case 'course' :  return 'Création d\'un Plat';
+                case 'dessert' : return 'Création d\'un Dessert';
+                case 'breakfast' : return 'Création d\'un Dej/Goûter';
+                case 'cocktail' : return 'Création d\'un Cocktail';
+            }
+        }
         function displayMealType(mealType){
             switch(mealType){
                 case 'breakfast' : return 'Petit déjeuner';
@@ -79,6 +88,7 @@ myService.service('AppendixFunctionsService', function($http, $q, $log) {
             displayIngrUnitAndFood: displayIngrUnitAndFood,
             displayRecipeType: displayRecipeType,
             displayButtonCreationRecipeType: displayButtonCreationRecipeType,
+            displayTitleCreationRecipeType: displayTitleCreationRecipeType,
             displayMealType: displayMealType,
             displayTime: displayTime
         };
