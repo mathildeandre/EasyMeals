@@ -38,7 +38,7 @@ import java.util.List;
 
 public class Recipe implements Serializable{
 
-    private int id;
+    private Long id;
     private String name;
     private boolean isPublic;
     private User user;
@@ -68,7 +68,7 @@ public class Recipe implements Serializable{
     public Recipe(){
     }
 
-    public Recipe(int id, String name, boolean isPublic, User user, String pixName, RecipeType recipeType,
+    public Recipe(Long id, String name, boolean isPublic, User user, String pixName, RecipeType recipeType,
                   List<Ingredient> ingredients, List<RecipeDescription> descriptions, RecipeOrigin origin,
                   List<RecipeCategory> categories, int nbPerson, float rating, int nbVoter, int timeCooking,
                   int timePreparation, boolean isValidated, RelUserRecipe relUserRecipe) {
@@ -95,11 +95,11 @@ public class Recipe implements Serializable{
         this.isHide = relUserRecipe.isHide();
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

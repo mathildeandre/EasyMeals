@@ -81,7 +81,7 @@ public class ManagerGet {
         return recipeDao.getRecipesForUser(conn, idUser);
     }
 
-    public Recipe getRecipeById(int idRecipe){
+    public Recipe getRecipeById(Long idRecipe){
         startConnection();
         return recipeDao.getRecipeById(conn, idRecipe);
     }
@@ -91,7 +91,7 @@ public class ManagerGet {
         return recipeDao.getRecipeTypes(conn);
     }
 
-    public boolean createRecipe(Recipe recipe){
+    public Recipe createRecipe(Recipe recipe){
         startConnection();
         return recipeDao.createRecipe(conn,recipe);
     }

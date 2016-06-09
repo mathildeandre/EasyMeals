@@ -602,12 +602,13 @@ h6 {
 .fieldRecipeCreationWidth{
     width:60px;
 }
-.nameRecipe{
+.alignLeft{
     text-align: left;
 }
 .nameFood{
     text-align: left;
-    color:white;
+    //color:white;
+    color: darkslategrey;
 }
 .nameFood:focus {
     outline: 0; /*2px solid #d9534f;*/
@@ -736,6 +737,9 @@ h6 {
 .width100{
      width: 100px;
  }
+.width150{
+     width: 150px;
+}
 
 .width180{
     width: 180px;
@@ -748,6 +752,9 @@ h6 {
     width: 400px;
 }
 
+.marginRight10px{
+    margin-right: 10px;
+}
 /**********************************************************************  TRASH  ********************************************************************************************/
 
 
@@ -802,7 +809,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 
 
-
 .inlineBlock{
     display:inline-block;
 }
@@ -812,6 +818,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .titleInlineBlock{
     display:inline-block;
+   border : 1px dotted purple;
+    width : 70%;
 }
 .rightInlineBlock{
     display:inline-block;
@@ -1813,6 +1821,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .popover {
     max-width: 600px;
+    //background-color: black;
 }
 
 
@@ -1879,6 +1888,9 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .colorRed{
     color:indianred;
+}
+.colorLightRed{
+    color:#e89996;
 }
 /************************************************************************************************************/
 /*************************  SINGLE RECIPE (new window) custom  *********************************************/
@@ -1997,8 +2009,15 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .artHeadingRecipeCreation{
     //height: 58px;
 }
-.formIngredients{
-    margin:20px 0 30px 0;
+.formBigger{
+    //margin:20px 0 30px 0;
+    margin-top: 20px;
+}
+.marginLeft10px{
+    margin-left:10px;
+}
+.blockCategories{
+    width: 80%;
 }
 
 .formIngredients2{
@@ -2010,18 +2029,34 @@ select::selection,option::selection { /* ne fonctionne pas  */
     border-radius: 3px;
     padding:10px;
     margin: 15px 0;
+    /* test :*/
+    background-color: lightgrey;
 }
 .myBlockFoodPropositionTitle{
     border-bottom:1px solid lightgrey;
+    border-bottom:1px solid darkslategrey;
+    border-bottom:1px solid #555555;
     margin-bottom:10px;
     //font-size: 18px;
     //font-weight: 600;
+    /* test :*/
+    //color: white;
+}
+.btnFoodProposition{
+    /* test :*/
+    background-color: white;
+}
+.foodProposition{
 }
 .backgroundGreen{
     background-color: #c1e2b3;
+    color:white;
 }
 .backgroundRed{
     background-color: #e89996;
+}
+.backgroundGrey{
+    background-color: #999999;//grey;
 }
 .inputIngredientFoodName{
     color: white;
@@ -2606,10 +2641,26 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .cursorNotAllowed2{
     color: blue;
 }
-.myDisabledBtn {
-    color: pink;
+.myDisabledBtn{
+    //color: darkgrey;
+    background-color: gray;
+    border: none;
     cursor: not-allowed;
-    pointer-events: all !important;
+}
+.myDisabledBtn:hover,
+.myDisabledBtn:active,
+.myDisabledBtn:focus {
+    //pointer-events: all !important;
+    //color: darkgrey;
+    background-color: gray;
+    border: none;
+    outline : 0;
+    outline-color : invert;
+    //outline-style : none;
+}
+
+.myAbledBtn{
+    color: blue;
 }
 
 /****************************************************************************************************************************************************************************************/

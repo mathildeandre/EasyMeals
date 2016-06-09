@@ -44,7 +44,7 @@ public class RecipeDao {
             "idOwner, nbPerson, pixName, idOrigin, isValidated, timeCooking, timePreparation) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
 
-    public boolean createRecipe(Connection conn, Recipe recipe) {
+    public Recipe createRecipe(Connection conn, Recipe recipe) {
         PreparedStatement stm;
         ResultSet resultRecipe;
         int isOk = 0;
@@ -89,7 +89,7 @@ public class RecipeDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isOk != 0;
+        return getRecipeById(conn, idRecipe);//isOk != 0;
     }
 
 
@@ -133,13 +133,13 @@ public class RecipeDao {
                     "WHERE recipe.idOrigin = ro.id  AND idOwner = user.id AND rt.id = recipe.idType AND recipe.id = ? ";
 
 
-    public Recipe getRecipeById(Connection conn, int idRecipe) {
+    public Recipe getRecipeById(Connection conn, Long idRecipe) {
         Recipe recipe = new Recipe();
         PreparedStatement stm;
         try {
             /* on fait la requete pr avoir les liste des plats en fonction de notre recipeType (: idType)*/
             stm = conn.prepareStatement(SELECT_RECIPE_By_ID);
-            stm.setInt(1, idRecipe);
+            stm.setLong(1, idRecipe);
             ResultSet resRecipe = stm.executeQuery();
 
             if (resRecipe.next()) {
@@ -236,7 +236,8 @@ public class RecipeDao {
         Recipe recipe;
         try {
 
-            int idRecipe, nbPerson, nbVoter, timeCooking, timePreparation, idRecipeType;
+            Long idRecipe;
+            int nbPerson, nbVoter, timeCooking, timePreparation, idRecipeType;
             float rating;
             String name, pixName, nameRecipeType;
             boolean isPublic, isValidated;
@@ -245,7 +246,7 @@ public class RecipeDao {
             RecipeOrigin recipeOrigin;
 
             while (resRecipe.next()) {
-                idRecipe = resRecipe.getInt("idRecipe");
+                idRecipe = resRecipe.getLong("idRecipe");
 
                 /* REL USER RECIPE */
                 RelUserRecipe relUserRecipe = getRelUserRecipe(conn, idRecipe, idUser);
@@ -313,13 +314,13 @@ public class RecipeDao {
     private static final String SELECT_RelUserRecipe = "SELECT * FROM Rel_User_Recipe " +
             " WHERE idUser = ? AND idRecipe = ?";
 
-    private RelUserRecipe getRelUserRecipe(Connection conn, int idRecipe, Long idUser) {
+    private RelUserRecipe getRelUserRecipe(Connection conn, Long idRecipe, Long idUser) {
         RelUserRecipe relUserRecipe = new RelUserRecipe();
         PreparedStatement stm;
         try {
             stm = conn.prepareStatement(SELECT_RelUserRecipe);
             stm.setLong(1, idUser);
-            stm.setInt(2, idRecipe);
+            stm.setLong(2, idRecipe);
             ResultSet res = stm.executeQuery();
             if (res.next()) {
                 boolean isFavorite = res.getInt("isFavorite") == 1;
@@ -341,7 +342,7 @@ public class RecipeDao {
     private static final String SELECT_INGREDIENT = "SELECT idRecipe, quantity, unit, idFood, name, idCategory, isValidated " +
             "FROM INGREDIENT, FOOD WHERE INGREDIENT.idFood=FOOD.id AND ingredient.idRecipe = ?";
 
-    private List<Ingredient> getIngredientList(Connection conn, int idRecipe) {
+    private List<Ingredient> getIngredientList(Connection conn, Long idRecipe) {
 
         List<Ingredient> ingredientList = new ArrayList<Ingredient>();
         Ingredient ingr;
@@ -356,7 +357,7 @@ public class RecipeDao {
         Food food;
         try {
             stm = conn.prepareStatement(SELECT_INGREDIENT);
-            stm.setInt(1, idRecipe);
+            stm.setLong(1, idRecipe);
             ResultSet resIngredient = stm.executeQuery();
             while (resIngredient.next()) {
                 qty = resIngredient.getFloat("quantity");
@@ -377,14 +378,15 @@ public class RecipeDao {
     /**
      * Utilisee dans les fct qui construisent un recipe
      */
-    private List<RecipeDescription> getDescriptionList(Connection conn, int idRecipe) {
+    private List<RecipeDescription> getDescriptionList(Connection conn, Long idRecipe) {
         List<RecipeDescription> descriptionList = new ArrayList<RecipeDescription>();
         String descr;
         int numDescrip;
         RecipeDescription recipeDescrip;
         PreparedStatement stm;
         try {
-            stm = conn.prepareStatement("SELECT description, numDescription FROM Recipe_Description WHERE idRecipe = " + idRecipe + " ORDER BY numDescription");
+            stm = conn.prepareStatement("SELECT description, numDescription FROM Recipe_Description WHERE idRecipe =  ?  ORDER BY numDescription");
+            stm.setLong(1, idRecipe);
             ResultSet resDescription = stm.executeQuery();
             while (resDescription.next()) {
                 descr = resDescription.getString("description");

@@ -51,7 +51,7 @@ public class RecipeCategoryDao {
      * Utilisee dans les fct qui construisent un recipe
      * Permet de trouver toutes les recipeCategory pour UNE recette donnée
      */
-    public List<RecipeCategory> getCategoryRecipeList(Connection conn, int idRecipe) {
+    public List<RecipeCategory> getCategoryRecipeList(Connection conn, Long idRecipe) {
 
         List<RecipeCategory> categoryList = new ArrayList<RecipeCategory>();
         Long idCategory;
@@ -60,7 +60,8 @@ public class RecipeCategoryDao {
         RecipeCategory recipeCategory;
         PreparedStatement stm;
         try {
-            stm = conn.prepareStatement("SELECT * FROM Rel_Recipe_Category, Recipe_Category  WHERE idCategory = Recipe_Category.id AND idRecipe = " + idRecipe);
+            stm = conn.prepareStatement("SELECT * FROM Rel_Recipe_Category, Recipe_Category  WHERE idCategory = Recipe_Category.id AND idRecipe = ?");
+            stm.setLong(1, idRecipe);
             ResultSet resCategory = stm.executeQuery();
             while (resCategory.next()) {
                 idCategory = resCategory.getLong("id");

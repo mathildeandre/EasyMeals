@@ -138,16 +138,18 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
 
     function createRecipe(recipe){
         // Web service - BDD
-        insertRecipe(recipe).then(function (response) {
-            $log.debug("ok mnt que c fait ds la base on insert la recipe ds la VIEW")
-            $log.info("ppou info les amis : recipe rating : "+recipe.ratingUser)
+
+        insertRecipe(recipe).then(function (data) { //postObjToServer('POST', '/rest/recipe/create', recipe).then(function (response) {
+            //On add dans VIEW apres avoir fait le POST car on ajoute recipe.ratingSystem ce qui aurait fait bugger le post avec un champ de l'objet non existant cote server
+            var recipeCreated = data;
             /* initComplement*/
-            recipe.ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]}
+            recipeCreated.ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]}
             /*push VIEW */
-            switch(recipe.recipeType.nameType){
-                case 'starter' : starters.push(recipe); break;
-                case 'course' :  courses.push(recipe); break;
-                case 'dessert' : desserts.push(recipe); break;
+            $log.info("[DATA] categoriiiiiiiiiiiiiiiiiiii (name): "+recipeCreated.categories[0].name)
+            switch(recipeCreated.recipeType.nameType){
+                case 'starter' : starters.push(recipeCreated); break;
+                case 'course' :  courses.push(recipeCreated); break;
+                case 'dessert' : desserts.push(recipeCreated); break;
                 case 'breakfast' :  break;
                 case 'cocktail' : break;
             }

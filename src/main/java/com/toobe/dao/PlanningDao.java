@@ -268,7 +268,8 @@ public class PlanningDao {
             stm = conn.prepareStatement("SELECT * FROM PLANNING WHERE id = "+idPlanning);
             ResultSet res = stm.executeQuery();
 
-            int idWeekMeal, idCaseMeal, idRecipe;
+            Long idRecipe;
+            int idWeekMeal, idCaseMeal;
             if(res.next()){
 
                 //idPlanning = res.getInt("id");
@@ -295,7 +296,7 @@ public class PlanningDao {
                         ResultSet resRelRecipeCaseMeal = stm.executeQuery();
                         List<Recipe> listRecipe = new ArrayList<Recipe>();
                         while(resRelRecipeCaseMeal.next()){
-                            idRecipe = resRelRecipeCaseMeal.getInt("idRecipe");
+                            idRecipe = resRelRecipeCaseMeal.getLong("idRecipe");
                             recipe = recipeDao.getRecipeById(conn, idRecipe);
                             listRecipe.add(recipe);
                         }

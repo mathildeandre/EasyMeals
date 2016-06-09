@@ -23,8 +23,8 @@ myModule.controller('ModalCreationRecipeCtrl', ['$scope', '$uibModal', '$log', '
             }
         });
 
-        modalInstance.result.then(function (variable) {
-            $log.debug("my variable : "+variable);
+        modalInstance.result.then(function () {
+            $log.debug("Creation recette validé");
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -57,7 +57,7 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
-        origin:{},
+        origin:$scope.origins[0],
         categories:[],
         timeCooking:30,
         timePreparation:20,
@@ -71,16 +71,13 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
 
     $scope.displayTitleCreationRecipeType = AppendixFunctionsService.displayTitleCreationRecipeType(recipeTypeName);
 
-    $scope.chooseCaseMeal = function(variable){
-        $uibModalInstance.close(variable);
-    }
-
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 
 
-
+    $scope.triedCreate = false;
+    $scope.enablePopoverNewSpeciality = true;
 
 
 
@@ -89,6 +86,23 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
     /************************************************************************************************** RESTE : not check yet ****************************************************************************/
     /************************************************************************************************** RESTE : not check yet ****************************************************************************/
 
+    $scope.cutEnable = function(){
+        $log.debug("youpiiiii")
+        $scope.enablePopoverNewSpeciality = false; $scope.enablePopoverNewSpeciality=true;
+    }
+    $scope.isEnable = function(){
+
+        return ($scope.newSpeciality =! undefined) && ($scope.newSpeciality =! '');
+    }
+
+    $scope.createNewSpeciality = function(newSpeciality){
+        var newSpecialty = {"id": -1, "name": newSpeciality, "numRank": 0}
+        $scope.origins.push(newSpecialty);
+        $scope.recipe.origin = newSpecialty;
+        //CLOSE popover : enbale to false close le popover puis on enbale=true pr pouvoir l'utiliser de nouveau!
+        //$scope.enablePopoverNewSpeciality = false;
+        //$scope.enablePopoverNewSpeciality=true;
+    }
 
 
     /*keyUpdateFilter  pr food*/
@@ -146,36 +160,48 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
 
     }
 
-    $scope.createRecipe = function(){
+    $scope.createRecipe = function(isFormValid){
 
-        //suppression du champ .checked de category (initil pour la base et povoquerait une erreur car non existant en java)
-        for(var i=0; i<$scope.recipe.categories.length; i++){
-            delete $scope.recipe.categories[i].checked;
-        }
-        //ajout en local des nouvelles foods (s'il y en a) car on ne reload pas la bdd avec les new food
-        for(var i=0; i<$scope.recipe.ingredients.length; i++){
-            if($scope.recipe.ingredients[i].food.id == 0){
-                restFoodService.addFood($scope.recipe.ingredients[i].food);
+
+        $log.info("categoriiiiiiiiiiiiiiiiiiii (all): "+$scope.recipe.categories[0])
+        $log.info("categoriiiiiiiiiiiiiiiiiiii (name): "+$scope.recipe.categories[0].name)
+        if(isFormValid){
+
+            $log.info("my recipe categoriiiiiiiiiiiiiiiiiiii (all): "+$scope.recipe.categories[0])
+            $log.info("my recipe categoriiiiiiiiiiiiiiiiiiii (name): "+$scope.recipe.categories[0].name)
+
+            //suppression du champ .checked de category (initil pour la base et povoquerait une erreur car non existant en java)
+            for(var i=0; i<$scope.recipe.categories.length; i++){
+                delete $scope.recipe.categories[i].checked;
             }
+            //ajout en local des nouvelles foods (s'il y en a) car on ne reload pas la bdd avec les new food
+            for(var i=0; i<$scope.recipe.ingredients.length; i++){
+                if($scope.recipe.ingredients[i].food.id == 0){
+                    restFoodService.addFood($scope.recipe.ingredients[i].food);
+                }
+            }
+
+            $log.info("AFET KILL checked categoriiiiiiiiiiiiiiiiiiii (all): "+$scope.recipe.categories[0])
+            $log.info("AFET KILL checked categoriiiiiiiiiiiiiiiiiiii (name): "+$scope.recipe.categories[0].name)
+            restRecipeService.createRecipe($scope.recipe);
+
+
+            /* IMAGE */
+            var file = $scope.picFile;
+            if($scope.picFile != null){
+                restRecipeService.sendImage($scope.picFile);
+            }
+            /*switch(recipeTypeName){
+             case 'starter' : RecipeService.addStarter(recipe); break;
+             case 'course' :  RecipeService.addCourse(recipe); break;
+             case 'dessert' : RecipeService.addDessert(recipe); break;
+             case 'breakfast' : RecipeService.addBreakfast(recipe); break;
+             case 'cocktail' : RecipeService.addCocktail(recipe); break;
+
+             }*/
+            //$location.path("/recipe/"+recipeTypeName);//$location.hash(recipe.id);
+            $uibModalInstance.close();
         }
-
-        restRecipeService.createRecipe($scope.recipe);
-
-
-        /* IMAGE */
-        var file = $scope.picFile;
-        if($scope.picFile != null){
-            restRecipeService.sendImage($scope.picFile);
-        }
-        /*switch(recipeTypeName){
-         case 'starter' : RecipeService.addStarter(recipe); break;
-         case 'course' :  RecipeService.addCourse(recipe); break;
-         case 'dessert' : RecipeService.addDessert(recipe); break;
-         case 'breakfast' : RecipeService.addBreakfast(recipe); break;
-         case 'cocktail' : RecipeService.addCocktail(recipe); break;
-
-         }*/
-        $location.path("/recipe/"+recipeTypeName);//$location.hash(recipe.id);
     }
 
 

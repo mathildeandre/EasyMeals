@@ -59,7 +59,7 @@ public class RecipeService {
     @Path("/recipe/{idRecipe}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getRecipeById(@PathParam("idRecipe") int idRecipe) {
+    public Response getRecipeById(@PathParam("idRecipe") Long idRecipe) {
         //localhost:8080/rest/recipe/2
         Recipe recipe = ManagerGet.getInstance().getRecipeById(idRecipe);
         return Response.ok(recipe).build();
@@ -79,7 +79,7 @@ public class RecipeService {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response createRecipe(Recipe recipe) {
-        ManagerGet.getInstance().createRecipe(recipe);
+        Recipe newRecipe = ManagerGet.getInstance().createRecipe(recipe);
         /*System.out.println(" recipe.name "+recipe.getName());
         System.out.println(" recipe.pixName "+recipe.getPixName());
         System.out.println(" recipe.Userid "+recipe.getUser().getId());
@@ -105,7 +105,7 @@ public class RecipeService {
 
 
         //Boolean rep = new ManagerPost().insertFood();
-        return Response.ok(new ObjString("MOUAHAHAH")).build();
+        return Response.ok(newRecipe).build();
     }
 
     @Path("recipe/image")
