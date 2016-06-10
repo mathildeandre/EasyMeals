@@ -12,7 +12,10 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
     var plannings = [];
     var planningsShopping = [];
 
-    var categories = [];
+
+    var startersCategories = [];
+    var coursesCategories = [];
+    var dessertsCategories = [];
     var origins = [];
     var recipeTypes = [];
 
@@ -34,8 +37,14 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
         return planningsShopping;
     }
 
-    function getCategories(){
-        return categories;
+    function getStartersCategories(){
+        return startersCategories;
+    }
+    function getCoursesCategories(){
+        return coursesCategories;
+    }
+    function getDessertsCategories(){
+        return dessertsCategories;
     }
     function getOrigins(){
         return origins;
@@ -90,8 +99,18 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                 $log.warn("LOADING RECIPES DATA")
                 /* CATEGORIES */
                 return getObjFromServer('/rest/recipeCategories/2').then(function(data){ //2117 = idUser
-                    categories = data;
-                    $log.warn("categories loaded!")
+                    var allCategories = data;
+                    $log.warn("all categories loaded!")
+                    for(var i=0; i<allCategories.length; i++){
+                        //$log.error("TRI ALL RECIPES : namerecipe : "+allRecipes[i].name +" -- recipeNameType : "+allRecipes[i].recipeType.nameType)
+                        switch(allCategories[i].idRecipeType){
+                            case 1 : startersCategories.push(allCategories[i]); break;
+                            case 2 : coursesCategories.push(allCategories[i]); break;
+                            case 3 : dessertsCategories.push(allCategories[i]); break;
+                            case 4 :  break;
+                            case 5 : break;
+                        }
+                    }
 
                     /* ORIGINS */
                     return getObjFromServer('/rest/recipeOrigins/2').then(function(data){//2117 = idUser
@@ -162,7 +181,9 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
         getPlannings: getPlannings,
         getPlanningsShopping: getPlanningsShopping,
 
-        getCategories: getCategories,
+        getStartersCategories: getStartersCategories,
+        getCoursesCategories: getCoursesCategories,
+        getDessertsCategories: getDessertsCategories,
         getOrigins: getOrigins,
         getRecipeTypes: getRecipeTypes,
 

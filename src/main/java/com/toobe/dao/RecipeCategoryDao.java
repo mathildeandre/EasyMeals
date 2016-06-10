@@ -2,10 +2,7 @@ package com.toobe.dao;
 
 import com.toobe.dto.info.RecipeCategory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +10,32 @@ import java.util.List;
  * Created by mathilde on 27/03/2016.
  */
 public class RecipeCategoryDao {
+
+    private static final String INSERT_RecipeCategory = "INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES (?, ?, ?)";
+    public Long createNewRecipeCategory(Connection conn, String recipeCategoryName, Long idRecipeType) {
+        PreparedStatement stm;
+        ResultSet result;
+        Long idRecipeCategory = null;
+        try {
+            stm = conn.prepareStatement(INSERT_RecipeCategory, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, recipeCategoryName);
+            stm.setInt(2, 1);
+            stm.setLong(3, idRecipeType);
+            stm.executeUpdate();
+
+            result = stm.getGeneratedKeys();
+            if (result.next()) {
+                idRecipeCategory = result.getLong(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idRecipeCategory;
+    }
+
+
+
 
     /**
      * On trouve ici toutes les categories utiles pour les filtres (on veut donc les numRank en fonction de chaque utilsateur)

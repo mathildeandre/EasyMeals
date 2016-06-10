@@ -116,6 +116,15 @@ public class ManagerGet {
         startConnection();
         recipeOriginDao.putIncrNumRankOrigin(conn, idRecipeOrigin, idUser);
     }
+    public Long createNewSpeciality(String recipeSpecialityName){
+        startConnection();
+        return recipeOriginDao.createNewOrigin(conn, recipeSpecialityName);
+    }
+    public Long createNewRecipeCategory(String recipeCategoryName, Long idRecipeType){
+        startConnection();
+        return recipeCategoryDao.createNewRecipeCategory(conn, recipeCategoryName,idRecipeType);
+    }
+
     /***********************************************/
     /************* PLANNING ***********************/
     /*********************************************/

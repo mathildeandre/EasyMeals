@@ -25,31 +25,34 @@ public class RecipeDao {
 
     private FoodDao foodDao;
     private RecipeCategoryDao recipeCategoryDao;
+    private RecipeOriginDao recipeOriginDao;
 
 
     public RecipeDao() {
         foodDao = new FoodDao();
         recipeCategoryDao = new RecipeCategoryDao();
+        recipeOriginDao = new RecipeOriginDao();
     }
 
 
     /**
      * Creation of a new recipe
-     *
-     * @param conn
-     * @param recipe
-     * @return
      */
-    private final static String CREATE_RECIPE = "INSERT INTO Recipe( name, idType, isPublic, " +
-            "idOwner, nbPerson, pixName, idOrigin, isValidated, timeCooking, timePreparation) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
-
+    private final static String CREATE_RECIPE = "INSERT INTO Recipe( name, idType, isPublic, idOwner, nbPerson, pixName, idOrigin, isValidated, " +
+                                                    "timeCooking, timePreparation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
     public Recipe createRecipe(Connection conn, Recipe recipe) {
         PreparedStatement stm;
         ResultSet resultRecipe;
         int isOk = 0;
         Long idRecipe = null; //PK long ?
         try {
+            /* NOT ANYMORE speciality created instantanously during the creation
+            //0. CHECK if RECIPE_ORIGIN exists already (otherwise it has just been created by the user : id==-1) so we create/insert it
+            Long idOrigin = recipe.getOrigin().getId();
+            if(idOrigin == -1){
+                idOrigin = recipeOriginDao.createNewOrigin(conn, recipe.getOrigin().getName());
+            }*/
+
             //1. INSERT into RECIPE
             stm = conn.prepareStatement(CREATE_RECIPE, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, recipe.getName());
@@ -444,7 +447,16 @@ public class RecipeDao {
     private boolean insertsRelRecipeCategory(Connection conn, List<RecipeCategory> listCategory, Long idRecipe) throws SQLException {
         PreparedStatement stmIngr;
         int insertOk = 0;
+
         for (RecipeCategory category : listCategory) {
+
+            /* NOT ANYMORE recipeCategory created instantanously during the creation
+            //0. CHECK if RECIPE_CATEGORY exists already (otherwise it has just been created by the user : id==-1) so we create/insert it
+            Long idCategory = category.getId();
+            if(idCategory == -1){
+                idCategory = recipeCategoryDao.createNewRecipeCategory(conn, category.getName(), category.getIdRecipeType());
+            }*/
+
             stmIngr = conn.prepareStatement(INSERT_REL_RECIPE_CATEGORY);
             stmIngr.setLong(1, category.getId());
             stmIngr.setLong(2, idRecipe);

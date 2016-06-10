@@ -54,9 +54,20 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
 
 
 
-    var categories = [];
+    var startersCategories = [];
+    var coursesCategories = [];
+    var dessertsCategories = [];
+
     var origins = [];
     var recipeTypes = [];
+
+    var starters = [];
+    var courses = [];
+    var desserts = [];
+    //var breakfasts = [];
+    //var cocktails = [];
+
+
     function getIdRecipeType(nameRecipeType){
         getRecipeTypes();
 
@@ -70,21 +81,39 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         return 0; //erreur..
     }
 
-
-
-    var starters = [];
-    var courses = [];
-    var desserts = [];
-    //var breakfasts = [];
-    //var cocktails = [];
-
-    function getCategories(){
-        if(categories.length == 0){
-            categories = restGlobalService.getCategories();
-            $log.warn("[restRecipe-service] getCategories() --> on appel restGLobalService");
+    function getStartersCategories(){
+        if(startersCategories.length == 0){
+            startersCategories = restGlobalService.getStartersCategories();
+            $log.warn("[restRecipe-service] getStartersCategories() --> on appel restGLobalService");
         }
-        return categories;
+        return startersCategories;
     }
+    function getCoursesCategories(){
+        if(coursesCategories.length == 0){
+            coursesCategories = restGlobalService.getCoursesCategories();
+            $log.warn("[restRecipe-service] getCoursesCategories() --> on appel restGLobalService");
+        }
+        return coursesCategories;
+    }
+    function getDessertsCategories(){
+        if(dessertsCategories.length == 0){
+            dessertsCategories = restGlobalService.getDessertsCategories();
+            $log.warn("[restRecipe-service] getDessertsCategories() --> on appel restGLobalService");
+        }
+        return dessertsCategories;
+    }
+
+    function getCategories(recipeType) {
+        switch (recipeType) {
+            case 'starter' :return getStartersCategories();
+            case 'course' :return getCoursesCategories();
+            case 'dessert' :return getDessertsCategories();
+            case 'breakfast' :return [];
+            case 'cocktail' :return [];
+        }
+    }
+
+
     function getOrigins(){
         if(origins.length == 0){
             origins = restGlobalService.getOrigins();
@@ -124,8 +153,6 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
 
 
 
-
-
     function getRecipes(recipeType) {
         switch (recipeType) {
             case 'starter' :return getStarters();
@@ -155,6 +182,13 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
             }
         })
 
+    }
+
+    function createNewSpeciality(recipeSpecialityName){
+        return postObjToServer('POST', '/rest/createNewSpeciality/'+recipeSpecialityName)
+    }
+    function createNewCategory(recipeCategoryName, idRecipeType){
+        return postObjToServer('POST', '/rest/createNewCategory/'+recipeCategoryName+'/'+idRecipeType)
     }
 
     function sendImage(file){
@@ -297,6 +331,8 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         putRatingUser: putRatingUser,
         putIncrNumRankCategory: putIncrNumRankCategory,
         putIncrNumRankOrigin: putIncrNumRankOrigin,
-        updateBddColor: updateBddColor
+        updateBddColor: updateBddColor,
+        createNewSpeciality: createNewSpeciality,
+        createNewCategory: createNewCategory
     };
 });

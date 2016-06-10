@@ -2,10 +2,7 @@ package com.toobe.dao;
 
 import com.toobe.dto.info.RecipeOrigin;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +10,31 @@ import java.util.List;
  * Created by mathilde on 27/03/2016.
  */
 public class RecipeOriginDao {
+
+    private static final String INSERT_RecipeOrigin = "INSERT INTO Recipe_Origin(name, numRank) VALUES (?, ?)";
+    public Long createNewOrigin(Connection conn, String recipeOriginName) {
+        PreparedStatement stm;
+        ResultSet result;
+        Long idRecipeOrigin = null;
+        try {
+            stm = conn.prepareStatement(INSERT_RecipeOrigin, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, recipeOriginName);
+            stm.setInt(2, 1);
+            stm.executeUpdate();
+
+            result = stm.getGeneratedKeys();
+            if (result.next()) {
+                idRecipeOrigin = result.getLong(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idRecipeOrigin;
+    }
+
+
+
 
     /**
      * On trouve ici toutes les foods
@@ -44,14 +66,6 @@ public class RecipeOriginDao {
         }
         return recipeOriginList;
     }
-
-
-
-
-
-
-
-
 
 
     /**************************************************** IA NUM_RANK **********************************************************/

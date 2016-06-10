@@ -737,6 +737,9 @@ h6 {
 .width100{
      width: 100px;
  }
+.width130{
+     width: 150px;
+}
 .width150{
      width: 150px;
 }
@@ -818,8 +821,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .titleInlineBlock{
     display:inline-block;
-   border : 1px dotted purple;
-    width : 70%;
+   /*border : 1px dotted purple;
+    width : 70%;*/
 }
 .rightInlineBlock{
     display:inline-block;
@@ -1275,7 +1278,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .elemCategorieVrac{ /*pas de colonne : tt en vrac*/
     display:inline-block;
-    margin: 3px 3% 3px 0;
+    margin: 3px 5px 3px 0;
 }
 .elemColonneX2{/*colonne x2*/
     display:inline-block;

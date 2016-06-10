@@ -44,9 +44,10 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
     /**************************************************************************************************************/
     var recipeTypeName = recipeType;
     var idRecipeType = restRecipeService.getIdRecipeType (recipeTypeName);
-    $scope.categories = restRecipeService.getCategories().filter(function(obj) {
+    $scope.categories = restRecipeService.getCategories(recipeTypeName);
+    /*.filter(function(obj) {
         return obj.idRecipeType == idRecipeType;
-    })
+    })*/
     $scope.origins = restRecipeService.getOrigins()
     $scope.foods = restFoodService.getFoods();
 
@@ -95,15 +96,56 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
         return ($scope.newSpeciality =! undefined) && ($scope.newSpeciality =! '');
     }
 
-    $scope.createNewSpeciality = function(newSpeciality){
-        var newSpecialty = {"id": -1, "name": newSpeciality, "numRank": 0}
-        $scope.origins.push(newSpecialty);
-        $scope.recipe.origin = newSpecialty;
+    /******************************************** CREER NEW SPECIALITY ***************************************************/
+    $scope.creatingNewSpeciality = false;
+    $scope.createNewSpeciality = function(newSpecialityName){
+        if(newSpecialityName != '' && newSpecialityName != undefined){
+            restRecipeService.createNewSpeciality(newSpecialityName).then(function (data) {
+                var newIdSpeciality = data.id;
+
+                var newSpecialty = {"id": newIdSpeciality, "name": newSpecialityName, "numRank": 0}
+                $scope.origins.push(newSpecialty);
+                $scope.recipe.origin = newSpecialty;
+                $scope.newSpecialityName = '';
+            })
+        }
         //CLOSE popover : enbale to false close le popover puis on enbale=true pr pouvoir l'utiliser de nouveau!
         //$scope.enablePopoverNewSpeciality = false;
         //$scope.enablePopoverNewSpeciality=true;
+        $scope.creatingNewSpeciality = false;
     }
+    $scope.pressEnterCreateSpeciality = function(event, newSpecialityName){
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.keyCode == 13){
+            $scope.createNewSpeciality(newSpecialityName);
+        }
+    }
+    /******************************************** end CREER NEW SPECIALITY ***************************************************/
 
+    /******************************************** CREER NEW CATEGORY ***************************************************/
+    $scope.creatingNewCategory = false;
+    $scope.createNewCategory = function(newCategoryName){
+        if(newCategoryName != '' && newCategoryName != undefined){
+            restRecipeService.createNewCategory(newCategoryName, idRecipeType).then(function (data) {
+                var newIdCategory = data.id;
+
+                var newCategory = {"id": newIdCategory, "name": newCategoryName, "numRank": 0, "idRecipeType":idRecipeType, "checked":true}
+                $scope.categories.push(newCategory);
+                $scope.recipe.categories.push(newCategory);
+                $scope.newCategoryName = '';
+            })
+        }
+        $scope.creatingNewCategory = false;
+    }
+    $scope.pressEnterCreateCategory = function(event, newCategoryName){
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.keyCode == 13){
+            $scope.createNewCategory(newCategoryName);
+        }
+    }
+    /******************************************** end CREER NEW CATEGORY ***************************************************/
 
     /*keyUpdateFilter  pr food*/
     $scope.pressEnterAreaDescrip = function(event){
@@ -162,14 +204,7 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
 
     $scope.createRecipe = function(isFormValid){
 
-
-        $log.info("categoriiiiiiiiiiiiiiiiiiii (all): "+$scope.recipe.categories[0])
-        $log.info("categoriiiiiiiiiiiiiiiiiiii (name): "+$scope.recipe.categories[0].name)
         if(isFormValid){
-
-            $log.info("my recipe categoriiiiiiiiiiiiiiiiiiii (all): "+$scope.recipe.categories[0])
-            $log.info("my recipe categoriiiiiiiiiiiiiiiiiiii (name): "+$scope.recipe.categories[0].name)
-
             //suppression du champ .checked de category (initil pour la base et povoquerait une erreur car non existant en java)
             for(var i=0; i<$scope.recipe.categories.length; i++){
                 delete $scope.recipe.categories[i].checked;
@@ -180,9 +215,6 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
                     restFoodService.addFood($scope.recipe.ingredients[i].food);
                 }
             }
-
-            $log.info("AFET KILL checked categoriiiiiiiiiiiiiiiiiiii (all): "+$scope.recipe.categories[0])
-            $log.info("AFET KILL checked categoriiiiiiiiiiiiiiiiiiii (name): "+$scope.recipe.categories[0].name)
             restRecipeService.createRecipe($scope.recipe);
 
 

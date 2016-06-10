@@ -8,13 +8,6 @@ var myModule = angular.module('controllers');
 
 myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $window,  $log, restRecipeService) {
 
-    $scope.bonjourrrr = "bonjourMath";
-    /**
-     * ICI on a uniquement besoin la liste complete des recette : $scope.recipes (correspondante à recipeType (plat, dessert etc))
-     *
-     *
-     */
-
 
     /*****
      * ORDER BY list
@@ -36,9 +29,9 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     $scope.$on('recipeTypeHasChanged', function(event, recipeTypeName) {
         $scope.filterMySelection.categories = [];
         var newIdRecipeType = restRecipeService.getIdRecipeType (recipeTypeName);
-        $scope.filterSearch.categories = restRecipeService.getCategories().filter(function(obj){
+        $scope.filterSearch.categories = restRecipeService.getCategories(recipeTypeName);/*.filter(function(obj){
             return obj.idRecipeType == newIdRecipeType;
-        })
+        })*/
 
         updateFilter();
     });
@@ -46,10 +39,10 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
     /************************* FILTRE *********************************/
     $scope.filterSearch = {
         myLists:[ {id:'myFavorite', name:'Mes recettes préférées'}, {id:'myPlanning', name:'Mes recettes planning'}], /*{id:'myMeal', name:'Mes plats'},*/
-        categories: restRecipeService.getCategories().filter(function(obj){
+        categories: restRecipeService.getCategories($scope.recipeType),/*.filter(function(obj){
             return obj.idRecipeType == 2;
-        }),//['Viande','Poisson', 'Legume', 'Vegetarien', 'Four', 'Poêle', 'Gratin', 'Sucré Salé', 'Facile', 'Rapide'],
-        origins:restRecipeService.getOrigins()//['Francais', 'Italien', 'Americain', 'Mexicain', 'Thai', 'Indien']//, 'Thai', 'Indien', 'Marocain']
+        })*/
+        origins:restRecipeService.getOrigins()
     };
     $scope.filterMySelection = {
         myLists:[],

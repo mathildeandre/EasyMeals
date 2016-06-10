@@ -151,7 +151,7 @@
                      uib-popover-template="'myPopoverTemplateMoreCategories.html'" popover-trigger="outsideClick" popover-placement="right">
                     Voir plus...
                     <!--popover--> <script type="text/ng-template" id="myPopoverTemplateMoreCategories.html" style="background-color:black;">
-                                        <div ng-repeat="category in filterSearch.categories | orderBy:'-numRank'" ng-show="$index >= 5" ng-click="moveCategoryToSelection(category)">
+                                        <div class="elemCategorieVrac"  ng-repeat="category in filterSearch.categories | orderBy:'-numRank'" ng-show="$index >= 5" ng-click="moveCategoryToSelection(category)">
                                             <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{category.name}}</button-filter>
                                         </div>
                                     </script>
@@ -169,7 +169,7 @@
                      uib-popover-template="'myPopoverTemplateMoreSpecialities.html'" popover-trigger="outsideClick" popover-placement="right">
                     Voir plus...
                     <!--popover--> <script type="text/ng-template" id="myPopoverTemplateMoreSpecialities.html">
-                                        <div ng-repeat="origin in filterSearch.origins | orderBy:'-numRank'" ng-show="$index >= 5" ng-click="moveOriginToSelection(origin)">
+                                        <div class="elemCategorieVrac" ng-repeat="origin in filterSearch.origins | orderBy:'-numRank'" ng-show="$index >= 5" ng-click="moveOriginToSelection(origin)">
                                             <button-filter mybtn-emptysection="myBtnEmptyRecipe">{{origin.name}}</button-filter>
                                         </div>
                                     </script>

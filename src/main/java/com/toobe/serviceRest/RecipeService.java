@@ -6,11 +6,7 @@ package com.toobe.serviceRest;
 
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
-import com.toobe.dto.info.ObjString;
-import com.toobe.dto.info.RecipeDescription;
-import com.toobe.dto.info.RecipeCategory;
-import com.toobe.dto.info.RecipeOrigin;
-import com.toobe.dto.info.RecipeType;
+import com.toobe.dto.info.*;
 import com.toobe.model.ManagerGet;
 //import org.springframework.web.multipart.MultipartFile;
 
@@ -74,6 +70,8 @@ public class RecipeService {
         return Response.ok(list).build();
     }
 
+
+
     @Path("recipe/create")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -87,7 +85,7 @@ public class RecipeService {
         System.out.println(" recipe.nbPers "+recipe.getNbPerson());
         System.out.println(" recipe.timeCooking "+recipe.getTimeCooking());
         System.out.println(" recipe.timePreparation "+recipe.getTimePreparation());
-        System.out.println(" recipe.origin "+recipe.getOrigin().getName());
+        System.out.println(" recipe.origin : (name): "+recipe.getOrigin().getName()+" --  (id):"+recipe.getOrigin().getId());
         List<Ingredient> listIngredient = recipe.getIngredients();
         for(int i=0; i<listIngredient.size(); i++){
             System.out.println(" ingredient : "+listIngredient.get(i).getQty()+listIngredient.get(i).getUnit()
@@ -95,7 +93,7 @@ public class RecipeService {
         }
         List<RecipeCategory> listCategory = recipe.getCategories();
         for(int i=0; i<listCategory.size(); i++){
-            System.out.println(" category : "+listCategory.get(i).getName());
+            System.out.println(" category : (name):"+listCategory.get(i).getName()+" -- (id):"+listCategory.get(i).getId());
         }
         List<RecipeDescription> listDescription = recipe.getDescriptions();
         for(int i=0; i<listDescription.size(); i++){
@@ -218,6 +216,18 @@ public class RecipeService {
         ManagerGet.getInstance().putIncrNumRankOrigin(idRecipeOrigin, idUser);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
-
-
+    @Path("createNewSpeciality/{recipeSpecialityName}")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createNewSpeciality(@PathParam("recipeSpecialityName") String recipeSpecialityName) {
+        Long idNewSpeciality = ManagerGet.getInstance().createNewSpeciality(recipeSpecialityName);
+        return Response.ok(new ObjLong(idNewSpeciality)).build();
+    }
+    @Path("createNewCategory/{recipeCategoryName}/{idRecipeType}")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createNewCategory(@PathParam("recipeCategoryName") String recipeCategoryName, @PathParam("idRecipeType") Long idRecipeType) {
+        Long idNewCategory = ManagerGet.getInstance().createNewRecipeCategory(recipeCategoryName, idRecipeType);
+        return Response.ok(new ObjLong(idNewCategory)).build();
+    }
 }

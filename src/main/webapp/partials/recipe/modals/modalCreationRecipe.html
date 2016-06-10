@@ -27,7 +27,7 @@
 
                 <div class="form-group">
                     <span class="glyphicon glyphicon-time marginRight10px"></span>
-                    Temps de Préparation (min) :
+                    Temps de Préparat° (min) :
                     <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timePreparation' min="1" step="5" name="rTimePrep"required />
                     <span ng-show="form.rTimePrep.$error.required && triedCreate" class="colorRed">Obligatoire</span>
                     <span ng-show="!form.rTimePrep.$error.required && form.rTimePrep.$invalid && triedCreate" class="colorRed">positif</span>
@@ -44,14 +44,19 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-globe marginRight10px"></span>
                     Spécialité :
-                    <select class="fieldRecipeCreation" ng-model='recipe.origin' ng-options="origin.name for origin in origins | orderBy:'-numRank'" ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
+                    <select class="fieldRecipeCreation width130" ng-model='recipe.origin' ng-options="origin.name for origin in origins | orderBy:'-numRank'" ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
 
 
-                    <input class="fieldRecipeCreation alignLeft" type="text" ng-model ='newSpeciality' />
-                    <button  type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="createNewSpeciality(newSpeciality)"
-                             uib-popover="Vous êtes sur le point de créer une nouvelle spécialité" popover-trigger="mouseenter" popover-placement="top" popover-enable="{{isEnable()}}">
+                    <button  ng-show="!creatingNewSpeciality" type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock" ng-click="creatingNewSpeciality = true">
                         <span class="txtFilter">Créer Spécialité</span>
                     </button>
+                    <span ng-show="creatingNewSpeciality" >
+                        <input class="fieldRecipeCreation alignLeft width100" type="text" ng-model ='newSpecialityName' ng-keyup="pressEnterCreateSpeciality($event, newSpecialityName)" />
+                        <button  type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock" ng-click="createNewSpeciality(newSpecialityName)"
+                                 uib-popover="Vous êtes sur le point de créer une nouvelle spécialité" popover-trigger="mouseenter" popover-placement="top">
+                            <span class="txtFilter">Créer</span>
+                        </button>
+                    </span>
 
 
                     <!-- popover--
@@ -105,16 +110,27 @@
 
                 <div class="inlineBlockAlignTop" >
                     <span class="glyphicon glyphicon-tags marginRight10px"></span><!-- pas de marginRight10px ici car il y a deja marginLeft10px sur chaque item category-->
-                    Categorie(s) :
+                    Catégorie(s) :
                 </div>
 
                 <div class="inlineBlock blockCategories" >
                     <span ng-repeat="category in categories | orderBy:'-numRank' " class="checkbox checkbox-warning checkbox-inline" ng-class="{marginLeft10px: $index==0}"><!-- only sur le 1st elem car bootstrap a fait sur chaque suivant avec checkbox-inline-->
                         <input type="checkbox"  ng-model="category.checked" id="{{category.id}}">
-                        <label for="{{category.id}}" >{{category.name}}({{category.numRank}})</label>
+                        <label for="{{category.id}}" >{{category.name}}</label>
                     </span>
                     <br>
-                    <span class="marginLeft10px">add new ..</span>
+
+
+                    <button  ng-show="!creatingNewCategory" type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock marginLeft10px" ng-click="creatingNewCategory = true">
+                        <span class="txtFilter">Créer Catégorie</span>
+                    </button>
+                    <span ng-show="creatingNewCategory" class="marginLeft10px">
+                        <input class="fieldRecipeCreation alignLeft width100" type="text" ng-model ='newCategoryName' ng-keyup="pressEnterCreateCategory($event, newCategoryName)" />
+                        <button  type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock" ng-click="createNewCategory(newCategoryName)"
+                                 uib-popover="Vous êtes sur le point de créer une nouvelle catégorie" popover-trigger="mouseenter" popover-placement="top">
+                            <span class="txtFilter">Créer</span>
+                        </button>
+                    </span>
                 </div>
 
             </div>
@@ -204,8 +220,37 @@
 
         </form>
 
+        <!-- DEBUG -->
+        <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+            <div>
+                SPECIALITE :::
+                <div> {{recipe.origin}}</div>
+                CATEGORIES :::
+                <div ng-repeat="category in recipe.categories ">
+                    {{category}}
+                </div>
+            </div>
+            <div>
+                INGREDIENTS :::
+                <div ng-repeat="ingredient in recipe.ingredients ">
+                    {{ingredient}}
+                </div>
+            </div>
+            <div>
+                DESCRIPTIONS :::
+                <div ng-repeat="description in recipe.descriptions ">
+                    {{description}}
+                </div>
+            </div>
+            <br>
+            <br>
+            <div>
+                RECIPE :::
+                {{recipe}}
+            </div>
+        </div>
 
-
+    </div>
 
     <div class="modal-footer">
 
@@ -237,8 +282,8 @@
                 </span>
             </div>-->
              <script type="text/ng-template" id="myPopoverTemplatePrivateRecipe.html">
-                 <div><span class="glyphicon glyphicon-asterisk"></span> Ce site rassemble une communauté de partage et vous solicite à faire de même pour permettre de faire découvrir les recettes de chacun !</div>
-                 <div> <span class="glyphicon glyphicon-asterisk"></span> Même partagée, cette sera recette sera toujours indiquée comme étant la vôtre :)</div>
+                 <div><span class="glyphicon glyphicon-asterisk"></span> Ce site rassemble une communauté de partage et vous solicite à faire de même en créant vos recettes PUBLIQUES :)</div>
+                 <div> <span class="glyphicon glyphicon-asterisk"></span> Même publique, cette recette sera toujours indiquée comme étant la vôtre!</div>
              </script>
 
         </span>
