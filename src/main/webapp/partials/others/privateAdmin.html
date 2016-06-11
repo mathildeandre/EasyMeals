@@ -144,7 +144,7 @@
                 <div>
                     <div class="myBlockFoodProposition" ng-show="showFoods">
                         <div class="myBlockFoodPropositionTitle" >Proposition(s) aliment(s)</div>
-                        <span class="foodProposition"   ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
+                        <span ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
                             <button  type="button" class="myBtnEmpty myBtnEmptyRecipe">
                                 <span class="txtFilter">{{food.name}}-(id:{{food.id}})</span>
                             </button>
@@ -169,10 +169,10 @@
                         <!-- ACCEPTER ET CHOISIR CATEGORIE -->
                         <div>
                             Accepter food en choisissant categorie :
-                            <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
+                            <select class="fieldPlanning width180"  ng-model='idFoodCategory' ng-options='foodCategory.id as foodCategory.name for foodCategory in foodCategories'>
                                 <option value="" disabled>Choisir Categories </option>
                             </select>
-                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateFood(foodNotVal.id ,idCategory, $index)">
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateFood(foodNotVal.id ,idFoodCategory, $index)">
                                 <span class="glyphicon glyphicon-ok"></span> Valider
                             </button>
                         </div>
@@ -183,10 +183,10 @@
                             Accepter food mais renommer :
                             <input type="text" ng-model ='newNameFood' class="fieldRecipeCreation" placeholder="new name" />
                              &nbsp - puis choisir categorie :
-                            <select class="fieldPlanning width180"  ng-model='idCategory' ng-options='category.id as category.name for category in categories'>
+                            <select class="fieldPlanning width180"  ng-model='idFoodCategory' ng-options='foodCategory.id as foodCategory.name for foodCategory in foodCategories'>
                                 <option value="" disabled>Choisir Categories </option>
                             </select>
-                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateFoodWithNewName(newNameFood, foodNotVal.id ,idCategory, $index)">
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateFoodWithNewName(newNameFood, foodNotVal.id ,idFoodCategory, $index)">
                                 <span class="glyphicon glyphicon-ok"></span> Valider
                             </button>
                         </div>
@@ -226,13 +226,92 @@
 
     <!--------------------------------- CATEGORY ------------------------------------------->
     <div ng-show="type == 'category'">
-        <div ng-show="categories.length == 0" style="color: white">
+        <div ng-show="categoriesNotValidated.length == 0" style="color: white">
             PAS DE NEW CATEGORY
         </div>
 
-        <div ng-repeat="category in categories">
+        <div ng-show="categoriesNotValidated.length > 0">
+
+            <!-------------- SHOW EXISTING CATEGORIES ------------>
+            <article  class="myArticle" >
+                <div class="myArticleHeading">
+                    <div class="myArticleTitle">Existing CATEGORIES </div>
+                </div>
+                <div class="myArticleBody">
+                    <div>
+                        STARTER ::: <br>
+                        <span class="marginRight10px"  ng-repeat="categorieStarter in categoriesStarter | orderBy : 'name'">
+                                <span class="txtFilter">{{categorieStarter.name}}-(id:{{categorieStarter.id}})</span>
+                        </span>
+                        <br><br>
+                        COURSE :::<br>
+                        <span class="marginRight10px" ng-repeat="categorieCourse in categoriesCourse | orderBy : 'name'">
+                                <span class="txtFilter">{{categorieCourse.name}}-(id:{{categorieCourse.id}})</span>
+                        </span>
+                        <br><br>
+                        DESSERT :::<br>
+                        <span class="marginRight10px" ng-repeat="categorieDessert in categoriesDessert | orderBy : 'name'">
+                                <span class="txtFilter">{{categorieDessert.name}}-(id:{{categorieDessert.id}})</span>
+                        </span>
+                    </div>
+                </div>
+            </article>
+            <br>
+            <br>
+            <!-------------- end SHOW EXISTING CATEGORIES ------------->
 
 
+            <div ng-repeat="categoryNotVal in categoriesNotValidated">
+
+                <article  class="myArticle" >
+                    <div class="myArticleHeading">
+                        <div class="myArticleTitle">Name new category : {{categoryNotVal.name}}  -- TYPE  : {{displayType(categoryNotVal.idRecipeType)}}</div>
+                    </div>
+
+                    <div class="myArticleBody">
+
+                        <!-- ACCEPTER ET CHOISIR CATEGORIE -->
+                        <div>
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateCategory(categoryNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- ACCEPTER mais RENOMMER -->
+                        <div>
+                            Accepter food mais renommer :
+                            <input type="text" ng-model ='newNameCategory' class="fieldRecipeCreation" placeholder="new name" />
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateCategoryWithNewName(newNameCategory, categoryNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- REMPLACER PAR EXISTANT -->
+                        <div>
+                            Remplacer food par existant - ID :
+                            <input type="number" ng-model ='idExistingCategory' class="fieldRecipeCreation" placeholder="new id" ng-keyup="keyUpdateIdExistingCategory(idExistingCategory, categoryNotVal.idRecipeType)" />
+                            {{newCategoryNameById}}
+                            <button  type="button" class="btn btn-success" ng-click="putAdminReplaceCategory(idExistingCategory, categoryNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- REFUSER FOOD - supprimer -->
+                        <div>
+                            <button type="button" class="btn btn-danger btnNewPlanning" ng-click="deleteCategory(categoryNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-remove"></span> Refuser Category
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <br>
+                <br>
+                <br>
+            </div>
         </div>
     </div>
     <!---------------------------------end CATEGORY ------------------------------------------->

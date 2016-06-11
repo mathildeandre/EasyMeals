@@ -343,6 +343,14 @@ fab 40€ to fab, math, eddy, carine, person4, person5
 
 
 
+********************************************************************************************************
+    STEP pb
+    *********************************
+    ATTENTION step is modulo(n) + min : cad si min=1, step =5, le step sera  6, 11, 16, 21 etc
+
+
+
+
 
 
 

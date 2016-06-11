@@ -585,6 +585,7 @@ public class RecipeDao {
         PreparedStatement stm;
         int isOk = 0;
         try {
+            System.out.println("[[putRatingUser]] - idRecipe: "+idRecipe+" -- idUser: "+idUser+", rating user : "+ratingUser);
             //1. verif que Rel_User_Recipe correspondante existe - sinon on la créée
             if (!isExist_RelUserRecipe(conn, idRecipe, idUser)) {
                 create_RelUserRecipe(conn, idRecipe, idUser);

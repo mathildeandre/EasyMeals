@@ -210,6 +210,7 @@ public class ManagerGet {
         privateAdminDao.putAdminValidateRecipe(conn, idRecipe, isPublic);
     }
 
+    /** FOOD **/
     public List<Food> getFoodsNotValidated(){
         startConnection();
         return privateAdminDao.getFoodsNotValidated(conn);
@@ -231,6 +232,27 @@ public class ManagerGet {
         privateAdminDao.deleteFood(conn, idFood);
     }
 
+    /** CATEGORY **/
+    public List<RecipeCategory> getCategoriesNotValidated(){
+        startConnection();
+        return privateAdminDao.getCategoriesNotValidated(conn);
+    }
+    public void putAdminValidateCategory(Long idCategory){
+        startConnection();
+        privateAdminDao.putAdminValidateCategory(conn, idCategory);
+    }
+    public void putAdminValidateCategoryWithNewName(String newNameCategory, Long idCategory){
+        startConnection();
+        privateAdminDao.putAdminValidateCategoryWithNewName(conn, newNameCategory, idCategory);
+    }
+    public void putAdminReplaceCategory(Long idExistingCategory, Long idUselessCategory){
+        startConnection();
+        privateAdminDao.putAdminReplaceCategory(conn, idExistingCategory, idUselessCategory);
+    }
+    public void deleteCategory(Long idCategory){
+        startConnection();
+        privateAdminDao.deleteCategory(conn, idCategory);
+    }
 
 
     /*********************************************/

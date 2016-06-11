@@ -93,6 +93,52 @@ public class PrivateAdminService {
     }
 
 
+    /********************* CATEGORY *********************/
+    @Path("/categoriesNotValidated")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getCategoriesNotValidated(){
+        List<RecipeCategory> list = new ManagerGet().getCategoriesNotValidated();
+        return Response.ok(list).build();
+    }
+    @Path("/putAdminValidateCategory/{idCategory}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    /* VALIDE CATEGORY : On valide la new cat*/
+    public Response putAdminValidateCategory(@PathParam("idCategory") Long idCategory) {
+        ManagerGet.getInstance().putAdminValidateCategory(idCategory);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+    @Path("/putAdminValidateCategoryWithNewName/{newNameCategory}/{idCategory}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    /* VALIDE CATEGORY with newName : on valide cat  et avec un nouveau nom  */
+    public Response putAdminValidateCategoryWithNewName(@PathParam("newNameCategory") String newNameCategory, @PathParam("idCategory") Long idCategory) {
+        ManagerGet.getInstance().putAdminValidateCategoryWithNewName(newNameCategory, idCategory);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+    @Path("/putAdminReplaceCategory/{idExistingCategory}/{idUselessCategory}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    /* REMPLACE CATEGORY : par une deja existante qui etait la mm chose (on remplacera ds la relation avec recipe...et supprimera celle creee par le user */
+    public Response putAdminReplaceCategory(@PathParam("idExistingCategory") Long idExistingCategory, @PathParam("idUselessCategory") Long idUselessCategory) {
+        ManagerGet.getInstance().putAdminReplaceCategory(idExistingCategory, idUselessCategory);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+    @Path("/deleteCategory/{idCategory}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    /* CATEGORY REFUSEE : on accepte pas la cat, ca la supprimera ainsi que la relation avec recipe */
+    public Response deleteCategory(@PathParam("idCategory") Long idCategory) {
+        ManagerGet.getInstance().deleteCategory(idCategory);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+
+
 
 
 

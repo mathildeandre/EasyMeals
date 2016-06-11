@@ -60,8 +60,8 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
         descriptions:[{name:"",numDescrip:1}],
         origin:$scope.origins[0],
         categories:[],
-        timeCooking:30,
-        timePreparation:20,
+        timeCooking:10,
+        timePreparation:12,
         isPublic: true,
         nbVoter:0,
         ratingUser:0

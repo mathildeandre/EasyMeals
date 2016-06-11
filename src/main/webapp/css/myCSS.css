@@ -1150,7 +1150,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 */
 
 .spanNameUserConnected{
-    text-transform: lowercase;
+    text-transform: none;
 }
 
 /***********************************************************************************************************************************************************************************************/
@@ -1538,6 +1538,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .bodyRecipeWithDescrip{
     padding:3%;
+    background-color: #f2f2f2;
 }
 .footerRecipeWithDescrip{
     padding: 10px 3vw;
@@ -2048,8 +2049,6 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .btnFoodProposition{
     /* test :*/
     background-color: white;
-}
-.foodProposition{
 }
 .backgroundGreen{
     background-color: #c1e2b3;

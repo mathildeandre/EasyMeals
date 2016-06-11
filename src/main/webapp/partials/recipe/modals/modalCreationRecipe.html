@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-time marginRight10px"></span>
                     Temps de Préparat° (min) :
-                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timePreparation' min="1" step="5" name="rTimePrep"required />
+                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timePreparation' min="0" step="5" name="rTimePrep"required />
                     <span ng-show="form.rTimePrep.$error.required && triedCreate" class="colorRed">Obligatoire</span>
                     <span ng-show="!form.rTimePrep.$error.required && form.rTimePrep.$invalid && triedCreate" class="colorRed">positif</span>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-fire marginRight10px"></span>
                     Temps de Cuisson (min) :
-                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timeCooking' min="1"  step="5" name="rTimeCook" required />
+                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timeCooking' min="0"  step="5" name="rTimeCook" required />
                     <span ng-show="form.rTimeCook.$error.required && triedCreate" class="colorRed">Obligatoire</span>
                     <span ng-show="!form.rTimeCook.$error.required && form.rTimeCook.$invalid && triedCreate" class="colorRed">positif</span>
                 </div>
@@ -175,7 +175,7 @@
 
                 <div class="myBlockFoodProposition" ng-show="showFoods">
                     <div class="myBlockFoodPropositionTitle" >Proposition(s) aliment(s)</div>
-                        <span class="foodProposition"   ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
+                        <span ng-repeat="food in foods | filter : filterFood | orderBy : 'name'">
                             <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnFoodProposition"  ng-mousedown="fillUpIngrWithFood($index, $event, food) ">
                                 <span class="txtFilter">{{food.name}}</span>
                             </button>
