@@ -49,8 +49,8 @@ myService.service("restPrivateAdminService", function ($http, $q, $log, restGlob
         postObjToServer('POST', '/rest/putAdminValidateCategory/'+idCategory)
     }
     /* VALIDE CATEGORY with newName : on valide cat  et avec un nouveau nom  */
-    function putAdminValidateCategoryWithNewName(newNameFood, idCategory){
-        postObjToServer('POST', '/rest/putAdminValidateCategoryWithNewName/'+newNameFood+'/'+idCategory)
+    function putAdminValidateCategoryWithNewName(newNameCategory, idCategory){
+        postObjToServer('POST', '/rest/putAdminValidateCategoryWithNewName/'+newNameCategory+'/'+idCategory)
     }
     /* REMPLACE CATEGORY : par une deja existante qui etait la mm chose (on remplacera ds la relation avec recipe...et supprimera celle creee par le user */
     function putAdminReplaceCategory(idExistingCategory, idUselessCategory){
@@ -60,6 +60,22 @@ myService.service("restPrivateAdminService", function ($http, $q, $log, restGlob
     function deleteCategory(idCategory){
         postObjToServer('POST', '/rest/deleteCategory/'+idCategory)
     }
+
+    /********************** SPECIALITIES ************************/
+    function getBDDSpecialitiesNotValidated(){
+        return getObjFromServer('rest/specialitiesNotValidated');
+    }
+    function putAdminValidateSpeciality(idSpeciality){
+        postObjToServer('POST', '/rest/putAdminValidateSpeciality/'+idSpeciality)
+    }
+    function putAdminValidateSpecialityWithNewName(newNameSpeciality, idSpeciality){
+        postObjToServer('POST', '/rest/putAdminValidateSpecialityWithNewName/'+newNameSpeciality+'/'+idSpeciality)
+    }
+    function putAdminReplaceSpeciality(idExistingSpeciality, idUselessSpeciality){
+        postObjToServer('POST', '/rest/putAdminReplaceSpeciality/'+idExistingSpeciality+'/'+idUselessSpeciality)
+    }
+    /* PAS de DELETE c normal !! on doit forcement remplacer une speciality puisque une recipe a un speciality ! */
+
 
 
 
@@ -104,7 +120,13 @@ myService.service("restPrivateAdminService", function ($http, $q, $log, restGlob
         putAdminValidateCategory: putAdminValidateCategory,
         putAdminValidateCategoryWithNewName: putAdminValidateCategoryWithNewName,
         putAdminReplaceCategory: putAdminReplaceCategory,
-        deleteCategory: deleteCategory
+        deleteCategory: deleteCategory,
+
+        getBDDSpecialitiesNotValidated: getBDDSpecialitiesNotValidated,
+        putAdminValidateSpeciality: putAdminValidateSpeciality,
+        putAdminValidateSpecialityWithNewName: putAdminValidateSpecialityWithNewName,
+        putAdminReplaceSpeciality: putAdminReplaceSpeciality
+
 
     };
 });

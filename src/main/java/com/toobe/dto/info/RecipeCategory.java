@@ -17,16 +17,20 @@ public class RecipeCategory {
     private String name;
     private int numRank;
     private int idRecipeType;
+    private boolean isValidated;
 
     public RecipeCategory(){
 
     }
-    public RecipeCategory(Long id, String name, int numRank, int idRecipeType) {
+
+    public RecipeCategory(Long id, String name, int numRank, int idRecipeType, boolean isValidated) {
         this.id = id;
         this.name = name;
         this.numRank = numRank;
         this.idRecipeType = idRecipeType;
+        this.isValidated = isValidated;
     }
+
 
     public Long getId() {
         return id;
@@ -58,5 +62,13 @@ public class RecipeCategory {
 
     public void setIdRecipeType(int idRecipeType) {
         this.idRecipeType = idRecipeType;
+    }
+
+    public boolean getIsValidated() {
+        return isValidated;
+    }
+
+    public void setIsValidated(boolean isValidated) {
+        this.isValidated = isValidated;
     }
 }

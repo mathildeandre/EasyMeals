@@ -49,6 +49,7 @@ public class RecipeOriginDao {
             Long id;
             String name;
             int numRank;
+            boolean isValidated;
             RecipeOrigin recipeOrigin;
             while(res.next()){
                 id = res.getLong("id");
@@ -57,7 +58,9 @@ public class RecipeOriginDao {
                 if(numRank == -1){
                     numRank = res.getInt("numRank");
                 }
-                recipeOrigin = new RecipeOrigin(id, name, numRank);
+                isValidated = res.getBoolean("isValidatedRecipeOrigin");
+
+                recipeOrigin = new RecipeOrigin(id, name, numRank, isValidated);
                 recipeOriginList.add(recipeOrigin);
             }
 

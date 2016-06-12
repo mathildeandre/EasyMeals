@@ -14,16 +14,19 @@ public class RecipeOrigin {
     private Long id;
     private String name;
     private int numRank;
+    private boolean isValidated;
 
     public RecipeOrigin(){
 
     }
 
-    public RecipeOrigin(Long id, String name, int numRank) {
+    public RecipeOrigin(Long id, String name, int numRank, boolean isValidated) {
         this.id = id;
         this.name = name;
         this.numRank = numRank;
+        this.isValidated = isValidated;
     }
+
 
     public Long getId() {
         return id;
@@ -47,5 +50,13 @@ public class RecipeOrigin {
 
     public void setNumRank(int numRank) {
         this.numRank = numRank;
+    }
+
+    public boolean getIsValidated() {
+        return isValidated;
+    }
+
+    public void setIsValidated(boolean isValidated) {
+        this.isValidated = isValidated;
     }
 }

@@ -140,6 +140,41 @@ public class PrivateAdminService {
 
 
 
+    /********************* SPECIALITY *********************/
+    @Path("/specialitiesNotValidated")
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response getSpecialitiesNotValidated(){
+        List<RecipeOrigin> list = new ManagerGet().getSpecialitiesNotValidated();
+        return Response.ok(list).build();
+    }
+    @Path("/putAdminValidateSpeciality/{idSpeciality}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putAdminValidateSpeciality(@PathParam("idSpeciality") Long idSpeciality) {
+        ManagerGet.getInstance().putAdminValidateSpeciality(idSpeciality);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+    @Path("/putAdminValidateSpecialityWithNewName/{newNameSpeciality}/{idSpeciality}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putAdminValidateSpecialityWithNewName(@PathParam("newNameSpeciality") String newNameSpeciality, @PathParam("idSpeciality") Long idSpeciality) {
+        ManagerGet.getInstance().putAdminValidateSpecialityWithNewName(newNameSpeciality, idSpeciality);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+    @Path("/putAdminReplaceSpeciality/{idExistingSpeciality}/{idUselessSpeciality}")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putAdminReplaceSpeciality(@PathParam("idExistingSpeciality") Long idExistingSpeciality, @PathParam("idUselessSpeciality") Long idUselessSpeciality) {
+        ManagerGet.getInstance().putAdminReplaceSpeciality(idExistingSpeciality, idUselessSpeciality);
+        return Response.ok(new ObjString("MOUAHAHAH")).build();
+    }
+
+
+
 
 
 }

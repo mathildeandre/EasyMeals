@@ -231,7 +231,8 @@ public class PrivateAdminDao {
                 name = res.getString("name");
                 numRank = res.getInt("numRank");
                 idRecipeType = res.getInt("idRecipeType");
-                category = new RecipeCategory(id, name, numRank, idRecipeType);
+                isValidated = res.getBoolean("isValidatedRecipeCategory");
+                category = new RecipeCategory(id, name, numRank, idRecipeType, isValidated);
                 categoryList.add(category);
             }
 
@@ -340,4 +341,126 @@ public class PrivateAdminDao {
     /****************************************************************************** end CATEGORY **************************************************************************************/
     /**************************************************************************************************************************************************************************************/
 
+
+
+
+
+    /**************************************************************************************************************************************************************************************/
+    /**************************************************************************************************************************************************************************************/
+    /************************************************************************************ SPECIALITY **************************************************************************************/
+    /**************************************************************************************************************************************************************************************/
+    /**************************************************************************************************************************************************************************************/
+    public List<RecipeOrigin> getSpecialitiesNotValidated(Connection conn){
+        List<RecipeOrigin> specialityList = new ArrayList<RecipeOrigin>();
+        PreparedStatement stm;
+        try {
+            stm = conn.prepareStatement("SELECT * FROM Recipe_Origin WHERE isValidatedRecipeOrigin = 0");
+            ResultSet res = stm.executeQuery();
+
+            Long id;
+            String name;
+            int numRank;
+            boolean isValidated;
+            RecipeOrigin origin;
+            while(res.next()){
+                id = res.getLong("id");
+                name = res.getString("name");
+                numRank = res.getInt("numRank");
+                isValidated = res.getBoolean("isValidatedRecipeOrigin");
+
+                origin = new RecipeOrigin(id, name, numRank, isValidated);
+                specialityList.add(origin);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return specialityList;
+    }
+
+    private final static String UPDTE_ADMIN_ValidateSpeciality = "UPDATE Recipe_Origin SET isValidatedRecipeOrigin = true  WHERE id = ?;\n";
+    public void putAdminValidateSpeciality(Connection conn, Long idSpeciality){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDTE_ADMIN_ValidateSpeciality);
+            stm.setLong(1, idSpeciality);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putAdminValidateSpeciality failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private final static String UPDTE_ADMIN_ValidateSpecialityWithNewName = "UPDATE Recipe_Origin SET name = ?, isValidatedRecipeOrigin = true WHERE id = ?;\n";
+    public void putAdminValidateSpecialityWithNewName(Connection conn, String newNameSpeciality, Long idSpeciality){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(UPDTE_ADMIN_ValidateSpecialityWithNewName);
+            stm.setString(1, newNameSpeciality);
+            stm.setLong(2, idSpeciality);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("putAdminValidateSpecialityWithNewName failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private final static String UPDTE_ADMIN_ReplaceOriginInto_Recipe = "UPDATE Recipe SET idOrigin = ? WHERE idOrigin = ?;\n";
+    private final static String UPDTE_ADMIN_ReplaceOriginInto_FoodRecipe = "UPDATE Food_Recipe SET idOrigin = ? WHERE idOrigin = ?;\n";
+    public void putAdminReplaceSpeciality(Connection conn, Long idExistingSpeciality, Long idUselessSpeciality){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            //1. replace useless by existing into RECIPE
+            stm = conn.prepareStatement(UPDTE_ADMIN_ReplaceOriginInto_Recipe);
+            stm.setLong(1, idExistingSpeciality);
+            stm.setLong(2, idUselessSpeciality);
+            isOk = stm.executeUpdate();
+            System.out.println("putAdminReplaceSpeciality -recipe- : "+isOk+" row affected...");
+
+            //2. replace useless by existing into FOOD_RECIPE
+            stm = conn.prepareStatement(UPDTE_ADMIN_ReplaceOriginInto_FoodRecipe);
+            stm.setLong(1, idExistingSpeciality);
+            stm.setLong(2, idUselessSpeciality);
+            isOk = stm.executeUpdate();
+            System.out.println("putAdminReplaceSpeciality -food_recipe- : "+isOk+" row affected...");
+
+            //3. NO replace into REL_USER_RecipeOrigin - no sense !
+
+            //4. delete useless from category
+            deleteRecipeOrigin(conn, idUselessSpeciality);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+
+
+    private final static String DELETE_RecipeOrigin = "DELETE FROM Recipe_Origin  WHERE id = ?;\n";
+    public void deleteRecipeOrigin(Connection conn, Long idCategory){
+        PreparedStatement stm;
+        int isOk = 0;
+        try {
+            stm = conn.prepareStatement(DELETE_RecipeOrigin);
+            stm.setLong(1, idCategory);
+            isOk = stm.executeUpdate();
+            if (isOk == 0) {
+                throw new SQLException("deleteRecipeOrigin failed, no rows affected");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    /**************************************************************************************************************************************************************************************/
+    /****************************************************************************** end SPECIALITY **************************************************************************************/
+    /**************************************************************************************************************************************************************************************/
 }

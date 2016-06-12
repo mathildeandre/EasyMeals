@@ -38,7 +38,7 @@
 
             <!-- RECIPE OPEN descr -->
             <div class="recipeWithDescrip">
-                <div class="headingRecipeWithDescrip" >{{recipe.name}} - (id : {{recipe.id}})
+                <div class="headingRecipeWithDescrip notTransformText" >{{recipe.name}} - (id : {{recipe.id}})
 
 
                         <span class="rightInlineBlock">
@@ -161,7 +161,7 @@
 
                 <article  class="myArticle" >
                     <div class="myArticleHeading">
-                        <div class="myArticleTitle">Name new food : {{foodNotVal.name}}</div>
+                        <div class="myArticleTitle notTransformText">Name new food : {{foodNotVal.name}}</div>
                     </div>
 
                     <div class="myArticleBody">
@@ -240,19 +240,24 @@
                 <div class="myArticleBody">
                     <div>
                         STARTER ::: <br>
-                        <span class="marginRight10px"  ng-repeat="categorieStarter in categoriesStarter | orderBy : 'name'">
-                                <span class="txtFilter">{{categorieStarter.name}}-(id:{{categorieStarter.id}})</span>
+                        <span class="marginRight10px" ng-show="categorieStarter.isValidated" ng-repeat="categorieStarter in categoriesStarter | orderBy : 'name'">
+                                <span class="txtFilter">{{categorieStarter.name}}({{categorieStarter.id}})</span>
                         </span>
                         <br><br>
                         COURSE :::<br>
-                        <span class="marginRight10px" ng-repeat="categorieCourse in categoriesCourse | orderBy : 'name'">
-                                <span class="txtFilter">{{categorieCourse.name}}-(id:{{categorieCourse.id}})</span>
+                        <span class="marginRight10px" ng-show="categorieCourse.isValidated" ng-repeat="categorieCourse in categoriesCourse | orderBy : 'name'">
+                                <span class="txtFilter">{{categorieCourse.name}}({{categorieCourse.id}})</span>
                         </span>
                         <br><br>
                         DESSERT :::<br>
-                        <span class="marginRight10px" ng-repeat="categorieDessert in categoriesDessert | orderBy : 'name'">
-                                <span class="txtFilter">{{categorieDessert.name}}-(id:{{categorieDessert.id}})</span>
+                        <span class="marginRight10px" ng-show="categorieDessert.isValidated" ng-repeat="categorieDessert in categoriesDessert | orderBy : 'name'">
+                                <span class="txtFilter">{{categorieDessert.name}}({{categorieDessert.id}})</span>
                         </span>
+                        <br>
+                        <br>
+                        <div  ng-repeat="categorieCourse in categoriesCourse | orderBy : 'id'">
+                                <span class="txtFilter" style="color: orange;">{{categorieCourse}}</span>
+                        </div>
                     </div>
                 </div>
             </article>
@@ -265,14 +270,14 @@
 
                 <article  class="myArticle" >
                     <div class="myArticleHeading">
-                        <div class="myArticleTitle">Name new category : {{categoryNotVal.name}}  -- TYPE  : {{displayType(categoryNotVal.idRecipeType)}}</div>
+                        <div class="myArticleTitle notTransformText">Name new category : {{categoryNotVal.name}}({{categoryNotVal.id}})  -- TYPE  : {{displayTypeCategory(categoryNotVal.idRecipeType)}}</div>
                     </div>
 
                     <div class="myArticleBody">
 
                         <!-- ACCEPTER ET CHOISIR CATEGORIE -->
                         <div>
-                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateCategory(categoryNotVal.id, $index)">
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateCategory(categoryNotVal.id, $index,categoryNotVal.idRecipeType)">
                                 <span class="glyphicon glyphicon-ok"></span> Valider
                             </button>
                         </div>
@@ -280,9 +285,9 @@
 
                         <!-- ACCEPTER mais RENOMMER -->
                         <div>
-                            Accepter food mais renommer :
+                            Accepter category mais renommer :
                             <input type="text" ng-model ='newNameCategory' class="fieldRecipeCreation" placeholder="new name" />
-                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateCategoryWithNewName(newNameCategory, categoryNotVal.id, $index)">
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateCategoryWithNewName(newNameCategory, categoryNotVal.id, $index, categoryNotVal.idRecipeType)">
                                 <span class="glyphicon glyphicon-ok"></span> Valider
                             </button>
                         </div>
@@ -290,7 +295,7 @@
 
                         <!-- REMPLACER PAR EXISTANT -->
                         <div>
-                            Remplacer food par existant - ID :
+                            Remplacer category par existant - ID :
                             <input type="number" ng-model ='idExistingCategory' class="fieldRecipeCreation" placeholder="new id" ng-keyup="keyUpdateIdExistingCategory(idExistingCategory, categoryNotVal.idRecipeType)" />
                             {{newCategoryNameById}}
                             <button  type="button" class="btn btn-success" ng-click="putAdminReplaceCategory(idExistingCategory, categoryNotVal.id, $index)">
@@ -299,7 +304,7 @@
                         </div>
                         <br>
 
-                        <!-- REFUSER FOOD - supprimer -->
+                        <!-- REFUSER category - supprimer -->
                         <div>
                             <button type="button" class="btn btn-danger btnNewPlanning" ng-click="deleteCategory(categoryNotVal.id, $index)">
                                 <span class="glyphicon glyphicon-remove"></span> Refuser Category
@@ -319,12 +324,73 @@
 
     <!--------------------------------- SPECIALITY ------------------------------------------->
     <div ng-show="type == 'speciality'">
-        <div ng-show="specialities.length == 0" style="color: white">
+        <div ng-show="originsNotValidated.length == 0" style="color: white">
             PAS DE NEW SPECIALITY
         </div>
 
-        <div ng-repeat="speciality in specialities">
+        <div ng-show="originsNotValidated.length > 0">
 
+            <!-------------- SHOW EXISTING SPECIALITY ------------>
+            <article  class="myArticle" >
+                <div class="myArticleHeading">
+                    <div class="myArticleTitle">Existing SPECIALITY </div>
+                </div>
+                <div class="myArticleBody">
+                    <div>
+                        <span class="marginRight10px" ng-show="origin.isValidated"  ng-repeat="origin in origins | orderBy : 'name'">
+                                <span class="txtFilter">{{origin.name}}({{origin.id}})</span>
+                        </span>
+                    </div>
+                </div>
+            </article>
+            <br>
+            <br>
+            <!-------------- end SHOW EXISTING SPECIALITY ------------->
+
+
+            <div ng-repeat="specialityNotVal in originsNotValidated">
+
+                <article  class="myArticle" >
+                    <div class="myArticleHeading">
+                        <div class="myArticleTitle notTransformText">Name new speciality : {{specialityNotVal.name}}({{specialityNotVal.id}}) </div>
+                    </div>
+
+                    <div class="myArticleBody">
+
+                        <!-- ACCEPTER ET CHOISIR speciality -->
+                        <div>
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateSpeciality(specialityNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- ACCEPTER mais RENOMMER -->
+                        <div>
+                            Accepter speciality mais renommer :
+                            <input type="text" ng-model ='newNameSpeciality' class="fieldRecipeCreation" placeholder="new name" />
+                            <button  type="button" class="btn btn-success" ng-click="putAdminValidateSpecialityWithNewName(newNameSpeciality, specialityNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+
+                        <!-- REMPLACER PAR EXISTANT -->
+                        <div>
+                            Remplacer speciality par existant - ID :
+                            <input type="number" ng-model ='idExistingSpeciality' class="fieldRecipeCreation" placeholder="new id" ng-keyup="keyUpdateIdExistingSpeciality(idExistingSpeciality)" />
+                            {{newSpecialityNameById}}
+                            <button  type="button" class="btn btn-success" ng-click="putAdminReplaceSpeciality(idExistingSpeciality, specialityNotVal.id, $index)">
+                                <span class="glyphicon glyphicon-ok"></span> Valider
+                            </button>
+                        </div>
+                        <br>
+                    </div>
+                </article>
+
+                <br>
+                <br>
+            </div>
 
         </div>
     </div>

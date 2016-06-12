@@ -71,7 +71,7 @@ ALTER TABLE Rel_Recipe_Category ADD INDEX FKRel_Recipe949991 (idCategory), ADD C
 ALTER TABLE Rel_User_RecipeCategory ADD INDEX FKRel_User_R345726 (idRecipeCategory), ADD CONSTRAINT FKRel_User_R345726 FOREIGN KEY (idRecipeCategory) REFERENCES Recipe_Category (id) ON DELETE CASCADE;
 
 /* ON DELETE CASCADE for Recipe_Origin deleted */
-ALTER TABLE Rel_User_RecipeOrigin ADD INDEX FKRel_User_R970858 (idRecipeOrigin), ADD CONSTRAINT FKRel_User_R970858 FOREIGN KEY (idRecipeOrigin) REFERENCES Recipe_Origin (id);
+ALTER TABLE Rel_User_RecipeOrigin ADD INDEX FKRel_User_R970858 (idRecipeOrigin), ADD CONSTRAINT FKRel_User_R970858 FOREIGN KEY (idRecipeOrigin) REFERENCES Recipe_Origin (id) ON DELETE CASCADE;
 /* NOTHING here for Recipe_Origin deleted  :  ATTENTION il faudra bien penser a remplacer lorigin par une autre dans chaque RECIPE & FOOD_RECIPE avt de deleted cett derniere  */
 ALTER TABLE Food_Recipe ADD INDEX FKFood_Recip58032 (idOrigin), ADD CONSTRAINT FKFood_Recip58032 FOREIGN KEY (idOrigin) REFERENCES Recipe_Origin (id);
 ALTER TABLE Recipe ADD INDEX FKRecipe215426 (idOrigin), ADD CONSTRAINT FKRecipe215426 FOREIGN KEY (idOrigin) REFERENCES Recipe_Origin (id);

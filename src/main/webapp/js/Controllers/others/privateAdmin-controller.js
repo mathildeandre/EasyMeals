@@ -129,27 +129,11 @@ myModule.controller('PrivateAdminCtrl', function($scope, $log, $routeParams, $lo
     /*************************************************************************************************************************************/
     /*******************************************************  CATEGORY  ****************************************************************/
     /*************************************************************************************************************************************/
-    /* AVEC CURRENT category en fct de starter course & dessert...
-     $scope.categoriesStarter = restRecipeService.getCategories("starter");
-     var categoriesCourse = restRecipeService.getCategories("course");
-     $scope.categoriesDessert = restRecipeService.getCategories("dessert");
-
-     $scope.currentTypeCategories = categoriesCourse;
-
-     var categoriesNotValidated = [];
-     $scope.currentTypeCategoriesNotValidated = []
-     restPrivateAdminService.getBDDCategoriesNotValidated( ).then(function(data){
-     categoriesNotValidated = data;
-     $scope.currentTypeCategoriesNotValidated = categoriesNotValidated.filter(function(obj){
-     return obj.idRecipeType == 2;
-     });
-     $log.warn("BOOM les categories sont laaaaaaa :  "+$scope.currentTypeCategoriesNotValidated[0].name)
-     })
-     */
     $scope.categoriesStarter = restRecipeService.getCategories("starter");
     $scope.categoriesCourse = restRecipeService.getCategories("course");
     $scope.categoriesDessert = restRecipeService.getCategories("dessert");
 
+    //$scope.allCategories = categoriesStarter.concat(categoriesCourse.concat(categoriesDessert))
 
     $scope.categoriesNotValidated = [];
     restPrivateAdminService.getBDDCategoriesNotValidated( ).then(function(data){
@@ -167,14 +151,16 @@ myModule.controller('PrivateAdminCtrl', function($scope, $log, $routeParams, $lo
 
 
     /* VALIDE CATEGORY : On valide la new cat*/
-    $scope.putAdminValidateCategory = function(idCategory, index){
+    $scope.putAdminValidateCategory = function(idCategory, index, idRecipeType){
         restPrivateAdminService.putAdminValidateCategory(idCategory);
         $scope.categoriesNotValidated.splice(index, 1);
+        toggleIsValidatedCategory(idCategory, idRecipeType);
     }
     /* VALIDE CATEGORY with newName : on valide cat  et avec un nouveau nom  */
-    $scope.putAdminValidateCategoryWithNewName = function(newNameCategory, idCategory, index){
+    $scope.putAdminValidateCategoryWithNewName = function(newNameCategory, idCategory, index, idRecipeType){
         restPrivateAdminService.putAdminValidateCategoryWithNewName(newNameCategory, idCategory);
         $scope.categoriesNotValidated.splice(index, 1);
+        toggleIsValidatedCategory(idCategory, idRecipeType, newNameCategory);
     }
     /* REMPLACE CATEGORY : par une deja existante qui etait la mm chose (on remplacera ds la relation avec recipe...et supprimera celle creee par le user */
     $scope.putAdminReplaceCategory = function(idExistingCategory, idUselessCategory, index){
@@ -190,23 +176,46 @@ myModule.controller('PrivateAdminCtrl', function($scope, $log, $routeParams, $lo
 
 
     $scope.newCategoryNameById = '';
+
+    var giveArrayCategory = function(idRecipeType){
+        switch (idRecipeType){
+            case 1 : return $scope.categoriesStarter;
+            case 2 : return $scope.categoriesCourse;
+            case 3 : return $scope.categoriesDessert;
+        }
+    }
+
+
     $scope.keyUpdateIdExistingCategory = function(idExistingCategory, idRecipeType){
         $scope.newCategoryNameById = '';
-        var array = [];
-        switch (idRecipeType){
-            case 1 : array =  $scope.categoriesStarter; break;
-            case 2 : array =  $scope.categoriesCourse; break;
-            case 3 : array =  $scope.categoriesDessert; break;
-        }
-        $scope.newCategoryNameById = array.filter(function(obj){
+        var array = giveArrayCategory(idRecipeType);
+        var cat = array.filter(function(obj){
             return obj.id == idExistingCategory;
-        })[0].name;
+        })[0]
+        if(cat !== undefined){
+            $scope.newCategoryNameById = cat.name;
+        }
+
     }
-    $scope.displayType = function(idRecipeType){
+    $scope.displayTypeCategory = function(idRecipeType){
         switch (idRecipeType){
             case 1 : return 'starter';
             case 2 : return 'course';
             case 3 : return 'dessert';
+        }
+    }
+
+    //for VIEW
+    var toggleIsValidatedCategory = function(idCategory, idRecipeType, newNameCategory) {
+        var array = giveArrayCategory(idRecipeType);
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].id == idCategory) {
+                array[i].isValidated = true;
+                if (newNameCategory !== undefined) {
+                    array[i].name = newNameCategory;
+                }
+            }
+
         }
     }
 
@@ -229,12 +238,58 @@ myModule.controller('PrivateAdminCtrl', function($scope, $log, $routeParams, $lo
 
 
     $scope.origins = restRecipeService.getOrigins();
+    $scope.originsNotValidated = [];
+    restPrivateAdminService.getBDDSpecialitiesNotValidated( ).then(function(data){
+        $scope.originsNotValidated = data;
+        $log.warn("BOOM les specialities sont laaaaaaa :p"+$scope.originsNotValidated[0].name)
+    })
     /*
      - valide origin
      - valide origin with new name
      - remplace origin par existante and delete
-
      */
+
+
+    /* VALIDE Speciality : On valide la new cat*/
+    $scope.putAdminValidateSpeciality = function(idSpeciality, index){
+        restPrivateAdminService.putAdminValidateSpeciality(idSpeciality);
+        $scope.originsNotValidated.splice(index, 1);
+        toggleIsValidatedSpeciality(idSpeciality);
+    }
+    /* VALIDE Speciality with newName : on valide cat  et avec un nouveau nom  */
+    $scope.putAdminValidateSpecialityWithNewName = function(newNameSpeciality, idSpeciality, index){
+        restPrivateAdminService.putAdminValidateSpecialityWithNewName(newNameSpeciality, idSpeciality);
+        $scope.originsNotValidated.splice(index, 1);
+        toggleIsValidatedSpeciality(idSpeciality, newNameSpeciality);
+    }
+    /* REMPLACE Speciality : par une deja existante qui etait la mm chose (on remplacera ds la relation avec recipe...et supprimera celle creee par le user */
+    $scope.putAdminReplaceSpeciality = function(idExistingSpeciality, idUselessSpeciality, index){
+        restPrivateAdminService.putAdminReplaceSpeciality(idExistingSpeciality, idUselessSpeciality);
+        $scope.originsNotValidated.splice(index, 1);
+    }
+    /* PAS de DELETE c normal !! on doit forcement remplacer une speciality puisque une recipe a un speciality ! */
+
+
+    $scope.newSpecialityNameById = '';
+    $scope.keyUpdateIdExistingSpeciality = function(idExistingSpeciality){
+        $scope.newSpecialityNameById = '';
+        $scope.newSpecialityNameById = $scope.origins.filter(function(obj){
+            return obj.id == idExistingSpeciality;
+        })[0].name;
+    }
+    //for VIEW
+    var toggleIsValidatedSpeciality = function(idSpeciality, newNameSpeciality){
+        for(var i=0; i<$scope.origins.length; i++){
+            if($scope.origins[i].id == idSpeciality){
+                $scope.origins[i].isValidated = true;
+                if(newNameSpeciality !== undefined){
+                    $scope.origins[i].name = newNameSpeciality;
+                }
+            }
+        }
+    }
+
+
     /*************************************************************************************************************************************/
     /******************************************************* end SPECIALITY  ****************************************************************/
     /*************************************************************************************************************************************/

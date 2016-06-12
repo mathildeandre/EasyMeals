@@ -50,6 +50,7 @@ public class RecipeCategoryDao {
             Long idCategory;
             int idRecipeType, numRankCategory;
             String nameCategory;
+            boolean isValidated;
             RecipeCategory recipeCategory;
             while(res.next()){
                 idCategory = res.getLong("id");
@@ -59,7 +60,8 @@ public class RecipeCategoryDao {
                     numRankCategory = res.getInt("numRank");
                 }
                 idRecipeType = res.getInt("idRecipeType");
-                recipeCategory = new RecipeCategory(idCategory, nameCategory, numRankCategory, idRecipeType);
+                isValidated = res.getBoolean("isValidatedRecipeCategory");
+                recipeCategory = new RecipeCategory(idCategory, nameCategory, numRankCategory, idRecipeType, isValidated);
                 recipeCategoryList.add(recipeCategory);
             }
 
@@ -80,6 +82,7 @@ public class RecipeCategoryDao {
         Long idCategory;
         String nameCategory;
         int idRecipeType, numRankCategory;
+        boolean isValidated;
         RecipeCategory recipeCategory;
         PreparedStatement stm;
         try {
@@ -91,7 +94,8 @@ public class RecipeCategoryDao {
                 nameCategory = resCategory.getString("name");
                 numRankCategory = resCategory.getInt("numRank");
                 idRecipeType = resCategory.getInt("idRecipeType");
-                recipeCategory = new RecipeCategory(idCategory, nameCategory, numRankCategory, idRecipeType);
+                isValidated = resCategory.getBoolean("isValidatedRecipeCategory");
+                recipeCategory = new RecipeCategory(idCategory, nameCategory, numRankCategory, idRecipeType, isValidated);
                 categoryList.add(recipeCategory);
             }
 

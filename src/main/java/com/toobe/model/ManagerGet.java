@@ -254,6 +254,24 @@ public class ManagerGet {
         privateAdminDao.deleteCategory(conn, idCategory);
     }
 
+    /** SPECIALITY **/
+    public List<RecipeOrigin> getSpecialitiesNotValidated(){
+        startConnection();
+        return privateAdminDao.getSpecialitiesNotValidated(conn);
+    }
+    public void putAdminValidateSpeciality(Long idSpeciality){
+        startConnection();
+        privateAdminDao.putAdminValidateSpeciality(conn, idSpeciality);
+    }
+    public void putAdminValidateSpecialityWithNewName(String newNameSpeciality, Long idSpeciality){
+        startConnection();
+        privateAdminDao.putAdminValidateSpecialityWithNewName(conn, newNameSpeciality, idSpeciality);
+    }
+    public void putAdminReplaceSpeciality(Long idExistingSpeciality, Long idUselessSpeciality){
+        startConnection();
+        privateAdminDao.putAdminReplaceSpeciality(conn, idExistingSpeciality, idUselessSpeciality);
+    }
+
 
     /*********************************************/
     /************** FOOD ************************/
