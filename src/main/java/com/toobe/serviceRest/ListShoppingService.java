@@ -4,7 +4,6 @@ package com.toobe.serviceRest;
  * Created by mathilde on 13/03/2016.
  */
 
-import com.toobe.dto.TestObj;
 import com.toobe.model.ManagerGet;
 
 import javax.ws.rs.*;

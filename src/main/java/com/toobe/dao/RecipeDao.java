@@ -129,7 +129,7 @@ public class RecipeDao {
     /******* RECIPE BY ID *******/
     /****************************/
     private static final String SELECT_RECIPE_By_ID =
-            "SELECT recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, isValidatedRecipeOrigin " +
+            "SELECT recipe.name as recipeName, recipe.isPublic, pixName, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, isValidatedRecipeOrigin, " +
                     "rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser," +
                     "rt.id as idRecipeType, rt.name as nameRecipeType " +
                     "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type rt " +
@@ -173,7 +173,7 @@ public class RecipeDao {
                 int timeCooking = resRecipe.getInt("timeCooking");
                 int timePreparation = resRecipe.getInt("timePreparation");
 
-                User user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
+                User user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"), "");
                 RecipeType recipeType = new RecipeType(idRecipeType, nameRecipeType);
                 RecipeOrigin recipeOrigin = new RecipeOrigin(resRecipe.getLong("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"), resRecipe.getBoolean("isValidatedRecipeOrigin"));
 
@@ -276,7 +276,7 @@ public class RecipeDao {
                 idRecipeType = resRecipe.getInt("idType");
                 nameRecipeType = resRecipe.getString("nameRecipeType");
 
-                user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"));
+                user = new User(resRecipe.getLong("idUser"), resRecipe.getString("pseudoUser"), resRecipe.getString("emailUser"), "");
                 recipeType = new RecipeType(idRecipeType, nameRecipeType);
                 recipeOrigin = new RecipeOrigin(resRecipe.getLong("idRo"), resRecipe.getString("nameRo"), resRecipe.getInt("numRank"), resRecipe.getBoolean("isValidatedRecipeOrigin"));
 

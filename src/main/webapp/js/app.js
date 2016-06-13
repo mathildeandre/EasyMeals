@@ -3,7 +3,7 @@
  */
 
 
-angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', 'ngRoute', 'ngFileUpload'] )
+angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', 'ngStorage', 'ngRoute', 'ngFileUpload'] )
     .config(['$routeProvider',
         function($routeProvider) {
             $routeProvider
@@ -68,11 +68,11 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
 
 
                 .when('/connexion', {
-                    templateUrl: '../partials/others/connexion.html',
+                    templateUrl: '../partials/user/connexion.html',
                     controller: 'ConnexionCtrl'
                 })
                 .when('/registration', {
-                    templateUrl: '../partials/others/registration.html',
+                    templateUrl: '../partials/user/registration.html',
                     controller: 'RegistrationCtrl'
                 })
 

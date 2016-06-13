@@ -172,7 +172,7 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
             /* initComplement*/
             recipeCreated.ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]}
             /*push VIEW */
-            $log.info("[DATA] categoriiiiiiiiiiiiiiiiiiii (name): "+recipeCreated.categories[0].name)
+            //$log.info("[DATA] categoriiiiiiiiiiiiiiiiiiii (name): "+recipeCreated.categories[0].name)
             switch(recipeCreated.recipeType.nameType){
                 case 'starter' : starters.push(recipeCreated); break;
                 case 'course' :  courses.push(recipeCreated); break;
