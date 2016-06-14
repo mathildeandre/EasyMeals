@@ -1,6 +1,9 @@
 <section ng-controller="RecipeCtrl">
 
-    <div class="titleRecipe contourTxt"><h2 class="myH2">Recettes : {{displayRecipeType()}}</h2></div> <!-- titleRecipe initilisee -->
+    <div class="titleRecipe contourTxt"><h2 class="myH2">Recettes : {{displayRecipeType()}} -
+        <br> user connected ? {{isUserConnected}}
+        <br>-{{currentUserFromRecipe}}-</h2>
+    </div> <!-- titleRecipe initilisee -->
 
 
     <!-- AVANT entre plat dessert... tout en haut -- tt FONCTIONNE niquel avec le css etc

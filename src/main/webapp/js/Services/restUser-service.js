@@ -25,6 +25,13 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
                 // add jwt token to auth header for all requests made by the $http service
                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
 
+
+                //return
+                restGlobalService.initGlobalLoadData_afterConnexion(response.idUser).then(function(){
+                   $log.warn("[restUserService] - connexion() xx YOUPI : initialized all data for idUser "+response.idUser)
+                });
+
+
                 // execute callback with true to indicate successful login
                 callback(true);
             } else {

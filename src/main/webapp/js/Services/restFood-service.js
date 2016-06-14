@@ -4,7 +4,7 @@
 
 var myService = angular.module('services');
 
-myService.service("restFoodService", function ($http, $q, $log, restGlobalService) {
+myService.service("restFoodService", function ($http, $q, $log) {
 
     /*
     foods = [{"id":1,"name":"steack","idCategory":2,"isValidated":false},{..}]
@@ -14,17 +14,9 @@ myService.service("restFoodService", function ($http, $q, $log, restGlobalServic
 
 
     function getFoodCategories(){
-        if(foodCategories.length == 0){
-            foodCategories = restGlobalService.getFoodCategories();
-            $log.warn("[restFood-service] getFoodCategories() --> on appel restGLobalService");
-        }
         return foodCategories;
     }
     function getFoods(){
-        if(foods.length == 0){
-            foods = restGlobalService.getFoods();
-            $log.warn("[restFood-service] getFoods() --> on appel restGLobalService");
-        }
         return foods;
     }
 
@@ -32,6 +24,37 @@ myService.service("restFoodService", function ($http, $q, $log, restGlobalServic
         foods.push(food);
     }
 
+
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    function getBddFoods() {
+        foods = [];
+        return getObjFromServer('/rest/foods').then(function (data) {
+            foods = data;
+            $log.warn("foods loaded!71")
+        })
+    }
+    function getBddFoodCategories() {
+        foodCategories = [];
+        return getObjFromServer('/rest/foodCategories').then(function (data) {
+            foodCategories = data;
+            $log.warn("foodCategories loaded!71")
+        })
+    }
+    /****************************************************************** INTIALIZATION **************************************************************************/
+
+    function getObjFromServer(url) {
+        return $http({
+            method: 'GET',
+            url: url
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    };
 
     /* useless
     function initLoadData(){
@@ -59,6 +82,9 @@ myService.service("restFoodService", function ($http, $q, $log, restGlobalServic
     return {
         getFoodCategories: getFoodCategories,
         getFoods: getFoods,
-        addFood: addFood
+        addFood: addFood,
+
+        getBddFoods: getBddFoods,
+        getBddFoodCategories: getBddFoodCategories
     };
 });

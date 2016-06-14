@@ -85,4 +85,16 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                 .when('/grilleImpot', {templateUrl: '../partials/others/grilleImpot.html', controller:'GrilleImpotCtrl'})
                 .when('/testDirective', {templateUrl: '../partials/others/testDirective.html', controller:'TestDirectiveCtrl'})
                 .otherwise({ redirectTo: '/welcomeMeal' });
-        }]);
+        }])
+    .run(['$rootScope', '$http', '$location', '$localStorage', function($rootScope, $http, $location, $localStorage){
+        // keep user logged in after page refresh
+        //$log.warn("[[APP RUN]] -- we will test $localStorage ...)
+        //alert("bjr1")
+        if ($localStorage.currentUser) {
+            //$log.warn("[[APP RUN]] -- $localStorage know !!!!!!!!!!!! pseudo : "+$localStorage.pseudo)
+            alert("bjr2")
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+        }
+
+    }])
+    ;

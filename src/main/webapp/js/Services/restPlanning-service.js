@@ -4,7 +4,7 @@
 
 var myService = angular.module('services');
 
-myService.service("restPlanningService", function ($http, $q, $log, $location, restGlobalService) {
+myService.service("restPlanningService", function ($http, $q, $log, $location) {
 
 
     var plannings = [];
@@ -13,7 +13,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
 
     function getPlannings(){
         if(plannings.length == 0){
-            plannings = restGlobalService.getPlannings();
+            //plannings = restGlobalService.getPlannings();
             $log.warn("[restPLanning-service] getPlannings() --> on appel restGLobalService");
         }
         return plannings;
@@ -21,7 +21,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
 
     function getPlanningsShopping(){
         if(planningsShopping.length == 0){
-            planningsShopping = restGlobalService.getPlanningsShopping();
+            //planningsShopping = restGlobalService.getPlanningsShopping();
             $log.warn("[restPLanning-service] getPlanningsShopping() --> on appel restGLobalService");
         }
         return planningsShopping;
@@ -201,6 +201,26 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
 
 
 
+    /**************************** INTIALIZATION *********************************/
+    function getBddPlannings(idUser) {
+        planningsShopping = [];
+        plannings = [];
+        return getObjFromServer('/rest/plannings/user/' + idUser).then(function (data) { //217 = idUser
+            var allPlannings = data;
+            for (var i = 0; i < allPlannings.length; i++) {
+                if (allPlannings[i].isForListShop) {
+                    planningsShopping.push(allPlannings[i]);
+                } else {
+                    plannings.push(allPlannings[i]);
+                }
+            }
+            $log.warn("plannings (& planningsShopping) loaded!71")
+            //return response; ??
+        })
+    }
+    /**************************** end INTIALIZATION *********************************/
+
+
     function getObjFromServer(url) {
         return $http({
             method: 'GET',
@@ -246,7 +266,9 @@ myService.service("restPlanningService", function ($http, $q, $log, $location, r
         getPlanningsShopping: getPlanningsShopping,
         createPlanningShopping: createPlanningShopping,
         deletePlanningShopping: deletePlanningShopping,
-        cutShoppingToPlanning: cutShoppingToPlanning
+        cutShoppingToPlanning: cutShoppingToPlanning,
+
+        getBddPlannings: getBddPlannings
 
 
     };

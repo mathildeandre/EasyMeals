@@ -4,10 +4,8 @@
 
 var myService = angular.module('services');
 
-myService.service("restRecipeService", function ($http, $q, $log, restGlobalService) {
-
-
-
+myService.service("restRecipeService", function ($http, $q, $log) {
+    /*
     var recipesTmp = [
         {
             "id": 3,
@@ -36,21 +34,11 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
             "isForPlanning": false,
             "ratingUser": 0,
             "isHide": false
-            /* "ratingSystem":{"isUserEditing":false,"starsEdit":[false,false,false,false,false]},
-             "timeTotal":230,"onOver":false} */
+            // "ratingSystem":{"isUserEditing":false,"starsEdit":[false,false,false,false,false]},
+            // "timeTotal":230,"onOver":false}
         }]
-
-    /*
-    function initTmpRecipes(){
-        for(var i=0; i<recipesTmp.length; i++){
-            createRecipe(recipesTmp[i]);
-        }
-    }
-    */
-    /*************************** USELESS ABOVE **************************************/
-    /*************************** USELESS ABOVE **************************************/
-    /*************************** USELESS ABOVE **************************************/
-    /*************************** USELESS ABOVE **************************************/
+        */
+    /*************************** EXEMPLE recipe ABOVE **************************************/
 
 
 
@@ -68,6 +56,56 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
     //var cocktails = [];
 
 
+    function getStartersCategories(){
+        /*if(startersCategories.length == 0){
+            //startersCategories = restGlobalService.getStartersCategories();
+            $log.warn("[restRecipe-service] getStartersCategories() --> on appel restGLobalService");
+        }*/
+        return startersCategories;
+    }
+    function getCoursesCategories(){
+        return coursesCategories;
+    }
+    function getDessertsCategories(){
+        return dessertsCategories;
+    }
+    function getOrigins(){
+        return origins;
+    }
+    function getRecipeTypes(){
+        return recipeTypes;
+    }
+    function getStarters(){
+        return starters;
+    }
+    function getCourses(){
+        return courses;
+    }
+    function getDesserts(){
+        return desserts;
+    }
+
+
+    function getCategories(recipeType) {
+        switch (recipeType) {
+            case 'starter' :return getStartersCategories();
+            case 'course' :return getCoursesCategories();
+            case 'dessert' :return getDessertsCategories();
+            case 'breakfast' :return [];
+            case 'cocktail' :return [];
+        }
+    }
+    function getRecipes(recipeType) {
+        switch (recipeType) {
+            case 'starter' :return getStarters();
+            case 'course' :return getCourses();
+            case 'dessert' :return getDesserts();
+            case 'breakfast' :return [];
+            case 'cocktail' :return [];
+        }
+    }
+
+
     function getIdRecipeType(nameRecipeType){
         getRecipeTypes();
 
@@ -81,87 +119,10 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         return 0; //erreur..
     }
 
-    function getStartersCategories(){
-        if(startersCategories.length == 0){
-            startersCategories = restGlobalService.getStartersCategories();
-            $log.warn("[restRecipe-service] getStartersCategories() --> on appel restGLobalService");
-        }
-        return startersCategories;
-    }
-    function getCoursesCategories(){
-        if(coursesCategories.length == 0){
-            coursesCategories = restGlobalService.getCoursesCategories();
-            $log.warn("[restRecipe-service] getCoursesCategories() --> on appel restGLobalService");
-        }
-        return coursesCategories;
-    }
-    function getDessertsCategories(){
-        if(dessertsCategories.length == 0){
-            dessertsCategories = restGlobalService.getDessertsCategories();
-            $log.warn("[restRecipe-service] getDessertsCategories() --> on appel restGLobalService");
-        }
-        return dessertsCategories;
-    }
-
-    function getCategories(recipeType) {
-        switch (recipeType) {
-            case 'starter' :return getStartersCategories();
-            case 'course' :return getCoursesCategories();
-            case 'dessert' :return getDessertsCategories();
-            case 'breakfast' :return [];
-            case 'cocktail' :return [];
-        }
-    }
-
-
-    function getOrigins(){
-        if(origins.length == 0){
-            origins = restGlobalService.getOrigins();
-            $log.warn("[restRecipe-service] getOrigins() --> on appel restGLobalService");
-        }
-        return origins;
-    }
-    function getRecipeTypes(){
-        if(recipeTypes.length == 0){
-            recipeTypes = restGlobalService.getRecipeTypes();
-            $log.warn("[restRecipe-service] getRecipeTypes() --> on appel restGLobalService");
-        }
-        return recipeTypes;
-    }
-    function getStarters(){
-        if(starters.length == 0){
-            starters = restGlobalService.getStarters();
-            $log.warn("[restRecipe-service] getStarters() --> on appel restGLobalService");
-        }
-        return starters;
-    }
-    function getCourses(){
-        if(courses.length == 0){
-            courses = restGlobalService.getCourses();
-            $log.warn("[restRecipe-service] getCourses() --> on appel restGLobalService");
-        }
-        return courses;
-    }
-    function getDesserts(){
-        if(desserts.length == 0){
-            desserts = restGlobalService.getDesserts();
-            $log.warn("[restRecipe-service] getDesserts() --> on appel restGLobalService");
-        }
-        return desserts;
-    }
 
 
 
 
-    function getRecipes(recipeType) {
-        switch (recipeType) {
-            case 'starter' :return getStarters();
-            case 'course' :return getCourses();
-            case 'dessert' :return getDesserts();
-            case 'breakfast' :return [];
-            case 'cocktail' :return [];
-        }
-    }
 
     function createRecipe(recipe){
         // Web service - BDD
@@ -234,7 +195,14 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
 
 
     function getBDDSingleRecipe(idRecipe){
-        return getObjFromServer('rest/recipe/'+idRecipe);
+        return getObjFromServer('rest/recipe/'+idRecipe).then(function (response) {
+
+            for(var i=0; i<1000; i++){
+                $log.warn("FUCK IT ;) on fait le traitement là ;)")
+            }
+
+            return response; //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+        })
     }
 
 
@@ -290,6 +258,84 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
     }
 
 
+
+
+
+
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    function getBddCategories(idUser) {
+        startersCategories = [];
+        coursesCategories = [];
+        dessertsCategories = [];
+        return getObjFromServer('/rest/recipeCategories/' + idUser).then(function (data) { //217 = idUser
+            var allCategories = data;
+            $log.warn("all categories loaded!71")
+            for(var i=0; i<allCategories.length; i++){
+                //$log.error("TRI ALL RECIPES : namerecipe : "+allRecipes[i].name +" -- recipeNameType : "+allRecipes[i].recipeType.nameType)
+                switch(allCategories[i].idRecipeType){
+                    case 1 : startersCategories.push(allCategories[i]); break;
+                    case 2 : coursesCategories.push(allCategories[i]); break;
+                    case 3 : dessertsCategories.push(allCategories[i]); break;
+                    case 4 :  break;
+                    case 5 : break;
+                }
+            }
+        })
+    }
+    function getBddSpecialities(idUser) {
+        origins = [];
+        return getObjFromServer('/rest/recipeOrigins/' + idUser).then(function (data) { //217 = idUser
+            origins = data;
+            $log.warn("origins loaded! 71")
+        })
+    }
+
+    function getBddRecipeTypes() {
+        recipeTypes = [];
+        return getObjFromServer('/rest/recipeTypes').then(function (data) { //217 = idUser
+            recipeTypes = data;
+            $log.warn("recipeTypes loaded!71")
+            //return response; ??
+        })
+    }
+
+
+    function getBddRecipes(idUser) {
+        starters = [];
+        courses = [];
+        desserts = [];
+        return getObjFromServer('/rest/recipes/' + idUser).then(function (data) { //217 = idUser
+            var allRecipes = data;
+            initComplement(allRecipes);
+            $log.warn("allRecipes loaded!71")
+            for(var i=0; i<allRecipes.length; i++){
+                //$log.error("TRI ALL RECIPES : namerecipe : "+allRecipes[i].name +" -- recipeNameType : "+allRecipes[i].recipeType.nameType)
+                switch(allRecipes[i].recipeType.nameType){
+                    case 'starter' : starters.push(allRecipes[i]); break;
+                    case 'course' :  courses.push(allRecipes[i]); break;
+                    case 'dessert' : desserts.push(allRecipes[i]); break;
+                    case 'breakfast' :  break;
+                    case 'cocktail' : break;
+                }
+            }
+            //return response; ??
+        })
+    }
+    function initComplement(arrayRecipe){
+        for(var i=0; i<arrayRecipe.length; i++){
+            arrayRecipe[i].ratingSystem = {isUserEditing: false, starsEdit: [false, false, false, false, false]};
+            arrayRecipe[i].timeTotal = arrayRecipe[i].timeCooking + arrayRecipe[i].timePreparation;
+        }
+    }
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    /****************************************************************** INTIALIZATION **************************************************************************/
+    /****************************************************************** INTIALIZATION **************************************************************************/
+
+
+
     function getObjFromServer(url) {
         return $http({
             method: 'GET',
@@ -333,6 +379,12 @@ myService.service("restRecipeService", function ($http, $q, $log, restGlobalServ
         putIncrNumRankOrigin: putIncrNumRankOrigin,
         updateBddColor: updateBddColor,
         createNewSpeciality: createNewSpeciality,
-        createNewCategory: createNewCategory
+        createNewCategory: createNewCategory,
+
+        getBddCategories: getBddCategories,
+        getBddSpecialities: getBddSpecialities,
+        getBddRecipeTypes: getBddRecipeTypes,
+        getBddRecipes: getBddRecipes
+
     };
 });

@@ -5,7 +5,16 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('RecipeCtrl', function($scope, $routeParams, $location, $window,  $log,  $http, $q, AppendixFunctionsService, restRecipeService) {
+myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, $location, $window,  $log,  $http, $q, AppendixFunctionsService, restRecipeService) {
+
+    $scope.isUserConnected = false;
+    $scope.currentUserFromRecipe = {};
+    if($localStorage.currentUser){
+        $log.debug("[[RecipeCtrl]] - USER CONNECTED !! ($localStorage known)")
+        $scope.isUserConnected = true;
+        $scope.currentUserFromRecipe = $localStorage.currentUser;
+    }
+
 
     $scope.$emit('intoRecipe'); //will tell to parents (global-controller.js) to modify pix
 

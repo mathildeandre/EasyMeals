@@ -1,6 +1,6 @@
 
 var myModule = angular.module('controllers');
-myModule.controller('ModalCreationRecipeCtrl', ['$scope', '$uibModal', '$log', 'restPlanningService', function ($scope, $uibModal, $log, restPlanningService) {
+myModule.controller('ModalCreationRecipeCtrl', ['$scope', '$uibModal', '$log', 'restPlanningService', '$localStorage', function ($scope, $uibModal, $log, $localStorage, restPlanningService) {
 
 
     $scope.openModalCreationRecipe = function () {
@@ -19,6 +19,9 @@ myModule.controller('ModalCreationRecipeCtrl', ['$scope', '$uibModal', '$log', '
             resolve: {
                 recipeType: function () {
                     return recipeType;
+                },
+                idUser: function(){
+                    return $scope.currentUserFromRecipe.idUser
                 }
             }
         });
@@ -35,9 +38,10 @@ myModule.controller('ModalCreationRecipeCtrl', ['$scope', '$uibModal', '$log', '
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $uibModalInstance, recipeType, restRecipeService, restFoodService, units, AppendixFunctionsService) {
+myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $uibModalInstance, recipeType, idUser, restRecipeService, restFoodService, units, AppendixFunctionsService) {
 
 
+    $log.debug("[ ModalInstanceCreationRecipeCtrl] info IDUSER : "+idUser)
 
     /**************************************************************************************************************/
     /**************************************** LOADING DATA NEEDED ********************************************/
@@ -54,7 +58,7 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
     $scope.recipe =  {
         name:'',
         recipeType:{idType:restRecipeService.getIdRecipeType(recipeTypeName),nameType:recipeTypeName},
-        user:{id:2, pseudo:'', email:''}, /* <---------- idUser A AFFINER ----------------------- */
+        user:{id:idUser, pseudo:'', email:''}, /* <---------- idUser A AFFINER ----------------------- */
         nbPerson:4,
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],

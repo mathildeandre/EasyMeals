@@ -33,7 +33,8 @@ public class ManagerBdd {
         if(self != null){
             return self;
         }
-        return new ManagerBdd();
+        self= new ManagerBdd();
+        return self;
     }
 
     public ManagerBdd(){
