@@ -82,7 +82,7 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
     function initGlobalLoadData(){
         if(!isInitGlobalDone){
             $log.warn(":::::::::::::::::::::::::::::[GLOBAL SERVICE] INIT - LOADING DATA")
-            return getObjFromServer('/rest/plannings/user/2').then(function(data){ //2 = idUser
+            return getObjFromServer('/rest/plannings/user/217').then(function(data){ //217 = idUser
                 var allPlannings = data;
                 for(var i=0; i<allPlannings.length; i++){
                     if(allPlannings[i].isForListShop){
@@ -98,7 +98,7 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                 /************ recipe */
                 $log.warn("LOADING RECIPES DATA")
                 /* CATEGORIES */
-                return getObjFromServer('/rest/recipeCategories/2').then(function(data){ //2117 = idUser
+                return getObjFromServer('/rest/recipeCategories/217').then(function(data){ //217 = idUser
                     var allCategories = data;
                     $log.warn("all categories loaded!")
                     for(var i=0; i<allCategories.length; i++){
@@ -113,7 +113,7 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                     }
 
                     /* ORIGINS */
-                    return getObjFromServer('/rest/recipeOrigins/2').then(function(data){//2117 = idUser
+                    return getObjFromServer('/rest/recipeOrigins/217').then(function(data){//217 = idUser
                         origins = data;
                         $log.warn("origins loaded!")
 
@@ -123,7 +123,7 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                             $log.warn("recipeTypes loaded!")
 
                             /* RECIPES */
-                            return getObjFromServer('/rest/recipes/2').then(function(data){ //2117 = idUser
+                            return getObjFromServer('/rest/recipes/217').then(function(data){ //217 = idUser
                                 var allRecipes = data;
                                 initComplement(allRecipes);
                                 $log.warn("allRecipes loaded!")
@@ -144,7 +144,7 @@ myService.service("restGlobalService", function ($http, $q, $log, $location) {
                                     $log.warn("foodCategories loaded!")
 
                                     /* FOODS */
-                                    return getObjFromServer('/rest/foods').then(function(data){ //2 = idUser
+                                    return getObjFromServer('/rest/foods').then(function(data){
                                         foods = data;
                                         $log.warn("foods loaded!")
 
