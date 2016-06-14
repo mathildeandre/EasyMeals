@@ -77,17 +77,19 @@ public class UserService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response authenticate(User user) {
         System.out.println("My user ---  pseudo : "+user.getPseudo()+ " / email : "+user.getEmail()+ " / password : "+user.getPassword());
-        //ManagerGet.getInstance().updateBddColor(colorValue, idUser);
-        //generateToken();
-        String strJWT = createJWT("id", "issuer", "subject", 999999999);
-        System.out.println("strJWT : "+strJWT);
-        parseJWT(strJWT);
-        //return Response.ok("{'name' : 'bal val blaa'}").build();
+
+
+
         return Response.ok(new ObjString("bal val blaa")).build();
-        //return Response.ok(createJWT("id", "issuer", "subject", 0)).build();
     }
 
 
+
+
+
+
+
+    /************************************************* USELESS BELOW ******************************************/
 
     //issuer = id ? //subject = "fab"
     private String createJWT(String id, String issuer, String subject, long ttlMillis) {
