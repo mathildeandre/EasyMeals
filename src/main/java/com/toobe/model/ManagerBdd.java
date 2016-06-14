@@ -60,6 +60,18 @@ public class ManagerBdd {
         startConnection();
         userDao.updateBddColor(conn, colorValue, idUser);
     }
+    /******** INSERT / GET USER **********/
+    public Long insertNewUser(String pseudo, String encryptedPwd){
+        startConnection();
+        return userDao.insertNewUser(conn, pseudo, encryptedPwd);
+    }
+    public Long getIdUserByPseudo(String pseudo){
+        startConnection();
+        return userDao.getIdUserByPseudo(conn, pseudo);
+    }
+    /******** end INSERT / GET USER **********/
+
+
     /***** SECRET KEY *****/
     public void putKeyAlgo(String keyAlgo, Long idUser){
         startConnection();
@@ -82,6 +94,7 @@ public class ManagerBdd {
         return userDao.getEncryptedPwd(conn, idUser);
     }
     /***** end ENCRYPTED PASSWORD *****/
+
     public List<RecipeCategory> getRecipeCategories(Long idUser){
         startConnection();
         return recipeCategoryDao.getRecipeCategories(conn, idUser);

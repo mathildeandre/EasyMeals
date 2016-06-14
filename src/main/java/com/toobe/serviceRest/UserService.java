@@ -22,6 +22,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 
 import com.toobe.model.ManagerToken;
+import com.toobe.model.ManagerUser;
 import io.jsonwebtoken.*;
 import java.util.Date;
 
@@ -35,6 +36,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class UserService {
 
     private ManagerToken managerToken = new ManagerToken();
+    private ManagerUser managerUser = new ManagerUser();
     private String key;
     public UserService(){
         //System.out.println("UserService CONSTRUCTOR !!");
@@ -76,6 +78,27 @@ public class UserService {
         return Response.ok(new ObjString("bal val blaa")).build();
     }
 
+
+    @Path("/registrationUser/{pseudo}/{pwd}")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response registrationUser(@PathParam("pseudo") String pseudo, @PathParam("pwd") String pwd) {
+        System.out.println("[/rest/registrationUser] - pseudo : "+pseudo+"  pwd : "+pwd);
+        ObjToken objToken = managerUser.registrationUserTreatment(pseudo, pwd);
+        return Response.ok(objToken).build();
+    }
+    @Path("/connexionUser/{pseudo}/{pwd}")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response connexionUser(@PathParam("pseudo") String pseudo, @PathParam("pwd") String pwd) {
+        System.out.println("[/rest/connexionUser] - pseudo : "+pseudo+"  pwd : "+pwd);
+        ObjToken objToken = managerUser.connexionUserTreatment(pseudo, pwd);
+        return Response.ok(objToken).build();
+    }
+/*
+
     @Path("/testAuthenticate/{idUser}")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
@@ -106,7 +129,7 @@ public class UserService {
         return Response.ok(new ObjString("bal val blaa")).build();
     }
 
-
+*/
 
 
 

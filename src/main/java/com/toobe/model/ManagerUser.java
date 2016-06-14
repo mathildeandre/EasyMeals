@@ -2,6 +2,7 @@ package com.toobe.model;
 
 import com.toobe.dao.Database;
 import com.toobe.dao.UserDao;
+import com.toobe.dto.info.ObjToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -36,22 +37,38 @@ public class ManagerUser {
     }
 
 
-    public void registrationUserTreatment(String username, String plainPwd){
-        //1. crypt plainPwd
+    public ObjToken registrationUserTreatment(String pseudo, String plainPwd){
+        ObjToken objToken = new ObjToken();
+
+        //1. CRYPT plainPwd
         String encryptedPwd = managerEncryptor.cryptePwd(plainPwd);
 
-        //2. INSERT USER INTO BDD
-        //idUser = insertUser(username, encryptedPwd); - // when throw error USER NOT FIND?
-        Long idUser = new Long(2117);
+        //2. INSERT USER into BDD
+        Long idUser = managerBdd.insertNewUser(pseudo, encryptedPwd);
+        if(idUser == -1){
+            objToken.setMsg("User not Created into BDD");
+            return objToken;
+        }
 
         //3. GENERATION TOKEN
         String strTokenUser = createTokenForUser(idUser);
+        objToken.setIsValidToken(true);
+        objToken.setToken(strTokenUser);
+        objToken.setIdUser(idUser);
+        objToken.setPseudo(pseudo);
+        return objToken;
     }
 
-    public void connexionUserTreatment(String username, String plainPwd){
+
+    public ObjToken connexionUserTreatment(String pseudo, String plainPwd){
+        ObjToken objToken = new ObjToken();
+
         //1. FIND USER INTO BDD
-        //idUser = findUser(username); - // when throw error USER NOT FIND?
-        Long idUser = new Long(2117);
+        Long idUser = managerBdd.getIdUserByPseudo(pseudo);
+        if(idUser == -1){
+            objToken.setMsg("Pseudo does not exist");
+            return objToken;
+        }
 
         //2. GET encrypted password from BDD
         String encryptedPwd = managerBdd.getEncryptedPwd(idUser);
@@ -60,11 +77,17 @@ public class ManagerUser {
 
 
         //3. if ok : GENERATION TOKEN
+        String strTokenUser = null;
         if(isPwdCorrect){
-            String strTokenUser = createTokenForUser(idUser);
+            strTokenUser = createTokenForUser(idUser);
+            objToken.setIsValidToken(true);
+            objToken.setToken(strTokenUser);
+            objToken.setIdUser(idUser);
+            objToken.setPseudo(pseudo);
         }else{
-            //throw error "PWD NOT CORRECT
+            objToken.setMsg("Password is incorrect");
         }
+        return objToken;
     }
 
 

@@ -15,14 +15,14 @@ myModule.controller('ConnexionCtrl', function($scope, $log, $routeParams, $locat
 
     $scope.login = function() {
         $log.info("INTO .........................LOGIN ......................................");
-        $log.info("INTO .LOGIN. : username;pwd : "+$scope.username+";"+$scope.password);
+        $log.info("INTO .LOGIN. : pseudo;pwd : "+$scope.pseudo+";"+$scope.password);
 
         $scope.loading = true;
-        restUserService.login($scope.username, $scope.password, function (result) {
+        restUserService.connexion($scope.pseudo, $scope.password, function (result, msgError) {
             if (result === true) {
                 $location.path('/recipe');
             } else {
-                $scope.error = 'Username or password is incorrect';
+                $scope.error = msgError;//'pseudo or password is incorrect --  msgError : '+;
                 $scope.loading = false;
             }
         });

@@ -40,7 +40,7 @@ public class UserDao {
     public Long insertNewUser(Connection conn, String pseudo, String encryptedPwd){
         PreparedStatement stm;
         ResultSet res;
-        Long idNewUser = null;
+        Long idNewUser = new Long(-1);
         int isOk = 0;
         try {
             stm = conn.prepareStatement(INSERT_newUser, Statement.RETURN_GENERATED_KEYS);
@@ -65,7 +65,7 @@ public class UserDao {
     private final static String SELECT_userByPseudo = "SELECT id FROM User WHERE pseudo = ?;\n";
     public Long getIdUserByPseudo(Connection conn, String pseudo){
         PreparedStatement stm;
-        Long idUser = null;
+        Long idUser = new Long(-1);
         try {
             stm = conn.prepareStatement(SELECT_userByPseudo);
             stm.setString(1, pseudo);

@@ -6,6 +6,65 @@ var myService = angular.module('services');
 
 myService.service("restUserService", function ($http, $q, $log, $localStorage, restGlobalService) {
 
+    function connexion(pseudo, password, callback){
+        $http.post('/rest/connexionUser/'+pseudo+"/"+password).success(function (response) {
+            // login successful if there's a token in the response
+            if (response.isValidToken) {
+                $log.debug("[restUserService] - connexion() - Token VALID :) : "+response.token);
+
+                /*
+                $http.post('/rest/testVerifyToken/2117', response).success(function(response){
+                    $log.debug("BOOM ca a MARCHEEEEE :):) :) :) :) :) :) :) :) - (response.name :"+response.name);
+                })
+                */
+
+
+                // store username and token in local storage to keep user logged in between page refreshes
+                $localStorage.currentUser = { pseudo: response.pseudo, idUser: response.idUser, token: response.token };
+
+                // add jwt token to auth header for all requests made by the $http service
+                $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
+
+                // execute callback with true to indicate successful login
+                callback(true);
+            } else {
+                // execute callback with false to indicate failed login
+                callback(false, response.msg);
+            }
+        });
+    }
+    function registration(pseudo, password, callback){
+        $http.post('/rest/registrationUser/'+pseudo+"/"+password).success(function (response) {
+            // login successful if there's a token in the response
+            if (response.isValidToken) {
+                $log.debug("[restUserService] - registration() - Token VALID :) : "+response.token);
+
+                /*
+                $http.post('/rest/testVerifyToken/2117', response).success(function(response){
+                    $log.debug("BOOM ca a MARCHEEEEE :):) :) :) :) :) :) :) :) - (response.name :"+response.name);
+                })
+                */
+
+                // store username and token in local storage to keep user logged in between page refreshes
+                $localStorage.currentUser = { pseudo: response.pseudo, idUser: response.idUser, token: response.token };
+
+                // add jwt token to auth header for all requests made by the $http service
+                $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
+
+                // execute callback with true to indicate successful login
+                callback(true);
+            } else {
+                // execute callback with false to indicate failed login
+                callback(false);
+            }
+        });
+    }
+
+
+
+
+
+
 
     function login(username, password, callback) {
 
@@ -73,6 +132,8 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
 
     return {
         login: login,
-        logout: logout
+        logout: logout,
+        connexion: connexion,
+        registration: registration
     };
 });
