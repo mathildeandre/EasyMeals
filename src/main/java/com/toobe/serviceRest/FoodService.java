@@ -6,7 +6,7 @@ package com.toobe.serviceRest;
 
 import com.toobe.dto.Food;
 import com.toobe.dto.FoodCategory;
-import com.toobe.model.ManagerGet;
+import com.toobe.model.ManagerBdd;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,7 +22,7 @@ public class FoodService {
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getFoods(){
-        List<Food> list = new ManagerGet().getFoods();
+        List<Food> list = new ManagerBdd().getFoods();
         return Response.ok(list).build();
     }
 
@@ -30,7 +30,7 @@ public class FoodService {
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getFoodCategories(){
-        List<FoodCategory> list = new ManagerGet().getFoodCategories();
+        List<FoodCategory> list = new ManagerBdd().getFoodCategories();
         return Response.ok(list).build();
     }
 
@@ -38,7 +38,7 @@ public class FoodService {
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getFoodsString(){
-        List<String> list = new ManagerGet().getFoodsString();
+        List<String> list = new ManagerBdd().getFoodsString();
         return Response.ok(list).build();
     }
 }

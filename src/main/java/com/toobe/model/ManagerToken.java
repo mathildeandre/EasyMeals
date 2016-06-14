@@ -1,4 +1,4 @@
-package com.toobe.serviceRest;
+package com.toobe.model;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -13,16 +13,14 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
 
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 /**
  * Created by fabien on 14/06/2016.
  */
 public class ManagerToken {
-
     private static ManagerToken self;
-    private HashMap<Long, String> mapUserSecretKey;
-
+    //private HashMap<Long, String> mapUserSecretKey;
 
     public static ManagerToken getInstance(){
         if(self != null){
@@ -31,51 +29,21 @@ public class ManagerToken {
         return new ManagerToken();
     }
     public ManagerToken(){
-        mapUserSecretKey = new HashMap<Long, String>();
-    }
-
-
-    public String createTokenForUser(Long idUser){
-        String id = "idUser"+idUser.toString();
-        String issuer = "myIssue";
-        String subject = "mysSubject";
-        long ttlMillis = 86400000;//1 day
-
-        String secretKeyUser = generateSecretKey();
-        mapUserSecretKey.put(idUser, secretKeyUser);
-
-        String strTokenUser = createJWT(id, issuer, subject, 999999, secretKeyUser);
-        return strTokenUser;
-    }
-
-    public boolean verifyTokenOfUser(Long idUser, String strTokenUser){
-        String secretKeyUser = mapUserSecretKey.get(idUser);
-
-        System.out.println("[verifyTokenOfUser] idUser: " + idUser + "  --before 'parseJWT'");
-        //This line will throw an exception if it is not a signed JWS (as expected)
-        parseJWT(strTokenUser, secretKeyUser);
-        System.out.println("[verifyTokenOfUser] 'parseJWT' didnt throw any exception -> TOKEN CORRECT");
-
-        //If no exception thrown we can return TRUE : the token is correct
-        return true;
+        //mapUserSecretKey = new HashMap<Long, String>();
     }
 
 
 
 
-    //Sample method to validate and read the JWT
-    private void parseJWT(String jwt, String secretkey) {
-        //This line will throw an exception if it is not a signed JWS (as expected)
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretkey)).parseClaimsJws(jwt).getBody();
-
-        System.out.println("ID: " + claims.getId());
-        System.out.println("Subject: " + claims.getSubject());
-        System.out.println("Issuer: " + claims.getIssuer());
-        System.out.println("Expiration: " + claims.getExpiration());
-    }
 
 
-    private String generateSecretKey(){
+
+
+
+
+
+    /********************** GENERATION SECRET KEY *************************/
+    public String generateSecretKey(){
         SecretKey secretKey = null;
         try {
             // create new key
@@ -88,8 +56,22 @@ public class ManagerToken {
 
         return  encodedKey;
     }
+    /********************** end GENERATION SECRET KEY *************************/
+
+
+
+
+    /********************** PARSE JWT *************************/
+    //Sample method to validate and read the JWT
+    public Claims parseJWT(String jwt, String secretkey) {
+        //This line will throw an exception if it is not a signed JWS (as expected)
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretkey)).parseClaimsJws(jwt).getBody();
+        return claims;
+    }
+
+    /********************** CREATE JWT *************************/
     //issuer = id ? //subject = "fab"
-    private String createJWT(String id, String issuer, String subject, long ttlMillis, String secretkey) {
+    public String createJWT(String id, String issuer, String subject, long ttlMillis, String secretkey) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;

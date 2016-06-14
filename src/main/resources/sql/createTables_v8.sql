@@ -17,7 +17,7 @@ CREATE TABLE Rel_Food_Category (idCategory int(10) NOT NULL, idFoodRecipe int(10
 CREATE TABLE Rel_Recipe_CaseMealPlanning (idRecipe int(10) NOT NULL, idPlanningCaseMeal int(10) NOT NULL, nbPers int(10), PRIMARY KEY (idRecipe, idPlanningCaseMeal));
 CREATE TABLE Rel_Recipe_Category (idCategory int(10) NOT NULL, idRecipe int(10) NOT NULL, PRIMARY KEY (idCategory, idRecipe));
 CREATE TABLE Rel_User_Recipe (idRecipe int(10) NOT NULL, idUser int(10) NOT NULL, isFavorite tinyint(1), isForPlanning tinyint(1), ratingUser int(10), isHide tinyint, PRIMARY KEY (idRecipe, idUser));
-CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), isAdmin tinyint DEFAULT 0 NOT NULL, colorThemeRecipe varchar(25) DEFAULT 'grey' NOT NULL, PRIMARY KEY (id));
+CREATE TABLE `User` (id int(10) NOT NULL AUTO_INCREMENT, pseudo varchar(255) NOT NULL, pwd varchar(255) NOT NULL, email varchar(255), isAdmin tinyint DEFAULT 0 NOT NULL, colorThemeRecipe varchar(25) DEFAULT 'grey' NOT NULL, keyAlgo varchar(255), PRIMARY KEY (id));
 
 CREATE TABLE FriendWith (idUser1 int(10) NOT NULL, idUser2 int(10) NOT NULL, PRIMARY KEY (idUser1, idUser2));
 CREATE TABLE Rel_User_RecipeCategory (idRecipeCategory int(10) NOT NULL, idUser int(10) NOT NULL, numRankRel int(10) NOT NULL, PRIMARY KEY (idRecipeCategory, idUser));

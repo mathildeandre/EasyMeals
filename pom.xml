@@ -61,6 +61,13 @@
             <version>0.6.0</version>
         </dependency>
 
+
+        <!-- Java Simplified Encryption (pwd)-->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.2</version>
+        </dependency>
     </dependencies>
 
 

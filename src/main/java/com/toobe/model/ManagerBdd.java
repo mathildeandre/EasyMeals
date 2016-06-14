@@ -14,9 +14,9 @@ import java.util.List;
  * Created by mathilde on 27/03/2016.
  * CLASS Singleton : only one instance at a time
  */
-public class ManagerGet {
+public class ManagerBdd {
 
-    private static ManagerGet self;
+    private static ManagerBdd self;
 
     private UserDao userDao;
     private RecipeDao recipeDao;
@@ -29,14 +29,14 @@ public class ManagerGet {
     private FoodDao foodDao;
     private Connection conn;
 
-    public static ManagerGet getInstance(){
+    public static ManagerBdd getInstance(){
         if(self != null){
             return self;
         }
-        return new ManagerGet();
+        return new ManagerBdd();
     }
 
-    public ManagerGet(){
+    public ManagerBdd(){
         userDao = new UserDao();
         recipeDao = new RecipeDao();
         //listShoppingDao = new ListShoppingDao();
@@ -51,13 +51,37 @@ public class ManagerGet {
 
     // TODO add constructor to initailize all dao ?
 
-    /*********************************************/
-    /************* USER ***********************/
-    /*******************************************/
+    /*************************************************************************/
+    /*************************************************************************/
+    /*********************** USER ********************************************/
+    /*************************************************************************/
+    /*************************************************************************/
     public void updateBddColor(String colorValue, Long idUser){
         startConnection();
         userDao.updateBddColor(conn, colorValue, idUser);
     }
+    /***** SECRET KEY *****/
+    public void putKeyAlgo(String keyAlgo, Long idUser){
+        startConnection();
+        userDao.putKeyAlgo(conn, keyAlgo, idUser);
+    }
+    public String getKeyAlgo(Long idUser){
+        startConnection();
+        return userDao.getKeyAlgo(conn, idUser);
+    }
+    /***** end SECRET KEY *****/
+
+
+    /***** ENCRYPTED PASSWORD *****/
+    public void putEncryptedPwd(String encryptedPwd, Long idUser){
+        startConnection();
+        userDao.putEncryptedPwd(conn, encryptedPwd, idUser);
+    }
+    public String getEncryptedPwd(Long idUser){
+        startConnection();
+        return userDao.getEncryptedPwd(conn, idUser);
+    }
+    /***** end ENCRYPTED PASSWORD *****/
     public List<RecipeCategory> getRecipeCategories(Long idUser){
         startConnection();
         return recipeCategoryDao.getRecipeCategories(conn, idUser);
@@ -66,6 +90,10 @@ public class ManagerGet {
         startConnection();
         return recipeOriginDao.getRecipeOrigins(conn, idUser);
     }
+    /*************************************************************************/
+    /*********************** end USER ********************************************/
+    /*************************************************************************/
+
 
     /*********************************************/
     /************* RECIPE ***********************/

@@ -4,23 +4,15 @@ package com.toobe.serviceRest;
  * Created by mathilde on 13/03/2016.
  */
 
-import com.toobe.dto.Recipe;
 import com.toobe.dto.User;
-import com.toobe.dto.info.ObjString;
-import com.toobe.dto.info.RecipeCategory;
-import com.toobe.dto.info.RecipeOrigin;
-import com.toobe.dto.info.RecipeType;
-import com.toobe.model.ManagerGet;
+import com.toobe.dto.info.*;
+import com.toobe.model.ManagerBdd;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.imageio.ImageIO;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
@@ -28,13 +20,13 @@ import java.util.List;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+
+import com.toobe.model.ManagerToken;
 import io.jsonwebtoken.*;
 import java.util.Date;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
-import java.security.Key;
 
 //import org.springframework.web.multipart.MultipartFile;
 
@@ -42,30 +34,31 @@ import java.security.Key;
 //localhost:8080/rest/
 public class UserService {
 
+    private ManagerToken managerToken = new ManagerToken();
     private String key;
     public UserService(){
-
+        //System.out.println("UserService CONSTRUCTOR !!");
     }
 
     @Path("updateBddColor/{colorValue}/{idUser}")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public Response updateBddColor(@PathParam("colorValue") String colorValue, @PathParam("idUser") Long idUser) {
-        ManagerGet.getInstance().updateBddColor(colorValue, idUser);
+        ManagerBdd.getInstance().updateBddColor(colorValue, idUser);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("/recipeCategories/{idUser}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getRecipeCategories(@PathParam("idUser") Long idUser) {
-        List<RecipeCategory> list = ManagerGet.getInstance().getRecipeCategories(idUser);
+        List<RecipeCategory> list = ManagerBdd.getInstance().getRecipeCategories(idUser);
         return Response.ok(list).build();
     }
     @Path("/recipeOrigins/{idUser}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getRecipeOrigins(@PathParam("idUser") Long idUser) {
-        List<RecipeOrigin> list = ManagerGet.getInstance().getRecipeOrigins(idUser);
+        List<RecipeOrigin> list = ManagerBdd.getInstance().getRecipeOrigins(idUser);
         return Response.ok(list).build();
     }
 
@@ -83,7 +76,35 @@ public class UserService {
         return Response.ok(new ObjString("bal val blaa")).build();
     }
 
+    @Path("/testAuthenticate/{idUser}")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response authenticate(@PathParam("idUser") Long idUser) {
+        System.out.println("[/rest/testAuthenticate/idUser] - idUser : "+idUser);
+        //String token = ManagerToken.getInstance().createTokenForUser(idUser);
+        String token = managerToken.createTokenForUser(idUser);
+        return Response.ok(new ObjToken(token)).build();
+    }
+    @Path("/testVerifyToken/{idUser}")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response authenticate(@PathParam("idUser") Long idUser, ObjToken token) {
+        System.out.println("[/rest/testVerifyToken/idUser] - idUser : "+idUser);
+        System.out.println("[/rest/testVerifyToken/idUser] - token : "+token.getToken());
 
+        //boolean isTokenCorrect = ManagerToken.getInstance().verifyTokenOfUser(idUser, token.getToken());
+        boolean isTokenCorrect = managerToken.verifyTokenOfUser(idUser, token.getToken());
+
+
+        if(isTokenCorrect){
+            System.out.println("[/rest/testVerifyToken/idUser] -- TOKEN CORRECT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+
+
+        return Response.ok(new ObjString("bal val blaa")).build();
+    }
 
 
 

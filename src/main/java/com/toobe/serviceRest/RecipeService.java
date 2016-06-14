@@ -4,26 +4,18 @@ package com.toobe.serviceRest;
  * Created by mathilde on 13/03/2016.
  */
 
-import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
 import com.toobe.dto.info.*;
-import com.toobe.model.ManagerGet;
+import com.toobe.model.ManagerBdd;
 //import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.FileImageOutputStream;
-import javax.imageio.stream.ImageOutputStream;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URL;
-import java.util.Iterator;
 import java.util.List;
 
 @Path("/")
@@ -40,7 +32,7 @@ public class RecipeService {
     public Response getRecipes(@PathParam("recipeType") String recipeType, @PathParam("idUser") int idUser){
 
         System.out.println("[WEB SERVICE] - fct getRecipes - @Path : 'recipes/"+recipeType+"/"+idUser+"'");
-        List<Recipe> list = ManagerGet.getInstance().getRecipes(recipeType, idUser);
+        List<Recipe> list = ManagerBdd.getInstance().getRecipes(recipeType, idUser);
         return Response.ok(list).build();
     }
     */
@@ -48,7 +40,7 @@ public class RecipeService {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getRecipesForUser(@PathParam("idUser") Long idUser) {
-        List<Recipe> list = ManagerGet.getInstance().getRecipesForUser(idUser);
+        List<Recipe> list = ManagerBdd.getInstance().getRecipesForUser(idUser);
         return Response.ok(list).build();
     }
 
@@ -57,7 +49,7 @@ public class RecipeService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getRecipeById(@PathParam("idRecipe") Long idRecipe) {
         //localhost:8080/rest/recipe/2
-        Recipe recipe = ManagerGet.getInstance().getRecipeById(idRecipe);
+        Recipe recipe = ManagerBdd.getInstance().getRecipeById(idRecipe);
         return Response.ok(recipe).build();
     }
 
@@ -66,7 +58,7 @@ public class RecipeService {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getRecipeTypes() {
-        List<RecipeType> list = ManagerGet.getInstance().getRecipeTypes();
+        List<RecipeType> list = ManagerBdd.getInstance().getRecipeTypes();
         return Response.ok(list).build();
     }
 
@@ -77,7 +69,7 @@ public class RecipeService {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response createRecipe(Recipe recipe) {
-        Recipe newRecipe = ManagerGet.getInstance().createRecipe(recipe);
+        Recipe newRecipe = ManagerBdd.getInstance().createRecipe(recipe);
         /*System.out.println(" recipe.name "+recipe.getName());
         System.out.println(" recipe.pixName "+recipe.getPixName());
         System.out.println(" recipe.Userid "+recipe.getUser().getId());
@@ -180,7 +172,7 @@ public class RecipeService {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response putIsFavorite(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isFavorite) {
-        ManagerGet.getInstance().putIsFavorite(idRecipe, idUser, isFavorite);
+        ManagerBdd.getInstance().putIsFavorite(idRecipe, idUser, isFavorite);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
@@ -189,7 +181,7 @@ public class RecipeService {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response putIsForPlanning(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, boolean isForPlanning) {
-        ManagerGet.getInstance().putIsForPlanning(idRecipe, idUser, isForPlanning);
+        ManagerBdd.getInstance().putIsForPlanning(idRecipe, idUser, isForPlanning);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
@@ -198,7 +190,7 @@ public class RecipeService {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response putRatingUser(@PathParam("idRecipe") Long idRecipe, @PathParam("idUser") Long idUser, int ratingUser) {
-        ManagerGet.getInstance().putRatingUser(idRecipe, idUser, ratingUser);
+        ManagerBdd.getInstance().putRatingUser(idRecipe, idUser, ratingUser);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
@@ -206,28 +198,28 @@ public class RecipeService {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public Response putIncrNumRankCategory(@PathParam("idRecipeCategory") Long idRecipeCategory, @PathParam("idUser") Long idUser) {
-        ManagerGet.getInstance().putIncrNumRankCategory(idRecipeCategory, idUser);
+        ManagerBdd.getInstance().putIncrNumRankCategory(idRecipeCategory, idUser);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("putIncrNumRankOrigin/{idRecipeOrigin}/{idUser}")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public Response putIncrNumRankOrigin(@PathParam("idRecipeOrigin") Long idRecipeOrigin, @PathParam("idUser") Long idUser) {
-        ManagerGet.getInstance().putIncrNumRankOrigin(idRecipeOrigin, idUser);
+        ManagerBdd.getInstance().putIncrNumRankOrigin(idRecipeOrigin, idUser);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
     @Path("createNewSpeciality/{recipeSpecialityName}")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public Response createNewSpeciality(@PathParam("recipeSpecialityName") String recipeSpecialityName) {
-        Long idNewSpeciality = ManagerGet.getInstance().createNewSpeciality(recipeSpecialityName);
+        Long idNewSpeciality = ManagerBdd.getInstance().createNewSpeciality(recipeSpecialityName);
         return Response.ok(new ObjLong(idNewSpeciality)).build();
     }
     @Path("createNewCategory/{recipeCategoryName}/{idRecipeType}")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public Response createNewCategory(@PathParam("recipeCategoryName") String recipeCategoryName, @PathParam("idRecipeType") Long idRecipeType) {
-        Long idNewCategory = ManagerGet.getInstance().createNewRecipeCategory(recipeCategoryName, idRecipeType);
+        Long idNewCategory = ManagerBdd.getInstance().createNewRecipeCategory(recipeCategoryName, idRecipeType);
         return Response.ok(new ObjLong(idNewCategory)).build();
     }
 }
