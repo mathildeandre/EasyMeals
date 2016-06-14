@@ -5,7 +5,21 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location, GlobalService, restRecipeService, restPlanningService, restFoodService) {
+myModule.controller('GlobalCtrl', function($scope, $log, $localStorage, $routeParams, $location, GlobalService, restRecipeService, restPlanningService, restFoodService) {
+
+
+
+    /**************************** UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
+    //$localStorage n'est pas raffraichi dans GLOBAL-CTRL ...
+    $scope.isUserConnected = false;
+    $scope.pseudoCurrentUser = '';
+    $scope.$on('userConnected', function(event, pseudo) {
+        $scope.isUserConnected = true;
+        $scope.pseudoCurrentUser = pseudo;
+    });
+    $scope.currentUser = $localStorage.currentUser
+    /**************************** end UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
+
 
     $scope.isTablet = function(){
         if (navigator.userAgent.match('/Android|iPad')){
@@ -26,13 +40,18 @@ myModule.controller('GlobalCtrl', function($scope, $log, $routeParams, $location
     //restPlanningService.initLoadData();
     //restFoodService.initLoadData();
 
-    $scope.classBody = "bodyEasyMeals";
+    $scope.classBody = "bodyWelcome";
 
 
     /** classBody utilisé danns 'index.html' : <body class="{{classBody}}" ng-controller="GlobalCtrl">*/
 
 
 
+    $scope.$on('intoWelcome', function() {
+        $log.debug("[global]  ON - intoWelcome")
+
+        $scope.classBody = "bodyWelcome";
+    });
     $scope.$on('intoConnexion', function() {
         $scope.classBody = "bodyConnexion";
     });
