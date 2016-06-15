@@ -45,10 +45,16 @@ public class UserService {
     @Path("updateBddColor/{colorValue}/{idUser}")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateBddColor(@PathParam("colorValue") String colorValue, @PathParam("idUser") Long idUser) {
+    public Response updateBddColor(@PathParam("colorValue") String colorValue, @PathParam("idUser") Long idUser, @HeaderParam("Authorization") String referer) {
         ManagerBdd.getInstance().updateBddColor(colorValue, idUser);
+        System.out.println("HI COLOR !! .........................................");
+        System.out.println("Header autorization : "+referer);
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
+
+
+
+
     @Path("/recipeCategories/{idUser}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})

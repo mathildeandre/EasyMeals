@@ -38,7 +38,7 @@
                                                                         ng-mouseenter="dropdwonUserIsopen = true" ng-mouseleave="dropdwonUserIsopen =false">
                     <a uib-dropdown-toggle>
                         <span class="glyphicon glyphicon-user"></span>
-                        <span class="spanNameUserConnected">{{pseudoCurrentUser}}</span>
+                        <span class="spanNameUserConnected">{{userConnected.pseudo}}</span>
                         <span class="caret"></span>
                     </a>
                     <ul class=" nav myDropDownConnexion" uib-dropdown-menu>
@@ -109,7 +109,7 @@
                 </li>-->
 
                 <!-- PRIVATE ADMIN : important -->
-                <li class="page-scroll" ng-class="{ activeInNavBarPrivateAdmin: classBody == 'bodyPrivateAdmin'}">
+                <li ng-show="userConnected.isAdmin" class="page-scroll" ng-class="{ activeInNavBarPrivateAdmin: classBody == 'bodyPrivateAdmin'}">
                     <a href="/#/privateAdmin">PA</a>
                 </li>
                 <!-- DEBUG Important...

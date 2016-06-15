@@ -11,6 +11,9 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
             // login successful if there's a token in the response
             if (response.isValidToken) {
                 $log.debug("[restUserService] - connexion() - Token VALID :) : "+response.token);
+                $log.debug("[restUserService] - connexion() - Token VALID :) : "+response.user.pseudo);
+                $log.debug("[restUserService] - connexion() - Token VALID :) : "+response.user.isAdmin);
+                $log.debug("[restUserService] - connexion() - Token VALID :) : "+response.user.id);
 
                 /*
                 $http.post('/rest/testVerifyToken/2117', response).success(function(response){
@@ -20,7 +23,8 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
 
 
                 // store username and token in local storage to keep user logged in between page refreshes
-                $localStorage.currentUser = { pseudo: response.pseudo, idUser: response.idUser, token: response.token };
+                $localStorage.userConnected = response.user; //response.user = { id: 21117, pseudo: 'mathou', email: '', isAdmin: 0, colorThemeRecipe: 'grey'}
+                $localStorage.token = response.token ;
 
                 // add jwt token to auth header for all requests made by the $http service
                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;

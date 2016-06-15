@@ -7,7 +7,10 @@ var myService = angular.module('services');
 myService.service("restPlanningService", function ($http, $q, $log, $location) {
 
 
-    var plannings = [];
+    var planningEmptyForNoUserConnected = {"id":-1,"name":"planningForUserNotConnected","lastOpen":true,"nbPersGlobal":4,"isForListShop":false,"weekMeals":[{"id":5,"weekMealName":"breakfast","show":false,"caseMeals":[{"id":29,"nbPers":4,"numDay":1,"recipes":[]},{"id":30,"nbPers":4,"numDay":2,"recipes":[]},{"id":31,"nbPers":4,"numDay":3,"recipes":[]},{"id":32,"nbPers":4,"numDay":4,"recipes":[]},{"id":33,"nbPers":4,"numDay":5,"recipes":[]},{"id":34,"nbPers":4,"numDay":6,"recipes":[]},{"id":35,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":6,"weekMealName":"lunch","show":true,"caseMeals":[{"id":36,"nbPers":4,"numDay":1,"recipes":[]},{"id":37,"nbPers":4,"numDay":2,"recipes":[]},{"id":38,"nbPers":4,"numDay":3,"recipes":[]},{"id":39,"nbPers":4,"numDay":4,"recipes":[]},{"id":40,"nbPers":4,"numDay":5,"recipes":[]},{"id":41,"nbPers":4,"numDay":6,"recipes":[]},{"id":42,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":7,"weekMealName":"snack","show":false,"caseMeals":[{"id":43,"nbPers":4,"numDay":1,"recipes":[]},{"id":44,"nbPers":4,"numDay":2,"recipes":[]},{"id":45,"nbPers":4,"numDay":3,"recipes":[]},{"id":46,"nbPers":4,"numDay":4,"recipes":[]},{"id":47,"nbPers":4,"numDay":5,"recipes":[]},{"id":48,"nbPers":4,"numDay":6,"recipes":[]},{"id":49,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":8,"weekMealName":"dinner","show":true,"caseMeals":[{"id":50,"nbPers":4,"numDay":1,"recipes":[]},{"id":51,"nbPers":4,"numDay":2,"recipes":[]},{"id":52,"nbPers":4,"numDay":3,"recipes":[]},{"id":53,"nbPers":4,"numDay":4,"recipes":[]},{"id":54,"nbPers":4,"numDay":5,"recipes":[]},{"id":55,"nbPers":4,"numDay":6,"recipes":[]},{"id":56,"nbPers":4,"numDay":7,"recipes":[]}]}]};
+
+
+    var plannings = [planningEmptyForNoUserConnected];
     var planningsShopping = [];
 
 
@@ -216,6 +219,14 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
             }
             $log.warn("plannings (& planningsShopping) loaded!71")
             //return response; ??
+            if(plannings[0] == undefined){
+                $log.warn("plannings (& planningsShopping) loaded!72")
+                plannings.push(planningEmptyForNoUserConnected);
+            }else{
+                $log.warn("plannings (& planningsShopping) loaded!73"+plannings)
+
+            }
+            $log.warn("plannings (& planningsShopping) loaded!74")
         })
     }
     /**************************** end INTIALIZATION *********************************/

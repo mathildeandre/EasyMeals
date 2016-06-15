@@ -1,5 +1,7 @@
 package com.toobe.dto.info;
 
+import com.toobe.dto.User;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,22 +13,21 @@ public class ObjToken {
     private boolean isValidToken;
     private String token;
     private String msg;
-    private String pseudo;
-    private Long idUser;
+    private User user;
 
 
     public ObjToken(){
         isValidToken = false;
         token = null;
         msg = null;
+        user = new User();
     }
 
-    public ObjToken(boolean isValidToken, String token, String msg, String pseudo, Long idUser) {
+    public ObjToken(boolean isValidToken, String token, String msg, User user) {
         this.isValidToken = isValidToken;
         this.token = token;
         this.msg = msg;
-        this.pseudo = pseudo;
-        this.idUser = idUser;
+        this.user = user;
     }
 
     public String getToken() {
@@ -53,19 +54,11 @@ public class ObjToken {
         this.msg = msg;
     }
 
-    public String getPseudo() {
-        return pseudo;
+    public User getUser() {
+        return user;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
-
-    public Long getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

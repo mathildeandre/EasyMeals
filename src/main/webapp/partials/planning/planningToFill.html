@@ -1,6 +1,13 @@
 <div>
 
     <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+
+
+        <div style="color:white">
+            Plannings[0] :  {{plannings[0]}}
+        </div>
+
+
         WeekMeal : lunch
         <div ng-repeat="caseMeal in currentPlanning.weekMeals[1].caseMeals">
             Recipes of {{caseMeal.id}} :

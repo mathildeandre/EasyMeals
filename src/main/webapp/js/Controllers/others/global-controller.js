@@ -11,13 +11,16 @@ myModule.controller('GlobalCtrl', function($scope, $log, $localStorage, $routePa
 
     /**************************** UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
     //$localStorage n'est pas raffraichi dans GLOBAL-CTRL ...
+    //$localStorage.userConnected = { pseudo: response.pseudo, id: response.idUser, token: response.token }
+
     $scope.isUserConnected = false;
-    $scope.pseudoCurrentUser = '';
-    $scope.$on('userConnected', function(event, pseudo) {
+    $scope.pseudoUserConnected = '';
+    $scope.userConnected = $localStorage.userConnected;
+
+    $scope.$on('userConnected', function(event, userConnected) {
         $scope.isUserConnected = true;
-        $scope.pseudoCurrentUser = pseudo;
+        $scope.userConnected = userConnected;
     });
-    $scope.currentUser = $localStorage.currentUser
     /**************************** end UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
 
 

@@ -14,14 +14,26 @@ public class User {
     private String pseudo;
     private String email;
     private String password;
+    private boolean isAdmin;
+    private String colorThemeRecipe;
 
-    public User(){ }
+    public User(){
+        this.id = new Long(-1);
+    }
 
-    public User(Long id, String pseudo, String email, String password) {
+    public User(Long id, String pseudo, String email) {
+        this.id = id;
+        this.pseudo = pseudo;
+        this.email = email;
+    }
+
+    public User(Long id, String pseudo, String email, String password, boolean isAdmin, String colorThemeRecipe) {
         this.id = id;
         this.pseudo = pseudo;
         this.email = email;
         this.password = password;
+        this.isAdmin = isAdmin;
+        this.colorThemeRecipe = colorThemeRecipe;
     }
 
     public Long getId() {
@@ -54,5 +66,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getColorThemeRecipe() {
+        return colorThemeRecipe;
+    }
+
+    public void setColorThemeRecipe(String colorThemeRecipe) {
+        this.colorThemeRecipe = colorThemeRecipe;
     }
 }

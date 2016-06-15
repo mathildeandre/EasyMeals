@@ -7,13 +7,16 @@ var myModule = angular.module('controllers');
 
 myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, $location, $window,  $log,  $http, $q, AppendixFunctionsService, restRecipeService) {
 
+    /*********************************** USER CONNECTED **************************************/
+    //$localStorage.userConnected = { pseudo: response.pseudo, id: response.idUser, token: response.token }
     $scope.isUserConnected = false;
-    $scope.currentUserFromRecipe = {};
-    if($localStorage.currentUser){
+    $scope.userConnected;
+    if($localStorage.userConnected){
         $log.debug("[[RecipeCtrl]] - USER CONNECTED !! ($localStorage known)")
         $scope.isUserConnected = true;
-        $scope.currentUserFromRecipe = $localStorage.currentUser;
+        $scope.userConnected = $localStorage.userConnected;
     }
+    /*********************************** end USER CONNECTED **************************************/
 
 
     $scope.$emit('intoRecipe'); //will tell to parents (global-controller.js) to modify pix
@@ -56,10 +59,11 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
         event.stopPropagation();
         $log.info("STOP PROPAG !!")
     }
+
+
     /**********************************************************************************************************/
     /************************************** RATING MODE ******************************************************/
     /********************************************************************************************************/
-
     $scope.isStarFull = function(numStar, rating){
         //$log.info("---------------numstar : "+numStar+" rating : "+Math.round(rating)+"------------- RESULT ::: ");
         return numStar <= Math.round(rating);
@@ -102,8 +106,6 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
         $log.info("STOP PROPAG !!")
     }
 
-
-
     /*
     var initStars = function(){
         for(var i=0; i<$scope.recipes.length; i++){
@@ -112,7 +114,6 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
     }
     initStars();
     */
-
     $scope.isUserEditRating = true;
     $scope.ratingUserEdit = 0;
     $scope.starsEdit = [true, false, false, false, false];
@@ -138,10 +139,6 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
         var newNum = Math.round(5 - num);
         return new Array(newNum);
     }
-
-
-
-
     /**********************************************************************************************************/
     /************************************** end RATING MODE **************************************************/
     /********************************************************************************************************/

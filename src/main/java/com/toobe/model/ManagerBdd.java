@@ -62,9 +62,13 @@ public class ManagerBdd {
         userDao.updateBddColor(conn, colorValue, idUser);
     }
     /******** INSERT / GET USER **********/
-    public Long insertNewUser(String pseudo, String encryptedPwd){
+    public User insertNewUser(String pseudo, String encryptedPwd){
         startConnection();
         return userDao.insertNewUser(conn, pseudo, encryptedPwd);
+    }
+    public User getUserByPseudo(String pseudo){
+        startConnection();
+        return userDao.getUserByPseudo(conn, pseudo);
     }
     public Long getIdUserByPseudo(String pseudo){
         startConnection();

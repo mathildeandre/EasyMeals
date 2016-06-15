@@ -2,6 +2,7 @@ package com.toobe.model;
 
 import com.toobe.dao.Database;
 import com.toobe.dao.UserDao;
+import com.toobe.dto.User;
 import com.toobe.dto.info.ObjToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -44,7 +45,8 @@ public class ManagerUser {
         String encryptedPwd = managerEncryptor.cryptePwd(plainPwd);
 
         //2. INSERT USER into BDD
-        Long idUser = managerBdd.insertNewUser(pseudo, encryptedPwd);
+        User user = managerBdd.insertNewUser(pseudo, encryptedPwd);
+        Long idUser = user.getId();
         if(idUser == -1){
             objToken.setMsg("User not Created into BDD");
             return objToken;
@@ -54,8 +56,7 @@ public class ManagerUser {
         String strTokenUser = createTokenForUser(idUser);
         objToken.setIsValidToken(true);
         objToken.setToken(strTokenUser);
-        objToken.setIdUser(idUser);
-        objToken.setPseudo(pseudo);
+        objToken.setUser(user);
         return objToken;
     }
 
@@ -64,8 +65,10 @@ public class ManagerUser {
         ObjToken objToken = new ObjToken();
 
         //1. FIND USER INTO BDD
-        Long idUser = managerBdd.getIdUserByPseudo(pseudo);
-        if(idUser == -1){
+        User user = managerBdd.getUserByPseudo(pseudo);
+        //Long idUser = managerBdd.getIdUserByPseudo(pseudo);
+        Long idUser = user.getId();
+        if(idUser == -1){ //si user has been find
             objToken.setMsg("Pseudo does not exist");
             return objToken;
         }
@@ -82,8 +85,8 @@ public class ManagerUser {
             strTokenUser = createTokenForUser(idUser);
             objToken.setIsValidToken(true);
             objToken.setToken(strTokenUser);
-            objToken.setIdUser(idUser);
-            objToken.setPseudo(pseudo);
+            System.out.println("before set user : idUser"+user.getId()+" .. pseudo :"+user.getPseudo());
+            objToken.setUser(user);
         }else{
             objToken.setMsg("Password is incorrect");
         }

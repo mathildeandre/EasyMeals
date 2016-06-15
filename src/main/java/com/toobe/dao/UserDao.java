@@ -1,5 +1,6 @@
 package com.toobe.dao;
 
+import com.toobe.dto.User;
 import com.toobe.dto.info.RecipeCategory;
 
 import java.sql.*;
@@ -37,10 +38,10 @@ public class UserDao {
 
     /************************************* INSERT NEW USER  ************************************************************************/
     private final static String INSERT_newUser = "INSERT INTO `User`(pseudo, pwd) VALUES (?, ?);\n";
-    public Long insertNewUser(Connection conn, String pseudo, String encryptedPwd){
+    public User insertNewUser(Connection conn, String pseudo, String encryptedPwd){
         PreparedStatement stm;
         ResultSet res;
-        Long idNewUser = new Long(-1);
+        User user = new User();
         int isOk = 0;
         try {
             stm = conn.prepareStatement(INSERT_newUser, Statement.RETURN_GENERATED_KEYS);
@@ -52,22 +53,48 @@ public class UserDao {
             }
             res = stm.getGeneratedKeys();
             if (res.next()) {
-                idNewUser = res.getLong(1);
+                Long idNewUser = res.getLong(1);
+                user.setId(idNewUser);
+                user.setPseudo(pseudo);
+                user.setIsAdmin(false);
+                user.setColorThemeRecipe("grey");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return idNewUser;
+        return user;
     }
 
     /************************************* GET USER by PSEUDO  ************************************************************************/
-    private final static String SELECT_userByPseudo = "SELECT id FROM User WHERE pseudo = ?;\n";
-    public Long getIdUserByPseudo(Connection conn, String pseudo){
+    private final static String SELECT_userByPseudo = "SELECT * FROM User WHERE pseudo = ?;\n";
+    public User getUserByPseudo(Connection conn, String pseudo){
+        User user = new User();
         PreparedStatement stm;
         Long idUser = new Long(-1);
         try {
             stm = conn.prepareStatement(SELECT_userByPseudo);
+            stm.setString(1, pseudo);
+            ResultSet res = stm.executeQuery();
+            if(res.next()) {
+                user.setId(res.getLong("id"));
+                user.setPseudo(res.getString("pseudo"));
+                user.setEmail(res.getString("email"));
+                user.setIsAdmin(res.getBoolean("isAdmin"));
+                user.setColorThemeRecipe(res.getString("colorThemeRecipe"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+    /************************************* get ID user by pseudo.. should be USELESS..... ************************************************************************/
+    private final static String SELECT_idUserByPseudo = "SELECT id FROM User WHERE pseudo = ?;\n";
+    public Long getIdUserByPseudo(Connection conn, String pseudo){
+        PreparedStatement stm;
+        Long idUser = new Long(-1);
+        try {
+            stm = conn.prepareStatement(SELECT_idUserByPseudo);
             stm.setString(1, pseudo);
             ResultSet res = stm.executeQuery();
             if(res.next()) {

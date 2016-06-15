@@ -55,7 +55,7 @@
 
                 <div class="buttonCreate" ng-controller="ModalCreationRecipeCtrl">
                     <!--<a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayButtonCreationRecipeType()}}</a> <!--creer nouveau plat-->
-                    <div class="btn btn-warning" ng-click="openModalCreationRecipe()"> {{displayButtonCreationRecipeType()}}</div> <!--creer nouveau plat-->
+                    <div class="btn btn-warning" ng-class="{greyBckgrd : !isUserConnected}" ng-click="openModalCreationRecipe()"> {{displayButtonCreationRecipeType()}}</div> <!--creer nouveau plat-->
                 </div>
                 <div class="buttonsDisplayListRecipe">
                     <span ng-show="!isTablet()">Affichage : </span> &nbsp

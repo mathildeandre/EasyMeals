@@ -20,7 +20,8 @@ myModule.controller('ConnexionCtrl', function($scope, $log, $routeParams, $locat
         $scope.loading = true;
         restUserService.connexion($scope.pseudo, $scope.password, function (result, msgError) {
             if (result === true) {
-                $location.path('/recipe');
+                //$location.path('/recipe/course');
+                $location.path('/welcomeMeal');
             } else {
                 $scope.error = msgError;//'pseudo or password is incorrect --  msgError : '+;
                 $scope.loading = false;

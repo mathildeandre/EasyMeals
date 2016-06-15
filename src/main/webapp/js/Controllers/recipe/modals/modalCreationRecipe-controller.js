@@ -1,36 +1,40 @@
 
 var myModule = angular.module('controllers');
-myModule.controller('ModalCreationRecipeCtrl', ['$scope', '$uibModal', '$log', 'restPlanningService', '$localStorage', function ($scope, $uibModal, $log, $localStorage, restPlanningService) {
+myModule.controller('ModalCreationRecipeCtrl', ['$scope', '$uibModal', '$log', '$location', 'restPlanningService', '$localStorage', function ($scope, $uibModal, $log, $location, $localStorage, restPlanningService) {
 
 
     $scope.openModalCreationRecipe = function () {
-        event.stopPropagation();
-        var recipeType = $scope.recipeType;
 
+        if(!$scope.isUserConnected ){
+            $location.path('/connexion');
+        }else{
+            event.stopPropagation();
+            var recipeType = $scope.recipeType;
 
-        $log.warn("ON est entre dans [[[ ModalCreationRecipeCtrl]]] info : recipeTYpe : "+$scope.recipeType+"  -- ")
+            $log.warn("ON est entre dans [[[ ModalCreationRecipeCtrl]]] info : recipeTYpe : "+$scope.recipeType+"  -- ")
 
-
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: '../../partials/recipe/modals/modalCreationRecipe.html',
-            controller: 'ModalInstanceCreationRecipeCtrl',
-            size: 'lg',
-            resolve: {
-                recipeType: function () {
-                    return recipeType;
-                },
-                idUser: function(){
-                    return $scope.currentUserFromRecipe.idUser
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: '../../partials/recipe/modals/modalCreationRecipe.html',
+                controller: 'ModalInstanceCreationRecipeCtrl',
+                size: 'lg',
+                resolve: {
+                    recipeType: function () {
+                        return recipeType;
+                    },
+                    idUser: function(){
+                        return $scope.userConnected.id
+                    }
                 }
-            }
-        });
+            });
 
-        modalInstance.result.then(function () {
-            $log.debug("Creation recette validé");
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
+            modalInstance.result.then(function () {
+                $log.debug("Creation recette validé");
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        }
+
     };
 
 }]);
