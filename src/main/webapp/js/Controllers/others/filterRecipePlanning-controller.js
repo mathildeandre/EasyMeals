@@ -6,7 +6,21 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $window,  $log, restRecipeService) {
+myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $localStorage, $window,  $log, restRecipeService) {
+
+
+
+
+    /*********************************** USER CONNECTED **************************************/
+        //$localStorage.userConnected = { pseudo: response.pseudo, id: response.idUser, token: response.token }
+    $scope.isUserConnected = false;
+    $scope.userConnected;
+    if($localStorage.userConnected){
+        $log.debug("[[FilterCtrl]] - USER CONNECTED !! ($localStorage known) idUser :"+$localStorage.userConnected.id)
+        $scope.isUserConnected = true;
+        $scope.userConnected = $localStorage.userConnected;
+    }
+    /*********************************** end USER CONNECTED **************************************/
 
 
     /*****
@@ -208,7 +222,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         }else{
             category.numRank++;
         }
-        restRecipeService.putIncrNumRankCategory(category.id, 2);//user 2117
+        restRecipeService.putIncrNumRankCategory(category.id, $localStorage.userConnected.id);//idUser
     }
     var incrNumRankOrigin = function(origin){
         if(origin.numRank < 10){
@@ -216,7 +230,7 @@ myModule.controller('FilterCtrl', function($scope, $routeParams, $location, $win
         }else{
             origin.numRank++;
         }
-        restRecipeService.putIncrNumRankOrigin(origin.id, 2);//user 2117
+        restRecipeService.putIncrNumRankOrigin(origin.id, $localStorage.userConnected.id);//idUser
     }
 
     /************* end IA ***************/

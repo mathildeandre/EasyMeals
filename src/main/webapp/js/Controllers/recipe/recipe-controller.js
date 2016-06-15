@@ -53,7 +53,7 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
     $scope.listColor = [{name:'blanc', value:'white'},{name:'gris', value:'grey'},{name:'noir', value:'black'},{name:'orange', value:'orange'} ]
     $scope.colorChoosen = $scope.listColor[1];
     $scope.updateBddColor = function(colorChoosen){
-        restRecipeService.updateBddColor(colorChoosen.value, 2117);
+        restRecipeService.updateBddColor(colorChoosen.value, $scope.userConnected.id); //idUser
     }
     $scope.stopPropag = function(event){
         event.stopPropagation();
@@ -81,7 +81,7 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
         recipe.rating =  Number(result.toFixed(1));
         recipe.nbVoter = recipe.nbVoter+1;
         recipe.ratingSystem.isUserEditing = false;
-        restRecipeService.putRatingUser(recipe.id, 2, recipe.ratingUser);//2117
+        restRecipeService.putRatingUser(recipe.id, $scope.userConnected.id, recipe.ratingUser);//idUser
     }
     $scope.displayRatingOfRecipeByTitle = function(recipe){
         var ratingUser = recipe.ratingUser;
@@ -174,13 +174,13 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
         event.stopPropagation();
         recipe.isFavorite = !recipe.isFavorite;
         $scope.$broadcast('updateFilter');
-        restRecipeService.putIsFavorite(recipe.id, 2, recipe.isFavorite);//2117
+        restRecipeService.putIsFavorite(recipe.id, $scope.userConnected.id, recipe.isFavorite);//idUser
     }
     $scope.toggleIsForPlanning = function(recipe, event){
         event.stopPropagation();
         recipe.isForPlanning = !recipe.isForPlanning;
         $scope.$broadcast('updateFilter');
-        restRecipeService.putIsForPlanning(recipe.id, 2, recipe.isForPlanning);//2117
+        restRecipeService.putIsForPlanning(recipe.id, $scope.userConnected.id, recipe.isForPlanning);//idUser
     }
 
     $scope.openRecipeNewWindow = function(id) {
