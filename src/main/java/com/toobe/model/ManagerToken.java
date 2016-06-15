@@ -62,10 +62,15 @@ public class ManagerToken {
 
 
     /********************** PARSE JWT *************************/
-    //Sample method to validate and read the JWT
     public Claims parseJWT(String jwt, String secretkey) {
-        //This line will throw an exception if it is not a signed JWS (as expected)
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretkey)).parseClaimsJws(jwt).getBody();
+        Claims claims;
+        try{
+            //This line will throw an exception if it is not a signed JWS (as expected)
+            claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretkey)).parseClaimsJws(jwt).getBody();
+        }catch (Exception e){
+            return null;
+        }
+        //If no exception thrown we can return the claims : the token is correct
         return claims;
     }
 

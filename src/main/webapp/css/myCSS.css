@@ -2347,12 +2347,15 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .greyBckgrd{
     background-color: gray;
+    color : lightgrey;
     outline: 0;
     outline-color : gray;
     outline-style : none;
+    border:none;
 }
 .greyBckgrd:hover{
     background-color: gray;
+    color : lightgrey;
 }
 /***********************************************************************************************************************************************************************************************/
 /*******************************************************************    --end--  CONNEXION      **************************************************************************************************/
@@ -2682,6 +2685,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .myDisabledBtn{
     //color: darkgrey;
     background-color: gray;
+    color: lightgrey;
     border: none;
     cursor: not-allowed;
 }
@@ -2692,6 +2696,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     //color: darkgrey;
     background-color: gray;
     border: none;
+    color: lightgrey;
     outline : 0;
     outline-color : invert;
     //outline-style : none;

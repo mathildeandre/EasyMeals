@@ -10,7 +10,7 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
     /*********************************** USER CONNECTED **************************************/
     //$localStorage.userConnected = { pseudo: response.pseudo, id: response.idUser, token: response.token }
     $scope.isUserConnected = false;
-    $scope.userConnected;
+    $scope.userConnected = {id: 0, pseudo: '', email: '', isAdmin: false, colorThemeRecipe: 'grey'};
     if($localStorage.userConnected){
         $log.debug("[[RecipeCtrl]] - USER CONNECTED !! ($localStorage known)")
         $scope.isUserConnected = true;
@@ -48,10 +48,12 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
         return AppendixFunctionsService.displayTime(timeInMinute);
     }
 
-
-
     $scope.listColor = [{name:'blanc', value:'white'},{name:'gris', value:'grey'},{name:'noir', value:'black'},{name:'orange', value:'orange'} ]
-    $scope.colorChoosen = $scope.listColor[1];
+    //$scope.colorChoosen = $scope.listColor[1];
+    $scope.colorChoosen = $scope.listColor.filter(function(obj){
+        return obj.value == $scope.userConnected.colorThemeRecipe;
+    })[0]
+
     $scope.updateBddColor = function(colorChoosen){
         restRecipeService.updateBddColor(colorChoosen.value, $scope.userConnected.id); //idUser
     }

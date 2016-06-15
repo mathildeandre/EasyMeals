@@ -98,19 +98,17 @@ public class ManagerUser {
     public boolean verifyTokenOfUser(Long idUser, String strTokenUser){
         String secretKeyUser = managerBdd.getKeyAlgo(idUser);
 
-        System.out.println("[verifyTokenOfUser] (idUser: "+idUser+") secretKey from map : " + secretKeyUser);
-
-        System.out.println("[verifyTokenOfUser] (idUser: "+idUser+")  --before 'parseJWT'");
-        //This line will throw an exception if it is not a signed JWS (as expected)
+        //managerToken.parseJWT give back null if it is not a well signed JWS, the good claims otherwise
         Claims claims = managerToken.parseJWT(strTokenUser, secretKeyUser);
-        System.out.println("[verifyTokenOfUser] 'parseJWT' didnt throw any exception -> TOKEN CORRECT");
-        /*System.out.println("ID: " + claims.getId());
-        System.out.println("Subject: " + claims.getSubject());
-        System.out.println("Issuer: " + claims.getIssuer());
-        System.out.println("Expiration: " + claims.getExpiration());*/
+        /*System.out.println("ID: " + claims.getId() + " Subject: " + claims.getSubject() + "Issuer: " + claims.getIssuer() + "Expiration: " + claims.getExpiration());*/
 
-        //If no exception thrown we can return TRUE : the token is correct
-        return true;
+        if(claims == null){
+            //System.out.println("[verifyTokenOfUser] claims NULL -> TOKEN IN-CORRECT");
+            return false;
+        }else{
+            //System.out.println("[verifyTokenOfUser] 'parseJWT' didnt throw any exception -> TOKEN CORRECT");
+            return true;
+        }
     }
 
 

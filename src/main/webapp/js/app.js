@@ -87,6 +87,12 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                 .otherwise({ redirectTo: '/welcomeMeal' });
         }])
     .run(['$rootScope', '$http', '$location', '$localStorage', function($rootScope, $http, $location, $localStorage){
+
+
+        // add jwt token to auth header for all requests made by the $http service --init to 'noAutorization'
+        $http.defaults.headers.common.Authorization = 'No Autorization';
+
+
         // keep user logged in after page refresh
         //$log.warn("[[APP RUN]] -- we will test $localStorage ...)
         //alert("bjr1")
@@ -95,6 +101,21 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
             alert("bjr2")
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
         }
+
+        /* header :
+
+            Accept:* / *
+            Accept-Encoding:gzip, deflate, sdch
+            Accept-Language:es-ES,es;q=0.8,ca;q=0.6,en;q=0.4,gl;q=0.2
+            Access-Control-Request-Headers:accept, authorization
+            Access-Control-Request-Method:GET
+            Connection:keep-alive
+            Host:localhost:3000
+            Origin:http://localhost:8000
+            Referer:http://localhost:8000/
+            User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4)         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36
+            Authorization : 'no Autorization' (ou 'Bearer tokenValue')
+         */
 
     }])
     ;

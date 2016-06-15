@@ -45,30 +45,20 @@ public class UserService {
     @Path("updateBddColor/{colorValue}/{idUser}")
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateBddColor(@PathParam("colorValue") String colorValue, @PathParam("idUser") Long idUser, @HeaderParam("Authorization") String referer) {
-        ManagerBdd.getInstance().updateBddColor(colorValue, idUser);
-        System.out.println("HI COLOR !! .........................................");
-        System.out.println("Header autorization : "+referer);
+    public Response updateBddColor(@PathParam("colorValue") String colorValue, @PathParam("idUser") Long idUser, @HeaderParam("Authorization") String authorization) {
+        if(!authorization.equals("No Autorization")){
+            String strToken = authorization.substring(7); //substring(7) will remove "Bearer "
+            if(managerUser.verifyTokenOfUser(idUser, strToken)){
+                System.out.println("[putIncrNumRankOrigin] - TOKEN CORRECT ! bdd modified");
+                ManagerBdd.getInstance().updateBddColor(colorValue, idUser);
+            }else{
+                System.out.println("[putIncrNumRankOrigin] - TOKEN IN-CORRECT ! - no add into bdd");
+            }
+        }
         return Response.ok(new ObjString("MOUAHAHAH")).build();
     }
 
 
-
-
-    @Path("/recipeCategories/{idUser}")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response getRecipeCategories(@PathParam("idUser") Long idUser) {
-        List<RecipeCategory> list = ManagerBdd.getInstance().getRecipeCategories(idUser);
-        return Response.ok(list).build();
-    }
-    @Path("/recipeOrigins/{idUser}")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response getRecipeOrigins(@PathParam("idUser") Long idUser) {
-        List<RecipeOrigin> list = ManagerBdd.getInstance().getRecipeOrigins(idUser);
-        return Response.ok(list).build();
-    }
 
 
 

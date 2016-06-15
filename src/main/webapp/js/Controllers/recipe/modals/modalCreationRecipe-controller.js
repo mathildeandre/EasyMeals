@@ -108,12 +108,13 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
     $scope.creatingNewSpeciality = false;
     $scope.createNewSpeciality = function(newSpecialityName){
         if(newSpecialityName != '' && newSpecialityName != undefined){
-            restRecipeService.createNewSpeciality(newSpecialityName).then(function (data) {
+            restRecipeService.createNewSpeciality(newSpecialityName, idUser).then(function (data) {
                 var newIdSpeciality = data.id;
-
-                var newSpecialty = {"id": newIdSpeciality, "name": newSpecialityName, "numRank": 0}
-                $scope.origins.push(newSpecialty);
-                $scope.recipe.origin = newSpecialty;
+                if(newIdSpeciality != -1){
+                    var newSpecialty = {"id": newIdSpeciality, "name": newSpecialityName, "numRank": 0}
+                    $scope.origins.push(newSpecialty);
+                    $scope.recipe.origin = newSpecialty;
+                }else{$log.error("speciality '"+newSpecialityName+"' didnt created (id = -1)")}
                 $scope.newSpecialityName = '';
             })
         }
@@ -135,12 +136,13 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
     $scope.creatingNewCategory = false;
     $scope.createNewCategory = function(newCategoryName){
         if(newCategoryName != '' && newCategoryName != undefined){
-            restRecipeService.createNewCategory(newCategoryName, idRecipeType).then(function (data) {
+            restRecipeService.createNewCategory(newCategoryName, idRecipeType, idUser).then(function (data) {
                 var newIdCategory = data.id;
-
-                var newCategory = {"id": newIdCategory, "name": newCategoryName, "numRank": 0, "idRecipeType":idRecipeType, "checked":true}
-                $scope.categories.push(newCategory);
-                $scope.recipe.categories.push(newCategory);
+                if(newIdCategory != -1){
+                    var newCategory = {"id": newIdCategory, "name": newCategoryName, "numRank": 0, "idRecipeType":idRecipeType, "checked":true}
+                    $scope.categories.push(newCategory);
+                    $scope.recipe.categories.push(newCategory);
+                }else{$log.error("category '"+newCategoryName+"' didnt created (id = -1)")}
                 $scope.newCategoryName = '';
             })
         }

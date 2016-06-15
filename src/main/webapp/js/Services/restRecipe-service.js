@@ -145,11 +145,11 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
     }
 
-    function createNewSpeciality(recipeSpecialityName){
-        return postObjToServer('POST', '/rest/createNewSpeciality/'+recipeSpecialityName)
+    function createNewSpeciality(recipeSpecialityName, idUser){
+        return postObjToServer('POST', '/rest/createNewSpeciality/'+recipeSpecialityName+'/'+idUser)
     }
-    function createNewCategory(recipeCategoryName, idRecipeType){
-        return postObjToServer('POST', '/rest/createNewCategory/'+recipeCategoryName+'/'+idRecipeType)
+    function createNewCategory(recipeCategoryName, idRecipeType, idUser){
+        return postObjToServer('POST', '/rest/createNewCategory/'+recipeCategoryName+'/'+idRecipeType+'/'+idUser)
     }
 
     function sendImage(file){
@@ -194,12 +194,12 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     }
 
 
-    function getBDDSingleRecipe(idRecipe){
-        return getObjFromServer('rest/recipe/'+idRecipe).then(function (response) {
+    function getBDDSingleRecipe(idRecipe, idUser){
+        return getObjFromServer('rest/recipe/'+idRecipe+'/'+idUser).then(function (response) {
 
-            for(var i=0; i<1000; i++){
-                $log.warn("FUCK IT ;) on fait le traitement là ;)")
-            }
+            //for(var i=0; i<1000; i++){
+            //    $log.warn("FUCK IT ;) on fait le traitement là ;)")
+            //}
 
             return response; //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
         })
@@ -264,7 +264,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
     /****************************************************************** INTIALIZATION **************************************************************************/
     /****************************************************************** INTIALIZATION **************************************************************************/
-    /****************************************************************** INTIALIZATION **************************************************************************/
+    /********** CALL FROM restGlobal-service.js  ********************** INTIALIZATION **************************************************************************/
     /****************************************************************** INTIALIZATION **************************************************************************/
     function getBddCategories(idUser) {
         startersCategories = [];

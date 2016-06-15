@@ -11,18 +11,18 @@
  ------------------------------------------------------------------------------------
  -------------- CHECK (even though NOT REACHABLE if not connected) --------------
  ------------------------------------------------------------------------------------
- - /rest/recipe/create  (not reachable if not connected)
- - /rest/createNewSpeciality/   (not reachable if not connected)                        pas d'id ds param method...
- - /rest/createNewCategory/ (not reachable if not connected)                            pas d'id ds param method...
+ - /rest/recipe/create  (not reachable if not connected)                                ok testok
+ - /rest/createNewSpeciality/'+idRecipe+'   (not reachable if not connected)            ok testok
+ - /rest/createNewCategory/'+idRecipe+' (not reachable if not connected)                ok testok
  ------------------------------------------------------------------------------------
  -------------- CHECK --------------
  ------------------------------------------------------------------------------------
- - /rest/putIsFavorite/'+idRecipe+'/'+idUser, isFavorite)
- - /rest/putIsForPlanning/'+idRecipe+'/'+idUser, isForPlanning)
- - /rest/putRatingUser/'+idRecipe+'/'+idUser, ratingUser)
- - /rest/putIncrNumRankCategory/'+idRecipeCategory+'/'+idUser)
- - /rest/putIncrNumRankOrigin/'+idRecipeOrigin+'/'+idUser)
- - /rest/updateBddColor/'+colorValue+'/'+idUser)
+ - /rest/putIsFavorite/'+idRecipe+'/'+idUser, isFavorite)                               ok testok
+ - /rest/putIsForPlanning/'+idRecipe+'/'+idUser, isForPlanning)                         ok testok
+ - /rest/putRatingUser/'+idRecipe+'/'+idUser, ratingUser)                               ok testok
+ - /rest/putIncrNumRankCategory/'+idRecipeCategory+'/'+idUser)                          ok testok
+ - /rest/putIncrNumRankOrigin/'+idRecipeOrigin+'/'+idUser)                              ok testok
+ - /rest/updateBddColor/'+colorValue+'/'+idUser)                                        ok testok
 
 
 
@@ -32,15 +32,15 @@
  ------------------------------------------------------------------------------------
  ----------- CHECK but if not good user (or no user) xxxx run with idUser = -1  -----
  ------------------------------------------------------------------------------------
- - /rest/recipeCategories/' + idUser
- - /rest/recipeOrigins/' + idUser
- - /rest/recipes/' + idUser
+ - /rest/recipeCategories/' + idUser                                                    ok testok
+ - /rest/recipeOrigins/' + idUser                                                       ok testok
+ - /rest/recipes/' + idUser                                                             ok testok
 
  ------------------------------------------------------------------------------------
  -------------- if recipe PUBLIC  : NO CHECK  --------------
  -------------- if recipe PRIVATE : CHECK  --------------
  ------------------------------------------------------------------------------------
- - get RecipeSingle: rest/recipe/'+idRecipe     (no check if not connected)
+ - get RecipeSingle: rest/recipe/'+idRecipe     (no check if not connected)             PASS THE TOKEN to the new window so that a user can see a private recipe of his...
 
  ------------------------------------------------------------------------------------
  --------------  NO CHECK  --------------

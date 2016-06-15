@@ -204,7 +204,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
 
 
 
-    /**************************** INTIALIZATION *********************************/
+    /**************************** INTIALIZATION call by GLOBAL service*********************************/
     function getBddPlannings(idUser) {
         planningsShopping = [];
         plannings = [];

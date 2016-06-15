@@ -31,7 +31,7 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
 
 
                 //return
-                restGlobalService.initGlobalLoadData_afterConnexion(response.idUser).then(function(){
+                restGlobalService.initGlobalLoadData_afterConnexion(response.user.id).then(function(){
                    $log.warn("[restUserService] - connexion() xx YOUPI : initialized all data for idUser "+response.idUser)
                 });
 
