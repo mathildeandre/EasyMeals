@@ -5,10 +5,21 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsService, restRecipeService, restPlanningService) {
+myModule.controller('PlanningCtrl', function($scope, $log, $localStorage, $location, AppendixFunctionsService, restRecipeService, restPlanningService) {
 
 
-    //$route.reload();
+    /*********************************** USER CONNECTED **************************************/
+    $scope.isUserConnected = false;
+    $scope.userConnected = {id: 0, pseudo: '', email: '', isAdmin: false, colorThemeRecipe: 'grey'};
+    if($localStorage.userConnected){
+        $log.debug("[[RecipeCtrl]] - USER CONNECTED !! ($localStorage known)")
+        $scope.isUserConnected = true;
+        $scope.userConnected = $localStorage.userConnected;
+    }
+    /*********************************** end USER CONNECTED **************************************/
+
+
+        //$route.reload();
 
 
     $scope.$emit('intoPlanning'); //will tell to parents (global-controller.js) to modify pix
@@ -205,28 +216,34 @@ myModule.controller('PlanningCtrl', function($scope, $log, AppendixFunctionsServ
     }
 
 
-    $scope.deletePlanning = function(){
-        var idPlanningToDelete = $scope.currentPlanning.id;
-        var index = $scope.plannings.indexOf($scope.currentPlanning);
-        $scope.plannings.splice(index, 1);
+    $scope.createNewPlanning = function(){
+        if(!$scope.isUserConnected ){
+            $location.path('/connexion');
+        }else{
+            restPlanningService.createNewPlanning($scope.userConnected.id).then(function(index){ //2 = idUser //2117
 
-        if($scope.plannings != undefined && $scope.plannings.length > 0){ //if we didnt deleted the last planning..
-            $scope.currentPlanning = $scope.plannings[0];
-            restPlanningService.makePlanningCurrent($scope.currentPlanning.id, false); //lastOpen...
+                $scope.currentPlanning = $scope.plannings[index];
+                $log.warn("new planning PUSHED - index : "+index)
+                //putLastOpenPlanning se fait tout seul dans updatePlanningBDD() !
+            });
+        }
+    }
+    $scope.deletePlanning = function(){
+        if(!$scope.isUserConnected ){
+            $location.path('/connexion');
+        }else{
+            var idPlanningToDelete = $scope.currentPlanning.id;
+            var index = $scope.plannings.indexOf($scope.currentPlanning);
+            $scope.plannings.splice(index, 1);
+
+            if($scope.plannings != undefined && $scope.plannings.length > 0){ //if we didnt deleted the last planning..
+                $scope.currentPlanning = $scope.plannings[0];
+                restPlanningService.makePlanningCurrent($scope.currentPlanning.id, false); //lastOpen...
+            }
+            restPlanningService.deletePlanningById(idPlanningToDelete, $scope.userConnected.id);
         }
 
-        restPlanningService.deletePlanningById(idPlanningToDelete);
     }
-
-    $scope.createNewPlanning = function(){
-        restPlanningService.createNewPlanning().then(function(index){ //2 = idUser //2117
-
-            $scope.currentPlanning = $scope.plannings[index];
-            $log.warn("new planning PUSHED - index : "+index)
-            //putLastOpenPlanning se fait tout seul dans updatePlanningBDD() !
-        });
-    }
-
 
 
 

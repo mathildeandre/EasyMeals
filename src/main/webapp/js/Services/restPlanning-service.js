@@ -4,7 +4,21 @@
 
 var myService = angular.module('services');
 
-myService.service("restPlanningService", function ($http, $q, $log, $location) {
+myService.service("restPlanningService", function ($http, $q, $log, $localStorage, $location) {
+
+    function giveIdUser(){
+        if($localStorage.userConnected){
+            $log.debug("[restPlanningService] giveIdUser() -existing localStorage.id  : "+$localStorage.userConnected.id);
+            return $localStorage.userConnected.id
+        }else{
+            $log.debug("[restPlanningService] giveIdUser() -no existing localStorage.id  ; return id -1 ");
+            return -1;
+        }
+    }
+    function setIdUser(idUserConnected){
+        idUser = idUserConnected;
+    }
+    var idUser = giveIdUser();//$localStorage.id;
 
 
     var planningEmptyForNoUserConnected = {"id":-1,"name":"planningForUserNotConnected","lastOpen":true,"nbPersGlobal":4,"isForListShop":false,"weekMeals":[{"id":5,"weekMealName":"breakfast","show":false,"caseMeals":[{"id":29,"nbPers":4,"numDay":1,"recipes":[]},{"id":30,"nbPers":4,"numDay":2,"recipes":[]},{"id":31,"nbPers":4,"numDay":3,"recipes":[]},{"id":32,"nbPers":4,"numDay":4,"recipes":[]},{"id":33,"nbPers":4,"numDay":5,"recipes":[]},{"id":34,"nbPers":4,"numDay":6,"recipes":[]},{"id":35,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":6,"weekMealName":"lunch","show":true,"caseMeals":[{"id":36,"nbPers":4,"numDay":1,"recipes":[]},{"id":37,"nbPers":4,"numDay":2,"recipes":[]},{"id":38,"nbPers":4,"numDay":3,"recipes":[]},{"id":39,"nbPers":4,"numDay":4,"recipes":[]},{"id":40,"nbPers":4,"numDay":5,"recipes":[]},{"id":41,"nbPers":4,"numDay":6,"recipes":[]},{"id":42,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":7,"weekMealName":"snack","show":false,"caseMeals":[{"id":43,"nbPers":4,"numDay":1,"recipes":[]},{"id":44,"nbPers":4,"numDay":2,"recipes":[]},{"id":45,"nbPers":4,"numDay":3,"recipes":[]},{"id":46,"nbPers":4,"numDay":4,"recipes":[]},{"id":47,"nbPers":4,"numDay":5,"recipes":[]},{"id":48,"nbPers":4,"numDay":6,"recipes":[]},{"id":49,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":8,"weekMealName":"dinner","show":true,"caseMeals":[{"id":50,"nbPers":4,"numDay":1,"recipes":[]},{"id":51,"nbPers":4,"numDay":2,"recipes":[]},{"id":52,"nbPers":4,"numDay":3,"recipes":[]},{"id":53,"nbPers":4,"numDay":4,"recipes":[]},{"id":54,"nbPers":4,"numDay":5,"recipes":[]},{"id":55,"nbPers":4,"numDay":6,"recipes":[]},{"id":56,"nbPers":4,"numDay":7,"recipes":[]}]}]};
@@ -54,7 +68,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
     /**********************************************************************************************************************************/
 
     function createPlanningShopping(planning, shoppingCategories){ //called when goShopping -- no creation from errand ..
-        postObjToServer('POST', '/rest/createPlanningShopping/'+planning.id, shoppingCategories).then(function(data){
+        postObjToServer('POST', '/rest/createPlanningShopping/'+planning.id+'/'+idUser, shoppingCategories).then(function(data){ //idUser ADDED for CHECK token
             /* VIEW*/
             var index = plannings.indexOf(planning);
             plannings.splice(index, 1);
@@ -76,7 +90,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
         })
     }
     function createNewPlanning(){
-        return getObjFromServer('/rest/createPlanning/user/2').then(function(data){ //2 = idUser //2117
+        return getObjFromServer('/rest/createPlanning/user/'+idUser).then(function(data){ // idUser
 
             var newPlanning = data;
             plannings.push(newPlanning);
@@ -85,7 +99,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
         })
     }
     function cutShoppingToPlanning(idPlanningShopping){
-        postObjToServer('POST', '/rest/cutShoppingToPlanning/'+idPlanningShopping).then(function(data){
+        postObjToServer('POST', '/rest/cutShoppingToPlanning/'+idPlanningShopping+'/'+idUser).then(function(data){ //idUser ADDED for CHECK token
 
             var newClonedPlanning = data;
             plannings.push(newClonedPlanning);
@@ -115,10 +129,10 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
             $location.path("/planning");
         })
     }
-    function clonePlanning(idPlanning){
+    function clonePlanning(idPlanning){ //idUser ADDED for CHECK token
         return $http({
             method: 'GET',
-            url: '/rest/clonePlanning/'+idPlanning
+            url: '/rest/clonePlanning/'+idPlanning+'/'+idUser
         })
             .then(function (response) {
                 if (response.status == 200) {
@@ -170,34 +184,34 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
     }
 
     function postNewRecipeCaseMeal(idRecipe, idCaseMeal){
-        postObjToServer('POST', '/rest/postNewRecipeCaseMeal', [idRecipe, idCaseMeal])
+        postObjToServer('POST', '/rest/postNewRecipeCaseMeal/'+idUser, [idRecipe, idCaseMeal]) //idUser ADDED for CHECK token
     }
     function deleteOldRecipeCaseMeal(idRecipe, idCaseMeal){
-        postObjToServer('POST', '/rest/deleteOldRecipeCaseMeal', [idRecipe, idCaseMeal])
+        postObjToServer('POST', '/rest/deleteOldRecipeCaseMeal/'+idUser, [idRecipe, idCaseMeal])//idUser ADDED for CHECK token
     }
     function postNewNamePlanning(idPlanning, namePlanning){
-        postObjToServer('POST', '/rest/postNewNamePlanning/'+namePlanning, idPlanning)
+        postObjToServer('POST', '/rest/postNewNamePlanning/'+namePlanning+'/'+idUser, idPlanning)//idUser ADDED for CHECK token
     }
     function putLastOpenPlannings(idOldOpenPlanning, idNewOpenPlanning){ //OLD & NEW
-        postObjToServer('POST', '/rest/putLastOpenPlannings', [idOldOpenPlanning, idNewOpenPlanning])
+        postObjToServer('POST', '/rest/putLastOpenPlannings/'+idUser, [idOldOpenPlanning, idNewOpenPlanning])//idUser ADDED for CHECK token
     }
     function putLastOpenNewPlanning(idNewOpenPlanning){ //just NEW
-        postObjToServer('POST', '/rest/putLastOpenNewPlanning', idNewOpenPlanning)
+        postObjToServer('POST', '/rest/putLastOpenNewPlanning/'+idUser, idNewOpenPlanning)//idUser ADDED for CHECK token
     }
     function putShowWeekMeal(idWeekMeal, showWeekMeal){
-        postObjToServer('POST', '/rest/putShowWeekMeal/'+showWeekMeal, idWeekMeal)
+        postObjToServer('POST', '/rest/putShowWeekMeal/'+showWeekMeal+'/'+idUser, idWeekMeal)//idUser ADDED for CHECK token
     }
     function putNbPersCaseMeal(idCaseMeal, nbPersCaseMeal){
-        postObjToServer('POST', '/rest/putNbPersCaseMeal/'+nbPersCaseMeal, idCaseMeal)
+        postObjToServer('POST', '/rest/putNbPersCaseMeal/'+nbPersCaseMeal+'/'+idUser, idCaseMeal)//idUser ADDED for CHECK token
     }
     function putNbPersGlobalPlanning(idPlanning, nbPersGlobal){
-        postObjToServer('POST', '/rest/putNbPersGlobalPlanning/'+nbPersGlobal, idPlanning)
+        postObjToServer('POST', '/rest/putNbPersGlobalPlanning/'+nbPersGlobal+'/'+idUser, idPlanning)//idUser ADDED for CHECK token
     }
     function deletePlanningById(idPlanning){
-        postObjToServer('POST', '/rest/deletePlanningById', idPlanning)
+        postObjToServer('POST', '/rest/deletePlanningById/'+idUser, idPlanning)//idUser ADDED for CHECK token
     }
     function getNamePlanning(idPlanning){
-        return getObjFromServer('/rest/getNamePlanning/'+idPlanning)
+        return getObjFromServer('/rest/getNamePlanning/'+idPlanning+'/'+idUser)//idUser ADDED for CHECK token
     }
 
 
@@ -205,10 +219,10 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
 
 
     /**************************** INTIALIZATION call by GLOBAL service*********************************/
-    function getBddPlannings(idUser) {
+    function getBddPlannings() {
         planningsShopping = [];
         plannings = [];
-        return getObjFromServer('/rest/plannings/user/' + idUser).then(function (data) { //217 = idUser
+        return getObjFromServer('/rest/plannings/user/' + idUser).then(function (data) { //idUser
             var allPlannings = data;
             for (var i = 0; i < allPlannings.length; i++) {
                 if (allPlannings[i].isForListShop) {
@@ -217,16 +231,14 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
                     plannings.push(allPlannings[i]);
                 }
             }
-            $log.warn("plannings (& planningsShopping) loaded!71")
+            $log.warn("plannings (& planningsShopping) loaded!")
             //return response; ??
-            if(plannings[0] == undefined){
-                $log.warn("plannings (& planningsShopping) loaded!72")
+            if(idUser == -1){
+                $log.debug("[restPlanningService] -getBddPlannings()-  idUser -1 : push >>> planningEmptyForNoUserConnected <<<")
                 plannings.push(planningEmptyForNoUserConnected);
             }else{
-                $log.warn("plannings (& planningsShopping) loaded!73"+plannings)
-
+                $log.debug("[restPlanningService] -getBddPlannings()- user connected!  id:"+idUser);
             }
-            $log.warn("plannings (& planningsShopping) loaded!74")
         })
     }
     /**************************** end INTIALIZATION *********************************/
@@ -279,7 +291,9 @@ myService.service("restPlanningService", function ($http, $q, $log, $location) {
         deletePlanningShopping: deletePlanningShopping,
         cutShoppingToPlanning: cutShoppingToPlanning,
 
-        getBddPlannings: getBddPlannings
+        getBddPlannings: getBddPlannings,
+
+        setIdUser: setIdUser
 
 
     };

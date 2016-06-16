@@ -20,13 +20,15 @@ myModule.controller('WelcomeMealCtrl', function($scope, $localStorage, $log) {
     $scope.userConnected = $localStorage.userConnected
 
 
-
-    $log.debug("user connected ?? pseudo : "+$scope.userConnected.pseudo)
-    $log.debug("user connected ?? pseudo : "+$scope.userConnected.id)
-    $log.debug("user connected ?? pseudo : "+$scope.userConnected.isAdmin)
     if($localStorage.userConnected){
-        $log.debug("EMIT TO GLOBAL")
+        $log.debug("[WelcomeMealCtrl] user connected !! pseudo : "+$scope.userConnected.pseudo)
+        $log.debug("[WelcomeMealCtrl] user connected !! id : "+$scope.userConnected.id)
+        $log.debug("[WelcomeMealCtrl] user connected !! isAdmin : "+$scope.userConnected.isAdmin)
+        $log.debug("[WelcomeMealCtrl] emit to global-CTRL")
         $scope.$emit('userConnected', $scope.userConnected);
+    }else{
+        $log.debug("[WelcomeMealCtrl] user NOT connected !! ")
     }
+
     /*************end EMIT TO GLOBAL-CTRL : UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
 });

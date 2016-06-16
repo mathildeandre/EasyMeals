@@ -5,23 +5,34 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('GlobalCtrl', function($scope, $log, $localStorage, $routeParams, $location, GlobalService, restRecipeService, restPlanningService, restFoodService) {
+myModule.controller('GlobalCtrl', function($scope, $log, $localStorage, $routeParams, $location, GlobalService, restUserService, restRecipeService, restPlanningService, restFoodService) {
 
 
-
-    /**************************** UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
+    /*********************************** USER CONNECTED **************************************/
+    /**************************** utile pour afficher pseudo dans NAVBAR ********************************/
     //$localStorage n'est pas raffraichi dans GLOBAL-CTRL ...
-    //$localStorage.userConnected = { pseudo: response.pseudo, id: response.idUser, token: response.token }
-
     $scope.isUserConnected = false;
-    $scope.pseudoUserConnected = '';
-    $scope.userConnected = $localStorage.userConnected;
+    $scope.userConnected = {id: 0, pseudo: '', email: '', isAdmin: false, colorThemeRecipe: 'grey'};
+    if($localStorage.userConnected){
+        $log.debug("[[GlobalCtrl]] - USER CONNECTED !! ($localStorage known)")
+        $scope.isUserConnected = true;
+        $scope.userConnected = $localStorage.userConnected;
+    }
 
+    //ici dans le cas d'un connexion (puisque globalCtrl ne se rafraichi pas, il prendra pas la new value de $localStorage
     $scope.$on('userConnected', function(event, userConnected) {
         $scope.isUserConnected = true;
         $scope.userConnected = userConnected;
     });
-    /**************************** end UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
+    /*********************************** end USER CONNECTED **************************************/
+
+    $scope.logout = function(){
+        $log.debug("BOOM --->>>>>>>>>>>>>>>>>> logout !! ");
+        restUserService.logout();
+        $scope.isUserConnected = false;
+        $scope.userConnected = {id: 0, pseudo: '', email: '', isAdmin: false, colorThemeRecipe: 'grey'};
+
+    }
 
 
     $scope.isTablet = function(){
@@ -51,8 +62,6 @@ myModule.controller('GlobalCtrl', function($scope, $log, $localStorage, $routePa
 
 
     $scope.$on('intoWelcome', function() {
-        $log.debug("[global]  ON - intoWelcome")
-
         $scope.classBody = "bodyWelcome";
     });
     $scope.$on('intoConnexion', function() {

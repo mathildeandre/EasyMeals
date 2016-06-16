@@ -86,7 +86,7 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                 .when('/testDirective', {templateUrl: '../partials/others/testDirective.html', controller:'TestDirectiveCtrl'})
                 .otherwise({ redirectTo: '/welcomeMeal' });
         }])
-    .run(['$rootScope', '$http', '$location', '$localStorage', function($rootScope, $http, $location, $localStorage){
+    .run(['$rootScope', '$http', '$location', '$localStorage', '$log', function($rootScope, $http, $location, $localStorage, $log){
 
 
         // add jwt token to auth header for all requests made by the $http service --init to 'noAutorization'
@@ -96,10 +96,11 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
         // keep user logged in after page refresh
         //$log.warn("[[APP RUN]] -- we will test $localStorage ...)
         //alert("bjr1")
-        if ($localStorage.currentUser) {
+        if ($localStorage.userConnected) {
             //$log.warn("[[APP RUN]] -- $localStorage know !!!!!!!!!!!! pseudo : "+$localStorage.pseudo)
-            alert("bjr2")
-            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+            $log.info("bjr3 pseudo :"+$localStorage.userConnected.pseudo)
+            $log.info("bjr3 tokeb :"+$localStorage.token)
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.token;
         }
 
         /* header :

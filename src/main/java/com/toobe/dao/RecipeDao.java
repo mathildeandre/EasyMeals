@@ -290,7 +290,9 @@ public class RecipeDao {
                 //recupere image
                 InputStream is;
                 try {
-                    File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\newFile7.jpg");
+                    //File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\newFile7.jpg");
+                    File file = new File("C:\\Users\\mathilde\\Pictures\\Recettes\\newFile7.jpg");
+
 
 
                     FileInputStream imageInFile = new FileInputStream(file);

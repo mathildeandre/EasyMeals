@@ -98,7 +98,7 @@ INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES ('salade', 5,1);
 INSERT INTO Recipe_Category(name, numRank, idRecipeType) VALUES ('cake', 3, 1);
 
 
-
+/*
 INSERT INTO `User`(pseudo, pwd) VALUES ('common', 'common'); /*id 1*/
 INSERT INTO `User`(pseudo, pwd, isAdmin) VALUES ('fab', 'fab', 1); /*1d 2 */
 INSERT INTO `User`(id, pseudo, pwd) VALUES (2117, 'mathou', 'mathou'); /*1d 2 */
@@ -140,3 +140,4 @@ INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 2, 500, 'g')
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 31, 8, '');
 INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 12, 1, '');
 
+*/

@@ -25,10 +25,6 @@
  - /rest/updateBddColor/'+colorValue+'/'+idUser)                                        ok testok
 
 
-
-
-******TRY WITH ABOVE...****
-
  ------------------------------------------------------------------------------------
  ----------- CHECK but if not good user (or no user) xxxx run with idUser = -1  -----
  ------------------------------------------------------------------------------------
@@ -50,3 +46,66 @@
 ********************************************************************************************************
 **************************** end  RECIPE  **************************************************************
 ********************************************************************************************************
+
+**********************************************************************************************************************************************************************************************
+
+********************************************************************************************************
+****************************   PLANNING  *****************************************************************
+********************************************************************************************************
+
+-->>>> CHECK : if not good user (or no user at all) -> DO NOTHING --------------
+
+
+ ------------------------------------------------------------------------------------
+ -------------- CHECK (even though NOT REACHABLE if not connected) --------------
+ ------------------------------------------------------------------------------------
+ - /rest/deletePlanningById  (not reachable if not connected)                                /ok testok
+ - /rest/createPlanning/user/+idUser   (not reachable if not connected)                     /ok testok
+ ------------------------------------------------------------------------------------
+ -------------- CHECK --------------
+ ------------------------------------------------------------------------------------
+ - /rest/postNewRecipeCaseMeal/'+idRecipe+'/'+idCaseMeal                                //ok testok
+ - /rest/deleteOldRecipeCaseMeal/'+idRecipe+'/'+idCaseMeal                              //ok testok
+ - /rest/postNewNamePlanning/'+namePlanning, idPlanning                                 //ok testok
+ - /rest/putLastOpenPlannings', [idOldOpenPlanning, idNewOpenPlanning                   //ok testok
+ - /rest/putLastOpenNewPlanning', idNewOpenPlanning                                     //ok testok
+ - /rest/putShowWeekMeal/'+showWeekMeal, idWeekMeal                                     //ok testok
+ - /rest/putNbPersCaseMeal/'+nbPersCaseMeal, idCaseMeal                                 //ok testok
+ - /rest/putNbPersGlobalPlanning/'+nbPersGlobal, idPlanning                             //ok testok
+ - /rest/getNamePlanning/'+idPlanning                                                   //ok testok
+
+ - /rest/clonePlanning/                                                                 //ok testok   ??
+ - /rest/cutShoppingToPlanning/                                                         //ok testok   ??
+  -/rest/createPlanningShopping/                                                        //ok testok
+
+ - rest/plannings/user/' + idUser                                                       //ok testok
+
+
+********************************************************************************************************
+**************************** end PLANNING  *****************************************************************
+********************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,11 +6,10 @@ var myService = angular.module('services');
 
 myService.service("restGlobalService", function ($http, $q, $log, $location, $localStorage, restPlanningService, restRecipeService, restFoodService) {
 
-
     function giveIdUser(){
-        if($localStorage.id){
-            $log.debug("[restGlobalService] giveIdUser() -existing localStorage.id  : "+$localStorage.id);
-            return $localStorage.id
+        if($localStorage.userConnected){
+            $log.debug("[restGlobalService] giveIdUser() -existing localStorage.id  : "+$localStorage.userConnected.id);
+            return $localStorage.userConnected.id
         }else{
             $log.debug("[restGlobalService] giveIdUser() -no existing localStorage.id  ; return id -1 ");
             return -1;
@@ -23,8 +22,8 @@ myService.service("restGlobalService", function ($http, $q, $log, $location, $lo
 
     function initGlobalLoadData(){
         if(!isInitGlobalDone){
-            $log.warn(":::::::::::::::::::::::::::::[GLOBAL SERVICE] INIT - LOADING DATA")
-            return restPlanningService.getBddPlannings(idUser).then(function(){
+            $log.debug(":::::::::::::::::::::::::::::[restGlobalService] INIT - LOADING DATA with   id: "+idUser)
+            return restPlanningService.getBddPlannings().then(function(){
                 return restRecipeService.getBddCategories(idUser).then(function(){
                     return restRecipeService.getBddSpecialities(idUser).then(function(){
                         return restRecipeService.getBddRecipeTypes().then(function(){
@@ -48,8 +47,8 @@ myService.service("restGlobalService", function ($http, $q, $log, $location, $lo
 
     function initGlobalLoadData_afterConnexion(idUser){
         $log.warn(":::::::::::::::::::::::::::::[GLOBAL SERVICE] INIT - LOADING DATA xxxxxxxxx after connexion idUser : "+idUser);
-        $log.debug("[restGlobalService] just to know id existing localStorage.id?  : "+$localStorage.id); //$localStorage.id  == undefined
-        return restPlanningService.getBddPlannings(idUser).then(function(){
+        //$log.debug("[restGlobalService] just to know id existing localStorage.id?  : "+$localStorage.id); //$localStorage.id  == undefined
+        return restPlanningService.getBddPlannings().then(function(){
             return restRecipeService.getBddCategories(idUser).then(function(){
                 return restRecipeService.getBddSpecialities(idUser).then(function(){
                     return restRecipeService.getBddRecipes(idUser).then(function(){

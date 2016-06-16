@@ -4,7 +4,19 @@
 
 var myService = angular.module('services');
 
-myService.service("restUserService", function ($http, $q, $log, $localStorage, restGlobalService) {
+myService.service("restUserService", function ($http, $q, $log, $localStorage, restGlobalService, restPlanningService) {
+
+    function logout(){
+        // remove user from local storage and clear http auth header
+        delete $localStorage.userConnected;
+        delete $localStorage.token;
+        $http.defaults.headers.common.Authorization = 'No Autorization';
+
+        restGlobalService.initGlobalLoadData_afterConnexion(-1).then(function(){
+            $log.warn("[restUserService] - DE-connexion()  : initialized all data for idUser -1")
+        });
+    }
+
 
     function connexion(pseudo, password, callback){
         $http.post('/rest/connexionUser/'+pseudo+"/"+password).success(function (response) {
@@ -29,6 +41,7 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
                 // add jwt token to auth header for all requests made by the $http service
                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
 
+                restPlanningService.setIdUser(response.user.id);
 
                 //return
                 restGlobalService.initGlobalLoadData_afterConnexion(response.user.id).then(function(){
@@ -135,11 +148,6 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
             */
     }
 
-    function logout() {
-        // remove user from local storage and clear http auth header
-        delete $localStorage.currentUser;
-        $http.defaults.headers.common.Authorization = '';
-    }
 
     return {
         login: login,

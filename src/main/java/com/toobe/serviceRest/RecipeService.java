@@ -36,6 +36,7 @@ public class RecipeService {
     public Response getRecipesForUser(@PathParam("idUser") Long idUser, @HeaderParam("Authorization") String authorization) {
         List<Recipe> list = null;
         String strToken = authorization.substring(7); //substring(7) will remove "Bearer "
+        System.out.println("token : "+strToken);
         if(managerUser.verifyTokenOfUser(idUser, strToken)){
             System.out.println("[getRecipesForUser] - TOKEN CORRECT ! get into bdd with id "+idUser);
             list = ManagerBdd.getInstance().getRecipesForUser(idUser);

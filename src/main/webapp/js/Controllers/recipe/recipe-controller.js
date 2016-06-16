@@ -8,7 +8,6 @@ var myModule = angular.module('controllers');
 myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, $location, $window,  $log,  $http, $q, AppendixFunctionsService, restRecipeService) {
 
     /*********************************** USER CONNECTED **************************************/
-    //$localStorage.userConnected = { pseudo: response.pseudo, id: response.idUser, token: response.token }
     $scope.isUserConnected = false;
     $scope.userConnected = {id: 0, pseudo: '', email: '', isAdmin: false, colorThemeRecipe: 'grey'};
     if($localStorage.userConnected){
