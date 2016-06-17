@@ -826,6 +826,11 @@ select::selection,option::selection { /* ne fonctionne pas  */
    /*border : 1px dotted purple;
     width : 70%;*/
 }
+.titleInlineBlockFilterPlanning{
+    display:inline-block;
+    border : 1px dotted purple;
+     width : 90%;
+}
 .rightInlineBlock{
     display:inline-block;
     position: relative;

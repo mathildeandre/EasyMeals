@@ -12,6 +12,7 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
         delete $localStorage.token;
         $http.defaults.headers.common.Authorization = 'No Autorization';
 
+        restPlanningService.setIdUser(-1);
         restGlobalService.initGlobalLoadData_afterConnexion(-1).then(function(){
             $log.warn("[restUserService] - DE-connexion()  : initialized all data for idUser -1")
         });
