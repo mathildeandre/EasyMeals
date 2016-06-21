@@ -31,7 +31,7 @@
             Aurevoir
             -->
                 <div class="divSubSelection recipeMySelectionFavoriteOrPlanning" ng-repeat="myList in filterMySelection.myLists | orderBy:'name'">
-                     - {{myList.name}} &nbsp
+                     - {{myList.name}}
                     <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
                     <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-pushpin thListNoBtn"></span>
                     &nbsp

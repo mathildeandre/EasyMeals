@@ -1,14 +1,12 @@
 <section class="mySectionBlock" ng-controller="FilterCtrl">
 
 
-    <div class="inlineBlockAlignTop divPlanningRecipeLeft">
-
+    <div class="divPlanningRecipeLeft">
         <!--
    ----------------------------------------------------------------------------------------------------------
    -------------------------   MA SELECTION   ---------------------------------------------------------------
    ----------------------------------------------------------------------------------------------------------
    -->
-
 
         <article class="myArticle artMySelectionNew">
             <div class="myArticleHeading">
@@ -18,13 +16,12 @@
                 </div>
             </div>
 
-            <div class="myArticleBody">
+            <div class="myArticleBody artBodyPlanningMySelection">
                 <div class="divSubSelection" ng-repeat="myList in filterMySelection.myLists | orderBy:'name'">
                     - {{myList.name}}
-                    &nbsp
                     <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
                     <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-pushpin thListNoBtn"></span>
-                    &nbsp &nbsp
+                    &nbsp
                     <button  type="button" class="myBtnEmpty myBtnEmptyPlanning btnMinusFilter" ng-click="removeMyListFromSelection(myList)">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
@@ -88,7 +85,7 @@
             -->
         <article  class="myArticle" >
             <div class="myArticleHeading" >
-                <div class="myArticleTitle titleInlineBlockFilterPlanning" >Affiner la recherche</div>
+                <div class="myArticleTitle titleInlineBlockFilterPlanning" >Affiner <span ng-show="!isTablet()">la</span> recherche</div>
                 <div class="rightInlineBlock">
                     <span ng-show="!collapseFilterPlanning" ng-click="collapseFilterPlanning = !collapseFilterPlanning" class="glyphicon glyphicon-resize-small glyphiconFilterPlanning glyphiconBtn" ></span>
                     <span ng-show="collapseFilterPlanning" ng-click="collapseFilterPlanning = !collapseFilterPlanning" class="glyphicon glyphicon-resize-full glyphiconFilterPlanning glyphiconBtn" ></span>
@@ -152,7 +149,7 @@
     </div>
 
 
-    <div class="inlineBlockAlignTop divPlanningRecipeRight">
+    <div class="divPlanningRecipeRight">
 
         <!--
           ----------------------------------------------------------------------------------------------------------
@@ -224,9 +221,18 @@
                         <div  class="itemToDragPlanning itemRecipesPlanning itemDrag"
                               data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}" ng-model="recipe" ng-show="recipe.name"
                               jqyoui-draggable="{index: {{$index}},placeholder:'keep', deepCopy:'true'}"
-                              title="{{displayIngredientsOfRecipeByTitle(recipe)}}">
-                            {{recipe.name}}
+                              uib-popover-template="'myPopoverTemplateShowContentRecipe.html'" popover-trigger="mouseenter" popover-placement="bottom"> <!-- uib-popover="{{displayIngredientsOfRecipeByTitle(recipe)}}"  title="{{displayIngredientsOfRecipeByTitle(recipe)}}"-->
+                            {{recipe.name}}yo
+                            <!--popover--> <script type="text/ng-template" id="myPopoverTemplateShowContentRecipe.html">
+                                                <div>Pour {{recipe.nbPerson}} personnes : </div>
+                                                <ul>
+                                                    <li ng-repeat="ingr in recipe.ingredients">
+                                                        {{ingr.qty}}{{ingr.unit}} {{ingr.food.name}}
+                                                    </li>
+                                                </ul>
+                                            </script>
                         </div>
+
                     </div>
                 </div>
             </article>
@@ -237,4 +243,3 @@
 
 
 </section>
-

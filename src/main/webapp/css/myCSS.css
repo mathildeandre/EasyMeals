@@ -101,6 +101,7 @@ h6 {
     width: 100%;
     max-width: 1200px;
     margin : auto;
+    padding-left: 1vw;
 }
 
 .bodyPlanning{
@@ -828,7 +829,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .titleInlineBlockFilterPlanning{
     display:inline-block;
-    border : 1px dotted purple;
+    //border : 1px dotted purple;
      width : 90%;
 }
 .rightInlineBlock{
@@ -1214,7 +1215,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     overflow: hidden;
     display: inline-block;
 
-    margin-left:2%;
+    margin-left:1.5vw;
     margin-right:0;
     //width:64vw; /* stay at 64vw in any case*/
     width: 72%; /*= max-width 864px puisque parentDiv.max-width = 1200px; */
@@ -1251,6 +1252,11 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .artBodyRecipeMySelection{
     padding-left:6px;
+    padding-right: 0;
+}
+.artBodyPlanningMySelection{
+    padding-left:6px;
+    padding-right: 0;
 }
 
 .separatorSelection{
@@ -2152,11 +2158,27 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /**********************************************************************  PLANNING RECIPES  **************************************************************************************************/
 
 .divPlanningRecipeLeft{
-    width:20vw;
-    margin-right: 2vw;
+
+    display:inline-block;
+    vertical-align: top;
+    overflow: auto;
+
+    width: 25%; /* = max-width 300px puisque parentDiv.max-width = 1200px;*/
+    min-width : 200px; /* donc proportionnelle pr parentDiv entre 1200px et 800px -> si parentDiv plus petit,  ca reste a cette taille fixe*/
+    max-width: 300px;
+
+    //width:20vw;
+    //margin-right: 2vw;
 }
 .divPlanningRecipeRight{
-    width:70vw;
+    display:inline-block;
+    vertical-align: top;
+    overflow: hidden;
+    margin-left:1.5vw;
+    margin-right:0;
+    //width:64vw; /* stay at 64vw in any case*/
+    width: 72%; /*= max-width 864px puisque parentDiv.max-width = 1200px; */
+    min-width: 576px;/* donc proportionnelle pr parentDiv entre 1200px et 800px -> si parentDiv plus petit,  ca reste a cette taille fixe*/
 }
 
 .divRecipesType{

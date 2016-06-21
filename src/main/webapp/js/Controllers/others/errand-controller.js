@@ -4,7 +4,39 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('ErrandCtrl', function($scope, $log, $location, AppendixFunctionsService, restPlanningService) {
+myModule.controller('ErrandCtrl', function($scope, $log, $location, $localStorage, AppendixFunctionsService, restPlanningService, restUserService) {
+
+    /*********************************** USER CONNECTED **************************************/
+    $scope.isUserConnected = false;
+    $scope.userConnected = {id: 0, pseudo: '', email: '', isAdmin: false, colorThemeRecipe: 'grey'};
+    if($localStorage.userConnected){
+        $log.debug("[[RecipeCtrl]] - USER CONNECTED !! ($localStorage known)")
+        $scope.isUserConnected = true;
+        $scope.userConnected = $localStorage.userConnected;
+    }
+    /*********************************** end USER CONNECTED **************************************/
+
+
+    /*********************************** check for USER CONNECTED **************************************/
+    var isTokenValidOrExpired = function(){
+
+        if($localStorage.userConnected){
+            restUserService.getIsTokenValid($scope.userConnected.id).then(function (isTokenStilValid) { //217 = idUser
+                if(isTokenStilValid){
+                    //user still connected
+                    $log.error("[ErrandCtrl] -isTokenValidOrExpired()- USER IS STILL CONNECTED ->  do nothing")
+                }else{
+                    //user not connected anymore
+                    $log.error("[ErrandCtrl] -isTokenValidOrExpired()- USER SHOULD NOT BE CONNECTED ANYMORE -> logout()")
+                    $scope.$emit('userLogout');
+                }
+            })
+        }
+    }
+    var checkIfTokenExpired = isTokenValidOrExpired();
+    /*********************************** end check for USER CONNECTED **************************************/
+
+
 
     $scope.$emit('intoErrand'); //will tell to parents (global-controller.js) to modify pix
 

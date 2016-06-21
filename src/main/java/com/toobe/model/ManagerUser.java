@@ -120,14 +120,17 @@ public class ManagerUser {
         String id = "idUser"+idUser.toString();
         String issuer = "myIssue";
         String subject = "mysSubject";
-        long ttlMillis = 86400000;//1 day
+        //long ttlMillis = 86400000;//1 day
+        //long ttlMillis = 60000;//1 min
+        long ttlMillis = 900000;//15 min
+        //long ttlMillis = 3600000;//1 heure
 
         String secretKeyUser = managerToken.generateSecretKey();
 
         System.out.println("[createTokenForUser] (idUser: "+idUser+") secretKey created : " + secretKeyUser);
         managerBdd.putKeyAlgo(secretKeyUser, idUser);
 
-        String strTokenUser = managerToken.createJWT(id, issuer, subject, 999999, secretKeyUser);
+        String strTokenUser = managerToken.createJWT(id, issuer, subject, ttlMillis, secretKeyUser);
 
         System.out.println("[createTokenForUser] (idUser: "+idUser+") token created : " + strTokenUser);
         return strTokenUser;

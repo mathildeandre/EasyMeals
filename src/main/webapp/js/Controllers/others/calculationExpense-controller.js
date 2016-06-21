@@ -4,7 +4,38 @@
 
 var myModule = angular.module('controllers');
 
-myModule.controller('CalculationExpenseCtrl', function($scope, $log) {
+myModule.controller('CalculationExpenseCtrl', function($scope, $log, $localStorage, restUserService) {
+
+
+
+    /*********************************** USER CONNECTED **************************************/
+    $scope.isUserConnected = false;
+    $scope.userConnected = {id: 0, pseudo: '', email: '', isAdmin: false, colorThemeRecipe: 'grey'};
+    if($localStorage.userConnected){
+        $log.debug("[[PlanningCtrl]] - USER CONNECTED !! ($localStorage known)")
+        $scope.isUserConnected = true;
+        $scope.userConnected = $localStorage.userConnected;
+    }
+    /*********************************** end USER CONNECTED **************************************/
+
+    /*********************************** check for USER CONNECTED **************************************/
+    var isTokenValidOrExpired = function(){
+
+        if($localStorage.userConnected){
+            restUserService.getIsTokenValid($scope.userConnected.id).then(function (isTokenStilValid) { //217 = idUser
+                if(isTokenStilValid){
+                    //user still connected
+                    $log.error("[CalculationExpenseCtrl] -isTokenValidOrExpired()- USER IS STILL CONNECTED ->  do nothing")
+                }else{
+                    //user not connected anymore
+                    $log.error("[CalculationExpenseCtrl] -isTokenValidOrExpired()- USER SHOULD NOT BE CONNECTED ANYMORE -> logout()")
+                    $scope.$emit('userLogout');
+                }
+            })
+        }
+    }
+    var checkIfTokenExpired = isTokenValidOrExpired();
+    /*********************************** end check for USER CONNECTED **************************************/
 
 
     $scope.$emit('intoExpense'); //will tell to parents (global-controller.js) to modify pix

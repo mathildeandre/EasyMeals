@@ -106,38 +106,39 @@ INSERT INTO `User`(id, pseudo, pwd) VALUES (2117, 'mathou', 'mathou'); /*1d 2 */
 
 
 /* BURGER maison*/
-INSERT INTO Recipe(name, idType, isPublic,  idOwner, nbPerson,  pixName,  idOrigin, rating, nbVoter, isValidated, timeCooking, timePreparation) VALUES ('Burgers Maison', 2, 1, 2117, 4, 'burgersMaison.jpeg', 5, 3.7, 10, 1, 15, 20); /*id 1 */
+INSERT INTO Recipe(name, idType, isPublic,  idOwner, nbPerson,  pixName,  idOrigin, rating, nbVoter, isValidated, timeCooking, timePreparation) VALUES ('Burgers Maison', 2, 1, 1, 4, 'burgersMaison.jpeg', 5, 3.7, 10, 1, 15, 20); /*id 1 */
 
-INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (1, 1);
-INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (1, 2);
+INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (3, 1);
+INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (3, 2);
 
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 1, 'cuire steack à la poêle');
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 2, 'preparer salade,couper tomates en rondelle et ouvrir les pains à burger et mettre du fromage sur chaque partie');
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 3, 'quand les steack sont pret, mettre pains au four 2min');
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 4, 'tout est pret, mettre sauce au choix sur chaque partie du pain, steack, tomate salade');
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (1, 5, 'Votre burger est pret !');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (3, 1, 'cuire steack à la poêle');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (3, 2, 'preparer salade,couper tomates en rondelle et ouvrir les pains à burger et mettre du fromage sur chaque partie');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (3, 3, 'quand les steack sont pret, mettre pains au four 2min');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (3, 4, 'tout est pret, mettre sauce au choix sur chaque partie du pain, steack, tomate salade');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (3, 5, 'Votre burger est pret !');
 
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 14, 8, '');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 32, 1, '');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 2, 4, '');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 11, 3, '');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 22, 100, 'g');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (1, 12, 1, '');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (3, 14, 8, '');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (3, 32, 1, '');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (3, 2, 4, '');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (3, 11, 3, '');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (3, 22, 100, 'g');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (3, 12, 1, '');
 
 /* BURRITOS*/
-INSERT INTO Recipe(name, idType, isPublic,  idOwner, nbPerson,  pixName,  idOrigin, rating, nbVoter, isValidated, timeCooking, timePreparation) VALUES ('Burritos', 2, 1, 2117, 4, 'burritos.jpg', 6, 4.2, 18, 1, 10, 15);
+INSERT INTO Recipe(name, idType, isPublic,  idOwner, nbPerson,  pixName,  idOrigin, rating, nbVoter, isValidated, timeCooking, timePreparation) VALUES ('Burritos', 2, 1, 2, 4, 'burritos.jpg', 6, 4.2, 18, 1, 10, 15);
 
-INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (2, 1);
-INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (2, 3);
+INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (4, 1);
+INSERT INTO Rel_Recipe_Category(idRecipe, idCategory) VALUES (4, 3);
 
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (2, 1, 'faire cuire steack');
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (2, 2, 'mettre dans crepe avec legumes');
-INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (2, 3, 'Votre burritos est pret !');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (4, 1, 'faire cuire steack');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (4, 2, 'mettre dans crepe avec legumes');
+INSERT INTO Recipe_Description(idRecipe, numDescription, description) VALUES (4, 3, 'Votre burritos est pret !');
 
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 11, 3, '');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 22, 100, 'g');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 2, 500, 'g');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 31, 8, '');
-INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (2, 12, 1, '');
+
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (4, 11, 3, '');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (4, 22, 100, 'g');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (4, 2, 500, 'g');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (4, 31, 8, '');
+INSERT INTO Ingredient(idRecipe, idFood, quantity, unit) VALUES (4, 12, 1, '');
 
 */

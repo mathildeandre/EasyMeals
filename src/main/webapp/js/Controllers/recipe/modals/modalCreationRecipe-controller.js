@@ -64,6 +64,7 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
         recipeType:{idType:restRecipeService.getIdRecipeType(recipeTypeName),nameType:recipeTypeName},
         user:{id:idUser, pseudo:'', email:''}, /* <---------- idUser A AFFINER ----------------------- */
         nbPerson:4,
+        pixName : '',
         ingredients:[{qty:1, unit:'g', food:{"id":-1,"name":"","idCategory":1,"isValidated":false}}],
         descriptions:[{name:"",numDescrip:1}],
         origin:$scope.origins[0],
@@ -225,14 +226,14 @@ myModule.controller('ModalInstanceCreationRecipeCtrl', function ($scope, $log, $
                     restFoodService.addFood($scope.recipe.ingredients[i].food);
                 }
             }
-            restRecipeService.createRecipe($scope.recipe);
+            restRecipeService.createRecipe($scope.recipe, $scope.picFile);
 
 
-            /* IMAGE */
+            /* IMAGE
             var file = $scope.picFile;
             if($scope.picFile != null){
                 restRecipeService.sendImage($scope.picFile);
-            }
+            }*/
             /*switch(recipeTypeName){
              case 'starter' : RecipeService.addStarter(recipe); break;
              case 'course' :  RecipeService.addCourse(recipe); break;

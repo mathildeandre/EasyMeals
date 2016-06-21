@@ -78,8 +78,10 @@
             </div>
         </div>
         <div class="divMiddleRecipe">
-            <div class="pixRecipeWithDescrip" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;">
-            </div>
+            <!--<div class="pixRecipeWithDescrip" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;">
+
+            </div>-->
+            <img src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeWithDescrip">
 
             <div class="ingredientRecipe">
                 <div class="subTitleRecipeOpen"> Ingrédients ({{recipe.nbPerson}} pers.) </div>

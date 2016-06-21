@@ -5,6 +5,8 @@
 var myService = angular.module('services');
 
 myService.service("restRecipeService", function ($http, $q, $log) {
+
+
     /*
     var recipesTmp = [
         {
@@ -54,6 +56,14 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     var desserts = [];
     //var breakfasts = [];
     //var cocktails = [];
+
+
+    var coursesPix = [];
+
+    function getCoursesPix(){
+        return coursesPix;
+    }
+
 
 
     function getStartersCategories(){
@@ -124,8 +134,12 @@ myService.service("restRecipeService", function ($http, $q, $log) {
 
 
 
-    function createRecipe(recipe){
+    function createRecipe(recipe, fileImg){
         // Web service - BDD
+
+        $log.info("[restRecipe] - createRecipe() - NAME RECIPE : "+recipe.name);
+        recipe.pixName = recipe.user.id+"_"+recipe.name.replace(/ /g,"_");
+        $log.info("[restRecipe] - createRecipe() - NAME RECIPE PIX : "+recipe.pixName);
 
         insertRecipe(recipe).then(function (data) { //postObjToServer('POST', '/rest/recipe/create', recipe).then(function (response) {
             //On add dans VIEW apres avoir fait le POST car on ajoute recipe.ratingSystem ce qui aurait fait bugger le post avec un champ de l'objet non existant cote server
@@ -141,6 +155,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
                 case 'breakfast' :  break;
                 case 'cocktail' : break;
             }
+
+            /*REST IMG */
+            sendImage(fileImg, recipe.pixName);
         })
 
     }
@@ -152,13 +169,13 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         return postObjToServer('POST', '/rest/createNewCategory/'+recipeCategoryName+'/'+idRecipeType+'/'+idUser)
     }
 
-    function sendImage(file){
-        $log.warn("REQUETE with IMAGE ----  ENVOYE !!! "+file);
+    function sendImage(file, namePix){
+        $log.warn("REQUETE with IMAGE ----  ENVOYE !!! "+file+ "namePix : "+namePix);
         var fd = new FormData();
         fd.append('file', file);
         return $http({
             method: 'POST',
-            url: '/rest/recipe/image',
+            url: '/rest/recipe/image/'+namePix,//+'/'+namePix,
             data: file,
             //transformRequest: angular.identity
             //,
@@ -266,6 +283,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     /****************************************************************** INTIALIZATION **************************************************************************/
     /********** CALL FROM restGlobal-service.js  ********************** INTIALIZATION **************************************************************************/
     /****************************************************************** INTIALIZATION **************************************************************************/
+
+
+
     function getBddCategories(idUser) {
         startersCategories = [];
         coursesCategories = [];
@@ -321,6 +341,16 @@ myService.service("restRecipeService", function ($http, $q, $log) {
                     case 'cocktail' : break;
                 }
             }
+
+            //empty img..
+            for(var j=0; j<courses.length; j++){
+                //var champImg = {image: courses[j].image };
+                //coursesPix.push(champImg);
+                coursesPix.push(courses[j].image);
+                courses[j].image = "";
+            }
+
+
             //return response; ??
         })
     }
@@ -330,9 +360,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
             arrayRecipe[i].timeTotal = arrayRecipe[i].timeCooking + arrayRecipe[i].timePreparation;
         }
     }
-    /****************************************************************** INTIALIZATION **************************************************************************/
-    /****************************************************************** INTIALIZATION **************************************************************************/
-    /****************************************************************** INTIALIZATION **************************************************************************/
+    /****************************************************************** end INTIALIZATION **************************************************************************/
+    /****************************************************************** end INTIALIZATION **************************************************************************/
+    /****************************************************************** end INTIALIZATION **************************************************************************/
 
 
 
@@ -384,7 +414,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         getBddCategories: getBddCategories,
         getBddSpecialities: getBddSpecialities,
         getBddRecipeTypes: getBddRecipeTypes,
-        getBddRecipes: getBddRecipes
+        getBddRecipes: getBddRecipes,
+
+        getCoursesPix: getCoursesPix
 
     };
 });

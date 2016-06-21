@@ -1,6 +1,9 @@
 <div ng-show="!recipe.descriptionOpen" ng-click="toggleDescOpen(recipe)">
 
-    <div class="pixRecipeNoDescription" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;"> </div>
+    <!--<div class="pixRecipeNoDescription" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;"> </div>-->
+    <img ng-src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeNoDescription">
+    <!--<img src="imageFileName.png" class="pixRecipeNoDescription">-->
+    <!--<img src="{{base64ToImg2(recipe)}}" class="pixRecipeNoDescription">-->
     <div class="titleAndSoNoDescription">
         <div class="title"> {{recipe.name}}</div>
 

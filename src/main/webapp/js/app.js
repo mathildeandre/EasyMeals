@@ -3,7 +3,7 @@
  */
 
 
-angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', 'ngStorage', 'ngRoute', 'ngFileUpload'] )
+angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', 'ngStorage', 'ngRoute', 'ngFileUpload', 'base64'] )
     .config(['$routeProvider',
         function($routeProvider) {
             $routeProvider
@@ -86,7 +86,8 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                 .when('/testDirective', {templateUrl: '../partials/others/testDirective.html', controller:'TestDirectiveCtrl'})
                 .otherwise({ redirectTo: '/welcomeMeal' });
         }])
-    .run(['$rootScope', '$http', '$location', '$localStorage', '$log', function($rootScope, $http, $location, $localStorage, $log){
+    .run(['$rootScope', '$http', '$location', '$localStorage', '$log', 'restUserService', function($rootScope, $http, $location, $localStorage, $log, restUserService){
+
 
 
         // add jwt token to auth header for all requests made by the $http service --init to 'noAutorization'

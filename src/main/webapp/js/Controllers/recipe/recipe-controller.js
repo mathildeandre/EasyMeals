@@ -5,7 +5,7 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, $location, $window,  $log,  $http, $q, AppendixFunctionsService, restRecipeService) {
+myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, $location, $window, $base64, $log,  $http, $q, AppendixFunctionsService, restRecipeService, restUserService) {
 
     /*********************************** USER CONNECTED **************************************/
     $scope.isUserConnected = false;
@@ -17,14 +17,74 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
     }
     /*********************************** end USER CONNECTED **************************************/
 
+    /*********************************** check for USER CONNECTED **************************************/
+    var isTokenValidOrExpired = function(){
+        if($localStorage.userConnected){
+            restUserService.getIsTokenValid($scope.userConnected.id).then(function (isTokenStilValid) { //217 = idUser
+                if(isTokenStilValid){
+                    //user still connected
+                    $log.error("[RecipeCtrl] -isTokenValidOrExpired()- USER IS STILL CONNECTED ->  do nothing")
+                }else{
+                    //user not connected anymore
+                    $log.error("[RecipeCtrl] -isTokenValidOrExpired()- USER SHOULD NOT BE CONNECTED ANYMORE -> logout()")
+                    $scope.$emit('userLogout');
+                }
+            })
+        }
+    }
+    var checkIfTokenExpired = isTokenValidOrExpired();
+    /*********************************** end check for USER CONNECTED **************************************/
+
 
     $scope.$emit('intoRecipe'); //will tell to parents (global-controller.js) to modify pix
 
     $scope.recipeType = $routeParams.recipeType;
-    $scope.recipes = restRecipeService.getRecipes( $scope.recipeType);
+    $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
+    $scope.pixxes = restRecipeService.getCoursesPix();
 
     var recipeSelection = $routeParams.selection; /*depuis navBar clique ds recette sur le coeur/pinTab...*/
     $scope.recipeSelection = recipeSelection;
+
+
+
+    $scope.emptyRecipesImg = function(){
+        $scope.img = [];
+        for(var i=0; i<$scope.recipes.length; i++){
+            $scope.img[i] = $scope.recipes[i].image;
+            $scope.recipes[i].image = "";
+        }
+    }
+    $scope.reputRecipeImage = function(){
+        for(var i=0; i<$scope.recipes.length; i++){
+            $scope.recipes[i].image = $scope.img[i];
+        }
+    }
+    $scope.reputRecipePixxes = function(){
+        for(var i=0; i<$scope.recipes.length; i++){
+            $scope.recipes[i].image = $scope.pixxes[i];
+        }
+    }
+
+
+    var base64ToImg = function(recipe){
+        recipe.imgFromBase64 = $base64.decode(recipe.image);
+        //$scope.encoded = $base64.encode('a string');
+        //$scope.decoded = $base64.decode('YSBzdHJpbmc=');
+    }
+
+    var base64ToImg2 = function(recipe){
+        var imageBase64 = "recipe.image";
+        var blob = new Blob([imageBase64], {type: 'image/png'});
+        var file = new File([blob], 'imageFileName.png');
+    }
+    var setImgBurger = function(){
+
+        var imageBase64 = $scope.recipes[0].image;
+        var blob = new Blob([imageBase64], {type: 'image/png'});
+        var file = new File([blob], 'imageFileName.png');
+    }
+    var setImg = setImgBurger();
+
 
     $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
         $scope.recipeType = recipeType;

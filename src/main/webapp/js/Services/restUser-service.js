@@ -6,6 +6,24 @@ var myService = angular.module('services');
 
 myService.service("restUserService", function ($http, $q, $log, $localStorage, restGlobalService, restPlanningService) {
 
+
+    function getIsTokenValid (idUser){
+        $log.info("[restUserService] -getIsTokenValid()")
+        return getObjFromServer('/rest/isTokenValid/' + idUser).then(function (data) { //217 = idUser
+            if(data.isValidToken){
+                //user still connected
+                $log.error("[restUserService] -getIsTokenValid()- USER IS STILL CONNECTED ->  do nothing")
+                return true;
+            }else{
+                //user not connected anymore
+                $log.error("[restUserService] -getIsTokenValid()- USER SHOULD NOT BE CONNECTED ANYMORE -> logout()")
+                logout();
+                return false;
+            }
+        })
+    }
+
+
     function logout(){
         // remove user from local storage and clear http auth header
         delete $localStorage.userConnected;
@@ -149,11 +167,24 @@ myService.service("restUserService", function ($http, $q, $log, $localStorage, r
             */
     }
 
+    function getObjFromServer(url) {
+        return $http({
+            method: 'GET',
+            url: url
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.data;
+                }
+                return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
+            })
+    };
 
     return {
         login: login,
         logout: logout,
         connexion: connexion,
-        registration: registration
+        registration: registration,
+        getIsTokenValid: getIsTokenValid
     };
 });

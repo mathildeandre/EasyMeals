@@ -287,22 +287,26 @@ public class RecipeDao {
                 recipe = new Recipe(idRecipe, name, isPublic, user, pixName, recipeType, ingredientList, descriptionList,
                         recipeOrigin, categoryList, nbPerson, rating, nbVoter, timeCooking, timePreparation, isValidated, relUserRecipe);
 
+
+                //System.out.println(".................. start img");
                 //recupere image
                 InputStream is;
+
+                File file = new File("C:\\Users\\mathilde\\workspace\\EasyMealsBack\\src\\main\\resources\\img\\"+pixName+".jpg");
+                if(file.exists()){
+                    //System.out.println("IMG found!!!  :) :)");
+                }else{
+                    //System.out.println("IMG user not found^^ :/   ---- SO WE TAKE DEFAULT IMG");
+                    file = new File("C:\\Users\\mathilde\\workspace\\EasyMealsBack\\src\\main\\resources\\img\\3_photoNonDispo.jpg");
+                }
+
                 try {
-                    //File file = new File("C:\\Users\\fabien\\IdeaProjects\\EasyMeals\\newFile7.jpg");
-                    File file = new File("C:\\Users\\mathilde\\Pictures\\Recettes\\newFile7.jpg");
-
-
-
                     FileInputStream imageInFile = new FileInputStream(file);
+
                     byte imageData[] = new byte[(int) file.length()];
                     imageInFile.read(imageData);
-
-
                     // Converting Image byte array into Base64 String
                     String imageDataString = new String(Base64.encodeBase64(imageData));
-
                     recipe.setImage(imageDataString);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();

@@ -53,6 +53,10 @@
                 <!-- <div>{{recipes[0].name}} - {{recipesToDisplay[0].name}}  </div>-->
 
 
+                <button ng-click="emptyRecipesImg()">empty img</button>
+                <button ng-click="reputRecipeImage()">refull img</button>
+                <button ng-click="reputRecipePixxes()">refull PIX</button>
+
                 <div class="buttonCreate" ng-controller="ModalCreationRecipeCtrl">
                     <!--<a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayButtonCreationRecipeType()}}</a> <!--creer nouveau plat-->
                     <div class="btn btn-warning" ng-class="{greyBckgrd : !isUserConnected}" ng-click="openModalCreationRecipe()"> {{displayButtonCreationRecipeType()}}</div> <!--creer nouveau plat-->

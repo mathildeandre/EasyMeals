@@ -24,6 +24,13 @@ myModule.controller('GlobalCtrl', function($scope, $log, $localStorage, $routePa
         $scope.isUserConnected = true;
         $scope.userConnected = userConnected;
     });
+    //ici dans le cas d'un connexion (puisque globalCtrl ne se rafraichi pas, il prendra pas la new value de $localStorage
+    $scope.$on('userLogout', function() {
+        $location.path('/connexion');
+        $scope.isUserConnected = false;
+        delete $scope.userConnected;
+        alert("OOPS, votre session a expirée...");
+    });
     /*********************************** end USER CONNECTED **************************************/
 
     $scope.logout = function(){
