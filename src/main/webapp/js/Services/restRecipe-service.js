@@ -301,9 +301,27 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         })
     }
 
+
+     // IMAGES LOADING AFTERWARD (didnt  worked ?)
      function getBddRecipesImages(idUser) {
         return getObjFromServer('/rest/recipesImages/' + idUser);
     }
+     INTO RECIPE CONTROLLER :
+     restRecipeService.getBddRecipesImages($scope.userConnected.id).then(function (data) { //217 = idUser
+
+        $log.warn("[RecipeCtrl] -- getBddRecipesImages()--");
+        var allRecipesImages = data;
+        for(var i=0; i<allRecipesImages.length; i++){
+            for(var j=0; j<$scope.recipes.length; j++) {
+                if(allRecipesImages[i].id == $scope.recipes[j].id ){
+                    $scope.recipes[j].image = allRecipesImages[i].image;
+                }
+            }
+        }
+    })
+     // end IMAGES LOADING AFTERWARD (didnt  worked ?)
+
+
     /** end USELESS FOR NOW **/
 
 

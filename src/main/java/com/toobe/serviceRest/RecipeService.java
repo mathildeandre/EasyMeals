@@ -52,6 +52,7 @@ public class RecipeService {
         return Response.ok(objToken).build();
     }
 
+    /* NOT USED so far
     @Path("recipesImages/{idUser}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -68,6 +69,7 @@ public class RecipeService {
         }
         return Response.ok(list).build();
     }
+    */
 
     @Path("recipes/{idUser}")
     @GET

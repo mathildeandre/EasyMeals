@@ -47,25 +47,9 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
 
 
 
-    /*
-    restRecipeService.getBddRecipesImages($scope.userConnected.id).then(function (data) { //217 = idUser
-
-        $log.warn("[RecipeCtrl] -- getBddRecipesImages()--");
-        var allRecipesImages = data;
-        for(var i=0; i<allRecipesImages.length; i++){
-            for(var j=0; j<$scope.recipes.length; j++) {
-                if(allRecipesImages[i].id == $scope.recipes[j].id ){
-                    $scope.recipes[j].image = allRecipesImages[i].image;
-                }
-            }
-        }
-    })
-    */
-
-
     /********************** PAGINATION *************************/
     $scope.currentPage = 1;
-    $scope.itemPerPage = 3;
+    $scope.itemPerPage = 9;
     $scope.listNbElemPagin = [3,6,9,15,24]
 
     $scope.checkPagination = function(index, currentPage){
