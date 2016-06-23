@@ -96,7 +96,7 @@
 
     <div class="modal-footer">
         <!--<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>-->
-        <button ng-show="showListShopping()"  class="btn btn-danger" type="button" ng-click="goShopping()">
+        <button ng-if="showListShopping()"  class="btn btn-danger" type="button" ng-click="goShopping()">
             <span class="glyphicon glyphicon-shopping-cart"></span> Aller faire ses courses !
         </button>
         <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>

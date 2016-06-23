@@ -4,13 +4,9 @@ import com.mysql.jdbc.JDBC4ResultSet;
 import com.mysql.jdbc.ResultSetImpl;
 import com.toobe.dto.Food;
 import com.toobe.dto.User;
-import com.toobe.dto.info.RecipeCategory;
+import com.toobe.dto.info.*;
 import com.toobe.dto.Ingredient;
 import com.toobe.dto.Recipe;
-import com.toobe.dto.info.RecipeDescription;
-import com.toobe.dto.info.RecipeOrigin;
-import com.toobe.dto.info.RecipeType;
-import com.toobe.dto.info.RelUserRecipe;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.*;
@@ -197,6 +193,57 @@ public class RecipeDao {
     /****************************/
 
 
+    public List<RecipeImage> getBddRecipesImages(Connection conn, Long idUser){
+
+        List<RecipeImage> listRecipeImage = new ArrayList<RecipeImage>();
+        RecipeImage recipeImage = new RecipeImage();
+        PreparedStatement stm;
+        try {
+            /* on fait la requete pr avoir toutes les recettes pr un user (entree, plat desserts etc)*/
+            stm = conn.prepareStatement(SELECT_All_RECIPES_FOR_USER_NoRecipeType);
+            stm.setLong(1, idUser);
+            ResultSet resRecipe = stm.executeQuery();
+
+            Long idRecipe;
+            String pixName;
+            while (resRecipe.next()) {
+                idRecipe = resRecipe.getLong("idRecipe");
+                pixName = resRecipe.getString("pixName");
+
+                //System.out.println(".................. start img");
+                //recupere image
+                InputStream is;
+
+                File file = new File("C:\\Users\\mathilde\\workspace\\EasyMealsBack\\src\\main\\resources\\img\\"+pixName+".jpg");
+                if(file.exists()){
+                    //System.out.println("IMG found!!!  :) :)");
+                }else{
+                    //System.out.println("IMG user not found^^ :/   ---- SO WE TAKE DEFAULT IMG");
+                    file = new File("C:\\Users\\mathilde\\workspace\\EasyMealsBack\\src\\main\\resources\\img\\3_photoNonDispo.jpg");
+                }
+
+                try {
+                    FileInputStream imageInFile = new FileInputStream(file);
+
+                    byte imageData[] = new byte[(int) file.length()];
+                    imageInFile.read(imageData);
+                    // Converting Image byte array into Base64 String
+                    String imageDataString = new String(Base64.encodeBase64(imageData));
+                    recipeImage = new RecipeImage(idRecipe, imageDataString);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                listRecipeImage.add(recipeImage);// = buildListRecipe(conn, resRecipe, idUser);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listRecipeImage;
+    }
+
     private static final String SELECT_All_RECIPES_FOR_USER_NoRecipeType =
             "SELECT recipe.id as idRecipe, recipe.name as recipeName, recipe.isPublic, pixName, idType, recipe_type.name as nameRecipeType, nbPerson, ro.id as idRo, ro.name as nameRo, ro.numRank, isValidatedRecipeOrigin, rating, nbVoter, isValidated, timeCooking, timePreparation, user.id as idUser, user.pseudo as pseudoUser, user.email as emailUser " +
                     "FROM RECIPE, Recipe_Origin ro, User, Recipe_Type " +
@@ -288,8 +335,9 @@ public class RecipeDao {
                         recipeOrigin, categoryList, nbPerson, rating, nbVoter, timeCooking, timePreparation, isValidated, relUserRecipe);
 
 
-                //System.out.println(".................. start img");
-                //recupere image
+                //**************************************************************************************
+                //******************************   IMAGE ************************************************
+                //****************************************************************************************
                 InputStream is;
 
                 File file = new File("C:\\Users\\mathilde\\workspace\\EasyMealsBack\\src\\main\\resources\\img\\"+pixName+".jpg");
@@ -313,7 +361,9 @@ public class RecipeDao {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                //**************************************************************************************
+                //****************************** end  IMAGE ************************************************
+                //****************************************************************************************
 
                 listRecipe.add(recipe);
             }

@@ -353,6 +353,47 @@ fab 40€ to fab, math, eddy, carine, person4, person5
 
 
 
+********************************************************************************************************
+    ng-show vs. ng-if
+    *********************************
+    NG-SHOW compute the html element in any case, and only if ng-show = false, it's hide by the css "display: none !important"
+    so if the element can take time (like with img for ex) ng-show is not appropriate!
+    NG-IF directive removes or recreates a portion of the DOM so it's appropriate for img !
+
+    funny test : hide elem with "ng-show=false" but with css show the elem anyway ! :
+                <div ng-show="false" style="display : inline !important; color:red;">
+                    TEST
+                </div>
+
+
+
+
+********************************************************************************************************
+    idee pour img instantanée DIRTY ^^
+    *********************************
+    the initial idea (which is really dirty i think) was to load every recipe using the directive ng-show
+    so afterward it consiste just by swiching the ng-show to true/false for each recipe and every html element are already computed so time : 0sec !
+
+
+
+
+
+
+********************************************************************************************************
+    PAGINATION
+    *********************************
+     boundary-links="true" (pour "first" & "last")
+     direction-links="true" (pour "previous" & "next")
+
+     changer nom 'previous'... : previous-text="prec." next-text="suiv." first-text="premier" last-text="dernier"
+     changer avec des flêches : previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+
+
+
+
+
+
+
 
 
 

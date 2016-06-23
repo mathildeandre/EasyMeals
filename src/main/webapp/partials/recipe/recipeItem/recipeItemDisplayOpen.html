@@ -1,6 +1,6 @@
-<div ng-show="recipe.descriptionOpen" class="" ng-click="toggleDescOpen(recipe)" ng-class="{recipeWithDescripOrange:colorChoosen.value=='orange',
+<div  class="" ng-click="toggleDescOpen(recipe)" ng-class="{recipeWithDescripOrange:colorChoosen.value=='orange',
                                             recipeWithDescripWhite:colorChoosen.value=='white', recipeWithDescripBlackSlate:colorChoosen.value=='black',
-                                            recipeWithDescripGrey:colorChoosen.value=='grey'}">
+                                            recipeWithDescripGrey:colorChoosen.value=='grey'}"> <!--ng-show="recipe.descriptionOpen"-->
 
     <div class="headingRecipeWithDescrip" >{{recipe.name}}
         &nbsp&nbsp
@@ -81,7 +81,7 @@
             <!--<div class="pixRecipeWithDescrip" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;">
 
             </div>-->
-            <img src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeWithDescrip">
+            <img data-ng-src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeWithDescrip">
 
             <div class="ingredientRecipe">
                 <div class="subTitleRecipeOpen"> Ingrédients ({{recipe.nbPerson}} pers.) </div>

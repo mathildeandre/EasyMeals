@@ -52,6 +52,23 @@ public class RecipeService {
         return Response.ok(objToken).build();
     }
 
+    @Path("recipesImages/{idUser}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getBddRecipesImages(@PathParam("idUser") Long idUser, @HeaderParam("Authorization") String authorization) {
+        List<RecipeImage> list = null;
+        String strToken = authorization.substring(7); //substring(7) will remove "Bearer "
+        System.out.println("token : "+strToken);
+        if(managerUser.verifyTokenOfUser(idUser, strToken)){
+            System.out.println("[getRecipesForUser] - TOKEN CORRECT ! get into bdd with id "+idUser);
+            list = ManagerBdd.getInstance().getBddRecipesImages(idUser);
+        }else{
+            list = ManagerBdd.getInstance().getBddRecipesImages(new Long(-1));
+            System.out.println("[getRecipesForUser] - TOKEN IN-CORRECT !  get into bdd with id -1");
+        }
+        return Response.ok(list).build();
+    }
+
     @Path("recipes/{idUser}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})

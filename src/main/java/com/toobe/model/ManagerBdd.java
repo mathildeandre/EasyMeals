@@ -3,6 +3,7 @@ package com.toobe.model;
 import com.toobe.dao.*;
 import com.toobe.dto.*;
 import com.toobe.dto.info.RecipeCategory;
+import com.toobe.dto.info.RecipeImage;
 import com.toobe.dto.info.RecipeOrigin;
 import com.toobe.dto.info.RecipeType;
 
@@ -122,6 +123,10 @@ public class ManagerBdd {
         return recipeDao.getRecipes(conn, recipeType, idUser);
     }
     */
+    public List<RecipeImage> getBddRecipesImages(Long idUser){
+        startConnection();
+        return recipeDao.getBddRecipesImages(conn, idUser);
+    }
     public List<Recipe> getRecipesForUser(Long idUser){
         startConnection();
         return recipeDao.getRecipesForUser(conn, idUser);

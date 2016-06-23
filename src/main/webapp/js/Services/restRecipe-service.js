@@ -51,6 +51,7 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     var origins = [];
     var recipeTypes = [];
 
+    var allRecipes = [];
     var starters = [];
     var courses = [];
     var desserts = [];
@@ -93,6 +94,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     }
     function getDesserts(){
         return desserts;
+    }
+    function getAllRecipes(){
+        return allRecipes;
     }
 
 
@@ -285,6 +289,23 @@ myService.service("restRecipeService", function ($http, $q, $log) {
     /****************************************************************** INTIALIZATION **************************************************************************/
 
 
+    /** USELESS FOR NOW **
+    function initRecipesData(idUser){
+        $log.warn(":::::::::::::::::::::::::::::[restRecipeService] INIT - LOADING DATA xxxxxxxxx after connexion idUser : "+idUser);
+        return getBddCategories(idUser).then(function(){
+            return getBddSpecialities(idUser).then(function(){
+                return getBddRecipes(idUser).then(function(){
+                    $log.warn("*****[restRecipeService]  everything initialized !")
+                })
+            })
+        })
+    }
+
+     function getBddRecipesImages(idUser) {
+        return getObjFromServer('/rest/recipesImages/' + idUser);
+    }
+    /** end USELESS FOR NOW **/
+
 
     function getBddCategories(idUser) {
         startersCategories = [];
@@ -327,8 +348,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         starters = [];
         courses = [];
         desserts = [];
+        allRecipes = [];
         return getObjFromServer('/rest/recipes/' + idUser).then(function (data) { //217 = idUser
-            var allRecipes = data;
+            allRecipes = data;
             initComplement(allRecipes);
             $log.warn("allRecipes loaded!71")
             for(var i=0; i<allRecipes.length; i++){
@@ -343,12 +365,12 @@ myService.service("restRecipeService", function ($http, $q, $log) {
             }
 
             //empty img..
-            for(var j=0; j<courses.length; j++){
+            /*for(var j=0; j<courses.length; j++){
                 //var champImg = {image: courses[j].image };
                 //coursesPix.push(champImg);
                 coursesPix.push(courses[j].image);
                 courses[j].image = "";
-            }
+            }*/
 
 
             //return response; ??
@@ -360,6 +382,9 @@ myService.service("restRecipeService", function ($http, $q, $log) {
             arrayRecipe[i].timeTotal = arrayRecipe[i].timeCooking + arrayRecipe[i].timePreparation;
         }
     }
+
+
+
     /****************************************************************** end INTIALIZATION **************************************************************************/
     /****************************************************************** end INTIALIZATION **************************************************************************/
     /****************************************************************** end INTIALIZATION **************************************************************************/
@@ -416,7 +441,8 @@ myService.service("restRecipeService", function ($http, $q, $log) {
         getBddRecipeTypes: getBddRecipeTypes,
         getBddRecipes: getBddRecipes,
 
-        getCoursesPix: getCoursesPix
+        getCoursesPix: getCoursesPix,
+        getAllRecipes: getAllRecipes
 
     };
 });

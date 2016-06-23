@@ -3,7 +3,7 @@
  */
 
 
-angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', 'ngStorage', 'ngRoute', 'ngFileUpload', 'base64'] )
+angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', 'ngStorage', 'ngRoute', 'ngFileUpload'] )
     .config(['$routeProvider',
         function($routeProvider) {
             $routeProvider

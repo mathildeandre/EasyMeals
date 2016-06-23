@@ -34,8 +34,30 @@
 
 
     <div ng-include="'navbar.html'"></div>
-    <div class="myMain" ng-view ></div>
 
+
+    <!-- RECIPE DIRTY -->
+    <div ng-show="isIntoRecipe" class="myMain">
+
+
+        <div> class body1 : {{classBody}}</div>
+        <section ng-controller="RecipeDirtyCtrl">
+            <div class="titleRecipe contourTxt"><h2 class="myH2">Recettes : {{displayRecipeType()}} </h2></div>
+            <div ng-controller="FilterDirtyCtrl"  >
+                <recipe-filterdirty></recipe-filterdirty>
+                <recipe-listdirty></recipe-listdirty>
+            </div>
+        </section >
+    </div>
+    <!-- end RECIPE DIRTY -->
+
+    <div ng-show="!isIntoRecipe" class="myMain" ng-view >
+
+        <div> class body2 : {{classBody}}</div>
+
+    </div>
+
+<div> class body3 : {{classBody}}</div>
 
 
     <!-- LIB -->
@@ -51,6 +73,7 @@
     <!-- image upload -->
     <script src="lib/img/ng-file-upload-shim.min.js"></script>
     <script src="lib/img/ng-file-upload.min.js"></script>
+    <script src="lib/angular-base64.js"></script>
 
 <!-- ng storage -->
     <script src="lib/ngStorage.js"></script>
@@ -64,6 +87,8 @@
     <script src="js/Controllers/recipe/singleRecipe-controller.js"></script>
     <script src="js/Controllers/recipe/modals/modalRecipeFillPlanning-controller.js"></script>
     <script src="js/Controllers/recipe/modals/modalCreationRecipe-controller.js"></script>
+    <script src="js/Controllers/recipe/recipeDirty-controller.js"></script>
+    <script src="js/Controllers/recipe/recipeFictionDirty-controller.js"></script>
     <script src="js/Controllers/planning/planning-controller.js"></script>
     <script src="js/Controllers/planning/planningListShopping-controller.js"></script>
     <script src="js/Controllers/planning/modals/planningModalCaseMeal-controller.js"></script>
@@ -79,6 +104,7 @@
     <script src="js/Controllers/others/grilleImpot-controller.js"></script>
     <script src="js/Controllers/others/testDirective-controller.js"></script>
     <script src="js/Controllers/others/filterRecipePlanning-controller.js"></script>
+    <script src="js/Controllers/others/filterDirtyRecipePlanning-controller.js"></script>
 
     <!-- DIRECTIVES -->
     <script src="js/Directives/directives.js"></script>

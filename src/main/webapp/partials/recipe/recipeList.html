@@ -50,12 +50,6 @@
         <div class="myArticleBody artBodyListRecipe">
 
             <div class="divTopListRecipe">
-                <!-- <div>{{recipes[0].name}} - {{recipesToDisplay[0].name}}  </div>-->
-
-
-                <button ng-click="emptyRecipesImg()">empty img</button>
-                <button ng-click="reputRecipeImage()">refull img</button>
-                <button ng-click="reputRecipePixxes()">refull PIX</button>
 
                 <div class="buttonCreate" ng-controller="ModalCreationRecipeCtrl">
                     <!--<a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayButtonCreationRecipeType()}}</a> <!--creer nouveau plat-->
@@ -90,25 +84,64 @@
                 <div style="font-weight: 800;border-bottom:1px solid grey">Recipe planning :</div><div ng-repeat="recipe in recipesPlanning">{{recipe.name}}</div>
             </div>
             -->
+
+
+            <div ng-show="recipesToDisplay.length > 9"> <!--/PAGINATION-->
+                <uib-pagination total-items="recipesToDisplay.length" ng-model="currentPage" max-size="5" class="pagination-sm"
+                                num-pages="numPages" items-per-page="itemPerPage" rotate="false"
+                                previous-text="prec." next-text="suiv." > <!--previous-text="&lsaquo;" '<' next-text="&rsaquo;" first-text="&laquo;" '<<' last-text="&raquo;"-->
+                </uib-pagination>
+            </div>
+
+
             <div  ng-controller="ModalRecipeFillPlanningCtrl">
 
-                <div ng-show="!showInBlock" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy"
+
+                <span ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy">
+                    <span ng-if="checkPagination($index, currentPage)">
+                        <div ng-if="!showInBlock && !recipe.descriptionOpen" class="divRecipes recipeWithNoDescr">
+                            <recipeitem-displayinlist></recipeitem-displayinlist>
+                        </div>
+                        <div ng-if="!showInBlock && recipe.descriptionOpen" class="divRecipes">
+                            <recipeitem-displayopen></recipeitem-displayopen>
+                        </div>
+
+                        <div ng-if="showInBlock && !recipe.descriptionOpen" class="divRecipesBlock divRecipesBlockIcon">
+                            <recipeitem-displayinblock></recipeitem-displayinblock>
+                        </div>
+                        <div ng-if="showInBlock && recipe.descriptionOpen" class="divRecipesBlock divRecipesBlockDescription">
+                            <recipeitem-displayopen></recipeitem-displayopen>
+                        </div>
+                    </span>
+                </span>
+                <!--
+
+                <div ng-if="!showInBlock" class="divRecipes" ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy"
                      ng-class="{recipeWithNoDescr:!recipe.descriptionOpen}">
-                    <!-- or :
+                    <!- or :
                     <div ng-include="'../../partials/recipe/recipeItemDisplayNotOpenInList.html'"></div>
-                    -->
+                    ->
                     <recipeitem-displayinlist></recipeitem-displayinlist>
                     <recipeitem-displayopen></recipeitem-displayopen>
                 </div>
 
-                <div ng-show="showInBlock" class="divRecipesBlock" ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy "
+                <div ng-if="showInBlock" class="divRecipesBlock" ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy "
                      ng-class="{divRecipesBlockIcon:!recipe.descriptionOpen, divRecipesBlockDescription:recipe.descriptionOpen}">
 
                     <recipeitem-displayinblock></recipeitem-displayinblock>
                     <recipeitem-displayopen></recipeitem-displayopen>
                 </div>
-
+                -->
             </div>
+
+
+
+            <div ng-show="recipesToDisplay.length > 9"> <!--/PAGINATION-->
+                <uib-pagination total-items="recipesToDisplay.length" ng-model="currentPage" class="pagination-sm"
+                                num-pages="numPages" items-per-page="itemPerPage" rotate="false" direction-links="false"  >
+                </uib-pagination>
+            </div>
+
         </div>
 
     </article>

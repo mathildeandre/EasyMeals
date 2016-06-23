@@ -72,15 +72,21 @@ h6 {
     height: 100%;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     //color: #fff;
-    background: url(../img/ideaApple.jpg) repeat ; /* planning-recipe_meals OR recipe_fruits.jpeg  //bottom center scroll */
-    background-color: #000;
+
+
+    background: url(../img/alcohol_Red-Grapes.jpg) repeat ;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    /*background: 0;
+    background-image : none;
+    background-color: limegreen;
+*/
 
     background-attachment:fixed;
     padding: 0 4vw;
+    color: BLUE;
 }
 .bodyRecipe{
 
@@ -1737,6 +1743,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     cursor:pointer;
 }
 .divRecipesBlockIcon{
+    display:inline-block;
     width: 31%;
     min-width:160px;
     vertical-align: top;
@@ -1845,6 +1852,39 @@ select::selection,option::selection { /* ne fonctionne pas  */
     //background-color: black;
 }
 
+
+/**************************************************************************************************************/
+/*************************  PAGINATION GENERAL  *****************************************************************/
+/************************************************************************************************************/
+/***********************************************************************************************************/
+
+.pagination {
+    margin: 20px 0;
+    border-radius: 4px;
+}
+.pagination > li > a,
+.pagination > li > span {
+    /:color: #337ab7;
+    color: #f0ad4e;
+}
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+    //color: #23527c;
+    color: #f0ad4e;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    //background-color: #337ab7;
+    background-color: #f5c88a;
+    //border-color: #337ab7;
+    border-color: #f0ad4e;
+}
 
 /************************************************************************************************************/
 /*************************  MODAL GENERAL  *********************************************/

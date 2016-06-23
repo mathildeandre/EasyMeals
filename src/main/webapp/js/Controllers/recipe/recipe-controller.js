@@ -5,7 +5,7 @@ var myModule = angular.module('controllers');
 
 
 
-myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, $location, $window, $base64, $log,  $http, $q, AppendixFunctionsService, restRecipeService, restUserService) {
+myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, $location, $window, $log,  $http, $q, AppendixFunctionsService, restRecipeService, restUserService) {
 
     /*********************************** USER CONNECTED **************************************/
     $scope.isUserConnected = false;
@@ -47,44 +47,46 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
 
 
 
-    $scope.emptyRecipesImg = function(){
-        $scope.img = [];
-        for(var i=0; i<$scope.recipes.length; i++){
-            $scope.img[i] = $scope.recipes[i].image;
-            $scope.recipes[i].image = "";
+    /*
+    restRecipeService.getBddRecipesImages($scope.userConnected.id).then(function (data) { //217 = idUser
+
+        $log.warn("[RecipeCtrl] -- getBddRecipesImages()--");
+        var allRecipesImages = data;
+        for(var i=0; i<allRecipesImages.length; i++){
+            for(var j=0; j<$scope.recipes.length; j++) {
+                if(allRecipesImages[i].id == $scope.recipes[j].id ){
+                    $scope.recipes[j].image = allRecipesImages[i].image;
+                }
+            }
         }
-    }
-    $scope.reputRecipeImage = function(){
-        for(var i=0; i<$scope.recipes.length; i++){
-            $scope.recipes[i].image = $scope.img[i];
-        }
-    }
-    $scope.reputRecipePixxes = function(){
-        for(var i=0; i<$scope.recipes.length; i++){
-            $scope.recipes[i].image = $scope.pixxes[i];
-        }
-    }
+    })
+    */
 
 
-    var base64ToImg = function(recipe){
-        recipe.imgFromBase64 = $base64.decode(recipe.image);
-        //$scope.encoded = $base64.encode('a string');
-        //$scope.decoded = $base64.decode('YSBzdHJpbmc=');
+    /********************** PAGINATION *************************/
+    $scope.currentPage = 1;
+    $scope.itemPerPage = 9;
+
+    $scope.checkPagination = function(index, currentPage){
+        $log.info("currentPage :  "+currentPage)
+
+        var bool= (index >= ((currentPage-1)*$scope.itemPerPage)) && (index < (currentPage*$scope.itemPerPage))
+        /*$log.info("((currentPage-1)*itemPerPage) :  "+(($scope.currentPage-1)*$scope.itemPerPage))
+        $log.info("(index >= ((currentPage-1)*itemPerPage)) :  "+(index >= (($scope.currentPage-1)*$scope.itemPerPage)))
+        $log.info("(currentPage-1*itemPerPage) :  "+($scope.currentPage-1*$scope.itemPerPage))
+        $log.info("(index < (currentPage-1*itemPerPage)) :  "+(index < ($scope.currentPage-1*$scope.itemPerPage)))*/
+        return bool
     }
 
-    var base64ToImg2 = function(recipe){
-        var imageBase64 = "recipe.image";
-        var blob = new Blob([imageBase64], {type: 'image/png'});
-        var file = new File([blob], 'imageFileName.png');
-    }
-    var setImgBurger = function(){
+    /******************* end PAGINATION ***********************/
+    /*var setImgBurger = function(){
 
         var imageBase64 = $scope.recipes[0].image;
         var blob = new Blob([imageBase64], {type: 'image/png'});
         var file = new File([blob], 'imageFileName.png');
     }
     var setImg = setImgBurger();
-
+    */
 
     $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
         $scope.recipeType = recipeType;
