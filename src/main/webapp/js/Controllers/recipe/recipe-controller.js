@@ -65,7 +65,8 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
 
     /********************** PAGINATION *************************/
     $scope.currentPage = 1;
-    $scope.itemPerPage = 9;
+    $scope.itemPerPage = 3;
+    $scope.listNbElemPagin = [3,6,9,15,24]
 
     $scope.checkPagination = function(index, currentPage){
         $log.info("currentPage :  "+currentPage)

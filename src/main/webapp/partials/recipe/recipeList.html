@@ -63,8 +63,7 @@
                 </div>
                 <div class="buttonsDisplayListColor">
                     <span ng-show="!isTablet()"> Couleur : </span>&nbsp
-                    <select class="fieldRecipe fieldOrderBy"  ng-model='colorChoosen' ng-options='color.name for color in listColor' ng-change="updateBddColor(colorChoosen)" >
-                    </select>
+                    <select class="fieldRecipe fieldOrderBy"  ng-model='colorChoosen' ng-options='color.name for color in listColor' ng-change="updateBddColor(colorChoosen)" ></select>
                 </div>
 
 
@@ -86,19 +85,21 @@
             -->
 
 
-            <div ng-show="recipesToDisplay.length > 9"> <!--/PAGINATION-->
-                <uib-pagination total-items="recipesToDisplay.length" ng-model="currentPage" max-size="5" class="pagination-sm"
-                                num-pages="numPages" items-per-page="itemPerPage" rotate="false"
+            <span ng-show="recipesToDisplay.length > 9" style="display: inline-block !important"> <!--/PAGINATION-->
+                <uib-pagination total-items="recipesToDisplay.length" ng-model="$parent.currentPage" max-size="5" class="pagination-sm"
+                                num-pages="numPages" items-per-page="$parent.itemPerPage" rotate="false"
                                 previous-text="prec." next-text="suiv." > <!--previous-text="&lsaquo;" '<' next-text="&rsaquo;" first-text="&laquo;" '<<' last-text="&raquo;"-->
                 </uib-pagination>
-            </div>
-
+            </span>
+            <span style="display: inline-block; vertical-align: top; margin-top:17px; margin-left: 20px;"> Nb recettes/page : &nbsp
+                    <select class="fieldRecipe fieldOrderBy"  ng-model='$parent.itemPerPage' ng-options='nbElemPagin for nbElemPagin in $parent.listNbElemPagin' ></select>
+            </span>
 
             <div  ng-controller="ModalRecipeFillPlanningCtrl">
 
 
                 <span ng-repeat="recipe in recipesToDisplay | filter : search | orderBy: recipeOrderBy">
-                    <span ng-if="checkPagination($index, currentPage)">
+                    <span ng-if="checkPagination($index, $parent.currentPage)">
                         <div ng-if="!showInBlock && !recipe.descriptionOpen" class="divRecipes recipeWithNoDescr">
                             <recipeitem-displayinlist></recipeitem-displayinlist>
                         </div>
@@ -137,8 +138,8 @@
 
 
             <div ng-show="recipesToDisplay.length > 9"> <!--/PAGINATION-->
-                <uib-pagination total-items="recipesToDisplay.length" ng-model="currentPage" class="pagination-sm"
-                                num-pages="numPages" items-per-page="itemPerPage" rotate="false" direction-links="false"  >
+                <uib-pagination total-items="recipesToDisplay.length" ng-model="$parent.currentPage" class="pagination-sm"
+                                num-pages="numPages" items-per-page="$parent.itemPerPage" rotate="false" direction-links="false"  >
                 </uib-pagination>
             </div>
 
