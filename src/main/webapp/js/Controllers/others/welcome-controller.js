@@ -13,10 +13,6 @@ myModule.controller('WelcomeMealCtrl', function($scope, $localStorage, $log) {
     /*************EMIT TO GLOBAL-CTRL : UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
     /** when a user just logged in -> emit to Global to change the NAVBAR**/
     //$localStorage.userConnected = { pseudo: response.pseudo, id: response.idUser, token: response.token }
-
-
-
-
     $scope.userConnected = $localStorage.userConnected
 
 
@@ -31,4 +27,10 @@ myModule.controller('WelcomeMealCtrl', function($scope, $localStorage, $log) {
     }
 
     /*************end EMIT TO GLOBAL-CTRL : UNIQUEMENT POUR AFFICHER pseudo dans NAVBAR ********************************/
+
+
+
+
+
+
 });

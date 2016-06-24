@@ -190,15 +190,14 @@
 
                     <div class="myArticleTitle titleInlineBlock">Liste {{displayRecipeType()}}</div>
                     <div class="rightInlineBlock rightHeadingSearch">
-                    <span class="sortPlanningRecipeList" >
-                        <span   class="glyphicon glyphicon-sort" ></span>
-                        &nbsp
-                        <select class="fieldPlanning"  ng-model='recipeOrderBy'  >
-                            <option ng-repeat="orderby in listOrderBy" value="{{orderby.value}}">{{orderby.name}}</option>
-                        </select>
-                    </span >
+                        <span class="sortPlanningRecipeList" >
+                            <span   class="glyphicon glyphicon-sort" ></span>
+                            &nbsp
+                            <select class="fieldPlanning"  ng-model='recipeOrderBy'  >
+                                <option ng-repeat="orderby in listOrderBy" value="{{orderby.value}}">{{orderby.name}}</option>
+                            </select>
+                        </span >
 
-                        &nbsp
                         &nbsp
 
                         <span   class="glyphicon glyphicon-search " ></span>

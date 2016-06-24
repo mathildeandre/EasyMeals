@@ -40,6 +40,17 @@
                                         <div><span class="glyphicon glyphicon-th-list modalFillPlanning fontSize20"></span> &nbsp <b>Ajouter directement une recette dans son planning</b></div>
                                     </script>
                 </div>
+                &nbsp
+
+                <span class="sortRecipeList" >
+                    <span   class="glyphicon glyphicon-sort" ></span>
+                    &nbsp
+                    <select class="fieldRecipe fieldOrderBy"  ng-model='recipeOrderBy'  >
+                        <option ng-repeat="orderby in listOrderBy" value="{{orderby.value}}">{{orderby.name}}</option>
+                    </select>
+                </span>
+
+                &nbsp
                 <span   class="glyphicon glyphicon-search " ></span>
                 &nbsp
                 <input class="inputRecipeSearch" type="text" ng-model="search.name" placeholder="nom d'une recette"> <!-- search.name permet de rechercher uniquement sur le champ name de recipe-->
@@ -55,24 +66,9 @@
                     <!--<a href="#/recipeCreation/{{recipeType}}"  class="btn btn-warning"> {{displayButtonCreationRecipeType()}}</a> <!--creer nouveau plat-->
                     <div class="btn btn-warning" ng-class="{greyBckgrd : !isUserConnected}" ng-click="openModalCreationRecipe()"> {{displayButtonCreationRecipeType()}}</div> <!--creer nouveau plat-->
                 </div>
-                <div class="buttonsDisplayListRecipe">
-                    <span ng-show="!isTablet()">Affichage : </span> &nbsp
-                    <span ng-click="showInListFct()"  class="glyphicon glyphicon-align-justify gliphList glyphiconBtn"></span> <!--title=""-->
-                    &nbsp-&nbsp
-                    <span ng-click="showInBlockFct()" class="glyphicon glyphicon-th gliphBlock glyphiconBtn"></span></span><!--title=""-->
-                </div>
                 <div class="buttonsDisplayListColor">
-                    <span ng-show="!isTablet()"> Couleur : </span>&nbsp
+                    <span ng-show="!isTablet()"> Recette : </span>&nbsp
                     <select class="fieldRecipe fieldOrderBy"  ng-model='colorChoosen' ng-options='color.name for color in listColor' ng-change="updateBddColor(colorChoosen)" ></select>
-                </div>
-
-
-                <div class="sortRecipeList" >
-                    <span   class="glyphicon glyphicon-sort" ></span>
-                    &nbsp
-                    <select class="fieldRecipe fieldOrderBy"  ng-model='recipeOrderBy'  >
-                        <option ng-repeat="orderby in listOrderBy" value="{{orderby.value}}">{{orderby.name}}</option>
-                    </select>
                 </div>
             </div>
 
@@ -91,9 +87,16 @@
                                 previous-text="prec." next-text="suiv." > <!--previous-text="&lsaquo;" '<' next-text="&rsaquo;" first-text="&laquo;" '<<' last-text="&raquo;"-->
                 </uib-pagination>
             </span>
-            <span style="display: inline-block; vertical-align: top; margin-top:17px; margin-left: 20px;"> Nb recettes/page : &nbsp
+            <span class="selectDisplayNbItemPerPage"> Nb recettes/page : &nbsp
                     <select class="fieldRecipe fieldOrderBy"  ng-model='$parent.itemPerPage' ng-options='nbElemPagin for nbElemPagin in $parent.listNbElemPagin' ></select>
             </span>
+
+            <div class="buttonsDisplayListRecipe">
+                <span ng-show="!isTablet()">Affichage : </span> &nbsp
+                <span ng-click="showInListFct()"  class="glyphicon glyphicon-align-justify gliphList glyphiconBtn"></span> <!--title=""-->
+                &nbsp-&nbsp
+                <span ng-click="showInBlockFct()" class="glyphicon glyphicon-th gliphBlock glyphiconBtn"></span></span><!--title=""-->
+            </div>
 
             <div  ng-controller="ModalRecipeFillPlanningCtrl">
 

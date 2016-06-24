@@ -8,7 +8,7 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
         function($routeProvider) {
             $routeProvider
                 .when('/welcomeMeal', {
-                    templateUrl: '../partials/others/welcomeMeal.html',
+                    templateUrl: '../partials/others/welcome.html',
                     controller: 'WelcomeMealCtrl',
                     resolve:{ welcomeMealResolve: function ($log, restGlobalService){
                         $log.warn("::::: RESOLVE welcomeMeal route ::::: calling -restGlobalService.initGlobalLoadData()")
@@ -81,9 +81,9 @@ angular.module('myApp', ['ngAnimate', 'ui.bootstrap','controllers','services', '
                 /*old -- .when('/recipeCreation/:recipeType', {templateUrl: '../partials/recipe/modals/old_recipeCreation.html', controller:'RecipeCreationCtrl'})*/
 
 
-                .when('/calculationAlcohol', {templateUrl: '../partials/others/calculationAlcohol.html', controller:'CalculationAlcoholCtrl'})
-                .when('/grilleImpot', {templateUrl: '../partials/others/grilleImpot.html', controller:'GrilleImpotCtrl'})
-                .when('/testDirective', {templateUrl: '../partials/others/testDirective.html', controller:'TestDirectiveCtrl'})
+                .when('/calculationAlcohol', {templateUrl: '../partials/others/old/calculationAlcohol.html', controller:'CalculationAlcoholCtrl'})
+                .when('/grilleImpot', {templateUrl: '../partials/others/old/grilleImpot.html', controller:'GrilleImpotCtrl'})
+                .when('/testDirective', {templateUrl: '../partials/others/old/testDirective.html', controller:'TestDirectiveCtrl'})
                 .otherwise({ redirectTo: '/welcomeMeal' });
         }])
     .run(['$rootScope', '$http', '$location', '$localStorage', '$log', 'restUserService', function($rootScope, $http, $location, $localStorage, $log, restUserService){
