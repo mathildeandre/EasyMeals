@@ -283,7 +283,8 @@ h6 {
     border-bottom: 1px solid transparent;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5 !important;
+    opacity: 1 !important;
     border-color: #ddd;
 }
 .myArticleTitle{
@@ -500,7 +501,8 @@ h6 {
     //color: #ff80bf;
     padding: 6px 10px 7px 10px;
     border: 1px solid #d9534f;
-    color:white;
+    //color:white;
+    color:darkslategray;
 }
 .myBtnEmptyErrand:hover,
 .myBtnEmptyErrand:focus{
@@ -538,6 +540,17 @@ h6 {
 }
 .txtWhiteBtn{
     //color: antiquewhite;
+}
+
+.btn-rosybrown{
+    background-color: rosybrown;
+    border-color: rosybrown;
+    color: white;
+}
+.btn-rosybrown:hover{
+    background-color: #9f6060;
+    border-color: #804d4d;
+    color: white;
 }
 
 /*******************************************************************************************************************************************************************************/
@@ -1066,10 +1079,10 @@ select::selection,option::selection { /* ne fonctionne pas  */
     border-bottom: 1px solid  cornflowerblue;// dimgray;
 }
 .titleStepThreeWelcome{
-    border-bottom: 1px solid  #d9534f;// dimgray;
+    border-bottom: 1px solid rosybrown;// dimgray;
 }
 .titleStepFourWelcome{
-    border-bottom: 1px solid  rosybrown;// dimgray;
+    border-bottom: 1px solid  #d9534f;// dimgray;
 }
 
 .theFourStepWelcome{
@@ -1095,24 +1108,14 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 }
 .stepThreeWelcome{
-    border: 1px solid #d9534f;
-
-}
-.stepFourWelcome{
     border: 1px solid rosybrown;
 
 }
+.stepFourWelcome{
+    border: 1px solid #d9534f;
 
-.btn-rosybrown{
-    background-color: rosybrown;
-    border-color: rosybrown;
-    color: white;
 }
-.btn-rosybrown:hover{
-    background-color: #9f6060;
-    border-color: #804d4d;
-    color: white;
-}
+
 .lineStep1{
     margin-top:10px;
 }
@@ -1282,7 +1285,8 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .activeInNavBarErrand > a {
     //color:deeppink;
-    color:#d9534f;
+    //color:#d9534f;
+    color: rosybrown;
 }
 .activeInNavBarPrivateAdmin > a {
     color:deeppink;
@@ -2861,6 +2865,11 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .artErrandList{
     width: 38%;
+}
+.test379{
+    //background-color: rgba(0,0,0, 0.9);
+    //opacity: 0.9;
+    width: 50%;
 }
 .artErrandPlanning{
     width: 90%;

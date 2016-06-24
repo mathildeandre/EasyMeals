@@ -1,0 +1,273 @@
+<div  ng-controller="ErrandCtrl" >
+
+    <div><h2 class="myH2">Mes Listes </h2></div>
+
+
+<div ng-show="planningsShopping.length == 0" style="color: white">
+    Pas de liste de course !
+    <br><br>
+    Vous devez générer votre liste à partir de  <div class="btn btn-info notTransformText" ng-click="goPlanning()">Planning</div>
+    <br>
+    ( Une fois le planning rempli -> "Liste de courses" -> "Aller faire ses courses" )
+</div>
+
+<div ng-show="planningsShopping.length > 0">
+
+
+<!--{{planningsShopping[0]}}-->
+
+
+    <div class="divErrandTop">
+        <button  ng-click="displayErrandList()" type="button" class="myBtnEmpty myBtnEmptyErrand" ng-class="{myBtnErrandFull : isDisplayErrandList, classicCursor: isDisplayErrandList}">
+            <span class="txtWhiteBtn">Liste de Courses</span>
+        </button>&nbsp &nbsp
+        <button  ng-click="displayErrandPlanning()"  type="button" class="myBtnEmpty myBtnEmptyErrand" ng-class="{myBtnErrandFull : !isDisplayErrandList, classicCursor: !isDisplayErrandList}">
+            <span class="txtWhiteBtn">Cuisiner avec le Planning</span>
+        </button>&nbsp &nbsp
+
+        <span style="color: white">Liste :</span>
+        <select class="fieldErrand"  ng-model='currentPlanningShopping' ng-change="resetRecipesToDisplay()" ng-options='list.name for list in planningsShopping' ></select>
+
+        &nbsp &nbsp
+
+        <!--
+        <button  type="button" class="btn btn-info" ng-click="cloneIntoMyPlannings()">
+            <span class="glyphicon glyphicon-duplicate"></span> Copier dans Planning
+        </button>
+        <button  type="button" class="btn btn-info" ng-click="cutShoppingToPlanning()">
+            <span class="glyphicon glyphicon-scissors"></span> Modifier dans Planning
+        </button>
+        -->
+        <span class="glyphicon glyphicon-duplicate glyphCopyErrandToPlanning glyphiconBtn" ng-class="{greyGlyphicon : !isUserConnected}" ng-click="cloneIntoMyPlannings()"
+              uib-popover="Copier dans PLANNINGS" popover-trigger="mouseenter"></span>
+        &nbsp
+        <span class="glyphicon glyphicon-scissors glyphCutErrandToPlanning glyphiconBtn" ng-class="{greyGlyphicon : !isUserConnected}" ng-click="cutShoppingToPlanning()"
+              uib-popover="OOPS j'ai oublié un ingredient! Copier dans PLANNINGS (Supprimera de COURSES)" popover-trigger="mouseenter"></span>
+        &nbsp
+        <span class="glyphicon glyphicon-trash glyphDeleteListShop glyphiconBtn" ng-class="{greyGlyphicon : !isUserConnected}" ng-click="deleteListShop()"
+              uib-popover="Supprimer de COURSES" popover-trigger="mouseenter"></span>
+
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------- ARTICLE LISTE  -------------------------------------------------->
+    <!---------------------------------------------------------------------------------------------------------------------->
+    <article class="myArticle artErrandList" ng-show="isDisplayErrandList" >
+        <div class="myArticleHeading">
+            <div class="myArticleTitle">
+                Courses : &nbsp
+                <span ng-show="!modifyingListName">
+                    {{currentPlanningShopping.name}} &nbsp
+                    <span ng-click="modifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
+                </span>
+                <span ng-show="modifyingListName">
+                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom"  ng-blur="modificationListNameDONE()" ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <span ng-click="modificationListNameDONE()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
+                </span>
+
+
+                <span class="rightInlineBlock  glyphicon glyphicon-refresh listReset glyphiconBtn" ng-click="reinitList()"></span>
+            </div>
+        </div>
+
+
+        <div class="myArticleBody" >
+            <div ng-repeat="category in currentPlanningShopping.shoppingCategories | orderBy:'name'"
+                 class="divCategory" ng-show="category.ingredients.length>0" ng-class="{divCategoryDone : isCategoryDone(category)}">
+                <div class="divTitleCategory">
+                    {{category.name}}
+                </div>
+                <!--<b style="border-bottom:1px solid grey; " >{{category.name}}</b>-->
+                <div class="divBodyCategory">
+                    <div ng-show="!isTablet()" ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}" ng-init="ingr.onOver=false" >
+
+
+                        <span ng-mouseenter="ingr.onOver = true" ng-mouseleave="ingr.onOver = false"
+                              ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon ingrDone"
+                              ng-class="{'glyphicon-unchecked': !ingr.onOver, 'glyphicon-check':ingr.onOver}" ></span>
+
+                        <span ng-mouseenter="ingr.onOver = true" ng-mouseleave="ingr.onOver = false"
+                              ng-show="ingr.done" ng-click="ingredientCancelDone(category, ingr)" class="glyphicon"
+                              ng-class="{'glyphicon-unchecked': ingr.onOver, 'glyphicon-check': !ingr.onOver}" ></span>
+
+
+                        <!--to see if the tablette has been detected : display device : {{nameDevice()}}-->
+                        <!-- TODO : ngclick ingredientDone & ingredientCancelDone to remove...
+                        <span ng-show="!ingr.done && !ingr.onOver" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-unchecked ingrDone glyphiconBtn" ng-class="{ingrDoneOnOver: ingr.onOver}" ></span>
+                        <span ng-show="!ingr.done && ingr.onOver" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-check ingrDone glyphiconBtn" ng-class="{ingrDoneOnOver: ingr.onOver}"></span>
+-->
+
+                        <!-- check sign... :
+                        <span ng-show="ingr.done && !ingr.onOver" class="glyphicon glyphicon-ok ingrDoneOk" ></span>
+                        ajouter ainsi en dessous '&& ingr.onOver'  (et ds le div parent : 'ng-mouseenter="ingr.onOver=true" ng-mouseleave="ingr.onOver=false" '-->
+                        <!-- sign refresh to unchecked
+                        <span ng-show="ingr.done" ng-click="ingredientCancelDone(category, ingr)" class="glyphicon glyphicon-refresh listReset glyphiconBtn" ></span>
+                        -->
+
+                        &nbsp
+                        {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
+                    </div>
+
+                    <div ng-show="isTablet()" ng-repeat="ingr in category.ingredients | orderBy:'food'" class="divOneCategory" ng-class="{lineThrough : ingr.done}" >
+                        <span ng-show="!ingr.done" ng-click="ingredientDone(category, ingr)" class="glyphicon glyphicon-unchecked ingrDone"></span>
+                        <span ng-show="ingr.done" ng-click="ingredientCancelDone(category, ingr)" class="glyphicon glyphicon-check"></span>
+                        &nbsp
+                        {{ingr.qty | number:1}} {{ingr.unit}} {{ingr.food.name}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+    <!------------------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------- ARTICLE PLANNING  -------------------------------------------------->
+    <!------------------------------------------------------------------------------------------------------------------------->
+
+
+    <article class="myArticle" ng-show="!isDisplayErrandList">
+
+        <div class="myArticleHeading" >
+            <div class="myArticleTitle">
+                Planning : &nbsp
+                <span ng-show="!modifyingListName">
+                    {{currentPlanningShopping.name}} &nbsp
+                    <span ng-click="modifyListName()" class="glyphicon glyphicon-pencil pencilModifyListName glyphiconBtn" title=""></span>
+                </span>
+                <span ng-show="modifyingListName">
+                    <input class="inputErrand" type="text" ng-model ='currentPlanningShopping.name' placeholder="Choissisez un nom" ng-blur="modificationListNameDONE()"  ng-keyup="pressEnterListName($event)"/> &nbsp
+                    <span ng-click="modificationListNameDONE()" class="glyphicon glyphicon-ok modifyListNameOk glyphiconBtn" title=""></span>
+                </span>
+
+                <!-- clone "editer planning" btn
+                <span class="rightInlineBlock">
+                    <button  type="button" class="btn btn-danger btnClonePlanning btnHeading" ng-click="cloneIntoMyPlannings()" title="">
+                        <span class="glyphicon glyphicon-edit"></span> &nbsp Editer Planning
+                    </button>
+                </span>
+                -->
+
+
+            </div>
+        </div>
+
+        <div class="myArticleBody">
+            <table class="table  table-bordered ">
+                <th class="thErrand myTh thErrand" ></th>
+                <th class="thErrand myTh">Lundi</th>
+                <th class="thErrand myTh">Mardi</th>
+                <th class="thErrand myTh">Mercredi</th>
+                <th class="thErrand myTh">Jeudi</th>
+                <th class="thErrand myTh">Vendredi</th>
+                <th class="thErrand myTh">Samedi</th>
+                <th class="thErrand myTh">Dimanche</th>
+                <!--
+                     //Planning = {id:.., name: myVeganPlanning, lastOpen: true, nbPersGlobal:4, weekMeals: [aWeekMealLunch, aWeekMealDinner, .., ..]}
+                     //WeekMeal = {id:.., weekMealName: lunch, show:true, caseMeals:[caseMeal1, caseMeal2, ..., caseMeal7]}
+                     //caseMeal = {id: lunch4, nbPers:5 , numDay:4,  recipes:[recipe1, recipe2, ...]}
+                     //recipe =  {id:'1',name:'burger',recipeType:'course',nbPerson:4,ingredients:[{qty:400, unit:'g', food:'steak'},{qty:4, unit:'', food:'bread'}],description:'faire des burgers'}
+                -->
+                <tr ng-repeat="weekMeal in currentPlanningShopping.weekMeals" ng-show="weekMeal.show" >
+
+                    <th class="myTh thErrand" style="height:80px; width:9%; vertical-align:middle"> {{displayMealType(weekMeal.weekMealName)}}</th>
+
+                    <td ng-repeat="caseMeal in weekMeal.caseMeals" class="tdCaseMeal" ng-click="displayMealsOfCaseMeal(caseMeal)"  >
+                        <span ng-show="showNbPers" class="nbPers">{{caseMeal.nbPers}} pers.</span>
+                        <br ng-show="showNbPers">
+                        <div ng-repeat="recipe in caseMeal.recipes track by $index " class="itemToDragPlanning itemColorErrand" style="display: inline-block;" ng-show="recipe.name">
+                            {{recipe.name}} <br>
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+
+
+            <!-- DEBUG -->
+            <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+                <div ng-repeat="recipe in fourWeekMeals[1].weekMeals[0].recipes">
+                    {{recipe.name}}
+                </div>
+            </div>
+
+            <div>
+                <span>Afficher / Cacher : &nbsp&nbsp&nbsp&nbsp</span>
+                        <span ng-repeat="weekMeal in currentPlanningShopping.weekMeals" class="checkbox checkbox-danger checkbox-inline">
+                            <input type="checkbox"  ng-model="weekMeal.show" id="{{weekMeal.id}}" ng-click="putWeekMeal(weekMeal)">
+                            <label for="{{weekMeal.id}}" ><b>{{displayMealType(weekMeal.weekMealName)}}</b> &nbsp&nbsp</label>
+                        </span>
+            </div>
+            <div>
+                <!--<input type="checkbox" ng-model="showNbPers" >Show NbPers &nbsp-->
+                        <span class="checkbox checkbox-danger checkbox-inline" >
+                            <input type="checkbox"  ng-model="showNbPers" id="idShowPers">
+                            <label for="idShowPers" >Afficher nb pers. &nbsp</label>
+                        </span>
+
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+
+            <h4>Recettes : </h4>
+            <span ng-show="recipesToDisplay.length == 0"> (selectionner un repas pour voir les recettes correspondantes)</span>
+
+
+            <!--
+            <div ng-show="true" class="divRecipes" ng-repeat="recipe in recipesToDisplay"
+                 ng-class="{recipeWithDescription: recipe.descriptionOpen, recipeWithNoDescr:!recipe.descriptionOpen}">
+
+                <recipeitem-displayinlist></recipeitem-displayinlist>
+                <recipeitem-displayopen></recipeitem-displayopen>
+            </div>
+            -->
+            <div ng-show="true" class="divRecipes" ng-repeat="recipe in recipesToDisplay">
+                <div class="recipeWithDescrip">
+                    <div class="headingRecipeWithDescrip" >
+                        {{recipe.name}}
+                        <span class="rightInlineBlock" style="text-transform: none">
+                            <span  class="checkbox checkbox-danger checkbox-inline ">
+                                <input type="checkbox"  ng-model="recipe.adaptNbPers" id="{{recipe.id}}adaptNbPers">
+                                <label for="{{recipe.id}}adaptNbPers" >Recette d'origine</label>
+                            </span>
+                        </span>
+                    </div>
+
+
+                    <div class="divMiddleRecipe">
+                        <div class="pixRecipeWithDescrip" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../images/no-image.png') ;">
+                        </div>
+
+                        <div class="ingredientRecipe">
+                            <div class="subTitleRecipeOpen"> Ingrédients
+                                <span ng-show="recipe.adaptNbPers">({{recipe.nbPerson}} pers.)</span>
+                                <span ng-show="!recipe.adaptNbPers">({{nbPersOfMeal}} pers.)</span>
+                            </div>
+                            <ul  ng-show="recipe.adaptNbPers" ng-repeat="ingr in recipe.ingredients" >
+                                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food.name}}</span> </li>
+                            </ul>
+                            <ul  ng-show="!recipe.adaptNbPers" ng-repeat="ingr in recipe.ingredientsAdapt" >
+                                <li > <span>{{ingr.qty}}</span>{{ingr.unit}}  <span>{{ingr.food.name}}</span> </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="preparationRecipe">
+                        <div class="subTitleRecipeOpen"> Préparation</div>
+                        <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
+                            {{descript.numDescrip}} - {{descript.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </article>
+</div>
+</div>
