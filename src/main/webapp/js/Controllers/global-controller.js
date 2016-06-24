@@ -106,6 +106,15 @@ myModule.controller('GlobalCtrl', function($scope, $log, $localStorage, $routePa
      };*/
 
 
+    $scope.goRecipe = function(){
+        $location.path('/recipe/course');
+    }
+    $scope.goPlanning = function(){
+        $location.path('/planning');
+    }
+    $scope.goErrand = function(){
+        $location.path('/errand');
+    }
 
 
     $scope.showDebug=GlobalService.getDebug();

@@ -4,7 +4,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="#welcomeMeal" ng-click="hideIntoRecipe()">
+            <a class="navbar-brand" href="#welcomeMeal">
                 <!--<i class="fa fa-play-circle"></i>-->
                 <span ng-class="{ activeInNavBarWelcome: classBody == 'bodyWelcome'}">
                     <span class="glyphicon glyphicon-fire"></span> EasyMeals<!--easyMeals Cuisiner Malîn-->
@@ -17,21 +17,18 @@
             <ul class="nav navbar-nav">
                 <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                 <li class="hidden" > <!-- style="width:100px;" ne fonctionne pas c une class hidden donc pas prix en compte par html -->
-                    <a href="#/welcomeMeal" ng-click="hideIntoRecipe()"> </a>
+                    <a href="#/welcomeMeal" > </a>
                 </li>
 
-                <li class="page-scroll" ng-class="{ activeInNavBarIdea: classBody == 'bodyIdea'}">
-                    <a href="#/idea" ng-click="hideIntoRecipe()"><!--Les Bonnes -->Idées</a>
-                </li>
                 <li class="page-scroll" ng-class="{ activeInNavBarRecipe: classBody == 'bodyRecipe'}"> <!--ng-class="{ activeInNavBarRecipe: isActiveInNavBar('recipe')}"-->
-                    <a href="/#/recipe/course" ng-click="hideIntoRecipe()">Recettes</a>
+                    <a href="/#/recipe/course" >Recettes</a>
                 </li>
                 <li class="page-scroll" ng-class="{ activeInNavBarPlanning: classBody == 'bodyPlanning'}">
-                    <a href="#/planning" ng-click="hideIntoRecipe()"><!--Creation -->Mes Plannings</a>
+                    <a href="#/planning" ><!--Creation -->Plannings</a>
                 </li>
                 </li>
                 <li class="page-scroll" ng-class="{ activeInNavBarErrand: classBody == 'bodyErrand'}">
-                    <a href="#/errand" ng-click="hideIntoRecipe()">Mes Courses<!-- & Cuisine--></a>
+                    <a href="#/errand" >Courses & Cuisine</a>
                 </li>
 
                 <li ng-show="isUserConnected" class="page-scroll" ng-class="{ activeInNavBarConnexion: classBody == 'bodyConnexion'}" uib-dropdown is-open="dropdwonUserIsopen"
@@ -101,6 +98,13 @@
 
 
 
+
+
+                <!-- LES BONNES IDEES  : important --
+
+                <li class="page-scroll" ng-class="{ activeInNavBarIdea: classBody == 'bodyIdea'}">
+                    <a href="#/idea" ><!--Les Bonnes ->Idées</a>
+                </li>-->
 
 
                 <!-- EXPENSES : important --
