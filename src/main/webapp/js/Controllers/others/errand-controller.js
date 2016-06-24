@@ -63,35 +63,50 @@ myModule.controller('ErrandCtrl', function($scope, $log, $location, $localStorag
     })[0];
 
     $scope.cloneIntoMyPlannings = function(){
-        restPlanningService.cloneIntoMyPlannings($scope.currentPlanningShopping);
+        if(!$scope.isUserConnected ){
+            $location.path('/connexion');
+        }else{
+            restPlanningService.cloneIntoMyPlannings($scope.currentPlanningShopping);
+        }
     }
 
     $scope.cutShoppingToPlanning = function(){
-        $log.info("EH VOIAL LE CUT CUT CUT")
-        var idPlanningShoppingToCut = $scope.currentPlanningShopping.id;
-        //delete from VIEW
-        var index = $scope.planningsShopping.indexOf($scope.currentPlanningShopping);
-        $scope.planningsShopping.splice(index, 1);
-        if($scope.planningsShopping != undefined && $scope.planningsShopping.length > 0) { //if we didnt deleted the last planning..
-            $scope.currentPlanningShopping = $scope.planningsShopping[0];
-            restPlanningService.makePlanningCurrent($scope.currentPlanningShopping.id, true)//lastOpen
+        if(!$scope.isUserConnected ){
+            $location.path('/connexion');
+        }else{
+            $log.info("EH VOIAL LE CUT CUT CUT")
+            var idPlanningShoppingToCut = $scope.currentPlanningShopping.id;
+            //delete from VIEW
+            var index = $scope.planningsShopping.indexOf($scope.currentPlanningShopping);
+            $scope.planningsShopping.splice(index, 1);
+            if($scope.planningsShopping != undefined && $scope.planningsShopping.length > 0) { //if we didnt deleted the last planning..
+                $scope.currentPlanningShopping = $scope.planningsShopping[0];
+                restPlanningService.makePlanningCurrent($scope.currentPlanningShopping.id, true)//lastOpen
+            }
+            //cut from BDD
+            restPlanningService.cutShoppingToPlanning(idPlanningShoppingToCut);
         }
-        //cut from BDD
-        restPlanningService.cutShoppingToPlanning(idPlanningShoppingToCut);
+
     }
 
 
     $scope.deleteListShop = function(){
-        var idPlanningShoppingToDelete = $scope.currentPlanningShopping.id;
-        //delete from VIEW
-        var index = $scope.planningsShopping.indexOf($scope.currentPlanningShopping);
-        $scope.planningsShopping.splice(index, 1);
-        if($scope.planningsShopping != undefined && $scope.planningsShopping.length > 0) { //if we didnt deleted the last planning..
-            $scope.currentPlanningShopping = $scope.planningsShopping[0];
-            restPlanningService.makePlanningCurrent($scope.currentPlanningShopping.id, true)//lastOpen
+
+        if(!$scope.isUserConnected ){
+            $location.path('/connexion');
+        }else{
+            var idPlanningShoppingToDelete = $scope.currentPlanningShopping.id;
+            //delete from VIEW
+            var index = $scope.planningsShopping.indexOf($scope.currentPlanningShopping);
+            $scope.planningsShopping.splice(index, 1);
+            if($scope.planningsShopping != undefined && $scope.planningsShopping.length > 0) { //if we didnt deleted the last planning..
+                $scope.currentPlanningShopping = $scope.planningsShopping[0];
+                restPlanningService.makePlanningCurrent($scope.currentPlanningShopping.id, true)//lastOpen
+            }
+            //delete from BDD
+            restPlanningService.deletePlanningShopping(idPlanningShoppingToDelete);
         }
-        //delete from BDD
-        restPlanningService.deletePlanningShopping(idPlanningShoppingToDelete);
+
 
     }
 

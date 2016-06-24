@@ -3,15 +3,18 @@
     <div><h2 class="myH2">Mes Listes </h2></div>
 
 
-<div ng-show="planningsShopping.length == 0">
-    Créez votre liste de course en construisant votre planning dans l'onglet "PLANNINGS", puis :
+<div ng-show="planningsShopping.length == 0" style="color: white">
+    Pas de liste de course !
+    <br><br>
+    Vous devez générer votre liste à partir de  <div class="btn btn-info notTransformText" ng-click="goPlanning()">Planning</div>
     <br>
-    -> "Générer liste de course"
-    <br>
-    -> "Aller faire ses courses !"
+    ( Une fois le planning rempli -> "Liste de courses" -> "Aller faire ses courses" )
 </div>
 
 <div ng-show="planningsShopping.length > 0">
+
+
+<!--{{planningsShopping[0]}}-->
 
 
     <div class="divErrandTop">
@@ -35,13 +38,13 @@
             <span class="glyphicon glyphicon-scissors"></span> Modifier dans Planning
         </button>
         -->
-        <span class="glyphicon glyphicon-duplicate glyphCopyErrandToPlanning glyphiconBtn" ng-click="cloneIntoMyPlannings()"
+        <span class="glyphicon glyphicon-duplicate glyphCopyErrandToPlanning glyphiconBtn" ng-class="{greyGlyphicon : !isUserConnected}" ng-click="cloneIntoMyPlannings()"
               uib-popover="Copier dans PLANNINGS" popover-trigger="mouseenter"></span>
         &nbsp
-        <span class="glyphicon glyphicon-scissors glyphCutErrandToPlanning glyphiconBtn" ng-click="cutShoppingToPlanning()"
+        <span class="glyphicon glyphicon-scissors glyphCutErrandToPlanning glyphiconBtn" ng-class="{greyGlyphicon : !isUserConnected}" ng-click="cutShoppingToPlanning()"
               uib-popover="OOPS j'ai oublié un ingredient! Copier dans PLANNINGS (Supprimera de COURSES)" popover-trigger="mouseenter"></span>
         &nbsp
-        <span class="glyphicon glyphicon-trash glyphDeleteListShop glyphiconBtn" ng-click="deleteListShop()"
+        <span class="glyphicon glyphicon-trash glyphDeleteListShop glyphiconBtn" ng-class="{greyGlyphicon : !isUserConnected}" ng-click="deleteListShop()"
               uib-popover="Supprimer de COURSES" popover-trigger="mouseenter"></span>
 
     </div>

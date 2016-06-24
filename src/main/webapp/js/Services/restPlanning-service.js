@@ -21,10 +21,11 @@ myService.service("restPlanningService", function ($http, $q, $log, $localStorag
     var idUser = giveIdUser();//$localStorage.id;
 
 
-    var planningEmptyForNoUserConnected = {"id":-1,"name":"planningForUserNotConnected","lastOpen":true,"nbPersGlobal":4,"isForListShop":false,"weekMeals":[{"id":5,"weekMealName":"breakfast","show":false,"caseMeals":[{"id":29,"nbPers":4,"numDay":1,"recipes":[]},{"id":30,"nbPers":4,"numDay":2,"recipes":[]},{"id":31,"nbPers":4,"numDay":3,"recipes":[]},{"id":32,"nbPers":4,"numDay":4,"recipes":[]},{"id":33,"nbPers":4,"numDay":5,"recipes":[]},{"id":34,"nbPers":4,"numDay":6,"recipes":[]},{"id":35,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":6,"weekMealName":"lunch","show":true,"caseMeals":[{"id":36,"nbPers":4,"numDay":1,"recipes":[]},{"id":37,"nbPers":4,"numDay":2,"recipes":[]},{"id":38,"nbPers":4,"numDay":3,"recipes":[]},{"id":39,"nbPers":4,"numDay":4,"recipes":[]},{"id":40,"nbPers":4,"numDay":5,"recipes":[]},{"id":41,"nbPers":4,"numDay":6,"recipes":[]},{"id":42,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":7,"weekMealName":"snack","show":false,"caseMeals":[{"id":43,"nbPers":4,"numDay":1,"recipes":[]},{"id":44,"nbPers":4,"numDay":2,"recipes":[]},{"id":45,"nbPers":4,"numDay":3,"recipes":[]},{"id":46,"nbPers":4,"numDay":4,"recipes":[]},{"id":47,"nbPers":4,"numDay":5,"recipes":[]},{"id":48,"nbPers":4,"numDay":6,"recipes":[]},{"id":49,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":8,"weekMealName":"dinner","show":true,"caseMeals":[{"id":50,"nbPers":4,"numDay":1,"recipes":[]},{"id":51,"nbPers":4,"numDay":2,"recipes":[]},{"id":52,"nbPers":4,"numDay":3,"recipes":[]},{"id":53,"nbPers":4,"numDay":4,"recipes":[]},{"id":54,"nbPers":4,"numDay":5,"recipes":[]},{"id":55,"nbPers":4,"numDay":6,"recipes":[]},{"id":56,"nbPers":4,"numDay":7,"recipes":[]}]}]};
+    var nbPlanTmp = 1;
+    var planningEmptyForNoUserConnected = {"id":-1,"name":"planningTemporaire"+nbPlanTmp,"lastOpen":true,"nbPersGlobal":4,"isForListShop":false,"weekMeals":[{"id":5,"weekMealName":"breakfast","show":false,"caseMeals":[{"id":29,"nbPers":4,"numDay":1,"recipes":[]},{"id":30,"nbPers":4,"numDay":2,"recipes":[]},{"id":31,"nbPers":4,"numDay":3,"recipes":[]},{"id":32,"nbPers":4,"numDay":4,"recipes":[]},{"id":33,"nbPers":4,"numDay":5,"recipes":[]},{"id":34,"nbPers":4,"numDay":6,"recipes":[]},{"id":35,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":6,"weekMealName":"lunch","show":true,"caseMeals":[{"id":36,"nbPers":4,"numDay":1,"recipes":[]},{"id":37,"nbPers":4,"numDay":2,"recipes":[]},{"id":38,"nbPers":4,"numDay":3,"recipes":[]},{"id":39,"nbPers":4,"numDay":4,"recipes":[]},{"id":40,"nbPers":4,"numDay":5,"recipes":[]},{"id":41,"nbPers":4,"numDay":6,"recipes":[]},{"id":42,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":7,"weekMealName":"snack","show":false,"caseMeals":[{"id":43,"nbPers":4,"numDay":1,"recipes":[]},{"id":44,"nbPers":4,"numDay":2,"recipes":[]},{"id":45,"nbPers":4,"numDay":3,"recipes":[]},{"id":46,"nbPers":4,"numDay":4,"recipes":[]},{"id":47,"nbPers":4,"numDay":5,"recipes":[]},{"id":48,"nbPers":4,"numDay":6,"recipes":[]},{"id":49,"nbPers":4,"numDay":7,"recipes":[]}]},{"id":8,"weekMealName":"dinner","show":true,"caseMeals":[{"id":50,"nbPers":4,"numDay":1,"recipes":[]},{"id":51,"nbPers":4,"numDay":2,"recipes":[]},{"id":52,"nbPers":4,"numDay":3,"recipes":[]},{"id":53,"nbPers":4,"numDay":4,"recipes":[]},{"id":54,"nbPers":4,"numDay":5,"recipes":[]},{"id":55,"nbPers":4,"numDay":6,"recipes":[]},{"id":56,"nbPers":4,"numDay":7,"recipes":[]}]}]};
 
 
-    var plannings = [planningEmptyForNoUserConnected];
+    var plannings = [];
     var planningsShopping = [];
 
 
@@ -68,26 +69,59 @@ myService.service("restPlanningService", function ($http, $q, $log, $localStorag
     /**********************************************************************************************************************************/
 
     function createPlanningShopping(planning, shoppingCategories){ //called when goShopping -- no creation from errand ..
-        postObjToServer('POST', '/rest/createPlanningShopping/'+planning.id+'/'+idUser, shoppingCategories).then(function(data){ //idUser ADDED for CHECK token
-            /* VIEW*/
-            var index = plannings.indexOf(planning);
-            plannings.splice(index, 1);
-            if(plannings.length == 0){//si on a delete last planning, on en cree un new
-                /*createNewPlanning().then(function(index){
-                    makePlanningCurrent(plannings[0].id, false);//lastOpen..
-                    $location.path("/errand");
-                })*/
-            }else{
-                makePlanningCurrent(plannings[0].id, false);//lastOpen..
-            }
 
-            //AJOUT DANS VUE
-            var newPlanningShopping = data;
-            planningsShopping.push(newPlanningShopping);
-            makePlanningCurrent(newPlanningShopping.id, true); //lastOpen...
+        $log.info("[restPlanning] -- -createPlanningShopping()-  idUser:"+idUser);
+        if(idUser == -1){//not connected
+
+            //AJOUT PLANNING DANS LIST SHOP -- VIEW
+            var index = plannings.indexOf(planning);
+
+            //1. creation new planning shop a partir de planning (il manque que la liste de categories)
+            var newPlanningShop = plannings[index];
+            //2. creation liste categories
+            // "shoppingCategories":[{"id":7,"name":"Viande","numRank":2,"ingredients":[{"qty":4,"unit":"","food":{"id":null,"name":"steack haché","idCategory":0,"isValidated":false}}]},{"id":8,"name":"Fruit/Legume","numRank":4,"ingredients":[{"qty":3,"unit":"","food":{"id":null,"name":"tomate","idCategory":0,"isValidated":false}},{"qty":1,"unit":"","food":{"id":null,"name":"salade","idCategory":0,"isValidated":false}}]},{"id":9,"name":"Pain/Viennoiserie/Patisserie","numRank":5,"ingredients":[{"qty":8,"unit":"","food":{"id":null,"name":"pain à burger","idCategory":0,"isValidated":false}}]},{"id":10,"name":"Fromage/Yaourt","numRank":8,"ingredients":[{"qty":100,"unit":"g","food":{"id":null,"name":"fromage rapé","idCategory":0,"isValidated":false}}]},{"id":11,"name":"Epicerie Condiment","numRank":14,"ingredients":[{"qty":1,"unit":"","food":{"id":null,"name":"sauce burger","idCategory":0,"isValidated":false}}]}]}
+            var listCategory = [];
+            for(var i=0; i<shoppingCategories.length; i++) {
+                if(shoppingCategories[i].ingredients.length > 0) {
+                    listCategory.push(shoppingCategories[i]);
+                }
+
+            }
+            newPlanningShop.shoppingCategories = listCategory;
+            //3. ajout new planning shop  a planningsShopping
+            planningsShopping.push(newPlanningShop);
+
+            //4.suppression des planning
+            plannings.splice(index, 1);
+            //5.ajout dans planning new planning (CLONE planningEmptyForNoUserConnected de base)
+            nbPlanTmp++;
+            var newPlaningTmp = clone(planningEmptyForNoUserConnected)//NEW OBJECT
+            newPlaningTmp.name = "planningTemporaire"+nbPlanTmp;
+            plannings.push(newPlaningTmp);
             $location.path("/errand");
 
-        })
+             }else{
+            postObjToServer('POST', '/rest/createPlanningShopping/'+planning.id+'/'+idUser, shoppingCategories).then(function(data){ //idUser ADDED for CHECK token
+                /* VIEW*/
+                var index = plannings.indexOf(planning);
+                plannings.splice(index, 1);
+                if(plannings.length == 0){//si on a delete last planning, on en cree un new
+                    /*createNewPlanning().then(function(index){
+                     makePlanningCurrent(plannings[0].id, false);//lastOpen..
+                     $location.path("/errand");
+                     })*/
+                }else{
+                    makePlanningCurrent(plannings[0].id, false);//lastOpen..
+                }
+
+                //AJOUT DANS VUE
+                var newPlanningShopping = data;
+                planningsShopping.push(newPlanningShopping);
+                makePlanningCurrent(newPlanningShopping.id, true); //lastOpen...
+                $location.path("/errand");
+
+            })
+        }
     }
     function createNewPlanning(){
         return getObjFromServer('/rest/createPlanning/user/'+idUser).then(function(data){ // idUser
@@ -235,7 +269,7 @@ myService.service("restPlanningService", function ($http, $q, $log, $localStorag
             //return response; ??
             if(idUser == -1){
                 $log.debug("[restPlanningService] -getBddPlannings()-  idUser -1 : push >>> planningEmptyForNoUserConnected <<<")
-                plannings.push(planningEmptyForNoUserConnected);
+                plannings.push(clone(planningEmptyForNoUserConnected));
             }else{
                 $log.debug("[restPlanningService] -getBddPlannings()- user connected!  id:"+idUser);
             }
@@ -269,6 +303,32 @@ myService.service("restPlanningService", function ($http, $q, $log, $localStorag
                 return $q.reject(response); //si HTTP pas de gestion d'erreur dans la version HTTP d'angular 1.3
             })
     };
+
+
+
+    function clone(obj) {
+        var copy;
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            for (var i = 0, len = obj.length; i < len; i++) {
+                copy[i] = clone(obj[i]);
+            }
+            return copy;
+        }
+        // Handle Object
+        if (obj instanceof Object) {
+            copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+            }
+            return copy;
+        }
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    }
+
 
 
     return {
