@@ -502,7 +502,8 @@ h6 {
     padding: 6px 10px 7px 10px;
     border: 1px solid #d9534f;
     //color:white;
-    color:darkslategray;
+    //color:darkslategray;
+    color:#df706d;
 }
 .myBtnEmptyErrand:hover,
 .myBtnEmptyErrand:focus{
@@ -511,11 +512,28 @@ h6 {
     //background-color: #ffb3d9;
     background-color: #e89996;
     outline: 0;
-
 }
-.myBtnErrandFull{
-    //background-color: #ffb3d9;
+
+
+.myBtnEmptyErrandRosyBrown{
+    padding: 6px 10px 7px 10px;
+    border: 1px solid #804d4d;
+//color:darkslategray;
+    color: #9f6060;
+}
+.myBtnEmptyErrandRosyBrown:hover,
+.myBtnEmptyErrandRosyBrown:focus{
+    color:darkslategrey;
+    background-color: rosybrown;
+    outline: 0;
+}
+
+.myBtnErrandRedFull{
     background-color: #e89996;
+    color: white;
+}
+.myBtnErrandRosybrownFull{
+    background-color: rosybrown;
     color: white;
 }
 
@@ -671,11 +689,13 @@ h6 {
 
     border:1px solid lightgrey;
     //color: #ffb3d9; //#ff80bf;
-    color: #d9534f;
+    //color: #d9534f;
+    color: #9f6060;
 }
 .fieldErrand:focus {
     outline: 0; /*2px solid #d9534f;*/
-    border: 1px solid #d9534f ;
+    //border: 1px solid #d9534f ;
+    border: 1px solid #804d4d ;
 }
 
 
@@ -1370,7 +1390,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-left:1.5vw;
     margin-right:0;
     //width:64vw; /* stay at 64vw in any case*/
-    width: 72%; /*= max-width 864px puisque parentDiv.max-width = 1200px; */
+    width: 71.5%; /*= max-width 864px puisque parentDiv.max-width = 1200px; */
     min-width: 576px;/* donc proportionnelle pr parentDiv entre 1200px et 800px -> si parentDiv plus petit,  ca reste a cette taille fixe*/
 }
 
@@ -2869,7 +2889,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .test379{
     //background-color: rgba(0,0,0, 0.9);
     //opacity: 0.9;
-    width: 50%;
+    width: 45%;
 }
 .artErrandPlanning{
     width: 90%;

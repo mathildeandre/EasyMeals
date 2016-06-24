@@ -1,6 +1,6 @@
 <div>
 
-    <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
+    <div ng-if="showDebug" style="font-size: 18px; color:darkorange">
 
 
         <div style="color:white">
@@ -48,7 +48,7 @@
 
                 <span class="rightInlineBlock">
 		            <span ng-controller="PlanningModalListShoppingCtrl">
-                            <button  type="button" class="btn btn-danger btnSeeListShop" ng-click="openModalListShopping(currentPlanning)">
+                            <button  type="button" class="btn btn-rosybrown btnSeeListShop" ng-click="openModalListShopping(currentPlanning)">
                                 <span class="glyphicon glyphicon-shopping-cart"></span> Liste de Courses
                             </button>
                     </span>
@@ -195,7 +195,7 @@
         </div>
     </article>
 
-    <button type="button" class="btn btn-info bigBtnNewPlanning" ng-click="createNewPlanning()"  ng-show="plannings.length == 0">
+    <button type="button" class="btn btn-info bigBtnNewPlanning" ng-click="createNewPlanning()"  ng-if="plannings.length == 0">
         <span class="glyphicon glyphicon-plus"></span> Nouveau Planning
     </button>
 </div>

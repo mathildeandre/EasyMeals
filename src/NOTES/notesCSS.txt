@@ -42,8 +42,9 @@
     INFO btn : #5bc0de (60%) clair
                 #95d6e9 (75%) + clair
 
-    DANGER btn : #d9534f (58%)
-                #e89996 (75%)
+    DANGER btn : #d9534f (58% - backgrd)
+                #df706d (65% - texte)
+                #e89996 (75% - border)
 
     SUCCESS btn : #5cb85c (54%)
                 #95d095 (70%)
@@ -60,6 +61,10 @@
 
     ERRAND btn : #ff5050 (66%)
                    #ff9999 (80%) +clair
+
+    ROSYBROWN btn : background : rosybrown
+                      text :     #9f6060
+                      border :     #804d4d
 
 
     beau black : #333;
