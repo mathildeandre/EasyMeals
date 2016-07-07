@@ -30,6 +30,11 @@
                 <li class="page-scroll" ng-class="{ activeInNavBarErrand: classBody == 'bodyErrand'}">
                     <a href="#/errand" >Courses & Cuisine</a>
                 </li>
+                <!-- EXPENSES : important -->
+                <li class="page-scroll" ng-class="{ activeInNavBarExpense: classBody == 'bodyExpense'}">
+                    <a href="/#/calculationExpense">Dépenses</a>
+                </li>
+
 
                 <li ng-show="isUserConnected" class="page-scroll" ng-class="{ activeInNavBarConnexion: classBody == 'bodyConnexion'}" uib-dropdown is-open="dropdwonUserIsopen"
                                                                         ng-mouseenter="dropdwonUserIsopen = true" ng-mouseleave="dropdwonUserIsopen =false">
@@ -106,11 +111,6 @@
                     <a href="#/idea" ><!--Les Bonnes ->Idées</a>
                 </li>-->
 
-
-                <!-- EXPENSES : important --
-                <li class="page-scroll" ng-class="{ activeInNavBarExpense: classBody == 'bodyExpense'}">
-                    <a href="/#/calculationExpense">Dépenses</a>
-                </li>-->
 
                 <!-- PRIVATE ADMIN : important -->
                 <li ng-show="userConnected.isAdmin" class="page-scroll" ng-class="{ activeInNavBarPrivateAdmin: classBody == 'bodyPrivateAdmin'}">
