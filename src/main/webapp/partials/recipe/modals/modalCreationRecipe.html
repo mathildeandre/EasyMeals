@@ -11,7 +11,9 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-leaf marginRight10px"></span>
                     Nom recette :
-                    <input class="fieldRecipeCreation alignLeft"  type="text" ng-model ='recipe.name' placeholder="Nom recette" name="rName" required />
+                    <input class="fieldRecipeCreation alignLeft"
+                           ng-class="{ borderError: form.rName.$error.required && triedCreate }"
+                           type="text" ng-model ='recipe.name' placeholder="Nom recette" name="rName" required />
                     <span ng-show="form.rName.$error.required && triedCreate" class="colorRed">Obligatoire</span>
                     <!--<span ng-show="form.rName.$invalid && triedCreate" class="colorRed">Invalid</span>-->
                 </div>

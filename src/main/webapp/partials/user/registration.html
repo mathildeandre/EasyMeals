@@ -5,9 +5,15 @@
 
 
         <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-            <label for="username">Pseudo / Email</label>
-            <input type="text" name="username" id="username" class="form-control" ng-model="pseudo" required />
-            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+            <label for="pseudo">Pseudo</label>
+            <input type="text" name="pseudo" id="pseudo" class="form-control" ng-model="pseudo" required />
+            <span ng-show="form.pseudo.$dirty && form.pseudo.$error.required" class="help-block">Pseudo is required</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" class="form-control" ng-model="email" required />
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
             <label for="password">Mot de Passe</label>
@@ -17,8 +23,9 @@
 
         <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
             <label for="passwordConfirm">Confirmation Mot de Passe</label>
-            <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" ng-model="vm.user.password" required />
-            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+            <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" ng-model="passwordConfirm" required />
+            <span ng-show="form.passwordConfirm.$dirty && form.passwordConfirm.$error.required" class="help-block">Confirmation password is required</span>
+            <span ng-show="passwordConfirm != password" class="help-block">Confirmation password different</span>
         </div>
         <div class="form-actions">
 
