@@ -786,7 +786,7 @@ h6 {
 
 .borderError{ /* from bootstrap .has-error .form-control*/
     border-color: #a94442 !important;
-    border-color: indianred !important;
+    //border: 3px solid indianred !important;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
@@ -802,11 +802,14 @@ h6 {
 .width70{
     width: 70px;
 }
+.width80{
+    width: 80px;
+}
 .width100{
      width: 100px;
  }
 .width130{
-     width: 150px;
+     width: 130px;
 }
 .width150{
      width: 150px;
@@ -1921,6 +1924,11 @@ select::selection,option::selection { /* ne fonctionne pas  */
 /************************************************************************************************************/
 /********************************  BLOCK custom  ***********************************************************/
 /**********************************************************************************************************/
+.blockMod3{
+    //border: 3px solid orange !important;
+    margin-right: 0 !important;
+
+}
 .divRecipesBlock{
     display:inline-block;
     //margin: 1vw 2vw 1vw 0;
@@ -2285,12 +2293,24 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .formBigger{
     //margin:20px 0 30px 0;
     margin-top: 20px;
+    margin-bottom:20px;
 }
 .marginLeft10px{
     margin-left:10px;
 }
+.blockSpeciality{
+    margin-left: 49px; /*84px to be align with name recipe*/
+}
 .blockCategories{
-    width: 80%;
+    //width: 80%;
+    width: 482px;
+    margin-left: 10px; /* =20px car il a y aussi 10px de padding pr le pb des checkbox*/
+}
+.blockIngredients{
+    margin-left: 16px;
+}
+.blockDescriptions{
+    margin-left: 21px;
 }
 
 .formIngredients2{
@@ -2339,10 +2359,14 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .descriptArea{
     text-align: left;
-    width:35vw;
+    /*width:35vw; useless car les ingredient son en px.. plus beau aligne*/
+    width:380px;
     min-width:200px;
 }
 
+.rowCategoriesCheckBox{
+    margin-bottom: 10px;
+}
 .rowIngredientInput{
     margin-bottom: 10px;
 }
@@ -2353,6 +2377,25 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .butonCreateRecipe{
     margin-top: 5px;
+}
+
+.fieldNameRecipe{
+    margin-left: 16px;
+}
+.fieldNbPers{
+    margin-left: 31px; /*66px to be align with name recipe*/
+}
+.fieldTimePrep{
+    margin-left: 9px; /*44px to be align with name recipe*/
+}
+.fieldTimeCook{
+    margin-left: 20px;/*55px to be align with name recipe*/
+}
+.fieldSpeciality{
+    margin-bottom: 10px;
+}
+.btnCreateSpeCat{
+    width: 130px !important;
 }
 /***********************************************************************************************************************************************************************************************/
 /***********************************************************************************************************************************************************************************************/

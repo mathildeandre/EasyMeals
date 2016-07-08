@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-leaf marginRight10px"></span>
                     Nom recette :
-                    <input class="fieldRecipeCreation alignLeft"
+                    <input class="fieldRecipeCreation alignLeft fieldNameRecipe"
                            ng-class="{ borderError: form.rName.$error.required && triedCreate }"
                            type="text" ng-model ='recipe.name' placeholder="Nom recette" name="rName" required />
                     <span ng-show="form.rName.$error.required && triedCreate" class="colorRed">Obligatoire</span>
@@ -21,7 +21,9 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-cutlery marginRight10px"></span>
                     Nombre de personnes :
-                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" name="rNbPers" required/>
+                    <input class="fieldRecipeCreation fieldRecipeCreationWidth fieldNbPers"
+                           ng-class="{ borderError: (form.rNbPers.$error.required && triedCreate) || (!form.rNbPers.$error.required && form.rNbPers.$invalid && triedCreate)}"
+                           type="number" ng-model ='recipe.nbPerson' min="1" placeholder="Ex:4" name="rNbPers" required/>
                     <!--<span ng-show="form.rNbPers.$error.required && triedCreate" class="colorRed">Required</span>-->
                     <span ng-show="form.rNbPers.$error.required && triedCreate" class="colorRed">Obligatoire</span>
                     <span ng-show="!form.rNbPers.$error.required && form.rNbPers.$invalid && triedCreate" class="colorRed">positif</span>
@@ -30,7 +32,9 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-time marginRight10px"></span>
                     Temps de Préparat° (min) :
-                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timePreparation' min="0" step="5" name="rTimePrep"required />
+                    <input class="fieldRecipeCreation fieldRecipeCreationWidth fieldTimePrep"
+                           ng-class="{ borderError: (form.rTimePrep.$error.required && triedCreate) || (!form.rTimePrep.$error.required && form.rTimePrep.$invalid && triedCreate)}"
+                           type="number" ng-model ='recipe.timePreparation' min="0" step="5" name="rTimePrep"required />
                     <span ng-show="form.rTimePrep.$error.required && triedCreate" class="colorRed">Obligatoire</span>
                     <span ng-show="!form.rTimePrep.$error.required && form.rTimePrep.$invalid && triedCreate" class="colorRed">positif</span>
                 </div>
@@ -38,27 +42,40 @@
                 <div class="form-group">
                     <span class="glyphicon glyphicon-fire marginRight10px"></span>
                     Temps de Cuisson (min) :
-                    <input class="fieldRecipeCreation fieldRecipeCreationWidth" type="number" ng-model ='recipe.timeCooking' min="0"  step="5" name="rTimeCook" required />
+                    <input class="fieldRecipeCreation fieldRecipeCreationWidth fieldTimeCook"
+                           ng-class="{ borderError: (form.rTimeCook.$error.required && triedCreate) || (!form.rTimeCook.$error.required && form.rTimeCook.$invalid && triedCreate)}"
+                           type="number" ng-model ='recipe.timeCooking' min="0"  step="5" name="rTimeCook" required />
                     <span ng-show="form.rTimeCook.$error.required && triedCreate" class="colorRed">Obligatoire</span>
                     <span ng-show="!form.rTimeCook.$error.required && form.rTimeCook.$invalid && triedCreate" class="colorRed">positif</span>
                 </div>
 
                 <div class="form-group">
-                    <span class="glyphicon glyphicon-globe marginRight10px"></span>
-                    Spécialité :
-                    <select class="fieldRecipeCreation width130" ng-model='recipe.origin' ng-options="origin.name for origin in origins | orderBy:'-numRank'" ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
 
 
-                    <button  ng-show="!creatingNewSpeciality" type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock" ng-click="creatingNewSpeciality = true">
-                        <span class="txtFilter">Créer Spécialité</span>
-                    </button>
-                    <span ng-show="creatingNewSpeciality" >
-                        <input class="fieldRecipeCreation alignLeft width100" type="text" ng-model ='newSpecialityName' ng-keyup="pressEnterCreateSpeciality($event, newSpecialityName)" />
-                        <button  type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock" ng-click="createNewSpeciality(newSpecialityName)"
-                                 uib-popover="Vous êtes sur le point de créer une nouvelle spécialité" popover-trigger="mouseenter" popover-placement="top">
-                            <span class="txtFilter">Créer</span>
+                    <div class="inlineBlockAlignTop" >
+                        <span class="glyphicon glyphicon-globe marginRight10px"></span>
+                        Spécialité :
+                    </div>
+
+
+                    <div class="inlineBlock blockSpeciality" >
+                        <select class="fieldRecipeCreation width130 fieldSpeciality" ng-model='recipe.origin' ng-options="origin.name for origin in origins | orderBy:'-numRank'" ></select><!--ng-model='originSelected' ng-init="originSelected=origins[4]"-->
+
+                        <br>
+
+                        <button  ng-show="!creatingNewSpeciality" type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock btnCreateSpeCat" ng-click="creatingNewSpeciality = true">
+                            <span class="txtFilter">Créer Spécialité</span>
                         </button>
-                    </span>
+                        <span ng-show="creatingNewSpeciality" >
+                            <input class="fieldRecipeCreation alignLeft width130" type="text" ng-model ='newSpecialityName' ng-keyup="pressEnterCreateSpeciality($event, newSpecialityName)" />
+                            <button  type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock" ng-click="createNewSpeciality(newSpecialityName)"
+                                     uib-popover="Vous êtes sur le point de créer une nouvelle spécialité" popover-trigger="mouseenter" popover-placement="top">
+                                <span class="txtFilter">Créer</span>
+                            </button>
+                        </span>
+                    </div>
+
+
 
 
                     <!-- popover--
@@ -116,18 +133,19 @@
                 </div>
 
                 <div class="inlineBlock blockCategories" >
-                    <span ng-repeat="category in categories | orderBy:'-numRank' " class="checkbox checkbox-warning checkbox-inline" ng-class="{marginLeft10px: $index==0}"><!-- only sur le 1st elem car bootstrap a fait sur chaque suivant avec checkbox-inline-->
-                        <input type="checkbox"  ng-model="category.checked" id="{{category.id}}">
-                        <label for="{{category.id}}" >{{category.name}}</label>
-                    </span>
-                    <br>
+                    <div class="rowCategoriesCheckBox">
+                        <span ng-repeat="category in categories | orderBy:'-numRank' " class="checkbox checkbox-warning checkbox-inline" ng-class="{marginLeft10px: $index==0}"><!-- only sur le 1st elem car bootstrap a fait sur chaque suivant avec checkbox-inline-->
+                            <input type="checkbox"  ng-model="category.checked" id="{{category.id}}">
+                            <label for="{{category.id}}" >{{category.name}}</label>
+                        </span>
+                    </div>
 
 
-                    <button  ng-show="!creatingNewCategory" type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock marginLeft10px" ng-click="creatingNewCategory = true">
+                    <button  ng-show="!creatingNewCategory" type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock marginLeft10px btnCreateSpeCat" ng-click="creatingNewCategory = true">
                         <span class="txtFilter">Créer Catégorie</span>
                     </button>
                     <span ng-show="creatingNewCategory" class="marginLeft10px">
-                        <input class="fieldRecipeCreation alignLeft width100" type="text" ng-model ='newCategoryName' ng-keyup="pressEnterCreateCategory($event, newCategoryName)" />
+                        <input class="fieldRecipeCreation alignLeft width130" type="text" ng-model ='newCategoryName' ng-keyup="pressEnterCreateCategory($event, newCategoryName)" />
                         <button  type="button" class="myBtnEmpty myBtnEmptyRecipe inlineBlock" ng-click="createNewCategory(newCategoryName)"
                                  uib-popover="Vous êtes sur le point de créer une nouvelle catégorie" popover-trigger="mouseenter" popover-placement="top">
                             <span class="txtFilter">Créer</span>
@@ -143,30 +161,43 @@
 
                 <div class="inlineBlockAlignTop" >
                     <span class="glyphicon glyphicon-grain marginRight10px"></span>
-                    Ingrédient(s): &nbsp &nbsp
+                    Ingrédient(s) :
                 </div>
 
-                <div class="inlineBlock">
+                <div class="inlineBlock blockIngredients">
 
                     <div class="rowIngredientInput" ng-repeat="ingredient in recipe.ingredients " >
-                        <input class="fieldRecipeCreation fieldRecipeCreationWidth"  type="number" ng-model ='ingredient.qty' min="0"   step="{{unitStep(ingredient.unit)}}" placeholder="Ex: 50"  required />
-                        <select class="fieldRecipeCreation width100" ng-model='ingredient.unit'  ng-options='unit for unit in units' ></select>
+                        <input class="fieldRecipeCreation width80"
+                               ng-class="{ borderError: (!ingredient.qty>0 && triedCreate)}"
+                               type="number" name="rQtyIngr_{{$index}}" ng-model ='ingredient.qty' min="1"   step="{{unitStep(ingredient.unit)}}" placeholder="Ex: 50"  required />
+                        <select class="fieldRecipeCreation width150" ng-model='ingredient.unit'  ng-options='unit for unit in units' ></select>
 
-                        <input class="fieldRecipeCreation nameFood width150" type="text"  ng-model ='ingredient.food.name' class="inputIngredientFoodName"  ng-class="{backgroundGreen:ingredient.food.id>0}"
-                               ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()" ng-keyup="keyUpdateFilter(ingredient.food.name)"  placeholder="aliment" name="rFood" required />
+                        <input class="fieldRecipeCreation nameFood width200"
+                               ng-class="{ borderError: ingredient.food.id==-1 && triedCreate, backgroundGreen:ingredient.food.id>0}"
+                               type="text"  ng-model ='ingredient.food.name' ng-focus="onFocusInputIngredient(ingredient)" ng-blur="onBlurInputIngredient()"
+                               ng-keyup="keyUpdateFilter(ingredient.food.name)"  placeholder="aliment" name="rFood" required />
 
                         <button  type="button" class="myBtnEmpty myBtnEmptyRecipe btnMinusFilter" ng-click="removeRowIngredient($index,ingredient)">
                             <span class="glyphicon glyphicon-minus"></span>
                         </button>
 
+
+                        <br ng-show="( (!ingredient.qty>0 && triedCreate) || (ingredient.food.id==-1 && triedCreate) ) || (!showFoods && ingredient.food.id==0) ">
+
+
                         <!--<span ng-show="form.rFood.$error.required && triedCreate" class="colorRed">Obligatoire</span> ne marche pas car tous les ingredient on le mm name 'rFood' ^^-->
+                        <span ng-show="!ingredient.qty>0 && triedCreate" class="colorRed">Qty invalide</span>
                         <span ng-show="ingredient.food.id==-1 && triedCreate" class="colorRed">Obligatoire</span>
+
 
                         <span ng-show="!showFoods && ingredient.food.id==0" style="color: grey"> <!-- showFoods==false when there isn't focus on any of inputs aliment-->
                             <!--<span class="glyphicon glyphicon-warning-sign"></span>-->
-                            <span class="glyphicon glyphicon glyphicon-alert"></span>
-                            creation d'un nouvel ingredient
+                            <span class="glyphicon glyphicon glyphicon-alert"></span> creation d'un nouvel ingredient
                         </span>
+
+                        <!--<br>ingred.qty ::: {{ingredient.qty}} > 0?{{!ingredient.qty>0}}
+                        attention il est important de faire !ingredient.qty>0 et NON ingredient.qty < 1
+                        car si qty < 1 elle n'existe pas dc evaluation de la comparaison tt le tps false...-->
                     </div>
 
                     <button  type="button" class="myBtnEmpty myBtnEmptyRecipe" ng-click="addRowIngredient()">
@@ -193,10 +224,10 @@
             <div class="form-group formBigger">
                 <div class="inlineBlockAlignTop">
                     <span class="glyphicon glyphicon-menu-hamburger marginRight10px"></span>
-                    Préparation: &nbsp &nbsp
+                    Préparation :
                 </div>
 
-                <div class="inlineBlockAlignTop">
+                <div class="inlineBlockAlignTop blockDescriptions">
                     <div class="rowDescriptionInput" ng-repeat="description in recipe.descriptions " >
                         <div class="inlineBlockAlignTop">
                             Etape {{description.numDescrip}} -

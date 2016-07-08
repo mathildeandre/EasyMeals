@@ -110,7 +110,7 @@
                             <recipeitem-displayopen></recipeitem-displayopen>
                         </div>
 
-                        <div ng-if="showInBlock && !recipe.descriptionOpen" class="divRecipesBlock divRecipesBlockIcon">
+                        <div ng-if="showInBlock && !recipe.descriptionOpen" class="divRecipesBlock divRecipesBlockIcon" ng-class="{ blockMod3: isModule3($index)}">
                             <recipeitem-displayinblock></recipeitem-displayinblock>
                         </div>
                         <div ng-if="showInBlock && recipe.descriptionOpen" class="divRecipesBlock divRecipesBlockDescription">

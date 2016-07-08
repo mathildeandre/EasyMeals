@@ -73,6 +73,11 @@ myModule.controller('RecipeCtrl', function($scope, $localStorage, $routeParams, 
     var setImg = setImgBurger();
     */
 
+    $scope.isModule3 = function(index){
+        /*$log.debug("index : "+index);
+        $log.debug("is =2 modulo 3  : "+(index%3==2));*/
+        return index%3==2;
+    }
     $scope.changeRecipeType = function(recipeType){/* click on big top Buttons : starter, course, dessert...*/
         $scope.recipeType = recipeType;
         $scope.recipes = restRecipeService.getRecipes($scope.recipeType);
