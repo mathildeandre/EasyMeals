@@ -7,7 +7,9 @@
     <div class="modal-body" ><!--style="color:black; height: 700px;" -> height fonctionne à voir qd bcp recettes-->
 
         <div class="divRecipeModalPlanning" ng-repeat="recipe in items" ng-click="chooseRecipe(recipe)">
-            <div class="pixRecipeModalPlanning" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;"> </div>
+            <!--<div class="pixRecipeModalPlanning" style="background-image:url('../images/{{recipe.recipeType.nameType}}/{{recipe.pixName}}'),url('../../../images/no-image.png') ;"> </div>-->
+
+            <img data-ng-src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeBlock">
             <div class="titleAndSoBlock" >
                 <span class="titleBlock" title="{{recipe.name}}"> {{recipe.name}} </span>
                 <div class="divRatingStarModalPlanning" title="{{displayRatingOfRecipeByTitle(recipe)}}">

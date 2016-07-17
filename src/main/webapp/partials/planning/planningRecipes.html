@@ -97,15 +97,16 @@
 
             <div class="myArticleBody" ng-show="!collapseFilterPlanning">
 
-                <span class="blockFilterPlanningRecipe"   ng-repeat="myList in filterSearch.myLists | orderBy:'name'" ng-click="moveMyListToSelection(myList)">
+                <div class="blockFilterPlanningRecipe"   ng-repeat="myList in filterSearch.myLists | orderBy:'name'" ng-click="moveMyListToSelection(myList)">
                     <button-filter mybtn-emptysection="myBtnEmptyPlanning">
                         {{myList.name}}
                         <span ng-show="isRecipeFavorite(myList.id)" class="glyphicon glyphicon-heart heartNoBtn"></span>
                         &nbsp
                         <span ng-show="isRecipePlanning(myList.id)" class="glyphicon glyphicon-pushpin thListNoBtn"></span>
                     </button-filter>
-                </span>
+                </div>
 
+                <br>
 
                 <div class="blockFilterPlanningRecipe">
                     <span class="txtFilter">
@@ -128,6 +129,7 @@
                 </div>
 
                 <br>
+
                 <div class="blockFilterPlanningRecipe">
                     <!--Categories :-->
                     <select class="fieldPlanning width180"  ng-model='myCategory' ng-change="moveCategoryToSelection(myCategory)"

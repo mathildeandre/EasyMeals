@@ -83,6 +83,7 @@
             </div>-->
             <img data-ng-src="data:image/jpg;base64,{{recipe.image}}" class="pixRecipeWithDescrip">
 
+
             <div class="ingredientRecipe">
                 <div class="subTitleRecipeOpen"> Ingrédients ({{recipe.nbPerson}} pers.) </div>
                 <ul ng-repeat="ingr in recipe.ingredients">
@@ -95,7 +96,7 @@
             <div class="subTitleRecipeOpen"> Préparation</div>
             <div ng-repeat="descript in recipe.descriptions | orderBy: '+numDescrip' "> <!-- + is by default -->
                 <div class="divEtapeNumPreparation">Etape {{descript.numDescrip}} :</div>
-                <div class="divContenuPreparation">{{descript.name}} blab blab baba j et ensuit enous lalon dznser dans les boirs ahahahhaha et oui petite coquine s :p</div>
+                <div class="divContenuPreparation">{{descript.name}}</div>
                 <br>
                 <br>
             </div>
