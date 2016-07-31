@@ -275,6 +275,8 @@ fab 40€ to fab, math, eddy, carine, person4, person5
 ********************************************************************************************************
     PRIORITIES EVENT HTML (onBlur ng-click ...)
     *********************************
+    $event (html) -> event.stopPropagation(); (js)
+
     Si on veut à la fois effectuer un NG-BLUR (lors que la souris quitte un elt != NG-FOCUS)
     et en mm tps un NG-CLICK, le le ng-blur est effectué avant le ng-click ! pas possible de changer
     Il est cependant possible d'y remedier en remplacer le ng-click par un NG-MOUSEDOWN qui passe avt le ng-blur
@@ -390,20 +392,25 @@ fab 40€ to fab, math, eddy, carine, person4, person5
 
 
 
+     LIST SIZE en fonction du filtre :
+     ex : ng-repeat="user in userList  | filter : search | orderBy: recipeOrderBy  as filteredList
+     {{filteredList.length}} renvoi bien la taille filtré de la liste !!
+
+
+
+    ATTENTION (pb pagination) pb possible car pour 2.0 : chgt syntaxe :
+    <ul uib-pagination total-items="filteredList.length" ng-model="currentPage" class="pagination-sm"
+            num-pages="numPages" items-per-page="itemPerPage" rotate="false" direction-links="true" boundary-links="true" max-size="10"></ul>
+    au lieu de <uib-pagination ...
 
 
 
 
 
 
-
-
-
-
-
-
-
-
+********************************************************************************************************
+    ...
+    *********************************
 
 
 

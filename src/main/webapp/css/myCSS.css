@@ -1406,7 +1406,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
     margin-left:1.5vw;
     margin-right:0;
     //width:64vw; /* stay at 64vw in any case*/
-    width: 71.5%; /*= max-width 864px puisque parentDiv.max-width = 1200px; */
+    width: 71%; //width: 71.5%; /*= max-width 864px puisque parentDiv.max-width = 1200px; */
     min-width: 576px;/* donc proportionnelle pr parentDiv entre 1200px et 800px -> si parentDiv plus petit,  ca reste a cette taille fixe*/
 }
 
@@ -1841,7 +1841,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 }
 .divTopRecipeRight{
     display: inline-block;
-    margin-left:7.5%;
+    margin-left:7%;
     vertical-align:top;
 }
 .divEtapeNumPreparation{
@@ -1877,7 +1877,7 @@ select::selection,option::selection { /* ne fonctionne pas  */
 .ingredientRecipe{
     display: inline-block;
     //width:50%;
-    margin-left:7.5%;
+    margin-left:7%;
     vertical-align:top;
     /*font-style:bold;
     font-size:large;*/
@@ -2592,6 +2592,17 @@ select::selection,option::selection { /* ne fonctionne pas  */
 
 .rightTrashPlanning{
     margin-right:3vw;
+}
+.orangeColor {
+    color : orange !important;
+}
+.redColor {
+    color : indianred !important;
+}
+.trashable:hover{
+    color: indianred;
+    border-color: indianred;
+    cursor: not-allowed;
 }
 
 

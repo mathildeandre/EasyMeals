@@ -268,7 +268,8 @@ myModule.controller('PlanningCtrl', function($scope, $log, $localStorage, $locat
 
 
     $scope.onOverTrash = function(){
-        document.getElementById("trashPlanning").style.color = 'orange';
+        //document.getElementById("trashPlanning").style.color = 'orange';
+        document.getElementById("trashPlanning").style.color = 'indianred';
     }
     $scope.onOutTrash = function(){
         document.getElementById("trashPlanning").style.color = '#5bc0de';
@@ -277,7 +278,19 @@ myModule.controller('PlanningCtrl', function($scope, $log, $localStorage, $locat
     $scope.onOverTab = function(vaa){
         alert(vaa);
     }*/
+    $scope.trashActivated = false;
+    $scope.activateTrash = function(){
+        $log.debug("**********************************TRASH ACTIVATEEEEd !")
+        $scope.trashActivated = !$scope.trashActivated;
+    }
 
+    $scope.isTrashItem = function(event, caseMeal, index){
+        if($scope.trashActivated){
+            event.stopPropagation();
+            $log.warn("SPLICE recipe !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! index : "+index)
+            caseMeal.recipes.splice(index, 1);
+        }
+    }
     $scope.dataDropTrash = true; //pas vraiment utilisé mais ne pas supprimer cette ligne sans enlever {{dataDropTrash}} du data-drop de la trash
     $scope.trash = [];
 

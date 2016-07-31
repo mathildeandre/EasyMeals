@@ -96,7 +96,8 @@
                                  class="itemToDragPlanning itemDrag" style="display: inline-block;"
                                  data-drag="true" data-jqyoui-options="{revert: 'invalid', helper:'clone'}"
                                  ng-model="caseMeal.recipes" ng-show="recipe.name"
-                                 jqyoui-draggable="{index: {{$index}},placeholder:false , deepCopy:'true'}">
+                                 jqyoui-draggable="{index: {{$index}},placeholder:false , deepCopy:'true'}"
+                                 ng-class="{trashable : trashActivated}" ng-click="isTrashItem($event, caseMeal, $index)">
 
                                 {{recipe.name}}
 
@@ -176,13 +177,18 @@
                 </div>
 
                 <div class="rightInlineBlock rightTrashPlanning">
-                    <div id="trashPlanning" class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
+                    <div ng-show="isTablet" class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
                          data-drop="{{dataDropTrash}}" ng-model='trash'
                          jqyoui-droppable="{multiple:true, onOver:'onOverTrash()', onOut:'onOutTrash()', onDrop:'onOutTrash()'}"
-                         uib-popover="Glisser recette à supprimer" popover-trigger="mouseenter" popover-placement="left" >
+                         uib-popover="Glisser recette à supprimer" popover-trigger="mouseenter" popover-placement="left"
+                    ng-click="activateTrash()" ng-class="{redColor : trashActivated}">
                         <!-- , onOver:'onOverTrash()', onOut:'onOutTrash()' }" -->
                     </div>
+                    <div ng-show="isTablet"  class="glyphicon glyphicon-trash" style="font-size: 50px; color:#5bc0de"
+                         ng-click="activateTrash()" ng-class="{redColor : trashActivated}">
+                    </div>
                 </div>
+                <span ng-if="trashActivated" style="color : indianred">Trash activée : cliquer sur une recette pour la supprimer</span>
 
                 <!-- DEBUG -->
                 <div ng-show="showDebug" style="font-size: 18px; color:darkorange">
